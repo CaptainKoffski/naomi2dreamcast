@@ -45,11 +45,11 @@ def parse(name):
     # blobs: { "file", 0xoff, 0xlen, 0xcrc [, TYPE [, 0xsrc]] }
     blobs = []
     for b in re.finditer(
-        r'\{\s*"([^"]*)"\s*,\s*(0x[0-9a-fA-F]+)\s*,\s*(0x[0-9a-fA-F]+)\s*,\s*'
-        r'(0x[0-9a-fA-F]+|0)\s*(?:,\s*(InterleavedWord|Copy|Key|Eeprom\w*|Normal|SwapWordBytes)\s*)?'
-        r'(?:,\s*(0x[0-9a-fA-F]+)\s*)?\}', e):
+        r'\{\s*"([^"]*)"\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*,\s*'
+        r'(0x[0-9a-fA-F]+|\d+)\s*(?:,\s*(InterleavedWord|Copy|Key|Eeprom\w*|Normal|SwapWordBytes)\s*)?'
+        r'(?:,\s*(0x[0-9a-fA-F]+|\d+)\s*)?\}', e):
         fn, off, ln, crc, typ, src_off = b.groups()
-        blobs.append((fn, int(off,16), int(ln,16), typ or "Normal", int(src_off,16) if src_off else 0))
+        blobs.append((fn, int(off,0), int(ln,0), typ or "Normal", int(src_off,0) if src_off else 0))
     return cart_type, blobs
 
 def extract(zips, filename, crc):
@@ -71,9 +71,9 @@ def main():
     os.makedirs(out, exist_ok=True)
 
     cart_type, blobs = parse(name)
-    if cart_type != "M2":
-        sys.exit("%s is cart_type %s -- assembly only valid for M2 "
-                 "(M1/M4 encrypt the whole ROM; use runtime dump). Aborting." % (name, cart_type))
+    if cart_type not in ("M1", "M2", "M4"):
+        sys.exit("%s is cart_type %s -- this tool handles M1/M2 (assemble) and M4 (assemble+decrypt). "
+                 "GD-ROM uses chd2dat.sh. Aborting." % (name, cart_type))
 
     zips = [os.path.join(LIB, name + ".zip")]
     # clones inherit parent files; add every zip as a fallback source
@@ -82,9 +82,13 @@ def main():
     size = max((off + (2*ln if typ=="InterleavedWord" else ln))
                for fn,off,ln,typ,src in blobs if typ not in ("Key","Eeprom","EepromBE16"))
     rom = bytearray(size)
+    key_blob = None
 
     for fn, off, ln, typ, src in blobs:
-        if typ in ("Key", "Eeprom", "EepromBE16"):
+        if typ == "Key":
+            key_blob = fn
+            continue
+        if typ in ("Eeprom", "EepromBE16"):
             continue
         if typ == "Copy":
             rom[off:off+ln] = rom[src:src+ln]
@@ -103,14 +107,38 @@ def main():
         else:
             sys.exit("unhandled blob_type %r" % typ)
 
-    # NAOMI header is at offset 0, or at 0x800000 for some carts (Flycast GetBootId fallback)
-    hdr = 0 if rom[:5] == b"NAOMI" else (0x800000 if rom[0x800000:0x800005] == b"NAOMI" else None)
-    if hdr is None:
-        sys.exit("assembled image has no NAOMI header at 0 or 0x800000 (offset 0 = %r) -- layout wrong?" % bytes(rom[:8]))
     dest = os.path.join(out, name + ".dat")
     open(dest, "wb").write(rom)
+
+    if cart_type == "M4" and rom[:5] == b"NAOMI":
+        # some M4 dumps (e.g. sl2007) are already stored decrypted -- don't re-encrypt them
+        cart_type = "M4-plain"
+
+    if cart_type == "M4":
+        # whole-ROM stream cipher; key (subkey1/2) from the PIC Key blob at 0x5e0/0x5e4
+        if key_blob is None:
+            os.remove(dest); sys.exit("M4 %s: no Key blob in Games[]" % name)
+        kd = extract(zips, key_blob, None)
+        if kd is None or len(kd) < 0x5e8:
+            os.remove(dest); sys.exit("M4 %s: cannot load key blob %r" % (name, key_blob))
+        subkey1 = (kd[0x5e2] << 8) | kd[0x5e0]
+        subkey2 = (kd[0x5e6] << 8) | kd[0x5e4]
+        m4dec = os.path.join(HERE, "m4dec")
+        if not os.path.exists(m4dec):
+            subprocess.run(["clang", "-O2", "-w", os.path.join(HERE, "m4dec.c"), "-o", m4dec], check=True)
+        subprocess.run([m4dec, str(subkey1), str(subkey2), dest], check=True)
+        rom = bytearray(open(dest, "rb").read(0x800010))  # reload head for validation
+
+    # NAOMI header is at offset 0, or 0x800000 for some M2 carts (Flycast GetBootId fallback)
+    hdr = 0 if rom[:5] == b"NAOMI" else (0x800000 if rom[0x800000:0x800005] == b"NAOMI" else None)
+    if hdr is None:
+        os.remove(dest)
+        sys.exit("%s: no NAOMI header at 0 or 0x800000 after %s (offset 0 = %r)" %
+                 (name, "decrypt" if cart_type == "M4" else "assembly", bytes(rom[:8])))
     title = rom[hdr+0x30:hdr+0x50].decode("latin1").strip()
-    print("OK  %s  M2 assembled  %d bytes  hdr@0x%x  title=%r -> %s" % (name, len(rom), hdr, title, dest))
+    verb = {"M4": "M4 assembled+decrypted", "M4-plain": "M4 assembled (already plaintext)",
+            "M1": "M1 assembled (boot plaintext; asset data stays LZSS-compressed)"}.get(cart_type, "M2 assembled")
+    print("OK  %s  %s  %d bytes  hdr@0x%x  title=%r -> %s" % (name, verb, size, hdr, title, dest))
 
 if __name__ == "__main__":
     main()

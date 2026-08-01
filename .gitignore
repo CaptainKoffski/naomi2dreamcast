@@ -8,8 +8,9 @@ naomi/
 *.pic
 *.zip
 tools/dat-extract/out/
-# built binary
+# built binaries
 tools/dat-extract/extract_dat
+tools/dat-extract/m4dec
 
 # junk
 .DS_Store

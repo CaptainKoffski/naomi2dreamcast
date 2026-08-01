@@ -49,9 +49,9 @@ byte is unreliable; ignoring it + the standard walk + the NAOMI-header check han
 **Known gaps (fix when a target needs them):**
 - `wccf*` GD sets fail: CD-media discs (data track @LBA 0, 2048-byte sectors) routed through
   `NetDimm`, not the LBA-45000 GD path. Needs a gdi-driven disc layer. Exotic/network → low priority.
-- **Cart games** use `cart2dat.py`, not this tool (they're not GD-ROM). M2 carts (56 of 58)
-  assemble from their ROM chips — boot image is plaintext. M1 (5) / M4 (11) encrypt the whole
-  ROM and still need a decoder port or the runtime-dump fallback. See the conversion matrix below.
+- **Cart games** use `cart2dat.py`, not this tool (they're not GD-ROM). M2 (56/58) and M1 (5/5)
+  assemble from their ROM chips (boot image plaintext); M4 (10/11) assembles then `m4dec`-decrypts.
+  71/74 carts convert. See the conversion matrix below.
 
 ### Fallbacks (only if the above can't cover a game)
 - **Route A — netboot / DIMM-image romset**: a separate decrypted-flat-image set (how Cleopatra's
@@ -78,19 +78,24 @@ load-entry table. Source: Flycast `naomi_cart.cpp` (`CartridgeType` = M1/M2/M4/A
 | GD-ROM, netpic==0 | ✅ done | `chd2dat.sh` | — |
 | GD-ROM, netpic!=0 (dragntr…) | ✅ done | netpic byte is unreliable (Flycast note); ignore it, use the LBA-45000 walk, let the NAOMI-header check confirm the right PIC. | done |
 | WCCF (wccf*, vf4, mj1) | ✅ but exotic | CD-media (data track @LBA 0, 2048-byte sectors) + routed through `NetDimm` (GDCartridge subclass), not plain GD. Parametrize base-LBA/sector-size from the `.gdi`. | med; low priority |
-| Cart — M2 (49→56) | ✅ done | **Boot image + NAOMI header are PLAINTEXT** — the 315-5881 chip only decrypts selectively-protected sections at runtime (port `0x4001fffe`), NOT the boot. So the `.dat` is just the ROM chips assembled at their `Games[]` blob offsets (Normal / InterleavedWord / Copy). `cart2dat.py`. | done |
-| Cart — M1 (5) | ⚠ | stream cipher + LZSS over the **whole** ROM; assembly alone = garbage. Port `m1cartridge.cpp`, or runtime-dump. | port decoder / dump |
-| Cart — M4 (11) | ⚠ | FPGA 16-bit stream cipher over the **whole** ROM; key from the cart PIC (`key_data[0x5e0]`). Port `m4cartridge.cpp`, or runtime-dump. | port decoder / dump |
+| Cart — M2 (56/58) | ✅ done | **Boot image + NAOMI header are PLAINTEXT** — the 315-5881 chip only decrypts selectively-protected sections at runtime (port `0x4001fffe`), NOT the boot. `.dat` = ROM chips assembled at their `Games[]` blob offsets (Normal / InterleavedWord / Copy). `cart2dat.py`. | done |
+| Cart — M1 (5/5) | ✅ done | **Boot chip (`ic11`) is PLAINTEXT** like M2 — the LZSS stream cipher only covers the `mpr`/`mtp` **asset** chips (graphics), which aren't needed for code analysis. So assemble the chips; boot executable + header are directly analyzable. `cart2dat.py`. | done |
+| Cart — M4 (10/11) | ✅ done | Whole-ROM FPGA stream cipher, BUT `iv` resets every 16 words (index-based) → each 32-byte block is independent → one sequential pass = flat plaintext ROM. Key (`subkey1/2`) from the PIC Key blob (`[0x5e0]/[0x5e4]`). `cart2dat.py` → `m4dec`. Some dumps (sl2007) ship already-decrypted → auto-detected & skipped. | done |
 
-**Correction:** M2 was earlier assumed to need a Feistel decode and "0 plain carts → nothing to
-concatenate." Both wrong — M2 ROMs are plaintext-boot, so assembling the chips IS the `.dat`.
-Verified: 56 of 58 M2 sets assemble to a valid `NAOMI` image with the correct title (header at
-offset 0, or 0x800000 for some). Stragglers: `hotd2` (garbage at 0 — inspect per-game),
-`gunsur2` (a blob filename differs from the zip — CRC-rename; exotic light-gun title). M1/M4
-genuinely encrypt the whole ROM → need the decoder port or the runtime-dump fallback below.
+**Corrections to earlier claims (all wrong):** (1) "0 plain carts → concatenation unlocks
+nothing" — M2/M1 boot ROMs are plaintext, so assembly IS the `.dat`. (2) "M1/M4 encrypt the
+whole ROM" — M1's boot chip is plaintext (only assets compressed); M4 does encrypt the whole ROM
+but decrypts to a clean flat image because blocks are independent.
+
+Verified: M2 56/58, M1 5/5, M4 10/11 assemble to a valid `NAOMI` image with the correct title.
+Stragglers (all exotic, low port priority): `hotd2` (M2, garbage at 0 — inspect per-game),
+`gunsur2` (M2, blob filename ≠ zip — CRC-rename), `mushik2e` (M4, library zip is a different
+revision than Flycast's `Games[]` entry → mismatched assembly).
 
 ```
-tools/dat-extract/cart2dat.py pstone      # -> tools/dat-extract/out/pstone.dat  (M2 only)
+tools/dat-extract/cart2dat.py pstone      # M2  -> out/pstone.dat
+tools/dat-extract/cart2dat.py mvsc2       # M1  -> out/mvsc2.dat (boot plaintext)
+tools/dat-extract/cart2dat.py radirgyn    # M4  -> out/radirgyn.dat (assemble + m4dec)
 ```
 
 ## Universal fallback (any cipher) — runtime dump for Ghidra
