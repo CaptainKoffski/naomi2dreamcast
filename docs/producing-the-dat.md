@@ -63,9 +63,42 @@ dd if="<game>.dat" of=boot.bin bs=1M count=1             # Ghidra boot binary (f
 /Applications/Flycast.app/Contents/MacOS/Flycast "/abs/<game>.dat"   # real boot gate — the only full proof
 ```
 
+## Converting the hard cases (netpic / WCCF / carts)
+
+Every format reduces to the SAME target: a flat image whose start is a `NAOMI` header +
+load-entry table. Source: Flycast `naomi_cart.cpp` (`CartridgeType` = M1/M2/M4/AW/GD),
+`gdcartridge.cpp`, `m4cartridge.cpp`, `m1cartridge.cpp`, and the per-game `Games[]` table
+(`naomi_roms.cpp`, which carries each game's `key` + `cart_type`).
+
+| Case | Convertible? | How | Effort |
+|------|-------------|-----|--------|
+| GD-ROM, netpic==0 | ✅ done | `chd2dat.sh` | — |
+| GD-ROM, netpic!=0 (dragntr…) | ✅ | Flycast's other `device_start` branch: file lives under `ROM/` dir as `ROM.BIN`, FS read from sector 0. Same DES, same output. | ~20 lines |
+| WCCF (wccf*, vf4, mj1) | ✅ but exotic | CD-media (data track @LBA 0, 2048-byte sectors) + routed through `NetDimm` (GDCartridge subclass), not plain GD. Parametrize base-LBA/sector-size from the `.gdi`. | med; low priority |
+| Cart — plain (key==0) | ✅ trivial | MAME ROM chips ARE the flat image; concatenate in ROM order. `NAOMI` header at offset 0. | ~none |
+| Cart — M1 | ✅ | stream cipher + LZSS; decode per `m1cartridge.cpp`, key from `Games[]`. Position-deterministic → offline. | port 1 decoder |
+| Cart — M2 | ✅ | DES block cipher, per-game 32-bit `key` baked in `Games[]`. Port MAME/Flycast M2 decrypt. | port 1 decoder |
+| Cart — M4 | ✅ | FPGA 16-bit stream cipher, 32-bit key from the cart PIC (`key_data[0x5e0]`); IV resets every 32 bytes by index → offline. Port `m4cartridge.cpp`. | port 1 decoder |
+
+A decrypted cart ROM has the same `NAOMI` header/load table as a GD `.dat` — it IS a `.dat`.
+So carts are convertible; cost = porting up to 3 more decoders (plain needs none). All are in
+Flycast/MAME (primary source, self-contained, position-deterministic → whole-ROM offline decrypt).
+
+## Universal fallback (any cipher) — runtime dump for Ghidra
+
+If a game's static decrypt isn't worth porting, dump from Flycast at runtime (cipher-agnostic):
+every set is Flycast-runnable, and once booted the BIOS/cart HW has decrypted the boot executable
+into SH-4 main RAM (`0x8c010000`+, entry ~`0x8c04xxxx`). Dumping that region gives Ghidra exactly
+the running code+data — works for GD/netpic/WCCF/M1/M2/M4 alike. Trade-off vs a static `.dat`:
+captures only what's loaded (boot exec + streamed regions), not the whole ROM, and needs a small
+Flycast hook (you already have instrumented Flycast from the CFP port). This is the guaranteed
+Ghidra-friendly path for any holdout.
+
 ## Bottom line
 
 Library = MAME `.chd`/`.zip`, kept for the Flycast boot gate → do not touch it.
 `.dat` = `chd2dat.sh <set>` per GD-ROM game, when you assess it. Do NOT batch all 152 blindly
 (disk: senko alone is 266 MB; a full GD sweep is many GB). Fill decrypted-image size into
-`naomi/GAME_FORMATS.md` as games are assessed.
+`naomi/GAME_FORMATS.md` as games are assessed. For a port candidate: check its `cart_type` in
+Flycast `Games[]` — plain carts → concatenate (instant); GD netpic==0 → `chd2dat.sh`; everything
+else → port that one decoder, or fall back to the runtime RAM dump.
