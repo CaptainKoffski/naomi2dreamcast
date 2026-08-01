@@ -49,9 +49,9 @@ byte is unreliable; ignoring it + the standard walk + the NAOMI-header check han
 **Known gaps (fix when a target needs them):**
 - `wccf*` GD sets fail: CD-media discs (data track @LBA 0, 2048-byte sectors) routed through
   `NetDimm`, not the LBA-45000 GD path. Needs a gdi-driven disc layer. Exotic/network → low priority.
-- **Cart games** use `cart2dat.py`, not this tool (they're not GD-ROM). M2 (56/58) and M1 (5/5)
+- **Cart games** use `cart2dat.py`, not this tool (they're not GD-ROM). M2 (57/58) and M1 (5/5)
   assemble from their ROM chips (boot image plaintext); M4 (10/11) assembles then `m4dec`-decrypts.
-  71/74 carts convert. See the conversion matrix below.
+  72/74 carts convert. See the conversion matrix below.
 
 ### Fallbacks (only if the above can't cover a game)
 - **Route A — netboot / DIMM-image romset**: a separate decrypted-flat-image set (how Cleopatra's
@@ -77,8 +77,8 @@ load-entry table. Source: Flycast `naomi_cart.cpp` (`CartridgeType` = M1/M2/M4/A
 |------|-------------|-----|--------|
 | GD-ROM, netpic==0 | ✅ done | `chd2dat.sh` | — |
 | GD-ROM, netpic!=0 (dragntr…) | ✅ done | netpic byte is unreliable (Flycast note); ignore it, use the LBA-45000 walk, let the NAOMI-header check confirm the right PIC. | done |
-| WCCF (wccf*, vf4, mj1) | ✅ but exotic | CD-media (data track @LBA 0, 2048-byte sectors) + routed through `NetDimm` (GDCartridge subclass), not plain GD. Parametrize base-LBA/sector-size from the `.gdi`. | med; low priority |
-| Cart — M2 (56/58) | ✅ done | **Boot image + NAOMI header are PLAINTEXT** — the 315-5881 chip only decrypts selectively-protected sections at runtime (port `0x4001fffe`), NOT the boot. `.dat` = ROM chips assembled at their `Games[]` blob offsets (Normal / InterleavedWord / Copy). `cart2dat.py`. | done |
+| WCCF (later cdv-* sets) | ✗ not a game | The CD discs are **networked-system/update images** (AUTORUN.INF, CHECKON.EXE, NAVI3_S.BIN, UPDATE.BAT), not Naomi SH-4 ROM games — no NAOMI flat image exists. WCCF is a satellite/network cabinet. | n/a |
+| Cart — M2 (57/58) | ✅ done | **Boot image + NAOMI header are PLAINTEXT** — the 315-5881 chip only decrypts selectively-protected sections at runtime (port `0x4001fffe`), NOT the boot. `.dat` = ROM chips assembled at their `Games[]` blob offsets (Normal / InterleavedWord / Copy; extract by filename, else by CRC). `cart2dat.py`. | done |
 | Cart — M1 (5/5) | ✅ done | **Boot chip (`ic11`) is PLAINTEXT** like M2 — the LZSS stream cipher only covers the `mpr`/`mtp` **asset** chips (graphics), which aren't needed for code analysis. So assemble the chips; boot executable + header are directly analyzable. `cart2dat.py`. | done |
 | Cart — M4 (10/11) | ✅ done | Whole-ROM FPGA stream cipher, BUT `iv` resets every 16 words (index-based) → each 32-byte block is independent → one sequential pass = flat plaintext ROM. Key (`subkey1/2`) from the PIC Key blob (`[0x5e0]/[0x5e4]`). `cart2dat.py` → `m4dec`. Some dumps (sl2007) ship already-decrypted → auto-detected & skipped. | done |
 
@@ -87,10 +87,14 @@ nothing" — M2/M1 boot ROMs are plaintext, so assembly IS the `.dat`. (2) "M1/M
 whole ROM" — M1's boot chip is plaintext (only assets compressed); M4 does encrypt the whole ROM
 but decrypts to a clean flat image because blocks are independent.
 
-Verified: M2 56/58, M1 5/5, M4 10/11 assemble to a valid `NAOMI` image with the correct title.
-Stragglers (all exotic, low port priority): `hotd2` (M2, garbage at 0 — inspect per-game),
-`gunsur2` (M2, blob filename ≠ zip — CRC-rename), `mushik2e` (M4, library zip is a different
-revision than Flycast's `Games[]` entry → mismatched assembly).
+Verified: M2 57/58, M1 5/5, M4 10/11 assemble to a valid `NAOMI` image with the correct title
+(**72/74 carts**). The 2 remaining are genuine dead-ends, both exotic:
+- `hotd2` (M2) — an early (1998) M2 whose **header region is actually 315-5881-encrypted** (only
+  the string `"NAOMI TEST MODE"` is plaintext). Needs the full Feistel decode (not worth porting
+  for one light-gun game) or a runtime dump.
+- `mushik2e` (M4) — Flycast has multiple ambiguous `"mushik2e"` `Games[]` entries (its own comment:
+  "key pic is missing") and the library zip is an unclear revision → no reliable name→layout. Exotic
+  barcode-card game (needs a card reader; unportable anyway).
 
 ```
 tools/dat-extract/cart2dat.py pstone      # M2  -> out/pstone.dat

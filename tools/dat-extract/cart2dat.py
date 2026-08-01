@@ -49,18 +49,41 @@ def parse(name):
         r'(0x[0-9a-fA-F]+|\d+)\s*(?:,\s*(InterleavedWord|Copy|Key|Eeprom\w*|Normal|SwapWordBytes)\s*)?'
         r'(?:,\s*(0x[0-9a-fA-F]+|\d+)\s*)?\}', e):
         fn, off, ln, crc, typ, src_off = b.groups()
-        blobs.append((fn, int(off,0), int(ln,0), typ or "Normal", int(src_off,0) if src_off else 0))
+        blobs.append((fn, int(off,0), int(ln,0), typ or "Normal",
+                      int(src_off,0) if src_off else 0, int(crc,0)))
     return cart_type, blobs
 
+_crcmap_cache = {}
+def _crcmap(z):
+    """Map CRC(hex, lower) -> path for a zip (cached)."""
+    if z not in _crcmap_cache:
+        m, path = {}, None
+        out = subprocess.run([SZ, "l", "-slt", z], capture_output=True, text=True).stdout
+        for line in out.splitlines():
+            if line.startswith("Path = "): path = line[7:]
+            elif line.startswith("CRC = ") and path: m[line[6:].strip().lower()] = path
+        _crcmap_cache[z] = m
+    return _crcmap_cache[z]
+
 def extract(zips, filename, crc):
-    """Pull one blob file out of the set/parent zips (by name)."""
+    """Pull one blob out of the set/parent zips: by filename, else by CRC (handles
+    renamed/extension-swapped dumps, e.g. gunsur2's bhf1ma8.4e <-> .4d)."""
     for z in zips:
         d = tempfile.mkdtemp()
-        r = subprocess.run([SZ, "e", "-y", "-o"+d, z, filename],
-                           capture_output=True, text=True)
+        subprocess.run([SZ, "e", "-y", "-o"+d, z, filename], capture_output=True, text=True)
         p = os.path.join(d, os.path.basename(filename))
         if os.path.exists(p):
             return open(p, "rb").read()
+    if crc:
+        want = "%08x" % crc
+        for z in zips:
+            hit = _crcmap(z).get(want)
+            if hit:
+                d = tempfile.mkdtemp()
+                subprocess.run([SZ, "e", "-y", "-o"+d, z, hit], capture_output=True, text=True)
+                p = os.path.join(d, os.path.basename(hit))
+                if os.path.exists(p):
+                    return open(p, "rb").read()
     return None
 
 def main():
@@ -80,22 +103,22 @@ def main():
     zips += [os.path.join(LIB, f) for f in os.listdir(LIB) if f.endswith(".zip")]
 
     size = max((off + (2*ln if typ=="InterleavedWord" else ln))
-               for fn,off,ln,typ,src in blobs if typ not in ("Key","Eeprom","EepromBE16"))
+               for fn,off,ln,typ,src,crc in blobs if typ not in ("Key","Eeprom","EepromBE16"))
     rom = bytearray(size)
-    key_blob = None
+    key_blob = key_crc = None
 
-    for fn, off, ln, typ, src in blobs:
+    for fn, off, ln, typ, src, crc in blobs:
         if typ == "Key":
-            key_blob = fn
+            key_blob, key_crc = fn, crc
             continue
         if typ in ("Eeprom", "EepromBE16"):
             continue
         if typ == "Copy":
             rom[off:off+ln] = rom[src:src+ln]
             continue
-        data = extract(zips, fn, None)
+        data = extract(zips, fn, crc)
         if data is None:
-            sys.exit("cannot find blob %r in any zip" % fn)
+            sys.exit("cannot find blob %r (crc %08x) in any zip" % (fn, crc))
         data = data[:ln]
         if typ in ("Normal", "SwapWordBytes"):
             rom[off:off+len(data)] = data
@@ -118,7 +141,7 @@ def main():
         # whole-ROM stream cipher; key (subkey1/2) from the PIC Key blob at 0x5e0/0x5e4
         if key_blob is None:
             os.remove(dest); sys.exit("M4 %s: no Key blob in Games[]" % name)
-        kd = extract(zips, key_blob, None)
+        kd = extract(zips, key_blob, key_crc)
         if kd is None or len(kd) < 0x5e8:
             os.remove(dest); sys.exit("M4 %s: cannot load key blob %r" % (name, key_blob))
         subkey1 = (kd[0x5e2] << 8) | kd[0x5e0]
