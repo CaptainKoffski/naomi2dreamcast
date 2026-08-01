@@ -43,12 +43,16 @@ images for cvsgd, senko, moeru, quizqgd (distinct per-game keys).
 3. Walk the disc's ISO9660 filesystem to find that file (handling the 0x100-byte indirection
    that points to the real `*.BIN`), read it, DES-decrypt every 8 bytes. That's the `.dat`.
 
+Also verified for the **netpic** GD games — dragntr / dragntr2 / dragntr3 (their PIC's netpic
+byte is unreliable; ignoring it + the standard walk + the NAOMI-header check handles them).
+
 **Known gaps (fix when a target needs them):**
-- `netpic != 0` games (dragntr / dragntr2 / dragntr3, some others) route through a different
-  ISO branch — `extract_dat` reports and skips them. ~20 lines from `device_start` to add.
-- `wccf341j` fails (investigate; WCCF is exotic/network, low port priority).
-- **Cart games (~75)** are NOT GD-ROM — different decrypt path (`naomi_cart.cpp` M2/M4). Separate
-  tool, not built. Tackle when a cart game is actually a port candidate.
+- `wccf*` GD sets fail: CD-media discs (data track @LBA 0, 2048-byte sectors) routed through
+  `NetDimm`, not the LBA-45000 GD path. Needs a gdi-driven disc layer. Exotic/network → low priority.
+- **Cart games (~75)** are NOT GD-ROM — they decrypt via `naomi_cart.cpp` (M1/M2/M4), not this
+  tool. In THIS library the split is 49 M2, 11 M4, 5 M1, **0 plain** (checked against Flycast
+  `Games[]`), so plain-concatenation would unlock nothing; **M2 (49 games) is the real cart path**.
+  Not built — tackle when a cart game is a port candidate.
 
 ### Fallbacks (only if the above can't cover a game)
 - **Route A — netboot / DIMM-image romset**: a separate decrypted-flat-image set (how Cleopatra's
@@ -73,9 +77,9 @@ load-entry table. Source: Flycast `naomi_cart.cpp` (`CartridgeType` = M1/M2/M4/A
 | Case | Convertible? | How | Effort |
 |------|-------------|-----|--------|
 | GD-ROM, netpic==0 | ✅ done | `chd2dat.sh` | — |
-| GD-ROM, netpic!=0 (dragntr…) | ✅ | Flycast's other `device_start` branch: file lives under `ROM/` dir as `ROM.BIN`, FS read from sector 0. Same DES, same output. | ~20 lines |
+| GD-ROM, netpic!=0 (dragntr…) | ✅ done | netpic byte is unreliable (Flycast note); ignore it, use the LBA-45000 walk, let the NAOMI-header check confirm the right PIC. | done |
 | WCCF (wccf*, vf4, mj1) | ✅ but exotic | CD-media (data track @LBA 0, 2048-byte sectors) + routed through `NetDimm` (GDCartridge subclass), not plain GD. Parametrize base-LBA/sector-size from the `.gdi`. | med; low priority |
-| Cart — plain (key==0) | ✅ trivial | MAME ROM chips ARE the flat image; concatenate in ROM order. `NAOMI` header at offset 0. | ~none |
+| Cart — plain (key==0) | n/a here | Would be: concatenate MAME ROM chips per `Games[]` blob offsets. But this library has **0 plain carts** — nothing to unlock. | not built |
 | Cart — M1 | ✅ | stream cipher + LZSS; decode per `m1cartridge.cpp`, key from `Games[]`. Position-deterministic → offline. | port 1 decoder |
 | Cart — M2 | ✅ | DES block cipher, per-game 32-bit `key` baked in `Games[]`. Port MAME/Flycast M2 decrypt. | port 1 decoder |
 | Cart — M4 | ✅ | FPGA 16-bit stream cipher, 32-bit key from the cart PIC (`key_data[0x5e0]`); IV resets every 32 bytes by index → offline. Port `m4cartridge.cpp`. | port 1 decoder |

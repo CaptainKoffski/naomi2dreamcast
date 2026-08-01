@@ -59,7 +59,11 @@ int main(int argc, char** argv) {
     key |= pic[0x7a0];
     u8 netpic = pic[0x6ee];
     fprintf(stderr, "key=%08x%08x name='%s' netpic=%u\n", (u32)(key>>32), (u32)key, name, netpic);
-    if (netpic) { fprintf(stderr, "netpic!=0 path not implemented (this game routes differently)\n"); return 3; }
+    // ponytail: the netpic byte is unreliable for GD discs (Flycast notes dragntr "seem to
+    // prefer a 0 here"), so we ignore it and use the standard LBA-45000 walk for all GD-ROMs.
+    // A wrong PIC/route just fails to produce a NAOMI header, which the caller detects.
+    // ceiling: true net-dimm games (PVD at LBA 0, file under a ROM/ subdir) and CD-media
+    // discs (WCCF, 2048-byte sectors) aren't handled here — add a gdi-driven disc layer if one lands.
 
     g_track = fopen(argv[2], "rb"); if (!g_track) { perror("track"); return 1; }
 
