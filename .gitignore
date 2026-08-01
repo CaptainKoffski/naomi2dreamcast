@@ -1,0 +1,16 @@
+# Copyrighted dumps — NEVER commit (ROMs, discs, BIOS, decrypted images)
+naomi/
+*.dat
+*.chd
+*.gdi
+*.bin
+*.raw
+*.pic
+*.zip
+tools/dat-extract/out/
+# built binary
+tools/dat-extract/extract_dat
+
+# junk
+.DS_Store
+.idea/
