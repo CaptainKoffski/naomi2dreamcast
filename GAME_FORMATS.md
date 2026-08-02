@@ -8,6 +8,7 @@ Every ROM set in the `naomi/` library folder: format, set relationship, size, ge
 - **Genre legend:** ★ = easy-port candidate lane (small 2D / puzzle / shmup, like Cleopatra) · ⚠ = exotic, likely exclude (mahjong, football-card, horse-race, typing, gambling, quiz, fishing) · ? = unclassified, fill during assessment.
 - **DC port column:** did this exact game get an **official, licensed consumer Dreamcast release**? `Yes (year)` · `No` · `Partial` (a related-but-not-identical version reached DC — see the note under the table). Sourced per-game (Wikipedia/GDRI/Sega Retro), 2026-08-02. A `Yes` means an official DC binary of the same game exists — **not a reason to skip it**, but a ready-made reference/validation target (compare a port's behaviour against the real DC build); an official port also means the community port is redundant for players. The porting lane still cares most about the `No`/★ games (never on DC, small enough to fit).
 - **Why keep full runnable sets (not disc-only):** the port pipeline's Phase 1–2 need the game to **boot in instrumented Flycast** to dump the decrypted DIMM image + capture cart/input/EEPROM traces. That needs disc + BIOS + PIC. See memory `porting-workflow-and-library-grooming`.
+- **Assessment status:** per-set cell in the last column; sorted scores in [assessments/RANKING.md](assessments/RANKING.md), work queue in [assessments/QUEUE.md](assessments/QUEUE.md), method in the [spec](docs/superpowers/specs/2026-08-02-portability-assessment-design.md).
 
 > **⚠ `parent` ≠ newer/better, `clone` ≠ older/worse.** MAME's parent/clone flag is a reference-dump pick, not a version rank. It often lines up with "parent = latest rev" (e.g. `senko` Rev A parent, `senkoo` base clone) but breaks on **region** splits: `cvs2` parent = USA, `cvs2mf` clone = Japan original; `puyofev` parent = World, `puyofevj` clone = Japan. To judge "latest", read the Rev letter / Ver number in the title *within the same region* — not the flag.
 
@@ -40,7 +41,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Capcom Vs. SNK 2: Millionaire Fighting 2001 (Japan, Rev A) (GDL-0007A) | `cvs2mf` | **GD-ROM** | clone of `cvs2` | 149.5 MB | Fighting | Yes (2001) | not assessed |
 | Capcom Vs. SNK: Millennium Fight 2000 Pro (Japan) (GDL-0004) | `cvsgd` | **GD-ROM** | parent | 125.2 MB | Fighting | Yes (2001) | not assessed |
 | Chaos Field (Japan) (GDL-0025) | `cfield` | **GD-ROM** | parent | 142.9 MB | Shmup ★ | Yes (2004) | not assessed |
-| Cleopatra Fortune Plus (GDL-0012) | `cleoftp` | **GD-ROM** | parent | 65.8 MB | Puzzle ★ | No | not assessed |
+| Cleopatra Fortune Plus (GDL-0012) | `cleoftp` | **GD-ROM** | parent | 65.8 MB | Puzzle ★ | No | **84.2** S · [assessment](assessments/cleoftp.md) |
 | Confidential Mission (GDS-0001) | `confmiss` | **GD-ROM** | parent | 126.4 MB | Light-gun | Yes (2001) | not assessed |
 | Doki Doki Idol Star Seeker (GDL-0005) | `starseek` | **GD-ROM** | parent | 37.2 MB | ? | Yes (2002) | not assessed |
 | Dragon Treasure (Rev A) (GDS-0030A) | `dragntra` | **GD-ROM** | clone of `dragntr` | 142.4 MB | ? | No | not assessed |
@@ -52,7 +53,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Guilty Gear XX (GDL-0011) | `ggxx` | **GD-ROM** | parent | 250.2 MB | Fighting | No | not assessed |
 | Guilty Gear XX Accent Core (Japan) (GDL-0041) | `ggxxac` | **GD-ROM** | parent | 255.1 MB | Fighting | No | not assessed |
 | Guilty Gear XX Slash (Japan, Rev A) (GDL-0033A) | `ggxxsla` | **GD-ROM** | parent | 249.6 MB | Fighting | No | not assessed |
-| Ikaruga (GDL-0010) | `ikaruga` | **GD-ROM** | parent | 40.5 MB | Shmup ★ | Yes (2002) | not assessed |
+| Ikaruga (GDL-0010) | `ikaruga` | **GD-ROM** | parent | 40.5 MB | Shmup ★ | Yes (2002) | parked G3 · [notes](assessments/ikaruga.md) |
 | Jingi Storm - The Arcade (Japan) (GDL-0037) | `jingystm` | **GD-ROM** | parent | 141.4 MB | Rhythm | No | not assessed |
 | Karous (Japan) (GDL-0040) | `karous` | **GD-ROM** | parent | 126.5 MB | Shmup ★ | Yes (2007) | not assessed |
 | Kurukuru Chameleon (Japan) (GDL-0034) | `kurucham` | **GD-ROM** | parent | 41.6 MB | Puzzle ★ | No | not assessed |
