@@ -47,8 +47,19 @@ def test_carve_fallback():
     assert meta["hdr_at"] == 0x800000 and meta["title"] == "HDRREL"
     assert blob[0:0x100] == b"C" * 0x100  # Payload was correctly read from hdr-relative offset
 
+def test_carve_garbage_raises_valueerror():
+    # Documents the exception type run_battery.py's static_scan() now catches (final-review
+    # IMPORTANT-2): a malformed-but-produced .dat must degrade to dat_available=False, not
+    # traceback out and lose the capture.
+    try:
+        carve_boot.carve(b"garbage")
+        assert False, "expected ValueError on a non-NAOMI blob"
+    except ValueError:
+        pass
+
 if __name__ == "__main__":
     test_carve_at_0(); print("test_carve_at_0 OK")
     test_carve_at_800000(); print("test_carve_at_800000 OK")
     test_carve_fallback(); print("test_carve_fallback OK")
+    test_carve_garbage_raises_valueerror(); print("test_carve_garbage_raises_valueerror OK")
     print("ALL OK")

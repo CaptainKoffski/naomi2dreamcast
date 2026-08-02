@@ -19,8 +19,9 @@ Spec: `docs/superpowers/specs/2026-08-02-portability-assessment-design.md`.
      still show a static pre-game screen (brightness calibration, warning/disclaimer — e.g.
      Ikaruga counts down ~300 s before the game even starts), attract was never reached and
      the metrics are unrepresentative — re-run with `--secs 900` (or higher until attract
-     appears in the shots) and use that sidecar. Record capture length and the static-screen
-     duration in doc §3.
+     appears in the shots) and use that sidecar. Record which of the three states the run
+     reached — `{{calibration screen | title only | demo reached}} — evidence screenshot` —
+     plus capture length and the static-screen duration in doc §3.
    - `PARKED G1 …` → verify it is the game, not tooling: check `assessments/evidence/<set>/raw/stdout.log`,
      the screenshots, and `boot.mame_not_working` in the sidecar. Write the short-form doc (§ Parked below).
      Battery v2 retries the no-handoff flake once automatically; if it still parks after the auto-retry, then diagnose.
@@ -30,8 +31,9 @@ Spec: `docs/superpowers/specs/2026-08-02-portability-assessment-design.md`.
    Sega Retro/System16 hardware pages > wikis. Record ≥2 sources with URLs.
    Set `controls.device_class` in the sidecar to one of: `stick`, `dc_peripheral`,
    `pad_adaptable`, `awkward` — or, for physically unmappable hardware (card reader/printer,
-   medal/hopper, mandatory multi-cabinet), leave the raw name (e.g. `card_reader`): score.py
-   turns any off-ladder value into gate G2. Append your sources to `controls.sources`.
+   medal/hopper, mandatory multi-cabinet), replace `review` with the raw hardware name (e.g.
+   `card_reader`): score.py turns any off-ladder value into gate G2. Append your sources to
+   `controls.sources`.
    Also research **existing community/fan DC ports** of the game; note findings for the doc.
 3. **Score:** `python3 tools/assess/score.py assessments/<set>.metrics.json`
 4. **Write the doc:** copy `assessments/TEMPLATE.md` → `assessments/<set>.md`; fill every
@@ -39,11 +41,14 @@ Spec: `docs/superpowers/specs/2026-08-02-portability-assessment-design.md`.
    quote it. Every claim needs its citation (log tag, screenshot path, or URL).
 5. **Tables:** `python3 tools/assess/gen_tables.py ranking && python3 tools/assess/gen_tables.py patch`
 6. **Update QUEUE.md** status cell for the family (`pending` → `done` / `parked`).
-7. **Commit:** `git add assessments/<set>.md assessments/<set>.metrics.json
+7. **Curate evidence:** keep at most 5 representative screenshots (boot / title /
+   attract-demo), delete the surplus `shot-*.png`; the sidecar's `capture.screenshots`
+   deliberately lists every shot the battery took — the committed set is the curated subset.
+8. **Commit:** `git add assessments/<set>.md assessments/<set>.metrics.json
    assessments/evidence/<set>/*.png assessments/RANKING.md assessments/QUEUE.md GAME_FORMATS.md`
    then commit `assess(<set>): <final> <tier>` (or `parked <gate>`).
    NEVER add `evidence/<set>/raw/` or anything under `tools/assess/out/` or `tools/dat-extract/out/`.
-8. **Lessons:** anything surprising (tool quirk, new failure class, scoring edge) →
+9. **Lessons:** anything surprising (tool quirk, new failure class, scoring edge) →
    append to `docs/kb/assessment-tooling.md`.
 
 ## Parked short-form doc

@@ -22,7 +22,7 @@
 ## 3. Boot & run evidence
 
 Boots: {{yes/no}} · handoff at {{t}} s · run {{secs}} s · rom: `{{rom_used}}`
-Attract/demo reached: {{yes/no — evidence screenshot}}
+Attract/demo reached: {{calibration screen | title only | demo reached}} — evidence screenshot
 Screenshots: {{links to evidence/<set>/shot-*.png}}
 Anomalies: {{none / description}}
 

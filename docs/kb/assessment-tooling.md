@@ -167,6 +167,24 @@ diagnostic ROM. `controls_extract.py`'s `HINT_OVERRIDES` forces all 19 to `devic
 "review"` (never an auto-set final class) — never trust the shared input-port name alone as
 proof of cabinet type; the researching agent must confirm real hardware per RUNBOOK step 2.
 
+**h. BIOS-vector penalty is inert as measured.** `bios_refs` came back `{}` on the known-good
+control binary (`cleoftp.metrics.json` → `guts.bios_refs: {}`, `extra_bios_classes: 0`) even
+though `cleoftp` demonstrably uses boot/EEPROM BIOS syscalls — so `score.py`'s `guts_axis()`
+`−2`-per-extra-BIOS-class penalty (max `−10`) is currently inert campaign-wide. Detector
+limitation, not a scoring bug: the Ghidra post-script only resolves BIOS vector references
+that are literal-pool scalar loads, not register-indirect/computed calls. Uniform across every
+game measured so far (no ranking skew), but watch for the first title in the queue where
+`bios_refs` actually comes back non-empty — that would be the first real signal this penalty
+ever fires.
+
+**i. `code_bytes` feeds a real penalty — it is not merely informational.** `guts.code_bytes`
+(e.g. `cleoftp` = 1,048,576 B) is the carve's initialized-blob size — code **and** data,
+equal to the `.dat` import size, not a disassembly-derived code-segment size — and it directly
+drives `run_battery.py`'s `guts_flags()` (`code_bytes > 4 << 20` → `code_over_4mb`), which
+`score.py`'s `guts_axis()` turns into a `−5` penalty (≈1% of the final score). Earlier notes in
+this repo characterized `code_bytes` as "informational for scoring" — that undersells it;
+treat it as scoring-affecting.
+
 ## 5. Campaign start checklist
 
 The battery is calibrated (§3) and the queue is generated. From here the campaign is pure

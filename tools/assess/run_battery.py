@@ -2,7 +2,7 @@
 """One-family assessment battery (spec §2). SERIAL ONLY — never run two at once.
 Usage: run_battery.py <set> [--secs 600] [--skip-static] [--keep-dat] [--rom PATH]
 Env overrides: FLYCAST_BIN, NAOMI_DIR, MAME_NAOMI."""
-import glob, json, os, shutil, signal, subprocess, sys, time
+import glob, json, os, shutil, signal, struct, subprocess, sys, time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.normpath(os.path.join(HERE, "..", ".."))
@@ -19,9 +19,11 @@ BATTERY_VERSION = "2"
 HANDOFF_TAGS = (b"ARAMHANDOFF", b"CARTDMA")
 # Sets whose disc/feature set is network-bound (netpic/WCCF/satellite — GAME_FORMATS.md
 # Completeness section). Drives the guts 'network' penalty (spec §4.3).
+# wccf2chk/wccf400j/wccf420e added to match controls_extract.py's HINT_OVERRIDES WCCF list
+# (all 12 WCCF sets are network-bound card-reader cabinets, not just the first 9).
 NETWORK_SETS = {"wccf116", "wccf1dup", "wccf212e", "wccf234j", "wccf310j", "wccf322e",
-                "wccf341j", "wccf331e", "wccf331j", "dragntr", "dragntra", "dragntr2",
-                "dragntr3", "quizqgd"}
+                "wccf341j", "wccf331e", "wccf331j", "wccf2chk", "wccf400j", "wccf420e",
+                "dragntr", "dragntra", "dragntr2", "dragntr3", "quizqgd"}
 
 
 def rom_candidates(setname):
@@ -134,6 +136,11 @@ def static_scan(setname, keep_dat):
         guts["dat_available"] = True
         guts["carve_meta"] = meta
         return guts
+    except (ValueError, struct.error, OSError, json.JSONDecodeError) as e:
+        # degrade-to-no-guts (spec §4.3): a produced-but-odd .dat must not crash the battery
+        # and lose the capture (carve_boot.carve raises ValueError; struct.error on a short
+        # file; json.JSONDecodeError on a bad guts.json).
+        return {"dat_available": False, "error": f"static scan: {e}"}
     finally:
         if not keep_dat:
             for p in (dat, os.path.join(OUT, setname + ".boot.bin")):
