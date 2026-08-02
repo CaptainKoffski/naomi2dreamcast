@@ -1,4 +1,6 @@
 # General checklist
+This is checklist for the future ports to be tested against.
+Not for initial general portability assessments.
 
 ## Static analysis
 - [ ] No VMU operations
