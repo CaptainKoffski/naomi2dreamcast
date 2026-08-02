@@ -231,6 +231,9 @@ def main():
                  "failure_class": aborted if not boot_ok else None,
                  "mame_not_working": row["not_working"]},
         "capture": {"handoff": cap["handoff"], "screenshots": shots,
+                    # set by the assessing agent from the screenshots (RUNBOOK
+                    # representativeness check): "demo" | "title" | "calibration"
+                    "coverage": None,
                     "watermarks_info": {r: cap[r]["watermark_max"] for r in ("main", "vram", "aram")}},
         "memory": {"main": {"dma_high_water": cap["main"]["dma_high_water"]},
                    "vram": {"peak": cap["vram"]["peak"], "nz_above_cap": cap["vram"]["nz_above_cap"],

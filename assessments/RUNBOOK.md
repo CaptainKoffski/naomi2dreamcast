@@ -21,7 +21,10 @@ Spec: `docs/superpowers/specs/2026-08-02-portability-assessment-design.md`.
      the metrics are unrepresentative — re-run with `--secs 900` (or higher until attract
      appears in the shots) and use that sidecar. Record which of the three states the run
      reached — `{{calibration screen | title only | demo reached}} — evidence screenshot` —
-     plus capture length and the static-screen duration in doc §3.
+     plus capture length and the static-screen duration in doc §3. Also set
+     `capture.coverage` in the sidecar to `demo` / `title` / `calibration` (the battery
+     writes `null`) — RANKING.md shows it as a ⚠ flag so lower-bound scores are visible
+     in the table, not just in the doc.
    - `PARKED G1 …` → verify it is the game, not tooling: check `assessments/evidence/<set>/raw/stdout.log`,
      the screenshots, and `boot.mame_not_working` in the sidecar. Write the short-form doc (§ Parked below).
      Battery v2 retries the no-handoff flake once automatically; if it still parks after the auto-retry, then diagnose.

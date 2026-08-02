@@ -46,7 +46,8 @@
       "main": 32505920,
       "vram": 6814341,
       "aram": 8388608
-    }
+    },
+    "coverage": "title"
   },
   "memory": {
     "main": {

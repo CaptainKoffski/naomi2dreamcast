@@ -46,7 +46,8 @@
       "main": 16252992,
       "vram": 8181717,
       "aram": 2097152
-    }
+    },
+    "coverage": "demo"
   },
   "memory": {
     "main": {

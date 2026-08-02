@@ -49,9 +49,17 @@ def test_patch_cell():
     parked = {"aaa": {"scores": None, "gate": "G2 controls: card_reader"}}
     assert "| parked G2 · [notes](assessments/aaa.md) |" in gt.patch_text(FIXTURE, parked, clones={})
 
+def test_coverage_flag():
+    assert gt.coverage_flag({"capture": {"coverage": "demo"}}) == "demo"
+    assert gt.coverage_flag({"capture": {"coverage": "title"}}) == "title ⚠"
+    assert gt.coverage_flag({"capture": {"coverage": "calibration"}}) == "cal ⚠"
+    assert gt.coverage_flag({"capture": {"coverage": None}}) == "?"
+    assert gt.coverage_flag({}) == "?"                       # pre-v2 sidecars lack the field
+
 if __name__ == "__main__":
     test_parse_rows(); print("test_parse_rows OK")
     test_families_scope(); print("test_families_scope OK")
     test_orphan_clone(); print("test_orphan_clone OK")
     test_patch_cell(); print("test_patch_cell OK")
+    test_coverage_flag(); print("test_coverage_flag OK")
     print("ALL OK")
