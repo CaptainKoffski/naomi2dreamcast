@@ -32,7 +32,9 @@ def parse_rows(text):
 def families(rows):
     fams = {}
     for s, r in rows.items():
-        fams.setdefault(r["parent"] or s, []).append(s)
+        # ponytail: self-key orphan clones whose parent is absent (f355→f355dlx, pokasuka→manicpnc)
+        parent_key = r["parent"] if r["parent"] and r["parent"] in rows else s
+        fams.setdefault(parent_key, []).append(s)
     return fams
 
 
