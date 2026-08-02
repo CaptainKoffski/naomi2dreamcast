@@ -28,8 +28,11 @@ def carve(data):
         raise ValueError("no main load entries")
     fixed = []
     for rom, ram, n in entries:
-        if rom + n > len(data) and hdr + rom + n <= len(data):
-            rom = hdr + rom                       # hdr-relative fallback
+        # GD-ROM .dat entries may use small hdr-relative offsets; try hdr-relative for small values.
+        # hdr-relative rom that is accidentally in-bounds under absolute read is undetectable here;
+        # calibration byte-compares against known-good boot.bin (planned Task 9) is the real guard.
+        if hdr > 0 and rom < 0x100000:
+            rom = hdr + rom                       # Small rom values are hdr-relative
         if rom + n > len(data):
             raise ValueError(f"load entry out of file: rom=0x{rom:x} len=0x{n:x}")
         fixed.append((rom, ram, n))
