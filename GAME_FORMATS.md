@@ -1,6 +1,6 @@
 # Naomi library — inventory & porting triage
 
-Every ROM set in this `naomi/` folder: format, set relationship, size, genre, and porting-assessment status. Purpose: **range games by ease of Naomi→Dreamcast porting**, then port the easy ones (ref: the Cleopatra Fortune Plus port in `../cleopatra`).
+Every ROM set in the `naomi/` library folder: format, set relationship, size, genre, and porting-assessment status. Purpose: **range games by ease of Naomi→Dreamcast porting**, then port the easy ones (ref: the Cleopatra Fortune Plus port in `../cleopatra`).
 
 - **Source of truth:** MAME driver `src/mame/sega/naomi.cpp`. GD-ROM = `ROM_START` declares a `DISK_IMAGE`; else cartridge. Set type = `GAME()` parent field.
 - **Layout (now uniform):** GD-ROM = `<set>.zip` (Naomi BIOS + PIC) + `<set>/<disc>.chd`; cart = `<set>.zip`. Folders hold only disc images.
