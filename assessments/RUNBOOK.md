@@ -59,6 +59,12 @@ Spec: `docs/superpowers/specs/2026-08-02-portability-assessment-design.md`.
 Use TEMPLATE sections 1–3 only, plus a `## Gate` section: which gate, the evidence
 (log line / screenshot / source), and what would unblock the game.
 
+## Campaign checkpoint
+
+After ~30 assessed families: run the scoring-semantics checkpoint in
+`docs/kb/assessment-tooling.md` §6 (G3-ARAM threshold; streaming re-read penalty) and
+decide whether `score.py` needs revision before the queue burns further down.
+
 ## Re-assessment rule
 
 If instrumentation or `score.py` changes materially, bump `BATTERY_VERSION` in

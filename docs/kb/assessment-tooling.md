@@ -198,3 +198,28 @@ RUNBOOK execution:
    `assessments/TEMPLATE.md` → regenerate `RANKING.md`/patch `GAME_FORMATS.md` → flip the
    family's `QUEUE.md` status cell → commit (RUNBOOK's exact file list) → append any new
    >10-minute lesson to this doc's §4.
+
+## 6. Scoring-semantics checkpoint — run after ~30 assessed families
+
+Both calibration games exposed places where a scoring rule may be miscalibrated against
+porting reality. Neither was changed mid-campaign (comparability first); **after roughly 30
+families are assessed, review the measured distributions and decide**. Re-scoring is cheap:
+edit `score.py`, bump `BATTERY_VERSION`, re-run `score.py` + `gen_tables.py` over all
+sidecars — no re-capture needed (the re-assessment rule above applies).
+
+1. **G3-ARAM threshold (2× cap) may be too aggressive.** Ikaruga's Naomi image loads a full
+   8 MiB ARAM bank (4× DC's 2 MiB) at boot — yet its official 2002 DC port shipped inside
+   2 MiB: a real port achieved a 4× sound trim (downsampling/ADPCM), so "beyond plausible
+   trimming" does not hold for sound the way it holds for VRAM/main RAM. Check: how many
+   queue families park solely on ARAM? Candidate fix: ARAM-specific gate at a higher
+   multiple, or score heavy-ARAM overshoot low instead of parking.
+2. **Streaming re-read penalty may be pessimistic for small-working-set loops.** cleoftp
+   measured re-read ratio 0.77 (97.8 MiB streamed / 22.8 MiB unique over 600 s of attract
+   loops) → streaming axis 69 — yet the actual Cleopatra port streams fine from GD-ROM,
+   because re-reading a *small* working set is the cache-friendliest access pattern.
+   Check: is a high re-read ratio correlated with small unique working sets across the
+   campaign? Candidate fix: scale the re-read penalty by working-set size (cacheable →
+   forgiven), using the `unique_bytes` already in every sidecar.
+
+Rankings stay internally fair meanwhile — every game is measured by the same rules — but
+absolute scores near tier boundaries should be read with these two caveats in mind.
