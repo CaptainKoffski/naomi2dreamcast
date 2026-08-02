@@ -28,7 +28,7 @@ A family is in scope only if **no member is the same game officially released on
 4. **Controls research.** Input device class parsed from MAME `src/mame/sega/naomi.cpp` input ports (primary source), plus web research (manuals, cabinet photos, flyers) — every claim cited, primary sources outrank wikis.
 5. **Score & write-up.** All metrics land in `assessments/<set>.metrics.json`; `score.py` computes axes → final → tier; the assessing agent writes `assessments/<set>.md` from the template; `gen_tables.py` regenerates the summary tables.
 
-Battery parameters (recorded in every sidecar): capture 360 s · steady-state window starts at handoff + 120 s · screenshot interval 60 s · boot timeout 120 s. The steady-state window start is validated during calibration (GD-ROM DIMM boot loads can be long) and adjusted once, before any real assessment, if the control runs show boot streaming leaking into the window.
+Stages 1–2 run as a **single 360 s launch with a 120 s early-abort**: if no game handoff (first cart DMA) is seen by 120 s, the run is killed and classified per stage 1; otherwise it continues as stage 2. Battery parameters (recorded in every sidecar): capture 360 s · steady-state window starts at handoff + 120 s · screenshot interval 60 s · boot timeout 120 s. The cartlog carries no timestamps; the orchestrator samples the log's byte size every 10 s into a timeline file, and the parser maps log lines to time through it (±10 s, ample for MB/min rates). The steady-state window start is validated during calibration (GD-ROM DIMM boot loads can be long) and adjusted once, before any real assessment, if the control runs show boot streaming leaking into the window.
 
 ## 3. Gates
 
@@ -56,7 +56,7 @@ Per region, utilization `u = write-truth peak / DC capacity` (capacities: main 1
 | 1.25 – 2.00 | 40 → 10 | Heavy overshoot |
 | > 2.00 | — | Gate G3 |
 
-Axis = **min of the three region scores** — regions are not tradeable against each other. Main RAM uses the larger of DMA high-water and post-handoff watermark; VRAM/ARAM use write-truth peaks only (content scans are known to lie — Cleopatra kb `phase2-measurements.md`).
+Axis = **min of the three region scores** — regions are not tradeable against each other. Main RAM scores on the **DMA high-water** (write-truth via DMA: actual asset placement); the content-scan WATERMARK is recorded as informational only and flagged in Risks when it far exceeds the high-water — content scans cannot distinguish stale bytes from real use (Cleopatra's main scan read ~32 MB of residue vs the real 11.2 MB; scoring on it would have parked the proven-ideal candidate at gate G3). Known v1 limitation, stated in each doc's Risks: CPU-written data above the DMA'd assets (heaps, tables) is not captured for main RAM. VRAM/ARAM use post-handoff write-truth peaks only.
 
 ### 4.2 Cart streaming (weight .20)
 
@@ -154,7 +154,7 @@ Parked short-form: sections 1–3 + gate evidence + "what would unblock".
 
 ### 5.3 Summary tables
 
-`GAME_FORMATS.md`'s per-set table gains two generator-patched columns keyed on set name: **Score/Tier** and **Assessment** (link; clones point at the family doc). The sorted ranking lives in generated `assessments/RANKING.md`, linked from `GAME_FORMATS.md` — the hand-curated inventory never gets re-sorted or rewritten by script beyond those two columns.
+`GAME_FORMATS.md`'s per-set table already ends in an assessment-status column (currently `not assessed`); the generator patches **that one cell** keyed on set name — `**<score>** <tier> · [assessment](assessments/<set>.md)` for representatives, `see <family doc>` for clones, `parked <gate>` for gated games. The sorted ranking lives in generated `assessments/RANKING.md`, linked from `GAME_FORMATS.md` — the hand-curated inventory never gets re-sorted or rewritten by script beyond that column.
 
 ## 6. Tooling
 
@@ -163,7 +163,7 @@ New code in `tools/assess/`; Flycast changes in the `flycast4naomi2dreamcast` fo
 | Tool | Job |
 |---|---|
 | `run_battery` | Orchestrates one family end-to-end: boot check → timed capture → parsers → static scan → sidecar. Strictly serial; unique per-set log paths |
-| Flycast fork | (a) timed auto-exit for unattended runs; (b) **verify** write-truth VRAM/ARAM profiles are game-agnostic (they hook generic Naomi paths — verify, don't assume); (c) **verify GD-ROM/DIMM reads route through the logged DMA path** — 77/152 sets are GD-ROM; if they bypass `Naomi_DmaStart` the streaming axis is blind for half the library; (d) video-mode logging if absent |
+| Flycast fork | **No C++ change needed for v1**: timed exit = wrapper background-launch + kill (the proven `capture.sh` pattern, incl. the macOS persistence-dialog suppression); screenshots = existing `FLYCAST_SHOT` + `FLYCAST_SHOT_EVERY` + `SIGUSR1`; video-mode record = existing `VRAMREGS`. Binary = the already-built instrumented app at `../cleopatra/tools/flycast-src/build/Flycast.app` (fork commit recorded in every sidecar). Still to **verify in calibration**: (a) write-truth VRAM/ARAM profiles are game-agnostic (they hook generic Naomi paths — verify, don't assume); (b) GD-ROM/DIMM reads route through the logged `CARTDMA` path — 77/152 sets are GD-ROM; if they bypass it, add a cartlog call to `core/hw/naomi/gdcartridge.cpp` and rebuild (the one contingency that would touch C++) |
 | `parse_capture.py` | Capture log → metric fragments (peaks, rates, working set, histograms, noise exclusion) |
 | `ghidra_metrics` | Headless Ghidra import (SH4 loader config from the Cleopatra kb) + post-script exporting code size, MMIO xrefs, BIOS call sites, SDK strings |
 | `controls_extract.py` | Parse MAME `naomi.cpp` input ports per set → device-class JSON (MAME version pinned & recorded) |
