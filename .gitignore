@@ -15,3 +15,7 @@ tools/dat-extract/m4dec
 # junk
 .DS_Store
 .idea/
+
+# assessment battery scratch + raw evidence (regenerable; may embed dumped bytes)
+tools/assess/out/
+assessments/evidence/*/raw/
