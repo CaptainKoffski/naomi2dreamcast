@@ -231,14 +231,36 @@ never an option):
 3. fork binary + full battery env (`FLYCAST_CARTLOG`/`FLYCAST_SHOT*`), no signals → booted;
 4. exact `run_battery.capture()` replication (env + SIGUSR1 cadence + defaults writes) →
    booted, `aborted=None`.
-Conclusion: binary, instrumentation, env, and signal cadence were ALL innocent — the
-5 consecutive hangs were §4.a flake clustering. Also established while investigating:
+Conclusion: binary, instrumentation, env, and signal cadence were ALL innocent as causes
+of the boot failures. **Correction (§4.m):** the ladder's own "booted" verdicts used the
+EEPROM stdout marker, which does NOT imply the game renders — kurucham's zip legs were
+actually the game running headless (see §4.m), and only the chd legs were true §4.a
+flakes (DC BIOS menu face, dynarec-assert face). Also established while investigating:
 the fork base `f09d1f22e` was only 2 commits behind flyinghead/flycast master
 (`d4fc07741`, 2026-07-31), both non-emulation (NetBSD CI + libretro translations) — a
 rebase was a provable no-op and was deliberately skipped to keep every sidecar's
 `versions.flycast = 9e882cbd2` matching the actual binary. If a rebase ever happens for
 real emulation changes, rebuild immediately and re-run the `cleoftp` calibration anchor
 (§3) before trusting new sidecars.
+
+**m. `no-render-after-handoff` is a real G1 subclass: the game runs headless (kurucham,
+2026-08-03).** Final kurucham diagnosis after the full ladder: the game boots (BIOS
+handoff, `NAOMI GAME ID [KURU KURU CHAMELEON]`, EEPROM init), runs its main loop for the
+entire 600 s window (~110 `CLEO-SPG` FB flips/s ≈ 2/frame), **but never draws** — VRAM
+write-truth stays under 64 KiB, and screenshots with `-config
+config:rend.EmulateFramebuffer=yes` show a uniform grey framebuffer at t=75 s and t=135 s
+(scratchpad `expfb-shot-*.png`, 2026-08-03). Corroborated by MAME flagging the title
+imperfect-graphics. Rules derived:
+- **The EEPROM marker means "launched", never "renders".** Boot verdicts in manual tests
+  must check rendering (a screenshot, or `WATERMARK region=vram` growth), not just stdout.
+- **Normal SIGUSR1 screenshots are misleading for such titles** — they show the last
+  TA-rendered frame (the NAOMI GD-ROM splash), which masquerades as a boot hang. The
+  no-render class is invisible in shots; it lives in the vram write-truth numbers.
+- Battery FIX 4: when every candidate fails, the sidecar keeps the most informative leg —
+  a full-window no-render capture (real measurements) wins over a later 120 s flake leg;
+  its shots are preserved as `raw/best-*.png` copies and restored.
+- Diagnostic recipe for a suspected headless title: one manual run with
+  `rend.EmulateFramebuffer=yes` + `FLYCAST_SHOT` — grey frames = headless confirmed.
 
 ## 5. Campaign start checklist
 

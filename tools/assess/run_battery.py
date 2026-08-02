@@ -211,15 +211,26 @@ def main():
     fmt = "GD-ROM" if any(c.endswith(".chd") for c in rom_candidates(setname)) else "cart"
 
     log = timeline = shots = None
-    aborted, rom_used = "no-candidates", None
+    aborted, rom_used, best = "no-candidates", None, None
+    raw = os.path.join(ASSESS, "evidence", setname, "raw")
+    for stale in glob.glob(os.path.join(raw, "stdout-leg*.log")):
+        os.remove(stale)
+    leg = 0
     for cand in cands:
-        log, timeline, shots, aborted = capture(setname, cand, secs)
-        rom_used = cand
-        if aborted in ("no-handoff-120s", "no-eeprom-180s"):
-            # ponytail: launch flake — DC BIOS menu face (no handoff) or GD-splash face
-            # (handoff but no EEPROM init); one identical retry clears it — retry before
-            # falling through to the next file.
+        # launch flake faces retried once per candidate: DC BIOS menu (no handoff),
+        # GD splash (handoff but no EEPROM init), dynarec-init assert exit
+        # (vmem layout luck, driver.cpp:349)
+        for attempt in (1, 2):
+            leg += 1
             log, timeline, shots, aborted = capture(setname, cand, secs)
+            rom_used = cand
+            src = os.path.join(raw, "stdout.log")
+            if os.path.exists(src):
+                shutil.copyfile(src, os.path.join(raw, f"stdout-leg{leg}.log"))
+            print(f"leg {leg}: {os.path.basename(cand)} attempt {attempt} -> "
+                  f"{aborted or 'ran full window'}", flush=True)
+            if aborted not in ("no-handoff-120s", "no-eeprom-180s", "emulator-exited"):
+                break
         # FIX 1: guard against missing cartlog (game dies before first probe hit)
         try:
             with open(log) as fh:
@@ -228,14 +239,31 @@ def main():
             cap = parse_capture.parse("", timeline=timeline)
             if aborted is None:
                 aborted = "no-cartlog"
-        # FIX 3: a GD set's zip candidate can sit on the NAOMI GD-ROM splash for the whole
-        # window with a real ARAM handoff (kurucham, 2026-08-03) — "ran clean" isn't
-        # "booted". Only stop on a run that actually rendered; else label the failure and
-        # fall through to the next launch file (the chd).
+        # FIX 3: a full-window run whose game never renders (vram write-truth < 64 KiB)
+        # is not a boot — kurucham 2026-08-03 runs its whole loop headless (EEPROM init,
+        # per-frame FB flips, empty framebuffers; MAME flags it imperfect-gfx). Label it
+        # and fall through to the next launch file in case that one renders.
         if aborted is None and not cap["boot_ok"]:
             aborted = "no-render-after-handoff"
+        # FIX 4: keep the most informative failed leg for the sidecar — a full-window
+        # no-render capture (real measurements, real timeline) must not be overwritten
+        # by a later candidate's 120 s launch-flake leg.
+        if aborted == "no-render-after-handoff" and best is None:
+            for s in shots:      # later legs delete shot-*.png — keep copies in raw/
+                p = os.path.join(REPO, s)
+                if os.path.exists(p):
+                    shutil.copyfile(p, os.path.join(raw, "best-" + os.path.basename(p)))
+            best = (log, timeline, shots, aborted, rom_used, cap)
         if aborted is None:
             break
+    else:
+        if best is not None:
+            log, timeline, shots, aborted, rom_used, cap = best
+            for s in shots:
+                src = os.path.join(raw, "best-" + os.path.basename(s))
+                dst = os.path.join(REPO, s)
+                if os.path.exists(src) and not os.path.exists(dst):
+                    shutil.copyfile(src, dst)
 
     boot_ok = cap["boot_ok"] and aborted is None
     guts = {"dat_available": False, "error": "skipped (--skip-static or no boot)"}
