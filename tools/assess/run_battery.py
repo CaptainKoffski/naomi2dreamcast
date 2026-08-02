@@ -15,7 +15,7 @@ BIN = os.environ.get("FLYCAST_BIN", os.path.join(
     CLEO, "tools/flycast-src/build/Flycast.app/Contents/MacOS/Flycast"))
 ASSESS = os.path.join(REPO, "assessments")
 OUT = os.path.join(HERE, "out")
-BATTERY_VERSION = "1"
+BATTERY_VERSION = "2"
 HANDOFF_TAGS = (b"ARAMHANDOFF", b"CARTDMA")
 # Sets whose disc/feature set is network-bound (netpic/WCCF/satellite — GAME_FORMATS.md
 # Completeness section). Drives the guts 'network' penalty (spec §4.3).
@@ -173,7 +173,7 @@ def similarity(row, fmt, guts):
 def main():
     args = sys.argv[1:]
     setname = args[0]
-    secs = int(args[args.index("--secs") + 1]) if "--secs" in args else 360
+    secs = int(args[args.index("--secs") + 1]) if "--secs" in args else 600
     skip_static = "--skip-static" in args
     keep_dat = "--keep-dat" in args
     rom = args[args.index("--rom") + 1] if "--rom" in args else None
@@ -191,6 +191,10 @@ def main():
     for cand in cands:
         log, timeline, shots, aborted = capture(setname, cand, secs)
         rom_used = cand
+        if aborted == "no-handoff-120s":
+            # ponytail: ~1-in-4 launches flakes at the DC BIOS menu (calibration A finding);
+            # one identical retry clears it — retry before falling through to the next file.
+            log, timeline, shots, aborted = capture(setname, cand, secs)
         if aborted is None:                      # clean full run; else try the next launch file
             break                                # (zip may show BIOS-only for GD sets — chd next)
 

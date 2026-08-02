@@ -14,9 +14,16 @@ Spec: `docs/superpowers/specs/2026-08-02-portability-assessment-design.md`.
 ## Per family (representative set from QUEUE.md)
 
 1. **Battery:** `python3 tools/assess/run_battery.py <set>`
-   (~6 min unattended; writes `assessments/<set>.metrics.json` + evidence).
+   (~10 min unattended; writes `assessments/<set>.metrics.json` + evidence).
+   - **Representativeness check (mandatory):** open the run's screenshots. If the late shots
+     still show a static pre-game screen (brightness calibration, warning/disclaimer — e.g.
+     Ikaruga counts down ~300 s before the game even starts), attract was never reached and
+     the metrics are unrepresentative — re-run with `--secs 900` (or higher until attract
+     appears in the shots) and use that sidecar. Record capture length and the static-screen
+     duration in doc §3.
    - `PARKED G1 …` → verify it is the game, not tooling: check `assessments/evidence/<set>/raw/stdout.log`,
      the screenshots, and `boot.mame_not_working` in the sidecar. Write the short-form doc (§ Parked below).
+     Battery v2 retries the no-handoff flake once automatically; if it still parks after the auto-retry, then diagnose.
    - `UNSCORED (controls research required)` → continue; scoring happens in step 3.
 2. **Controls research:** determine the real cabinet controls. Sources in priority order:
    MAME `naomi.cpp` input ports (already cited in the sidecar) > game manual/flyer scans >
