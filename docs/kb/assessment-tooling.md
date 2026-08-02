@@ -185,6 +185,30 @@ drives `run_battery.py`'s `guts_flags()` (`code_bytes > 4 << 20` → `code_over_
 this repo characterized `code_bytes` as "informational for scoring" — that undersells it;
 treat it as scoring-affecting.
 
+**j. Subagent-driven campaign: the battery must run from the main session.** A background
+Bash task started *inside a subagent* is killed the moment that subagent ends its turn —
+observed 2026-08-03 on `kurucham`: the subagent launched `run_battery.py` in background,
+yielded to wait, and Flycast died mid-capture (stdout.log stops abruptly at a normal PVR
+frame-flip, no crash, no sidecar; 478 MB partial cartlog left in `raw/`). Main-session
+background tasks survive across turns (azumanga ran that way). Division of labor that works:
+the coordinator runs the battery in the main session and hands the subagent everything before
+(controls/ports research) and after (representativeness check, coverage, scoring, doc,
+tables, curation, commit). An interrupted run's `raw/` debris is harmless — the next battery
+run overwrites it.
+
+**k. New failure class `no-render-after-handoff`: GD splash-stuck zip candidate.**
+`kurucham`'s zip candidate sat on the NAOMI GD-ROM SYSTEM splash for the full 600 s with a
+*real* ARAM handoff (`ARAMHANDOFF zeroed size=800000`) and live framebuffer flips — so the
+candidate loop's old "aborted is None → break" accepted it and never fell through to the
+`.chd`, then sidecar writing crashed on `failure_class=None` (boot.ok False via the
+`vram nz_below_max >= 0x10000` render heuristic, but no abort class). Fixed 2026-08-03:
+the loop now parses each candidate's cartlog and only breaks when `cap["boot_ok"]` is
+true, labeling the stuck state `no-render-after-handoff` and trying the next launch file;
+`score.py`'s G1 branch tolerates a `None` failure_class (`or "no boot"`). No
+`BATTERY_VERSION` bump — the change only affects failure paths; every previously written
+sidecar came from a first-candidate real boot and is unaffected. Remedy when it recurs:
+`--rom naomi/<set>/<disc>.chd` skips the known-bad zip candidate (kb §4.a escalation).
+
 ## 5. Campaign start checklist
 
 The battery is calibrated (§3) and the queue is generated. From here the campaign is pure

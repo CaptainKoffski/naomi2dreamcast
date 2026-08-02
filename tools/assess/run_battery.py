@@ -202,17 +202,22 @@ def main():
             # ponytail: ~1-in-4 launches flakes at the DC BIOS menu (calibration A finding);
             # one identical retry clears it — retry before falling through to the next file.
             log, timeline, shots, aborted = capture(setname, cand, secs)
-        if aborted is None:                      # clean full run; else try the next launch file
-            break                                # (zip may show BIOS-only for GD sets — chd next)
-
-    # FIX 1: guard against missing cartlog (game dies before first probe hit)
-    try:
-        with open(log) as fh:
-            cap = parse_capture.parse(fh.read(), timeline=timeline)
-    except FileNotFoundError:
-        cap = parse_capture.parse("", timeline=timeline)
+        # FIX 1: guard against missing cartlog (game dies before first probe hit)
+        try:
+            with open(log) as fh:
+                cap = parse_capture.parse(fh.read(), timeline=timeline)
+        except FileNotFoundError:
+            cap = parse_capture.parse("", timeline=timeline)
+            if aborted is None:
+                aborted = "no-cartlog"
+        # FIX 3: a GD set's zip candidate can sit on the NAOMI GD-ROM splash for the whole
+        # window with a real ARAM handoff (kurucham, 2026-08-03) — "ran clean" isn't
+        # "booted". Only stop on a run that actually rendered; else label the failure and
+        # fall through to the next launch file (the chd).
+        if aborted is None and not cap["boot_ok"]:
+            aborted = "no-render-after-handoff"
         if aborted is None:
-            aborted = "no-cartlog"
+            break
 
     boot_ok = cap["boot_ok"] and aborted is None
     guts = {"dat_available": False, "error": "skipped (--skip-static or no boot)"}

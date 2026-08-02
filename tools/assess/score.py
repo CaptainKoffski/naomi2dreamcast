@@ -109,7 +109,7 @@ def score_sidecar(sc):
     sc["gate"] = None
     sc["scores"] = None
     if not sc["boot"]["ok"]:
-        sc["gate"] = "G1 broken: " + sc["boot"].get("failure_class", "no boot")
+        sc["gate"] = "G1 broken: " + (sc["boot"].get("failure_class") or "no boot")
         return sc
     mem, gated = memory_axis({"main": sc["memory"]["main"]["dma_high_water"],
                               "vram": sc["memory"]["vram"]["peak"],
