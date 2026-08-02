@@ -110,6 +110,14 @@ it exhausted both the `.zip` and `.chd` fallback candidates (each auto-retried) 
 parked; a fully manual re-run of the identical command then cleared it. Remedy: on a `PARKED
 G1`/`no-handoff-120s` result for a set with a prior clean sidecar, retry manually once more
 before treating it as a real failure or escalating to an explicit `--rom` override.
+**Second face on GD sets (kurucham, 2026-08-03):** the flake can also present as the NAOMI
+GD-ROM SYSTEM splash hanging for the entire window *with* a real ARAM handoff and live
+framebuffer flips — no DC BIOS menu, no `no-handoff-120s` abort, so it used to burn the
+full 600 s. Battery now aborts this face at `no-eeprom-180s` (upstream logs "Initializing
+Naomi EEPROM" seconds after any successful launch; its absence past 180 s is the flake)
+and auto-retries once, same as the menu face. **The flake clusters:** kurucham hit 5
+flaky legs across 3 consecutive battery invocations, then 4 consecutive manual/scripted
+launches all booted clean — do NOT read repeated flakes as determinism (see §4.l).
 
 **b. Static pre-game screens can eat most of the capture window.** Ikaruga counts down
 roughly 330 s of a brightness/contrast calibration screen (Naomi cabinet setup UI, standard,
@@ -208,6 +216,29 @@ true, labeling the stuck state `no-render-after-handoff` and trying the next lau
 `BATTERY_VERSION` bump — the change only affects failure paths; every previously written
 sidecar came from a first-candidate real boot and is unaffected. Remedy when it recurs:
 `--rom naomi/<set>/<disc>.chd` skips the known-bad zip candidate (kb §4.a escalation).
+**Correction (same day, §4.l):** kurucham's zip-leg hang turned out to be the §4.a launch
+flake (GD face), not deterministic — an exact `capture()` replication later booted the
+same zip cleanly. The `no-render-after-handoff` loop fix above stays as a backstop, but
+the primary defense is now the `no-eeprom-180s` early abort + retry.
+
+**l. Control-test ladder for "game X hangs under the battery" (kurucham, 2026-08-03).**
+Before believing a park, walk the cheapest-experiment ladder; each step is ~5 min and
+log-evidence based (grep launch stdout for upstream's `Initializing Naomi EEPROM` — the
+marker every successful boot logs within seconds on our build; macOS screenshots are
+never an option):
+1. stock release Flycast 2.6 (`/Applications/Flycast.app`), plain launch → booted kurucham;
+2. instrumented fork binary, plain launch (no env) → booted (~15 s);
+3. fork binary + full battery env (`FLYCAST_CARTLOG`/`FLYCAST_SHOT*`), no signals → booted;
+4. exact `run_battery.capture()` replication (env + SIGUSR1 cadence + defaults writes) →
+   booted, `aborted=None`.
+Conclusion: binary, instrumentation, env, and signal cadence were ALL innocent — the
+5 consecutive hangs were §4.a flake clustering. Also established while investigating:
+the fork base `f09d1f22e` was only 2 commits behind flyinghead/flycast master
+(`d4fc07741`, 2026-07-31), both non-emulation (NetBSD CI + libretro translations) — a
+rebase was a provable no-op and was deliberately skipped to keep every sidecar's
+`versions.flycast = 9e882cbd2` matching the actual binary. If a rebase ever happens for
+real emulation changes, rebuild immediately and re-run the `cleoftp` calibration anchor
+(§3) before trusting new sidecars.
 
 ## 5. Campaign start checklist
 

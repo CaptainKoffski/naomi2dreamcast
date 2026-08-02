@@ -53,6 +53,16 @@ def handoff_seen(logpath):
         return False
 
 
+def eeprom_seen(stdout_path):
+    # upstream naomi_flashrom.cpp logs this for every booting game, seconds after
+    # launch on this build — its absence past 180 s is the launch flake (kb §4.a/l)
+    try:
+        with open(stdout_path, "rb") as fh:
+            return b"Initializing Naomi EEPROM" in fh.read()
+    except OSError:
+        return False
+
+
 def capture(setname, rom, secs):
     ev = os.path.join(ASSESS, "evidence", setname)
     raw = os.path.join(ev, "raw")
@@ -71,7 +81,8 @@ def capture(setname, rom, secs):
         subprocess.run(["defaults", "write", "com.flyinghead.Flycast", k, "-bool", v],
                        check=False, capture_output=True)
     env = dict(os.environ, FLYCAST_CARTLOG=log, FLYCAST_SHOT=shot, FLYCAST_SHOT_EVERY="300")
-    with open(os.path.join(raw, "stdout.log"), "wb") as so:
+    so_path = os.path.join(raw, "stdout.log")
+    with open(so_path, "wb") as so:
         # vsync off so the emu thread doesn't deadlock unfocused (capture.sh finding)
         p = subprocess.Popen([BIN, "-config", "config:rend.vsync=no", rom],
                              env=env, stdout=so, stderr=subprocess.STDOUT)
@@ -95,6 +106,12 @@ def capture(setname, rom, secs):
             break
         if t >= 120 and not handoff_seen(log):
             aborted = "no-handoff-120s"          # spec §2 early abort
+            break
+        # Launch flake, GD face (kurucham 2026-08-03): BIOS zeroes ARAM (handoff seen)
+        # but the game hangs on the GD-ROM splash and never initializes its EEPROM —
+        # without this check the flake burns the whole capture window.
+        if t >= 180 and not eeprom_seen(so_path):
+            aborted = "no-eeprom-180s"
             break
         if t >= secs:
             break
@@ -198,9 +215,10 @@ def main():
     for cand in cands:
         log, timeline, shots, aborted = capture(setname, cand, secs)
         rom_used = cand
-        if aborted == "no-handoff-120s":
-            # ponytail: ~1-in-4 launches flakes at the DC BIOS menu (calibration A finding);
-            # one identical retry clears it — retry before falling through to the next file.
+        if aborted in ("no-handoff-120s", "no-eeprom-180s"):
+            # ponytail: launch flake — DC BIOS menu face (no handoff) or GD-splash face
+            # (handoff but no EEPROM init); one identical retry clears it — retry before
+            # falling through to the next file.
             log, timeline, shots, aborted = capture(setname, cand, secs)
         # FIX 1: guard against missing cartlog (game dies before first probe hit)
         try:
