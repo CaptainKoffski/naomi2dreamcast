@@ -1,0 +1,244 @@
+#!/usr/bin/env python3
+"""One-family assessment battery (spec §2). SERIAL ONLY — never run two at once.
+Usage: run_battery.py <set> [--secs 360] [--skip-static] [--keep-dat] [--rom PATH]
+Env overrides: FLYCAST_BIN, NAOMI_DIR, MAME_NAOMI."""
+import glob, json, os, shutil, signal, subprocess, sys, time
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.normpath(os.path.join(HERE, "..", ".."))
+sys.path.insert(0, HERE)
+import carve_boot, parse_capture, score  # noqa: E402
+
+NAOMI = os.environ.get("NAOMI_DIR", os.path.join(REPO, "naomi"))
+CLEO = os.path.normpath(os.path.join(REPO, "..", "cleopatra"))
+BIN = os.environ.get("FLYCAST_BIN", os.path.join(
+    CLEO, "tools/flycast-src/build/Flycast.app/Contents/MacOS/Flycast"))
+ASSESS = os.path.join(REPO, "assessments")
+OUT = os.path.join(HERE, "out")
+BATTERY_VERSION = "1"
+HANDOFF_TAGS = (b"ARAMHANDOFF", b"CARTDMA")
+# Sets whose disc/feature set is network-bound (netpic/WCCF/satellite — GAME_FORMATS.md
+# Completeness section). Drives the guts 'network' penalty (spec §4.3).
+NETWORK_SETS = {"wccf116", "wccf1dup", "wccf212e", "wccf234j", "wccf310j", "wccf322e",
+                "wccf341j", "wccf331e", "wccf331j", "dragntr", "dragntra", "dragntr2",
+                "dragntr3", "quizqgd"}
+
+
+def rom_candidates(setname):
+    cands = []
+    z = os.path.join(NAOMI, setname + ".zip")
+    if os.path.isfile(z):
+        cands.append(z)
+    cands += sorted(glob.glob(os.path.join(NAOMI, setname, "*.chd")))
+    return cands
+
+
+def flycast_commit():
+    try:
+        return subprocess.run(["git", "-C", os.path.join(CLEO, "tools/flycast-src"),
+                               "rev-parse", "--short", "HEAD"],
+                              capture_output=True, text=True).stdout.strip()
+    except OSError:
+        return "unknown"
+
+
+def handoff_seen(logpath):
+    try:
+        with open(logpath, "rb") as fh:
+            data = fh.read()
+        return any(t in data for t in HANDOFF_TAGS)
+    except OSError:
+        return False
+
+
+def capture(setname, rom, secs):
+    ev = os.path.join(ASSESS, "evidence", setname)
+    raw = os.path.join(ev, "raw")
+    os.makedirs(raw, exist_ok=True)
+    log = os.path.join(raw, "cartlog.txt")
+    shot = os.path.join(raw, "shot.png")
+    for p in (log, shot):
+        if os.path.exists(p):
+            os.remove(p)
+    # macOS: suppress the "reopen windows?" modal that blocks boot after a killed run
+    # (root-caused in ../cleopatra/scripts/capture.sh)
+    for k, v in (("ApplePersistenceIgnoreState", "YES"), ("NSQuitAlwaysKeepsWindows", "false")):
+        subprocess.run(["defaults", "write", "com.flyinghead.Flycast", k, "-bool", v],
+                       check=False, capture_output=True)
+    env = dict(os.environ, FLYCAST_CARTLOG=log, FLYCAST_SHOT=shot, FLYCAST_SHOT_EVERY="300")
+    with open(os.path.join(raw, "stdout.log"), "wb") as so:
+        # vsync off so the emu thread doesn't deadlock unfocused (capture.sh finding)
+        p = subprocess.Popen([BIN, "-config", "config:rend.vsync=no", rom],
+                             env=env, stdout=so, stderr=subprocess.STDOUT)
+    t0 = time.time()
+    timeline, next_shot, shots, aborted = [], 60, [], None
+    while True:
+        time.sleep(10)
+        t = round(time.time() - t0, 1)
+        size = os.path.getsize(log) if os.path.exists(log) else 0
+        timeline.append([t, size])
+        if t >= next_shot and p.poll() is None:
+            os.kill(p.pid, signal.SIGUSR1)
+            time.sleep(1)                       # copy-then-open: fwrite isn't atomic
+            if os.path.exists(shot):
+                dst = os.path.join(ev, f"shot-{int(t):03d}s.png")
+                shutil.copyfile(shot, dst)
+                shots.append(os.path.relpath(dst, REPO))
+            next_shot += 60
+        if p.poll() is not None:
+            aborted = "emulator-exited"
+            break
+        if t >= 120 and not handoff_seen(log):
+            aborted = "no-handoff-120s"          # spec §2 early abort
+            break
+        if t >= secs:
+            break
+    if p.poll() is None:
+        p.terminate()
+        try:
+            p.wait(5)
+        except subprocess.TimeoutExpired:
+            p.kill()
+    with open(os.path.join(raw, "timeline.json"), "w") as fh:
+        json.dump(timeline, fh)
+    return log, timeline, shots, aborted
+
+
+def static_scan(setname, keep_dat):
+    de = os.path.join(REPO, "tools", "dat-extract")
+    is_gd = bool(glob.glob(os.path.join(NAOMI, setname, "*.chd")) or
+                 glob.glob(os.path.join(NAOMI, "*", setname + "*.chd")))
+    cmd = ["./chd2dat.sh", setname] if is_gd else ["python3", "cart2dat.py", setname]
+    r = subprocess.run(cmd, cwd=de, capture_output=True, text=True)
+    dat = os.path.join(de, "out", setname + ".dat")
+    if r.returncode != 0 or not os.path.isfile(dat):
+        return {"dat_available": False, "error": (r.stdout + r.stderr)[-500:]}
+    try:
+        stem = os.path.join(OUT, setname)
+        os.makedirs(OUT, exist_ok=True)
+        with open(dat, "rb") as fh:
+            blob, meta = carve_boot.carve(fh.read())
+        with open(stem + ".boot.bin", "wb") as fh:
+            fh.write(blob)
+        guts_json = stem + ".guts.json"
+        g = subprocess.run(["sh", os.path.join(HERE, "ghidra", "run_guts.sh"),
+                            stem + ".boot.bin", meta["base"], guts_json],
+                           capture_output=True, text=True)
+        if g.returncode != 0 or not os.path.isfile(guts_json):
+            return {"dat_available": False, "error": "ghidra: " + (g.stdout + g.stderr)[-500:]}
+        with open(guts_json) as fh:
+            guts = json.load(fh)
+        guts["dat_available"] = True
+        guts["carve_meta"] = meta
+        return guts
+    finally:
+        if not keep_dat:
+            for p in (dat, os.path.join(OUT, setname + ".boot.bin")):
+                if os.path.exists(p):
+                    os.remove(p)                 # SSD hygiene + never keep decrypted dumps
+
+
+def guts_flags(setname, guts, serial_pokes):
+    flags = ["eeprom_bios"]                      # every Naomi game reads settings via BIOS
+    if serial_pokes > 0 or guts.get("mmio_refs", {}).get("scif", 0) > 0:
+        flags.append("serial")
+    if guts.get("mmio_refs", {}).get("rtc", 0) > 0:
+        flags.append("rtc")
+    if setname in NETWORK_SETS:
+        flags.append("network")
+    if guts.get("code_bytes", 0) > 4 << 20:
+        flags.append("code_over_4mb")
+    extra = max(0, sum(1 for v in guts.get("bios_refs", {}).values() if v) - 2)
+    return flags, extra
+
+
+def similarity(row, fmt, guts):
+    ref_path = os.path.join(ASSESS, "reference", "similarity-reference.json")
+    if not os.path.isfile(ref_path):
+        return {"developer_match": False, "sdk_overlap": "none", "cart_loader_match": False,
+                "note": "no reference yet (pre-calibration)"}
+    with open(ref_path) as fh:
+        ref = json.load(fh)
+    ours = set(guts.get("sdk_strings", []))
+    theirs = set(ref["sdk_strings"])
+    overlap = "full" if theirs and theirs <= ours else ("partial" if ours & theirs else "none")
+    return {"developer_match": row["maker"] in ref["makers"],
+            "sdk_overlap": overlap,
+            "cart_loader_match": fmt == ref["format"] and guts.get("dat_available", False)}
+
+
+def main():
+    args = sys.argv[1:]
+    setname = args[0]
+    secs = int(args[args.index("--secs") + 1]) if "--secs" in args else 360
+    skip_static = "--skip-static" in args
+    keep_dat = "--keep-dat" in args
+    rom = args[args.index("--rom") + 1] if "--rom" in args else None
+
+    with open(os.path.join(OUT, "controls.json")) as fh:
+        controls = json.load(fh)
+    row = controls[setname]
+    cands = [rom] if rom else rom_candidates(setname)
+    if not cands:
+        sys.exit(f"no rom for {setname} under {NAOMI}")
+    fmt = "GD-ROM" if any(c.endswith(".chd") for c in rom_candidates(setname)) else "cart"
+
+    log = timeline = shots = None
+    aborted, rom_used = "no-candidates", None
+    for cand in cands:
+        log, timeline, shots, aborted = capture(setname, cand, secs)
+        rom_used = cand
+        if aborted is None:                      # clean full run; else try the next launch file
+            break                                # (zip may show BIOS-only for GD sets — chd next)
+
+    with open(log) as fh:
+        cap = parse_capture.parse(fh.read(), timeline=timeline)
+
+    boot_ok = cap["boot_ok"] and aborted is None
+    guts = {"dat_available": False, "error": "skipped (--skip-static or no boot)"}
+    if boot_ok and not skip_static:
+        guts = static_scan(setname, keep_dat)
+    flags, extra = guts_flags(setname, guts, cap["serial_pokes"])
+
+    sc = {
+        "set": setname, "title": row["title"], "maker": row["maker"], "year": row["year"],
+        "format": fmt, "assessed": time.strftime("%Y-%m-%d"),
+        "versions": {"flycast": flycast_commit(), "battery": BATTERY_VERSION,
+                     "ghidra": "12.1.2_PUBLIC", "mame_src": "59e7c0b"},
+        "params": {"capture_s": secs, "steady_after_s": 120, "shot_interval_s": 60,
+                   "boot_timeout_s": 120, "rom_used": os.path.relpath(rom_used, REPO)},
+        "boot": {"ok": boot_ok,
+                 "failure_class": aborted if not boot_ok else None,
+                 "mame_not_working": row["not_working"]},
+        "capture": {"handoff": cap["handoff"], "screenshots": shots,
+                    "watermarks_info": {r: cap[r]["watermark_max"] for r in ("main", "vram", "aram")}},
+        "memory": {"main": {"dma_high_water": cap["main"]["dma_high_water"]},
+                   "vram": {"peak": cap["vram"]["peak"], "nz_above_cap": cap["vram"]["nz_above_cap"],
+                            "regs_last": cap["vram"]["regs_last"]},
+                   "aram": {"peak": cap["aram"]["peak"], "nz_above_cap": cap["aram"]["nz_above_cap"]}},
+        "streaming": dict(cap["streaming"]),
+        "guts": {**{k: v for k, v in guts.items() if k != "sdk_strings"},
+                 "flags": flags, "extra_bios_classes": extra,
+                 "sdk_strings": guts.get("sdk_strings", [])},
+        "serial_pokes": cap["serial_pokes"],
+        "controls": {"device_class": row["device_class_hint"], "input_ports": row["input_ports"],
+                     "sources": [f"MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS "
+                                 f"'{row['input_ports']}'"]},
+        "similarity": similarity(row, fmt, guts),
+    }
+    if sc["controls"]["device_class"] == "review":
+        sc["gate"] = None
+        sc["scores"] = None
+        verdict = "UNSCORED (controls research required — set device_class, rerun score.py)"
+    else:
+        score.score_sidecar(sc)
+        verdict = (f"PARKED {sc['gate']}" if sc["gate"]
+                   else f"{sc['scores']['final']} {sc['scores']['tier']}")
+    path = os.path.join(ASSESS, setname + ".metrics.json")
+    with open(path, "w") as fh:
+        json.dump(sc, fh, indent=2)
+    print(f"{setname}: {verdict}  -> {os.path.relpath(path, REPO)}")
+
+
+if __name__ == "__main__":
+    main()
