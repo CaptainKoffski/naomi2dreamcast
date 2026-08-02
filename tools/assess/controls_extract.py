@@ -31,6 +31,33 @@ DEVICE_HINTS = {
     "naomi_kb": "dc_peripheral",  # IPT_KEYBOARD ports -- DC keyboard peripheral exists
 }
 
+# Set-name overrides applied AFTER the input_ports lookup above. These are cabinets
+# that share input_ports="naomi" (an ordinary joystick+buttons panel) with genuine
+# stick games, but are actually card/medal/hopper hardware the shared port name hides:
+#   - World Club Champion Football (WCCF): trading-card scanner is the core mechanic
+#     (team lineup is built from scanned cards each match) -- Hitmaker/Sega satellite terminal.
+#   - Club Kart Prize: redemption cabinet, ticket/prize dispenser.
+#   - Shootout Pool Prize / The Medal: redemption cabinet; "shootplm" machine config is
+#     literally "naomim1_hop" (SEGA837_14438 hopper board), confirming physical hopper.
+#   - SWP Hopper Board ("hopper"): a standalone diagnostic ROM for the hopper board itself.
+# Deliberately "review", not "card_reader" -- a title-text heuristic must not auto-gate a
+# game; the researching agent confirms the real hardware and sets the final class.
+# ("shootopl" = plain "Shootout Pool", no Prize/Medal in title, is NOT in this list --
+# it's the ordinary non-redemption release.)
+HINT_OVERRIDES = {
+    # World Club Champion Football (12 sets, all input_ports="naomi")
+    "wccf116": "review", "wccf1dup": "review", "wccf212e": "review",
+    "wccf2chk": "review", "wccf234j": "review", "wccf310j": "review",
+    "wccf331e": "review", "wccf322e": "review", "wccf331j": "review",
+    "wccf341j": "review", "wccf400j": "review", "wccf420e": "review",
+    # Club Kart Prize (3 sets)
+    "clubkprz": "review", "clubkpzb": "review", "clubkpzbp": "review",
+    # Shootout Pool Prize / The Medal (3 sets)
+    "shootpl": "review", "shootplm": "review", "shootplmp": "review",
+    # SWP Hopper Board diagnostic (1 set)
+    "hopper": "review",
+}
+
 
 def default_mame_path():
     here = os.path.dirname(os.path.abspath(__file__))
@@ -58,7 +85,8 @@ def extract(text):
             "maker": maker,
             "title": title,
             "not_working": "MACHINE_NOT_WORKING" in flags,
-            "device_class_hint": DEVICE_HINTS.get(inp, "review"),
+            "device_class_hint": HINT_OVERRIDES.get(
+                setname, DEVICE_HINTS.get(inp, "review")),
         }
     return rows
 

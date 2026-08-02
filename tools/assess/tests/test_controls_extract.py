@@ -16,6 +16,10 @@ def test_real_file():
     assert rows["cvs2mf"]["parent"] == "cvs2"       # clone linkage
     assert len(rows) >= 140                          # the Naomi library
     assert all("device_class_hint" in r for r in rows.values())
+    # card/medal/hopper cabinets sharing input_ports="naomi" must not inherit "stick"
+    assert rows["wccf116"]["device_class_hint"] == "review"     # WCCF trading-card scanner
+    assert rows["cleoftp"]["device_class_hint"] != "review"     # plain sets unaffected
+    assert rows["ikaruga"]["device_class_hint"] != "review"
 
 if __name__ == "__main__":
     test_real_file(); print("test_real_file OK"); print("ALL OK")
