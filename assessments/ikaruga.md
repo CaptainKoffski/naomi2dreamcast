@@ -22,7 +22,7 @@
 | Set / family | `ikaruga` (covers: no clones — `parent: null` in controls.json) |
 | Maker / year | Treasure, 2001 |
 | Genre / format | Shmup, GD-ROM |
-| Official DC port | Yes (2002, Japan-only, published by ESP) — `GAME_FORMATS.md:55` |
+| Official DC port | Yes (2002) — `GAME_FORMATS.md:55`; released exclusively in Japan, 2002-09-05, publisher Entertainment Software Publishing — en.wikipedia.org/wiki/Ikaruga (accessed 2026-08-02) |
 | Community ports | None found for this exact Naomi GD-ROM set. |
 | Representative choice | Not a representative pick — this is the GD-ROM calibration control: the second half of the pair (with `cleoftp`, a cart-format known-good) that establishes the battery reads GD/DIMM streaming correctly before it is trusted on any GD-ROM set in the queue. |
 
@@ -31,14 +31,14 @@
 Boots: yes · handoff at 30.0 s · run 600 s · rom: `naomi/ikaruga.zip`
 Attract/demo reached: **no**. Three-state capture, both timed from handoff (t=30.0 s):
 - **Calibration screen** (画面の明度調整 / brightness-contrast adjustment, cabinet setup UI) from handoff to t≈330 s. Countdown observed at 270 (t=60s) and 24 (t=306s) — an exact 1-count/sec decrement, hitting 0 (auto-start) at t=330 s.
-- **Title screen** (斑鳩 IKARUGA, © TREASURE 2001, "PRESS START BUTTON", FREE PLAY) from t≈330 s to the end of the 600 s capture. The only change across this entire span is the "PRESS START BUTTON" line blinking on/off (2 distinct frame hashes, `shot-368s.png` vs `shot-606s.png`) — no attract/demo gameplay loop ever starts, consistent with the cabinet being set to FREE PLAY.
-- No demo/attract state exists in this capture at any length tried (360 s and 600 s both stop at "title, blinking").
+- **Title screen** (斑鳩 IKARUGA, © TREASURE 2001, "PRESS START BUTTON", FREE PLAY) from t≈330 s to the end of the 600 s capture. Across the 5 post-title frames in the full 10-shot capture (368s-606s), only the "PRESS START BUTTON" line blinks on/off (2 alternating frame hashes; full hash breakdown in `task-10-report.md`) — no attract/demo gameplay loop ever starts, consistent with the cabinet being set to FREE PLAY. The two frames kept as evidence here, `shot-368s.png` and `shot-606s.png`, are themselves **byte-identical** (same md5 / git blob) despite being 238 s apart — the screen was pixel-for-pixel unchanged for that entire span, the strongest single proof available that no attract content ever plays.
+- No demo/attract state exists in this capture at any length tried (360 s and 600 s both stop at the same static title screen).
 
 Screenshots:
 - `assessments/evidence/ikaruga/shot-060s.png` — calibration screen, countdown 270
 - `assessments/evidence/ikaruga/shot-306s.png` — calibration screen, countdown 24 (last frame before auto-start)
 - `assessments/evidence/ikaruga/shot-368s.png` — title screen, "PRESS START BUTTON" visible
-- `assessments/evidence/ikaruga/shot-606s.png` — title screen, end of 600 s capture, "PRESS START BUTTON" blinked off — proves the extra 240 s bought by the v2 default (600 s vs. v1's 360 s) added only idle title time, not new game state.
+- `assessments/evidence/ikaruga/shot-606s.png` — title screen, end of 600 s capture — **byte-identical to `shot-368s.png`** (same md5, 238 s earlier): proves the extra 240 s bought by the v2 default (600 s vs. v1's 360 s) added only idle title time, not new game state.
 
 Anomalies: none relative to expected Naomi boot behavior (the brightness-calibration screen is standard Naomi cabinet setup, not a fault). Two full battery runs (360 s v1, 600 s v2) both booted cleanly on the first attempt — no `no-handoff-120s` flake this session.
 
