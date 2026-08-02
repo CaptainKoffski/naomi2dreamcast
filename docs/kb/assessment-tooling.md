@@ -213,6 +213,9 @@ sidecars — no re-capture needed (the re-assessment rule above applies).
    trimming" does not hold for sound the way it holds for VRAM/main RAM. Check: how many
    queue families park solely on ARAM? Candidate fix: ARAM-specific gate at a higher
    multiple, or score heavy-ARAM overshoot low instead of parking.
+   Tally of G3-aram boot-time full-bank loads: `ikaruga` (calibration), `azumanga`
+   (2026-08-02, first queue family — 8 MiB voice/BGM bank; but note its main 1.29× and
+   VRAM 1.84× would keep it low-tier even with a softer ARAM rule).
 2. **Streaming re-read penalty may be pessimistic for small-working-set loops.** cleoftp
    measured re-read ratio 0.77 (97.8 MiB streamed / 22.8 MiB unique over 600 s of attract
    loops) → streaming axis 69 — yet the actual Cleopatra port streams fine from GD-ROM,
