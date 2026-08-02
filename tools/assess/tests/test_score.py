@@ -76,6 +76,27 @@ def test_score_sidecar_gates():
     b3["controls"] = {"device_class": "card_reader"}
     assert score.score_sidecar(b3)["gate"].startswith("G2")
 
+def test_score_sidecar_none_streaming():
+    # FIX 2: short run with no post-handoff streaming data (steady_mb_per_min=None)
+    # Should not raise; drops streaming axis, renormalizes weights
+    import math
+    sc = {
+        "set": "shortrun",
+        "boot": {"ok": True},
+        "memory": {"main": {"dma_high_water": 11761888}, "vram": {"peak": 8181717, "nz_above_cap": 0},
+                   "aram": {"peak": 2097152, "nz_above_cap": 0}},
+        "streaming": {"steady_mb_per_min": None, "reread_ratio": 0},
+        "guts": {"dat_available": True, "flags": ["serial", "eeprom_bios"], "extra_bios_classes": 0},
+        "controls": {"device_class": "stick"},
+        "similarity": {"developer_match": True, "sdk_overlap": "full", "cart_loader_match": True},
+    }
+    out = score.score_sidecar(sc)
+    assert out["gate"] is None
+    assert out["scores"]["streaming"] is None
+    # Final = geom mean of memory(85), guts(90), controls(100), similarity(100) with renormalized weights
+    exp = math.exp(0.5 * math.log(85) + 0.25 * math.log(90) + 0.125 * math.log(100) + 0.125 * math.log(100))
+    assert out["scores"]["final"] == round(exp, 1)
+
 if __name__ == "__main__":
     for n, f in sorted(globals().items()):
         if n.startswith("test_") and callable(f):

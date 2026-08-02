@@ -60,6 +60,9 @@ def capture(setname, rom, secs):
     for p in (log, shot):
         if os.path.exists(p):
             os.remove(p)
+    # FIX 3: clean up stale shot-*.png from previous candidate runs
+    for stale in glob.glob(os.path.join(ev, "shot-*.png")):
+        os.remove(stale)
     # macOS: suppress the "reopen windows?" modal that blocks boot after a killed run
     # (root-caused in ../cleopatra/scripts/capture.sh)
     for k, v in (("ApplePersistenceIgnoreState", "YES"), ("NSQuitAlwaysKeepsWindows", "false")):
@@ -191,8 +194,14 @@ def main():
         if aborted is None:                      # clean full run; else try the next launch file
             break                                # (zip may show BIOS-only for GD sets — chd next)
 
-    with open(log) as fh:
-        cap = parse_capture.parse(fh.read(), timeline=timeline)
+    # FIX 1: guard against missing cartlog (game dies before first probe hit)
+    try:
+        with open(log) as fh:
+            cap = parse_capture.parse(fh.read(), timeline=timeline)
+    except FileNotFoundError:
+        cap = parse_capture.parse("", timeline=timeline)
+        if aborted is None:
+            aborted = "no-cartlog"
 
     boot_ok = cap["boot_ok"] and aborted is None
     guts = {"dat_available": False, "error": "skipped (--skip-static or no boot)"}

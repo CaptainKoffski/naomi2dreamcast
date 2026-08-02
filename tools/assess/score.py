@@ -124,9 +124,12 @@ def score_sidecar(sc):
     guts = None
     if sc["guts"]["dat_available"]:
         guts = guts_axis(set(sc["guts"]["flags"]), sc["guts"]["extra_bios_classes"])
+    # FIX 2: no post-handoff streaming data (short run) — drop axis, renormalize; short_window flag in sidecar records why
+    stream = None if sc["streaming"]["steady_mb_per_min"] is None else \
+             streaming_axis(sc["streaming"]["steady_mb_per_min"],
+                            sc["streaming"]["reread_ratio"])
     axes = {"memory": mem,
-            "streaming": streaming_axis(sc["streaming"]["steady_mb_per_min"],
-                                        sc["streaming"]["reread_ratio"]),
+            "streaming": stream,
             "guts": guts,
             "controls": ctrl,
             "similarity": similarity_axis(sc["similarity"]["developer_match"],
