@@ -12,9 +12,9 @@
 
 | | |
 |---|---|
-| **Final score** | **84.7** (S) |
-| Bottom line | The battery reproduces `../cleopatra`'s phase2/phase5 known-good RAM figures byte-for-byte across two independent clean runs, and — once the similarity reference is baked from this run's own static-scan output (self-match by construction) — lands S-tier. The 84.7 vs. a naively-expected ~92 is explained entirely by real static-scan penalties (`serial`, `rtc`, `eeprom_bios` flags on the actual cart code), not battery error. |
-| Assessed | 2026-08-02 · battery v1 · flycast `9e882cbd2` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final score** | **84.2** (S) |
+| Bottom line | Re-run under battery v2 (600 s capture, was 360 s under v1) for uniformity with Calibration B (`ikaruga`). All memory/handoff/guts invariants reproduce **bit-identically** to the v1 calibration; only the streaming axis moved (70.8 → 69.0, pure dilution from the longer steady-state window — expected, not an error), taking the final score from 84.7 → 84.2. Tier stays **S**. The battery remains trustworthy. |
+| Assessed | 2026-08-02 · battery v2 (600 s capture) · flycast `9e882cbd2` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -29,32 +29,50 @@
 
 ## 3. Boot & run evidence
 
-Boots: yes · handoff at 30.0 s · run 360 s · rom: `naomi/cleoftp.zip`
+Boots: yes · handoff at 30.0 s · run 600 s (battery v2 default, was 360 s under v1) · rom: `naomi/cleoftp.zip`
+Attract/demo reached: **yes** — this title genuinely reaches and sustains its attract/demo loop for the full 600 s capture (contrast with `ikaruga`'s free-play title-idle lower bound). Evidence across the curated shots below: title (60 s) → attract how-to-play with an early board state (121 s) → a transitional black frame (183 s — a screen-wipe between attract segments, not a fault; the same run also hit a black frame at 370 s and a mid-wipe checkerboard frame at 485 s, both flanked by valid attract content before/after, confirming this title's attract sequence fades between segments) → attract demo with a visibly progressed board (422 s) → attract demo still actively playing, score 4000 on-screen, board mostly cleared (600 s, the very last frame of the capture). The board state visibly changes across 121 s → 422 s → 600 s (not a static loop), and the title screen recurs mid-capture (seen at 547 s, not kept) — a real, evolving attract cycle sustained end-to-end.
 Screenshots:
 - `assessments/evidence/cleoftp/shot-060s.png` — title screen ("Cleopatra Fortune+", PRESS START BUTTON)
-- `assessments/evidence/cleoftp/shot-121s.png` — attract "how to play" demo (tile-clearing rules)
-- `assessments/evidence/cleoftp/shot-183s.png` — attract RANKING TOP10 screen
+- `assessments/evidence/cleoftp/shot-121s.png` — attract "how to play" demo, early board state
+- `assessments/evidence/cleoftp/shot-183s.png` — transitional black frame (attract-segment screen wipe)
+- `assessments/evidence/cleoftp/shot-422s.png` — attract demo, board progressed further (mid-capture)
+- `assessments/evidence/cleoftp/shot-600s.png` — attract demo still active at the end of the 600 s capture (score 4000)
 
-Anomalies: Of the 4 launches run this session (run 1 "keep-dat", run 2 determinism re-run, run 3 similarity-bake, and a retry of run 3), **run 3 parked `G1 broken: no-handoff-120s`**: Flycast booted to the stock Dreamcast BIOS home menu (swirl logo, Play/File/Music/Settings) instead of loading the cart at all, and the automatic rom-candidate fallback (`.zip` → `naomi/cleoftp/gdl-0012.chd`) landed on the same failure within that run (`rom_used: naomi/cleoftp/gdl-0012.chd`, still no handoff). An immediate retry of the identical command (`python3 tools/assess/run_battery.py cleoftp`, no flags) succeeded cleanly via the default `.zip` path (`rom_used: naomi/cleoftp.zip`, handoff at 30.0 s) with every memory/guts number matching runs 1 and 2 exactly. Runs 1, 2, and the retry (3 of 4 launches) are byte-identical on every measured figure; only run 3 hung at the BIOS menu. Judged a one-off Flycast launch flake, not a battery defect — see §9.
+Anomalies: **v1 session** — of 4 launches (run 1 "keep-dat", run 2 determinism re-run, run 3 similarity-bake, and a retry of run 3), run 3 parked `G1 broken: no-handoff-120s` (Flycast booted to the stock Dreamcast BIOS home menu instead of loading the cart; the automatic `.zip`→`.chd` rom fallback also failed within that run). An immediate manual retry succeeded cleanly. Judged a one-off Flycast launch flake, not a battery defect (see §9).
+**v2 re-run session (this doc's numbers)** — battery v2's new built-in auto-retry-once (see `run_battery.py`) fired but the run **still parked** `G1 broken: no-handoff-120s` after exhausting both the `.zip` and `.chd` candidates (each with its automatic retry) — `rom_used` ended at `naomi/cleoftp/gdl-0012.chd`, still no handoff. A second, fully manual re-run (`python3 tools/assess/run_battery.py cleoftp`, no flags) then succeeded cleanly via `.zip` with every memory/guts/similarity figure matching the v1 calibration exactly. This is the same flake class as v1's, just needing one extra manual retry beyond the new automatic one this time — still judged operational flakiness, not a battery or measurement defect (see §9).
 
 ## 4. Memory fit (axis: 85.0)
 
 | Region | Peak | DC capacity | Utilization | Sub-score | Evidence |
 |---|---|---|---|---|---|
-| Main RAM (DMA high-water) | 11,761,888 B (`0xb378e0`) | 16 MB | 70.1% | 100.0 | grep `CARTDMA` in raw log (1104 hits, retry run) |
-| VRAM (write-truth) | 8,181,717 B (`0x7cd7d5`) | 8 MB | 97.5% | 86.8 | grep `VRAMPROFILE`/`VRAMHANDOFF` (9 profile snapshots, 1 handoff-zero) |
-| ARAM (write-truth) | 2,097,152 B (`0x200000`, exactly 2 MiB) | 2 MB | 100.0% | 85.0 | grep `ARAMPROFILE`/`ARAMHANDOFF` (9 profile snapshots, 1 handoff-zero) |
+| Main RAM (DMA high-water) | 11,761,888 B (`0xb378e0`) | 16 MB | 70.1% | 100.0 | grep `CARTDMA` in raw log |
+| VRAM (write-truth) | 8,181,717 B (`0x7cd7d5`) | 8 MB | 97.5% | 86.8 | grep `VRAMPROFILE`/`VRAMHANDOFF` |
+| ARAM (write-truth) | 2,097,152 B (`0x200000`, exactly 2 MiB) | 2 MB | 100.0% | 85.0 | grep `ARAMPROFILE`/`ARAMHANDOFF` |
 
 Memory axis = min(region sub-scores) = 85.0 (regions aren't tradeable).
-Watermarks (informational, content-scan — stale-data prone): main 16,252,992 B · vram 8,181,717 B · aram 2,097,152 B.
+Watermarks (informational, content-scan — stale-data prone): main 16,252,992 B · vram 8,181,717 B · aram 2,097,152 B (unchanged from v1).
 Risk flag: main watermark (~15.5 MB) is well above the DMA high-water (~11.2 MB) — this is exactly the known stale/uninitialized-data effect documented in `../cleopatra/docs/kb/phase2-measurements.md` (the WATERMARK scan hit was confirmed stale, not a real high-address stack, by Phase 3 disassembly + dynamic SP logging). `nz_above_cap` is 0 for both VRAM and ARAM in this run, confirming no genuine game write lands above DC capacity in either region.
 
-Cross-check vs. `../cleopatra/docs/kb/phase2-measurements.md`: main DMA high-water 11,761,888 (11.2 MB), VRAM write-truth peak 8,181,717 (7.8 MB, `0x7cd7d5`), ARAM write-truth peak exactly 2,097,152 (2 MB, `0x200000`) — **all three reproduce exactly**, run 1 → run 2 → retry, with `nz_above_cap == 0` and `handoff.{aram,vram}_zeroed == true` in every clean run.
+Cross-check vs. `../cleopatra/docs/kb/phase2-measurements.md`: main DMA high-water 11,761,888 (11.2 MB), VRAM write-truth peak 8,181,717 (7.8 MB, `0x7cd7d5`), ARAM write-truth peak exactly 2,097,152 (2 MB, `0x200000`) — **all three reproduce exactly**, bit-for-bit, across every clean run this title has had: v1 run 1 → v1 run 2 → v1 retry → **v2 re-run (this doc)**. `nz_above_cap == 0` and `handoff.{aram,vram}_zeroed == true` hold in every clean run regardless of capture length (360 s or 600 s) — the memory axis is fully insensitive to the v1→v2 capture-length bump, as expected (these are boot/attract-loaded, not a growth trend a longer run would change).
 
-## 5. Cart streaming (axis: 70.8)
+## 5. Cart streaming (axis: 69.0)
 
-DMA events 552 · total 62,101,504 B (59.2 MB) · unique 22,827,008 B (21.8 MB) · re-read ratio 0.6324 ·
-steady-state 10.487 MB/min (short-window flag: false)
+DMA events 835 · total 97,761,280 B (93.2 MB) · unique 22,827,008 B (21.8 MB) · re-read ratio 0.7665 ·
+steady-state 9.42 MB/min (short-window flag: false)
+
+Old (v1, 360 s) vs. new (v2, 600 s) — expected drift, not an error, per the coordinator's uniformity note:
+
+| field | v1 (360 s) | v2 (600 s) | why it moved |
+|---|---|---|---|
+| dma_events | 552 | 835 | more re-reads accumulate over the longer window |
+| total_bytes | 62,101,504 | 97,761,280 | scales with the extra 240 s of attract/demo activity |
+| unique_bytes | 22,827,008 | 22,827,008 | **identical** — same underlying asset set touched either way |
+| reread_ratio | 0.6324 | 0.7665 | more repeats of the same unique set over more time |
+| steady_mb_per_min | 10.487 | 9.42 | dilution — the longer window averages in more idle/attract-transition time (matches the pattern already documented for `ikaruga` in `RUNBOOK.md`'s representativeness check) |
+| streaming axis | 70.8 | 69.0 | net of the above via `bandwidth_score`/`reread_score` |
+| final / tier | 84.7 / S | 84.2 / S | streaming is the only axis that moved; tier unchanged |
+
+`unique_bytes` being exactly identical is itself a useful invariant: the game's real streamed-asset footprint doesn't grow with capture length, only how many times it gets re-touched does.
 
 ## 6. Guts (axis: 85.0)
 
@@ -76,13 +94,16 @@ Sources:
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 85.0^.40 · 70.8^.20 · 85.0^.20 · 100.0^.10 · 100.0^.10 = **84.7**
+      = 85.0^.40 · 69.0^.20 · 85.0^.20 · 100.0^.10 · 100.0^.10 = **84.2**
 
-Similarity inputs (self-match, by construction — the reference was built from this run's own guts scan): developer y (`Altron / Taito` ∈ reference makers), SDK overlap full (500/500 `sdk_strings` ⊆ reference), loader match y (`GD-ROM` == reference format, `dat_available: true`) → similarity axis 100.0.
+(v1/battery-v1 was 85.0^.40 · 70.8^.20 · 85.0^.20 · 100.0^.10 · 100.0^.10 = 84.7 — the only changed input is streaming, 70.8 → 69.0, per §5.)
+
+Similarity inputs (checked against the existing `assessments/reference/similarity-reference.json` — **not rebuilt** for this re-run, per instruction): developer y (`Altron / Taito` ∈ reference makers), SDK overlap full (500/500 `sdk_strings` ⊆ reference), loader match y (`GD-ROM` == reference format, `dat_available: true`) → similarity axis 100.0, identical to v1 (expected: it's a self-match by construction, and the cart's guts scan is deterministic).
 
 ## 9. Risks & notes
 
-- Main-RAM v1 limitation (carried from spec): the DMA high-water measure only sees cart-DMA'd data; CPU-written data placed above the last DMA'd asset (e.g. dynamically-allocated heap/stack past that point) is not captured. `../cleopatra`'s own Phase 3 dynamic-SP logging closed this gap for this specific title (SP confirmed at `~0x8c00e-f xxx`, nowhere near the 32 MB watermark) — see `../cleopatra/docs/kb/phase2-measurements.md`. The generic battery (v1) does not do per-title dynamic SP logging, so this residual gap applies to every other assessed set until/unless a future battery version adds it.
-- One of four Flycast launches this session hung at the stock DC BIOS home menu instead of loading the cart (§3). Recommend adding to `RUNBOOK.md`: on `PARKED G1 broken: no-handoff-120s` for a title known to work (prior clean sidecar exists), retry once with the identical command before treating it as a real boot failure or reaching for the `--rom` fallback chain.
-- The literal "final ≥ 85" anchor line from the calibration brief misses by 0.3 (84.7). This is fully explained by the `guts` axis landing at the real, deterministic value of 85.0 (rtc + serial + eeprom_bios penalties genuinely present in the cart's code, confirmed identically across all three clean runs) rather than the brief's naive ~90 estimate — the brief itself flags this as expected "DATA, not battery error" and instructs accepting any S-tier result. Tier S (≥80) holds with a 4.7-point margin; this is treated as calibration PASS.
+- Main-RAM v1 limitation (carried from spec): the DMA high-water measure only sees cart-DMA'd data; CPU-written data placed above the last DMA'd asset (e.g. dynamically-allocated heap/stack past that point) is not captured. `../cleopatra`'s own Phase 3 dynamic-SP logging closed this gap for this specific title (SP confirmed at `~0x8c00e-f xxx`, nowhere near the 32 MB watermark) — see `../cleopatra/docs/kb/phase2-measurements.md`. The generic battery does not do per-title dynamic SP logging, so this residual gap applies to every other assessed set until/unless a future battery version adds it.
+- The Flycast boot-menu flake (§3) recurred under battery v2 despite the new built-in auto-retry-once — one manual retry beyond the automatic one was still needed to get this doc's clean run. Across both sessions (v1 + v2) this title has now flaked on 2 of 6 total launches, always the same signature (`no-handoff-120s`, lands on the DC BIOS home menu, clears on a plain re-run). This is more frequent than a true one-off — worth watching across other titles rather than assuming v2's auto-retry alone is always sufficient; `RUNBOOK.md` already documents the auto-retry and flake pattern (line 26), which this run corroborates.
+- The literal "final ≥ 85" anchor line from the original calibration brief misses by more under v2 (84.2, was 84.7 under v1) — purely because streaming dropped (69.0 vs 70.8, §5 dilution effect), not because guts or memory changed. Tier S (≥80) still holds, now with a 4.2-point margin (was 4.7 under v1); this remains calibration PASS — the margin shrinking with a longer, more dilution-prone capture is itself informative for future titles with long idle attract loops.
 - `bios_refs: {}` (empty) — no extra BIOS-vector classes penalized this run; `extra_bios_classes: 0`.
+- Uniformity note: this re-run exists solely so both calibration sidecars (`cleoftp`, `ikaruga`) are on the same battery version (v2, 600 s) before being compared or used as the basis for scoring the rest of the queue, per `RUNBOOK.md`'s re-assessment rule ("sidecars with an older battery version are stale").

@@ -7,12 +7,12 @@
   "assessed": "2026-08-02",
   "versions": {
     "flycast": "9e882cbd2",
-    "battery": "1",
+    "battery": "2",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
   "params": {
-    "capture_s": 360,
+    "capture_s": 600,
     "steady_after_s": 120,
     "shot_interval_s": 60,
     "boot_timeout_s": 120,
@@ -36,7 +36,11 @@
       "assessments/evidence/cleoftp/shot-183s.png",
       "assessments/evidence/cleoftp/shot-245s.png",
       "assessments/evidence/cleoftp/shot-307s.png",
-      "assessments/evidence/cleoftp/shot-360s.png"
+      "assessments/evidence/cleoftp/shot-370s.png",
+      "assessments/evidence/cleoftp/shot-422s.png",
+      "assessments/evidence/cleoftp/shot-485s.png",
+      "assessments/evidence/cleoftp/shot-547s.png",
+      "assessments/evidence/cleoftp/shot-600s.png"
     ],
     "watermarks_info": {
       "main": 16252992,
@@ -51,7 +55,7 @@
     "vram": {
       "peak": 8181717,
       "nz_above_cap": 0,
-      "regs_last": "isp_base=0 isp_limit=728a0 ol_base=98b80 ol_limit=729a0 fb_w_sof1=4b2000 fb_w_sof2=c00000 fb_r_sof1=4b2000"
+      "regs_last": "isp_base=400000 isp_limit=4728a0 ol_base=498b80 ol_limit=4729a0 fb_w_sof1=b2000 fb_w_sof2=c00000 fb_r_sof1=b2000"
     },
     "aram": {
       "peak": 2097152,
@@ -59,11 +63,11 @@
     }
   },
   "streaming": {
-    "dma_events": 552,
-    "total_bytes": 62101504,
+    "dma_events": 835,
+    "total_bytes": 97761280,
     "unique_bytes": 22827008,
-    "reread_ratio": 0.6324,
-    "steady_mb_per_min": 10.487,
+    "reread_ratio": 0.7665,
+    "steady_mb_per_min": 9.42,
     "short_window": false
   },
   "guts": {
@@ -615,11 +619,11 @@
   "gate": null,
   "scores": {
     "memory": 85.0,
-    "streaming": 70.8,
+    "streaming": 69.0,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 100.0,
-    "final": 84.7,
+    "final": 84.2,
     "tier": "S"
   }
 }
