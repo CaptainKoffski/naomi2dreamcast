@@ -1,4 +1,4 @@
-# Assessment runbook (battery v1)
+# Assessment runbook (battery v2)
 
 Follow verbatim, one family at a time, SERIAL ONLY (never two Flycast instances).
 Spec: `docs/superpowers/specs/2026-08-02-portability-assessment-design.md`.

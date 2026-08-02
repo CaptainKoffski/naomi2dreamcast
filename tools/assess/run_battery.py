@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """One-family assessment battery (spec §2). SERIAL ONLY — never run two at once.
-Usage: run_battery.py <set> [--secs 360] [--skip-static] [--keep-dat] [--rom PATH]
+Usage: run_battery.py <set> [--secs 600] [--skip-static] [--keep-dat] [--rom PATH]
 Env overrides: FLYCAST_BIN, NAOMI_DIR, MAME_NAOMI."""
 import glob, json, os, shutil, signal, subprocess, sys, time
 

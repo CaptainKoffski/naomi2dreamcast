@@ -23,7 +23,7 @@ A family is in scope only if **no member is the same game officially released on
 ## 2. Pipeline (per family, strictly serial)
 
 1. **Boot pre-check.** Launch the representative set in instrumented Flycast, headless screenshots at 30 s and 60 s, boot timeout 120 s. On failure: retry up to 2× (alternate BIOS region), capture stderr, classify (missing files / crash / black screen / error screen), corroborate against MAME `MACHINE_NOT_WORKING` flags to separate tooling faults from broken games. No boot → park as `Broken` (gate G1), short-form doc, stop.
-2. **Dynamic capture.** One unattended **360 s** attract-mode run. Per-set `FLYCAST_CARTLOG` file, screenshots every 60 s as progress evidence. Collected: main-RAM cart-DMA high-water + WATERMARK scan, VRAM and ARAM **write-truth** profiles (zero-at-handoff on first cart DMA — the mechanism that eliminated the 9.4 MB BIOS-logo false positive in the Cleopatra work), full cart-DMA log, video-mode registers. No human input.
+2. **Dynamic capture.** One unattended **600 s** attract-mode run. Per-set `FLYCAST_CARTLOG` file, screenshots every 60 s as progress evidence. Collected: main-RAM cart-DMA high-water + WATERMARK scan, VRAM and ARAM **write-truth** profiles (zero-at-handoff on first cart DMA — the mechanism that eliminated the 9.4 MB BIOS-logo false positive in the Cleopatra work), full cart-DMA log, video-mode registers. No human input.
 3. **Static scan.** Produce `out/<set>.dat` via `tools/dat-extract`, parse header, run headless Ghidra (version pinned to the Cleopatra project's) with a metrics post-script: code size, MMIO cross-references (serial, EEPROM, RTC, network/DIMM), Naomi-BIOS call sites, SDK/library string fingerprints. **Delete the `.dat` afterwards** (SSD hygiene).
 4. **Controls research.** Input device class parsed from MAME `src/mame/sega/naomi.cpp` input ports (primary source), plus web research (manuals, cabinet photos, flyers) — every claim cited, primary sources outrank wikis.
 5. **Score & write-up.** All metrics land in `assessments/<set>.metrics.json`; `score.py` computes axes → final → tier; the assessing agent writes `assessments/<set>.md` from the template; `gen_tables.py` regenerates the summary tables.
@@ -191,7 +191,7 @@ Both runs are calibration only — not queue entries, but their sidecars and doc
 
 ## 9. Cost estimate
 
-~78 in-scope families × (~6 min capture + ~10 min static scan + ~10 min research/write-up) ≈ a few days of mostly-unattended wall-clock, serialized.
+~78 in-scope families × (~10 min capture + ~10 min static scan + ~10 min research/write-up) ≈ a few days of mostly-unattended wall-clock, serialized.
 
 ## 10. Explicitly deferred
 
