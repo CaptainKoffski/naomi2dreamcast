@@ -56,7 +56,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Ikaruga (GDL-0010) | `ikaruga` | **GD-ROM** | parent | 40.5 MB | Shmup ★ | Yes (2002) | parked G3 · [notes](assessments/ikaruga.md) |
 | Jingi Storm - The Arcade (Japan) (GDL-0037) | `jingystm` | **GD-ROM** | parent | 141.4 MB | Rhythm | No | not assessed |
 | Karous (Japan) (GDL-0040) | `karous` | **GD-ROM** | parent | 126.5 MB | Shmup ★ | Yes (2007) | not assessed |
-| Kurukuru Chameleon (Japan) (GDL-0034) | `kurucham` | **GD-ROM** | parent | 41.6 MB | Puzzle ★ | No | not assessed |
+| Kurukuru Chameleon (Japan) (GDL-0034) | `kurucham` | **GD-ROM** | parent | 41.6 MB | Puzzle ★ | No | parked G1 · [notes](assessments/kurucham.md) |
 | La Keyboard (GDS-0017) | `keyboard` | **GD-ROM** | parent | 33.6 MB | Typing ⚠ | No | not assessed |
 | Lupin The Third - The Shooting (GDS-0018) | `lupinshoo` | **GD-ROM** | clone of `lupinsho` | 199.7 MB | Light-gun | No | not assessed |
 | Lupin The Third - The Shooting (Rev A) (GDS-0018A) | `lupinsho` | **GD-ROM** | parent | 190.2 MB | Light-gun | No | not assessed |
