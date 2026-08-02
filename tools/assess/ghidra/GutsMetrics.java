@@ -21,17 +21,14 @@ public class GutsMetrics extends GhidraScript {
         {0x1FE80000L, 0x1FE8FFFFL},   // scif
     };
     static final String[] MMIO_NAMES = {"rtc", "g2ext", "scif"};
-    // Naomi BIOS syscall vectors. Cross-checked 2026-08-02 against
-    // ../cleopatra/docs/kb/boot-binary.md: that doc names NO specific syscall
-    // vector addresses — it only refers to "BIOS ROM (phys 0x0-0x1fffff)" as a
-    // range (its §7 BIOS-call verdict). The actual vector table is documented
-    // in ../cleopatra/docs/kb/naomi-vs-dreamcast.md:328-331 (indirect vectors
-    // at 0x8c0000b0 SYSINFO, 0x8c0000b4 ROM font, 0x8c0000b8 flashrom,
-    // 0x8c0000bc misc+GD-ROM) and phase4-conversion.md:416 ("Vector pointers
-    // 0x8c0000b0-0x8c0000e0"). Defaults below already cover that full range
-    // (b0/b8/bc/c0/e0); kept as-is since boot-binary.md itself names nothing
-    // beyond the defaults.
-    static final long[] BIOS_VEC = {0x8c0000b0L, 0x8c0000b8L, 0x8c0000bcL, 0x8c0000c0L, 0x8c0000e0L};
+    // Naomi BIOS syscall vectors. ../cleopatra/docs/kb/boot-binary.md names no
+    // specific vector addresses (only the BIOS ROM range, phys 0x0-0x1fffff,
+    // §7). The vector table itself is documented in
+    // ../cleopatra/docs/kb/naomi-vs-dreamcast.md:328-331 (indirect vectors at
+    // 0x8c0000b0 SYSINFO, 0x8c0000b4 ROM font, 0x8c0000b8 flashrom, 0x8c0000bc
+    // misc+GD-ROM) and phase4-conversion.md:416 ("Vector pointers
+    // 0x8c0000b0-0x8c0000e0"). 0x8c0000b4 (ROM font) added below per those docs.
+    static final long[] BIOS_VEC = {0x8c0000b0L, 0x8c0000b4L, 0x8c0000b8L, 0x8c0000bcL, 0x8c0000c0L, 0x8c0000e0L};
 
     Map<String, Integer> mmio = new LinkedHashMap<>();
     Map<String, Integer> bios = new LinkedHashMap<>();
@@ -88,7 +85,9 @@ public class GutsMetrics extends GhidraScript {
             else if (v instanceof ghidra.program.model.address.Address)
                 tally(((ghidra.program.model.address.Address) v).getOffset());
             else if (d.hasStringValue() && strs.size() < 500) {
-                String s = d.getDefaultValueRepresentation();
+                // ponytail: getValue() is the clean string; fall back to the
+                // quote-wrapped display form only if getValue() isn't a String.
+                String s = (v instanceof String) ? (String) v : d.getDefaultValueRepresentation();
                 if (s.length() >= 10) strs.add(esc(s));
             }
         }
