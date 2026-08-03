@@ -10,7 +10,7 @@ MAIN_LO, MAIN_HI = 0x0c000000, 0x0e000000    # Naomi main-RAM physical window
 _DMA = re.compile(r"^CARTDMA src=([0-9a-f]+) dest=([0-9a-f]+) len=([0-9a-f]+)", re.I)
 _WM = re.compile(r"^WATERMARK region=(\w+) used=([0-9a-f]+) size=([0-9a-f]+)", re.I)
 _APROF = re.compile(r"^ARAMPROFILE high=([0-9a-f]+) nz=[0-9a-f]+ nz_below2m=[0-9a-f]+ nz_above2m=([0-9a-f]+)", re.I)
-_VPROF = re.compile(r"^VRAMPROFILE high=([0-9a-f]+) nz=[0-9a-f]+ nz_below8m=([0-9a-f]+) nz_above8m=([0-9a-f]+)", re.I)
+_VPROF = re.compile(r"^VRAMPROFILE high=([0-9a-f]+) nz=([0-9a-f]+) nz_below8m=([0-9a-f]+) nz_above8m=([0-9a-f]+)", re.I)
 _VREGS = re.compile(r"^VRAMREGS (.+)$")
 
 
@@ -27,7 +27,7 @@ def parse(text, timeline=None, handoff_window=120):
     pos = 0
     handoff = {"seen": False, "t": None, "aram_zeroed": False, "vram_zeroed": False}
     wm = {}
-    vram = {"peak": 0, "nz_above_cap": 0, "nz_below_max": 0, "regs_last": ""}
+    vram = {"peak": 0, "nz_total": 0, "nz_above_cap": 0, "nz_below_max": 0, "regs_last": ""}
     aram = {"peak": 0, "nz_above_cap": 0}
     dmas = []           # (t, src, dest, length)
     serial = 0
@@ -60,8 +60,9 @@ def parse(text, timeline=None, handoff_window=120):
                     m = _VPROF.match(s)
                     if m:
                         vram["peak"] = max(vram["peak"], int(m.group(1), 16))
-                        vram["nz_below_max"] = max(vram["nz_below_max"], int(m.group(2), 16))
-                        vram["nz_above_cap"] = max(vram["nz_above_cap"], int(m.group(3), 16))
+                        vram["nz_total"] = max(vram["nz_total"], int(m.group(2), 16))
+                        vram["nz_below_max"] = max(vram["nz_below_max"], int(m.group(3), 16))
+                        vram["nz_above_cap"] = max(vram["nz_above_cap"], int(m.group(4), 16))
                     else:
                         m = _VREGS.match(s)
                         if m:
@@ -95,7 +96,8 @@ def parse(text, timeline=None, handoff_window=120):
     return {
         "handoff": handoff,
         "main": {"dma_high_water": main_hw, "watermark_max": wm.get("main", 0)},
-        "vram": {"peak": vram["peak"], "nz_above_cap": vram["nz_above_cap"],
+        "vram": {"peak": vram["peak"], "nz_total": vram["nz_total"],
+                 "nz_above_cap": vram["nz_above_cap"],
                  "watermark_max": wm.get("vram", 0), "regs_last": vram["regs_last"]},
         "aram": {"peak": aram["peak"], "nz_above_cap": aram["nz_above_cap"],
                  "watermark_max": wm.get("aram", 0)},
@@ -103,7 +105,10 @@ def parse(text, timeline=None, handoff_window=120):
                       "reread_ratio": round(reread, 4), "steady_mb_per_min": steady,
                       "short_window": short_window},
         "serial_pokes": serial,
-        "boot_ok": bool(handoff["seen"] and vram["nz_below_max"] >= 0x10000),
+        # total nz, not nz_below8m: CPU-framebuffer 2D titles (kurucham) draw above
+        # the 8 MB line and are invisible to a below-8m check — any >=64 KiB of real
+        # nonzero VRAM content anywhere means the game renders
+        "boot_ok": bool(handoff["seen"] and vram["nz_total"] >= 0x10000),
     }
 
 

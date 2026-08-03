@@ -262,6 +262,20 @@ imperfect-graphics. Rules derived:
 - Diagnostic recipe for a suspected headless title: one manual run with
   `rend.EmulateFramebuffer=yes` + `FLYCAST_SHOT` — grey frames = headless confirmed.
 
+**Final correction (same day):** the kurucham story ended a third way — the `boot_ok`
+heuristic itself was blind. It required ≥64 KiB nonzero VRAM *below 8 MB*
+(`nz_below8m`), but kurucham CPU-uploads its entire 5.34 MiB working set ABOVE 8 MB
+(asset store at `0xc00000`; the sub-8 MB framebuffers stay black). `parse_capture.py`
+now uses **total** nonzero VRAM (`nz_total`, also written to the sidecar) — any real
+content anywhere means the game runs. With that fix kurucham boots cleanly and scored
+**45.8 B**: display-blind (frozen TA splash in shots, black FBs, grey EmulateFramebuffer)
+but verifiably running (EEPROM, FB flips, 86.7 MB GD streaming, ARAM writes). Rules:
+a headless-LOOKING title can still be scoreable — check `nz_total` and the activity
+metrics before parking; visual coverage then can't be classified, so set the
+conservative `coverage = "title"` and document the display blindness. Raw-VRAM frame
+decoding (`FLYCAST_VRAMDUMP` + scratchpad `vramdump2png.py`, FB address/size from the
+`CLEO-VRAMDUMP` log line) is the way to check what such a title actually displays.
+
 ## 5. Campaign start checklist
 
 The battery is calibrated (§3) and the queue is generated. From here the campaign is pure
