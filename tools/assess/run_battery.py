@@ -54,12 +54,14 @@ def handoff_seen(logpath):
 
 
 def eeprom_seen(stdout_path):
-    # upstream naomi_flashrom.cpp:209 logs "EEPROM: <h/v> monitor orientation" on
-    # EVERY game boot; "Initializing Naomi EEPROM" fires only when no saved EEPROM
-    # exists (ss2005 false-abort, kb §4.n) — grep the unconditional line
+    # either naomi_flashrom.cpp line counts as "game content launched": :148
+    # "Initializing Naomi EEPROM" fires only on first boot (ss2005 gap, kb §4.n),
+    # :209 "monitor orientation" is skipped for nonstandard ROM headers (gunsur2's
+    # Namco header, players 0 vertical 0 — kb §4.n). Flake faces print neither.
     try:
         with open(stdout_path, "rb") as fh:
-            return b"monitor orientation" in fh.read()
+            data = fh.read()
+        return b"monitor orientation" in data or b"Initializing Naomi EEPROM" in data
     except OSError:
         return False
 

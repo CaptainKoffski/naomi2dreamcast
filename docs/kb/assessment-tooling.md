@@ -287,6 +287,11 @@ and running ~4 s after launch, verified by a plain-launch control). `eeprom_seen
 greps "monitor orientation". Boot-marker rule: before trusting any stdout line as a
 universal signal, check its guard conditions in the upstream source — and prefer lines
 logged unconditionally on the success path.
+**Second gap, same lesson (gunsur2, 2026-08-03):** the orientation line ALSO isn't
+universal — gunsur2's Namco-built ROM header is nonstandard (`region ff players 0
+vertical 0`) and the :209 orientation log never fires, while :148 "Initializing Naomi
+EEPROM" does; two healthy legs were killed at 180 s. `eeprom_seen()` now accepts EITHER
+naomi_flashrom line (each covers the other's gap; the §4.a flake faces print neither).
 
 **o. tcrf.net serves fetch bots a prompt-injection bot-trap page (observed 2026-08-03,
 tetkiwam research).** Both a direct WebFetch and the MediaWiki `action=raw` endpoint
