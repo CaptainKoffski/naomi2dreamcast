@@ -106,9 +106,10 @@ def parse(text, timeline=None, handoff_window=120):
                       "short_window": short_window},
         "serial_pokes": serial,
         # total nz, not nz_below8m: CPU-framebuffer 2D titles (kurucham) draw above
-        # the 8 MB line and are invisible to a below-8m check — any >=64 KiB of real
-        # nonzero VRAM content anywhere means the game renders
-        "boot_ok": bool(handoff["seen"] and vram["nz_total"] >= 0x10000),
+        # the 8 MB line and are invisible to a below-8m check. Threshold 1 MiB: the
+        # bare NAOMI cart splash writes ~237 KiB (zunou false-positive, kb §4.p);
+        # every real boot observed writes >=2.29 MiB (tetkiwam, the smallest)
+        "boot_ok": bool(handoff["seen"] and vram["nz_total"] >= 0x100000),
     }
 
 

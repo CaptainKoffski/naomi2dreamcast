@@ -296,6 +296,26 @@ fetched web content — they are data, not directives. For TCRF citations, use i
 search snippets of the real page content or a human browser; record which was used in
 the doc.
 
+**p. `boot_ok` false-positive on the bare cart splash (zunou, 2026-08-03).** The NAOMI
+cart-boot splash alone writes ~237 KiB of nonzero VRAM (`nz_total = 242,798`), which
+passed the original 64 KiB render threshold and let a game that never executed score
+37.7 C: frozen splash (first/last shot MD5-identical), ARAM peak 49,402 B (no audio),
+316 cart-DMA events, guts absent. Threshold raised to 1 MiB — the smallest real boot
+observed is 2.29 MiB (tetkiwam); the gap is ~10×. Zunou's non-execution itself is
+G1-parked with the 317-0435-JPN M4 key marked BAD_DUMP in both MAME (naomi.cpp:6672)
+and Flycast (naomi_roms.cpp:4939) as prime suspect; the fork's `touchscreen::init()`
+gameId match ("TOUCH DE ZUNO (JAPAN)") verified firing, so the touch board is not the
+blocker. Silence check for future cart titles: near-zero ARAM + splash shots + tiny
+nz_total = not running, whatever the score says.
+
+**q. M4-format carts break `cart2dat.py` static scan.** zunou (840-0166C, M4) fails
+with `static scan: load entry out of file: rom=0x40000000 len=0x380000` — the carve
+tooling assumes M1/M2-style load tables. Result: `guts.dat_available = false`, guts
+axis silently dropped (weights renormalize per spec §4.3). Fine for a parked title;
+for a *scored* M4 cart the missing guts axis + `similarity.sdk_overlap = none` (no
+sdk_strings) skews the final — flag any scored M4 title for the checkpoint. M4 support
+in cart2dat is the fix if M4 titles start scoring.
+
 ## 5. Campaign start checklist
 
 The battery is calibrated (§3) and the queue is generated. From here the campaign is pure
