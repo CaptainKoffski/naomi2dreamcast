@@ -290,8 +290,18 @@ logged unconditionally on the success path.
 **Second gap, same lesson (gunsur2, 2026-08-03):** the orientation line ALSO isn't
 universal — gunsur2's Namco-built ROM header is nonstandard (`region ff players 0
 vertical 0`) and the :209 orientation log never fires, while :148 "Initializing Naomi
-EEPROM" does; two healthy legs were killed at 180 s. `eeprom_seen()` now accepts EITHER
-naomi_flashrom line (each covers the other's gap; the §4.a flake faces print neither).
+EEPROM" does; two healthy legs were killed at 180 s. `eeprom_seen()` then accepted EITHER
+naomi_flashrom line.
+**Third gap ended the experiment (moeru, 2026-08-03): the abort is REMOVED.** moeru
+prints NEITHER line even while visibly running (user-observed on stock 2.6; the title
+ships `moeru-default-eeprom.bin`, so the flashrom-init path is silent), and the
+either-line marker still called it dead — including in two §4.l ladder control runs,
+which produced a wrong "Flycast-family-wide stall" conclusion until the user's eyewitness
+report corrected it. Tally: three false-kill titles, zero confirmed true saves. Rule:
+stdout log lines are NOT boot signals — only content signals (cartlog handoff tags,
+VRAM nz thresholds) and the mandatory representativeness check decide liveness; flake
+faces that idle a full 600 s window are an acceptable cost. Corollary: automated
+"booted=no" verdicts from log greps must never override a human watching the window.
 
 **o. tcrf.net serves fetch bots a prompt-injection bot-trap page (observed 2026-08-03,
 tetkiwam research).** Both a direct WebFetch and the MediaWiki `action=raw` endpoint

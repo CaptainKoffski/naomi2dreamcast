@@ -53,17 +53,11 @@ def handoff_seen(logpath):
         return False
 
 
-def eeprom_seen(stdout_path):
-    # either naomi_flashrom.cpp line counts as "game content launched": :148
-    # "Initializing Naomi EEPROM" fires only on first boot (ss2005 gap, kb §4.n),
-    # :209 "monitor orientation" is skipped for nonstandard ROM headers (gunsur2's
-    # Namco header, players 0 vertical 0 — kb §4.n). Flake faces print neither.
-    try:
-        with open(stdout_path, "rb") as fh:
-            data = fh.read()
-        return b"monitor orientation" in data or b"Initializing Naomi EEPROM" in data
-    except OSError:
-        return False
+# (no-eeprom-180s abort removed 2026-08-03: stdout EEPROM markers proved per-title
+# unreliable — three gaps in three weeks of titles (ss2005 saved-eeprom, gunsur2
+# Namco header, moeru silent default-MIE path, kb §4.n) and every abort it fired on
+# a real game was a false kill. Flake faces burn a full window harmlessly; FIX 3
+# no-render + the mandatory representativeness check catch dead runs.)
 
 
 def capture(setname, rom, secs):
@@ -109,12 +103,6 @@ def capture(setname, rom, secs):
             break
         if t >= 120 and not handoff_seen(log):
             aborted = "no-handoff-120s"          # spec §2 early abort
-            break
-        # Launch flake, GD face (kurucham 2026-08-03): BIOS zeroes ARAM (handoff seen)
-        # but the game hangs on the GD-ROM splash and never initializes its EEPROM —
-        # without this check the flake burns the whole capture window.
-        if t >= 180 and not eeprom_seen(so_path):
-            aborted = "no-eeprom-180s"
             break
         if t >= secs:
             break
