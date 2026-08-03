@@ -1,6 +1,7 @@
 {
   "makers": [
-    "Altron / Taito"
+    "Altron / Taito",
+    "Altron"
   ],
   "format": "GD-ROM",
   "sdk_strings": [
