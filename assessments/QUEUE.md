@@ -7,7 +7,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | Representative | Family members | Genre | Size | Status |
 |---|---|---|---|---|
 | `azumanga` — Azumanga Daioh Puzzle Bobble (GDL-0018) | `azumanga` | Puzzle ★ | 86.7 MB | parked |
-| `kurucham` — Kurukuru Chameleon (Japan) (GDL-0034) | `kurucham` | Puzzle ★ | 41.6 MB | parked |
+| `kurucham` — Kurukuru Chameleon (Japan) (GDL-0034) | `kurucham` | Puzzle ★ | 41.6 MB | done |
 | `ss2005` — Super Shanghai 2005 (Japan, Rev A) (GDL-0031A) | `ss2005`, `ss2005o` | Puzzle ★ | 63.1 MB | pending |
 | `takoron` — Noukone Puzzle Takoron (Japan) (GDL-0042) | `takoron` | Puzzle ★ | 52.6 MB | pending |
 | `tetkiwam` — Tetris Kiwamemichi (Japan) (GDL-0020) | `tetkiwam` | Puzzle ★ | 62.3 MB | pending |

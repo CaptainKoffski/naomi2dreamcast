@@ -4,82 +4,136 @@
 
 | | |
 |---|---|
-| **Final score** | **PARKED — `G1 broken: no-handoff-120s`** (not a numeric tier) |
-| Bottom line | The game never reaches its own code under our instrumented Flycast fork: the zip candidate hangs forever on the NAOMI GD-ROM SYSTEM splash (DIMM firmware boot hang, despite a real ARAM handoff), and the chd-direct candidate falls to the stock Dreamcast BIOS home menu. The dump itself is verified good against MAME's reference SHA1, and upstream Flycast builds are reported to boot it — this is a title-specific incompatibility of our fork's base (`9e882cbd2`), not a bad dump and not a broken game. |
+| **Final score** | **45.8** (B) |
+| Bottom line | Mid-tier B: the actual content volume is genuinely DC-sized (5.3 MiB of nonzero VRAM assets, 2.4 MB ARAM, 1 MiB code) — but main-RAM DMA high-water is 1.64× the DC's 16 MB and needs real reduction, and our Flycast fork renders no visible frames for this title (display-path gap, §3), so nothing can be visually validated in emulation today. |
 | Assessed | 2026-08-03 · battery v2 · flycast `9e882cbd2` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+
+History: this doc supersedes the 2026-08-03 `G1 broken: no-handoff-120s` park (commit
+`d7500a1`) — that diagnosis was retracted after the kb §4.l/§4.m investigation showed the
+game boots and runs headless under the fork; two tooling bugs had masked it (see §3/§9).
 
 ## 2. Identity
 
 | | |
 |---|---|
 | Set / family | `kurucham` (covers: no clones — `parent: null` in controls.json) |
-| Maker / year | Able (arcade publisher; developer Starfish SD), 2006 |
+| Maker / year | Able (arcade publisher; developer Starfish SD — `@2006 STARFISH-SD` in `guts.sdk_strings`), 2006 |
 | Genre / format | Puzzle ★, GD-ROM (GDL-0034) |
 | Official DC port | No — platform history is PSP/DS (2006), Switch (2019), PS4/Windows (2020) as *Chameleon: To Dye For!* / *Kameleon*; no Dreamcast release ([Wikipedia](https://en.wikipedia.org/wiki/Chameleon:_To_Dye_For!), accessed 2026-08-02) |
-| Community ports | None found — not in the Dreamcast Junkyard Naomi-conversion list ([link](https://www.thedreamcastjunkyard.co.uk/2016/01/guest-article-expanding-dreamcast.html)), no dreamcast-talk/Reddit conversion threads surfaced (searched 2026-08-02). Zophar's Domain hosts a "Sega Dreamcast (DSF)" music rip ([link](https://www.zophar.net/music/sega-dreamcast-dsf/kuru-kuru-chameleon)) — almost certainly a mislabeled Naomi AICA rip (same sound hardware), not evidence of a DC conversion. |
+| Community ports | None found — not in the Dreamcast Junkyard Naomi-conversion list ([link](https://www.thedreamcastjunkyard.co.uk/2016/01/guest-article-expanding-dreamcast.html)), no dreamcast-talk/Reddit conversion threads surfaced (searched 2026-08-02). Zophar's "Sega Dreamcast (DSF)" music rip ([link](https://www.zophar.net/music/sega-dreamcast-dsf/kuru-kuru-chameleon)) is almost certainly a mislabeled Naomi AICA rip, not a conversion. |
 | Representative choice | Only member of its family (MAME parent, no clones) |
 
 ## 3. Boot & run evidence
 
-Boots: **no** · handoff: never seen · run 600 s window · rom: `naomi/kurucham/gdl-0034.chd`
-Attract/demo reached: n/a — `capture.coverage` left `null`; the three-state taxonomy
-(calibration/title/demo) does not apply because the game's own code never executed.
-Screenshots (both show the **stock DC BIOS home menu** — Play/File/Music/Settings,
-Dreamcast swirl, RTC clock — the kb §4.a fall-to-BIOS signature, not game content):
-- `assessments/evidence/kurucham/shot-060s.png` — DC BIOS home menu at t=60 s
-- `assessments/evidence/kurucham/shot-121s.png` — DC BIOS home menu at t=121 s, unchanged
-Anomalies: the two candidate legs fail *differently* (splash hang vs. fall-to-BIOS) — see Gate.
+Boots: yes · handoff at 30.0 s · run 600 s · rom: `naomi/kurucham.zip` (single clean zip leg)
+Attract/demo reached: **title (conservative lower bound)** — sidecar
+`capture.coverage = "title"`. The run cannot be classified visually (see Display
+blindness below); the game verifiably runs its attract loop for the full window —
+EEPROM init (`Initializing Naomi EEPROM for game KURU KURU CHAMELEON`, raw
+stdout of earlier legs), ~2 framebuffer flips/frame for 600 s, 86.7 MB of GD streaming
+across 2,597 DMA events, ARAM written to 2.4 MB, and 5,600,640 B of nonzero VRAM asset
+uploads (`memory.vram.nz_total`) — but we cannot visually distinguish title-idle from
+demo gameplay, so the conservative `title` label is used.
 
-## Gate
+### Display blindness
 
-**G1 broken: no-handoff-120s** (`boot.ok = false`, `boot.mame_not_working = false` in the
-sidecar — MAME marks the set runnable, so this is not a known-broken title).
+The game runs with no visible output under our fork; three image classes prove the
+metrics come from a running game, not a hang:
 
-Two candidate legs, diagnosed in the main session (2026-08-03):
+- `shot-060s.png` / `shot-609s.png` — all 10 battery screenshots show the same frozen
+  NAOMI GD-ROM SYSTEM splash: a **stale TA frame** left in the GL display path, not a
+  boot hang (the activity counters above run underneath it the whole time).
+- `vram-fb-76a000-black.png` — raw VRAM framebuffer decode at the displayed FB address
+  `0x76a000` (640×480 RGB565 per `FB_R_SIZE=0017753f`, from a CLEO-VRAMDUMP snapshot):
+  pure black — the game never composes a frame the fork's display path can show.
+- `vram-assets-c00000.png` — decode of the 5.34 MiB nonzero region above 8 MB at
+  `0xc00000`: dense structured asset data, not a displayable frame.
 
-- **Zip candidate (`naomi/kurucham.zip`):** deterministically hangs on the NAOMI GD-ROM
-  SYSTEM splash for the full 600 s window *with* a real ARAM handoff (`ARAMHANDOFF zeroed
-  size=800000` in cartlog) and live framebuffer flips — observed on 2 independent runs.
-  Battery v2's candidate loop detects this class (`no-render-after-handoff`, fixed in
-  commit `61350c8`, kb §4.k) and falls through to the chd.
-- **Chd-direct candidate (`naomi/kurucham/gdl-0034.chd`):** falls to the stock DC BIOS
-  home menu (kb §4.a signature; screenshots above), **no CARTDMA/ARAMHANDOFF at all**,
-  twice (auto-retry included). The sidecar's final failure class comes from this leg.
-- **The dump is not the problem:** `chdman verify` passes, and the chd SHA1
-  `48a7d20811a6658d749c495db8aa802d1172a8db` exactly matches MAME's `DISK_IMAGE_READONLY`
-  reference for gdl-0034 (`../cleopatra/tools/mame/src/mame/sega/naomi.cpp:8851`, pinned
-  @59e7c0b). The security PIC `317-5115-jpn.pic` CRC `e5435e85` matches Flycast's
-  expectation (`naomi_roms.cpp:5398` in our fork checkout `../cleopatra/tools/flycast-src`).
-- **Tooling is not the problem:** the layout (zip + `naomi/kurucham/gdl-0034.chd`) is
-  identical to `azumanga`, which reached demo on the same battery. Flycast's
-  `gdcartridge.cpp:506-527` shows a failed chd-open would THROW ("Naomi GDROM: Cannot
-  open") rather than hang — so on the zip path the disc opened and the DIMM firmware boot
-  itself hung. `gdcartridge.cpp:487` carries a TODO on the `netpic` byte that selects the
-  DIMM firmware's start sector — a plausible hang mechanism, unconfirmed.
-- **Upstream data point:** the libretro Flycast NAOMI compatibility list marks `kurucham`
-  OK ([libretro/flycast#136](https://github.com/libretro/flycast/issues/136)) — the game
-  has booted on other Flycast builds.
+MAME flags the title imperfect-graphics
+([arcadeitalia](http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=kurucham),
+[minimaws](https://arcade.vastheman.com/minimaws/machine/kurucham)) — consistent with an
+emulator display-path gap for this title's 2D composition method, not a broken game: it
+shipped in arcades and was ported to PSP/DS/Switch/PS4. The score remains valid because
+memory/streaming/guts measure real game activity (DMA, VRAM/ARAM writes, static
+analysis), none of which depends on rendering.
 
-What would unblock it: retest when the instrumented fork rebases onto a newer upstream
-Flycast; no per-title work is warranted before that.
+Screenshots kept: `shot-060s.png`, `shot-609s.png` (frozen splash, identical at t=60 s
+and t=609 s), `vram-fb-76a000-black.png`, `vram-assets-c00000.png`.
+Anomalies: the two earlier false G1 parks were tooling, not the game — (a) the boot
+heuristic checked nonzero VRAM only below 8 MB, blind to this title's above-8-MB asset
+store (fixed → total-nz, kb §4.m); (b) genuine launch flakes (kb §4.a DC-BIOS-menu and
+dynarec-assert faces) hit the chd legs repeatedly (fixes: `61350c8`, `4ea17fc`,
+`e5f5649`, plus the boot_ok fix).
 
-## Risks & notes
+## 4. Memory fit (axis: 19.6)
 
-- **All measurement fields in the sidecar are non-measurements.** Memory peaks,
-  streaming counters, and watermarks are all `0` because the game never ran — they are
-  not small values, they are absent values. Guts static analysis was skipped
-  (`"skipped (--skip-static or no boot)"`). Do not compare this sidecar's numbers with
-  scored titles.
-- **Controls would be the easy axis if unparked:** `controls.device_class = stick`,
-  standard `naomi` INPUT_PORTS (MAME src/mame/sega/naomi.cpp @59e7c0b);
-  [arcadeitalia](http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=kurucham)
-  mirrors the 8-way joystick + 6-button JVS standard declaration, 2 players;
-  [Wikipedia](https://en.wikipedia.org/wiki/Chameleon:_To_Dye_For!) describes a
-  "simple controls" competitive colour-matching puzzle. Maps 1:1 to a DC pad.
-- MAME emulates the title as runnable but with "imperfect graphics and sound" flags
-  ([arcadeitalia](http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=kurucham);
-  [minimaws](https://arcade.vastheman.com/minimaws/machine/kurucham)) — consistent with
-  a quirky title that trips emulator edge cases.
-- The console ports (PSP/DS/Switch/PS4/PC) mean the game content itself is well within
-  handheld-class budgets — if the fork boot issue clears, this 41.6 MB puzzle title is a
-  plausible easy candidate, not a lost cause.
+| Region | Peak | DC capacity | Utilization | Sub-score | Evidence |
+|---|---|---|---|---|---|
+| Main RAM (DMA high-water) | 27,449,344 B | 16 MB | 1.64× | 24.6 | grep `CARTDMA` in raw log |
+| VRAM (write-truth) | 14,770,864 B | 8 MB | 1.76× | 19.6 | grep `VRAMPROFILE` |
+| ARAM (write-truth) | 2,395,328 B | 2 MB | 1.14× | 59.4 | grep `ARAMPROFILE` |
+
+Watermarks (informational, content-scan — stale-data prone): main 32,505,920 /
+vram 14,770,864 / aram 2,395,328. Main watermark is 1.18× the DMA high-water — mild
+flag; some content above the last DMA'd asset.
+
+Note on VRAM: the 14.77 MB peak is **address-extent**, not content volume — actual
+nonzero content is only 5,600,640 B (5.34 MiB, `nz_total`), most of it parked above the
+8 MB line at `0xc00000` (`nz_above_cap = 5,599,740 B`); a port would relocate it, so the
+real VRAM pressure is far milder than the sub-score implies. ARAM at 1.14× is near-fit.
+Main RAM at 1.64× is the genuine weak point.
+
+## 5. Cart streaming (axis: 74.4)
+
+DMA events 2,597 · total 86.76 MB · unique 28.82 MB · re-read ratio 0.6678 ·
+steady-state 7.171 MB/min (full window, `short_window: false`)
+
+## 6. Guts (axis: 85.0)
+
+Code 1,048,576 B · functions 2,634 · MMIO refs: scif 2, rtc 3, g2ext 58 ·
+BIOS vector refs: none · penalties applied: `eeprom_bios`, `serial`, `rtc` → 85.0
+
+`guts.sdk_strings` shows a heavily DC-adjacent stack: Kunoichi2 Library for NAOMI 2.07,
+Ninja2 2.01, `sd2 for DC`, `SEGAKATANA` RMC, CRI ADX/Sofdec, NEC KAMUI2 — plus the
+internal build id `KAMELEON 2005 VER 1.00`.
+
+## 7. Controls (axis: 100.0)
+
+Cabinet: standard Naomi stick + buttons, 2 players. MAME input ports: `naomi`.
+The game's own INPUT TEST menu (in-binary, `guts.sdk_strings`) lists exactly
+UP/DOWN/LEFT/RIGHT + SELECT/CANCEL/SPECIAL + START per player — one 8-way stick and
+three game buttons. Proposed DC mapping: d-pad/stick + A (select), B (cancel),
+X or Y (special), Start — 1:1 on a stock pad.
+Sources: MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS `naomi`;
+[arcadeitalia](http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=kurucham)
+(8-way joystick + 6-button JVS standard declaration, 2P);
+[Wikipedia](https://en.wikipedia.org/wiki/Chameleon:_To_Dye_For!) ("simple controls"
+competitive colour-matching puzzle); in-binary INPUT TEST strings
+(`assessments/kurucham.metrics.json` → `guts.sdk_strings`).
+
+## 8. Score computation
+
+final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
+      = 19.6^.40 · 74.4^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **45.8** (tier B)
+Similarity inputs: developer no (Starfish SD/Able ≠ reference), SDK overlap partial
+(Kunoichi2/Ninja2/CRI — see §6), loader match yes.
+
+## 9. Risks & notes
+
+- **Display path is an unknown-class risk.** Under our fork the game produces zero
+  visible frames (§3); whatever 2D composition method Flycast doesn't emulate for this
+  title, a port must implement or replace it — and per the working-style rule, rendering
+  must be verified on real DC hardware, since no emulator check is currently possible.
+  Fork base `9e882cbd2` is effectively current (upstream `d4fc07741` is only 2
+  non-emulation commits ahead, kb §4.l) — a rebase will not fix this today.
+- **Main RAM is the weak axis regardless of the display issue**: 1.64× DC's 16 MB DMA
+  high-water (and a 1.18×-higher content watermark) needs real data reduction, unlike
+  VRAM (5.34 MiB actual content, relocatable) and ARAM (1.14×, near-fit).
+- Coverage is `title` as a conservative lower bound — activity data proves the attract
+  loop ran, but visual confirmation of demo gameplay is impossible (§3), so peaks could
+  be understated relative to played gameplay.
+- Supersedes the 2026-08-03 G1 park (`d7500a1`): "GD-DIMM boot hang" retracted; the
+  false parks were a below-8MB-only boot heuristic (kb §4.m) plus launch flakes on the
+  chd legs (kb §4.a) — both fixed (`61350c8`, `4ea17fc`, `e5f5649`).
+- Main-RAM v1 limitation carried from the spec: DMA high-water misses CPU-written data
+  above the last DMA'd asset (the watermark gap above is consistent with some).
