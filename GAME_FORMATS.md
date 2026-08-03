@@ -79,7 +79,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Radirgy (Japan, Rev A) (GDL-0032A) | `radirgy` | **GD-ROM** | parent | 132.4 MB | Shmup ★ | Yes (2006) | not assessed |
 | Senko no Ronde (Japan) (GDL-0030) | `senkoo` | **GD-ROM** | clone of `senko` | 215.3 MB | Shmup ★ | No | see [`senko`](assessments/senko.md) |
 | Senko no Ronde (Japan, Rev A) (GDL-0030A) | `senko` | **GD-ROM** | parent | 241.0 MB | Shmup ★ | No | parked G3 · [notes](assessments/senko.md) |
-| Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | **GD-ROM** | parent | 237.7 MB | Shmup ★ | No | not assessed |
+| Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | **GD-ROM** | parent | 237.7 MB | Shmup ★ | No | parked G3 · [notes](assessments/senkosp.md) |
 | Shakatto Tambourine Cho Powerup Chu (2K1 AUT) (GDS-0016) | `shaktamb` | **GD-ROM** | parent | 180.2 MB | Rhythm | No | not assessed |
 | Shikigami no Shiro II / The Castle of Shikigami II (GDL-0021) | `shikgam2` | **GD-ROM** | parent | 111.1 MB | Shmup ★ | Yes (2004) | not assessed |
 | Slashout (GDS-0004) | `slashout` | **GD-ROM** | parent | 137.4 MB | Beat-em-up | No | not assessed |

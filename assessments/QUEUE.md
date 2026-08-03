@@ -15,7 +15,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `illvelo` — Illvelo (Illmatic Envelope) (Japan) | `illvelo` | Shmup ★ | 88.4 MB | parked |
 | `radirgyn` — Radirgy Noa (Japan) | `radirgyn` | Shmup ★ | 107.4 MB | parked |
 | `senko` — Senko no Ronde (Japan, Rev A) (GDL-0030A) | `senko`, `senkoo` | Shmup ★ | 241.0 MB | parked |
-| `senkosp` — Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | Shmup ★ | 237.7 MB | pending |
+| `senkosp` — Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | Shmup ★ | 237.7 MB | parked |
 | `ausfache` — Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | ? | 75.4 MB | pending |
 | `dragntr` — Dragon Treasure (Rev B) (GDS-0030B) | `dragntr`, `dragntra` | ? | 142.3 MB | pending |
 | `dragntr2` — Dragon Treasure 2 (Rev A) (GDS-0037A) | `dragntr2` | ? | 231.6 MB | pending |

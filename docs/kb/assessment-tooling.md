@@ -370,7 +370,8 @@ sidecars — no re-capture needed (the re-assessment rule above applies).
    nearly fit — first unpark candidate if the ARAM rule softens; own franchise shipped
    Radirgy DC 2006), `senko` (2026-08-03 — 8 MiB bank, 6.29 MB nonzero above cap; main
    1.99× also near-gate — heavy either way; G.Rev's own Under Defeat DC port is the
-   sibling precedent).
+   sibling precedent), `senkosp` (2026-08-03 — 8 MiB bank, 6.29 MB nonzero above cap;
+   main 33,453,344 B byte-identical to senko — same engine, deterministic measurement).
 2. **Streaming re-read penalty may be pessimistic for small-working-set loops.** cleoftp
    measured re-read ratio 0.77 (97.8 MiB streamed / 22.8 MiB unique over 600 s of attract
    loops) → streaming axis 69 — yet the actual Cleopatra port streams fine from GD-ROM,
