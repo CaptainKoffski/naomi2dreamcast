@@ -422,7 +422,9 @@ sidecars — no re-capture needed (the re-assessment rule above applies).
    and the earliest: a 2001 M2 cart, 8 MiB bank, 4.53 MB nonzero above cap — full-bank
    loading was common Naomi practice from the start, not a late-era luxury), `mamonoro`
    (2026-08-03 — 8 MiB bank, 6.29 MB nonzero above cap; main 1.32×, own X360/PS3
-   pad-native ports — third-strongest unpark candidate).
+   pad-native ports — third-strongest unpark candidate), `marstv` (2026-08-03 — TWELFTH
+   and earliest at 1999; peak 8 MiB but only 81,598 B nonzero above cap — see the
+   divergence item 5).
 2. **Streaming re-read penalty may be pessimistic for small-working-set loops.** cleoftp
    measured re-read ratio 0.77 (97.8 MiB streamed / 22.8 MiB unique over 600 s of attract
    loops) → streaming axis 69 — yet the actual Cleopatra port streams fine from GD-ROM,
@@ -452,6 +454,17 @@ sidecars — no re-capture needed (the re-assessment rule above applies).
    even though its own PS2 port shipped pad-native on a DualShock 2 — i.e. the adaptation
    is not hypothetical but an already-shipped design. Check at the checkpoint: should an
    official pad-native port of the same title lift `pad_adaptable` toward the 75 band?
+
+5. **marstv divergence: the G3-aram gate metric fires on peak, but content-above-cap is
+   near zero (2026-08-03).** `marstv` parked at aram peak 4.00× (full 8 MiB bank) — yet
+   `nz_above_cap = 81,598 B`: only ~0.08 MB of nonzero content above the DC's 2 MiB,
+   trivially trimmable, where every earlier full-bank title had MBs (azumanga 6.2,
+   ss2005 6.29, illvelo 6.29, inunoos 4.53…). Something near-empty (zero-fill/test-pass
+   class) pushed the watermark to the top of the bank. This is the strongest single
+   argument that the gate metric should change from **peak** to **`nz_above_cap`** — a
+   content rule would let marstv through with essentially DC-fitting sound. Re-scoring
+   all parked sidecars under a content rule requires NO re-runs: `nz_above_cap` is
+   already recorded in every sidecar.
 
 Rankings stay internally fair meanwhile — every game is measured by the same rules — but
 absolute scores near tier boundaries should be read with these two caveats in mind.
