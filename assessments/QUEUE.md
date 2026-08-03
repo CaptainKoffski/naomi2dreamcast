@@ -19,7 +19,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `ausfache` — Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | ? | 75.4 MB | parked |
 | `dragntr` — Dragon Treasure (Rev B) (GDS-0030B) | `dragntr`, `dragntra` | Medal | 142.3 MB | parked |
 | `dragntr2` — Dragon Treasure 2 (Rev A) (GDS-0037A) | `dragntr2` | Medal | 231.6 MB | parked |
-| `dragntr3` — Dragon Treasure 3 (Rev A) (GDS-0041A) | `dragntr3` | Medal | 290.1 MB | pending |
+| `dragntr3` — Dragon Treasure 3 (Rev A) (GDS-0041A) | `dragntr3` | Medal | 290.1 MB | parked |
 | `gunsur2` — Gun Survivor 2 Biohazard Code: Veronica (World, BHF2 Ver.E) | `gunsur2` | ? | 175.7 MB | pending |
 | `inunoos` — Inu no Osanpo / Dog Walking (Japan, Export, Rev A) | `inunoos` | ? | 79.7 MB | pending |
 | `mamonoro` — Mamoru-kun wa Norowarete Shimatta! (Japan) | `mamonoro` | ? | 146.1 MB | pending |

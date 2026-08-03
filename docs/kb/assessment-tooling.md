@@ -344,7 +344,14 @@ above dragntr2). G1-class for the record, but all three titles are G2-parked reg
 (satellite medal machines — `medal_hopper`), so the emulator gap needs no fix for this
 campaign. **Second instance confirmed:** dragntr2 (GDS-0037A, 2026-08-03) — same
 `gui.cpp:1358` decrypt-error signature on its zip leg 2 (leg 1 died earlier on an unrelated
-`Verify Failed` dynarec-init flake, driver.cpp:349).
+`Verify Failed` dynarec-init flake, driver.cpp:349). **Third set differs:** dragntr3
+(GDS-0041A, 2026-08-03) does NOT hit the netpic error (the TODO names only dragntr[2]) —
+its zip legs load, run ~31 s, then stall deterministically (2 legs, line-for-line
+identical) on `gdcartridge.cpp:761 W[NAOMI]: Network command received cmd 1. Need full
+NetDIMM?` — the satellite requesting its main unit at runtime; battery aborts the stalled
+GD-splash face at `no-eeprom-180s`. Trio summary: three sets, three zip-leg signatures
+(decrypt ×2 / decrypt + init-flake / network-stall ×2), one shared root cause — satellite
+images without their main unit.
 
 ## 5. Campaign start checklist
 

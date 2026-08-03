@@ -47,7 +47,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Dragon Treasure (Rev A) (GDS-0030A) | `dragntra` | **GD-ROM** | clone of `dragntr` | 142.4 MB | Medal | No | see [`dragntr`](assessments/dragntr.md) |
 | Dragon Treasure (Rev B) (GDS-0030B) | `dragntr` | **GD-ROM** | parent | 142.3 MB | Medal | No | parked G1 · [notes](assessments/dragntr.md) |
 | Dragon Treasure 2 (Rev A) (GDS-0037A) | `dragntr2` | **GD-ROM** | parent | 231.6 MB | Medal | No | parked G1 · [notes](assessments/dragntr2.md) |
-| Dragon Treasure 3 (Rev A) (GDS-0041A) | `dragntr3` | **GD-ROM** | parent | 290.1 MB | Medal | No | not assessed |
+| Dragon Treasure 3 (Rev A) (GDS-0041A) | `dragntr3` | **GD-ROM** | parent | 290.1 MB | Medal | No | parked G1 · [notes](assessments/dragntr3.md) |
 | Guilty Gear XX #Reload (Japan) (GDL-0019) | `ggxxrlo` | **GD-ROM** | clone of `ggxxrl` | 246.9 MB | Fighting | No | not assessed |
 | Guilty Gear XX #Reload (Japan, Rev A) (GDL-0019A) | `ggxxrl` | **GD-ROM** | parent | 254.8 MB | Fighting | No | not assessed |
 | Guilty Gear XX (GDL-0011) | `ggxx` | **GD-ROM** | parent | 250.2 MB | Fighting | No | not assessed |
