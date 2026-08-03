@@ -1,0 +1,102 @@
+{
+  "set": "ausfache",
+  "title": "Akatsuki Blitzkampf Ausf. Achse (Japan)",
+  "maker": "Subtle Style",
+  "year": "2008",
+  "format": "cart",
+  "assessed": "2026-08-03",
+  "versions": {
+    "flycast": "9e882cbd2",
+    "battery": "2",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/ausfache.zip"
+  },
+  "boot": {
+    "ok": true,
+    "failure_class": null,
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 30.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true
+    },
+    "screenshots": [
+      "assessments/evidence/ausfache/shot-060s.png",
+      "assessments/evidence/ausfache/shot-121s.png",
+      "assessments/evidence/ausfache/shot-183s.png",
+      "assessments/evidence/ausfache/shot-246s.png",
+      "assessments/evidence/ausfache/shot-308s.png",
+      "assessments/evidence/ausfache/shot-360s.png",
+      "assessments/evidence/ausfache/shot-422s.png",
+      "assessments/evidence/ausfache/shot-485s.png",
+      "assessments/evidence/ausfache/shot-548s.png",
+      "assessments/evidence/ausfache/shot-600s.png"
+    ],
+    "coverage": "title",
+    "watermarks_info": {
+      "main": 16371936,
+      "vram": 7892608,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "dma_high_water": 4777120
+    },
+    "vram": {
+      "peak": 7892608,
+      "nz_total": 3600148,
+      "nz_above_cap": 0,
+      "regs_last": "isp_base=0 isp_limit=81060 ol_base=ac080 ol_limit=81160 fb_w_sof1=ca000 fb_w_sof2=c00000 fb_r_sof1=4ca000"
+    },
+    "aram": {
+      "peak": 8388608,
+      "nz_above_cap": 6291456
+    }
+  },
+  "streaming": {
+    "dma_events": 415,
+    "total_bytes": 43786240,
+    "unique_bytes": 24932352,
+    "reread_ratio": 0.4306,
+    "steady_mb_per_min": 4.487,
+    "short_window": false
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "static scan: load entry out of file: rom=0x40000000 len=0x100000",
+    "flags": [
+      "eeprom_bios"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "stick",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'naomi'",
+      "Flycast core/hw/naomi/naomi_roms_input.h:195 ausfache_inputs = INPUT_3_BUTTONS('Weak Attack','Medium Attack','Strong Attack')",
+      "https://mizuumi.wiki/w/Akatsuki_Blitzkampf/Controls (A/B/C = weak/medium/strong; throw + Reflector parry on same buttons)",
+      "http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=ausfache (8-way joystick 2P; 6-button figure is the generic JVS declaration)"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": "G3 memory: aram peak > 2x DC capacity",
+  "scores": null
+}

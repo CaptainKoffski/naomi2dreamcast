@@ -312,7 +312,8 @@ nz_total = not running, whatever the score says.
 with `static scan: load entry out of file: rom=0x40000000 len=0x380000` — the carve
 tooling assumes M1/M2-style load tables. (Second instance: illvelo, 841-0059C,
 `rom=0x40000000 len=0x200000`, 2026-08-03. Third: radirgyn, 841-0062C, same
-`rom=0x40000000 len=0x200000`, 2026-08-03.) Result: `guts.dat_available = false`, guts
+`rom=0x40000000 len=0x200000`, 2026-08-03. Fourth: ausfache, 841-0058C,
+`rom=0x40000000 len=0x100000`, 2026-08-03.) Result: `guts.dat_available = false`, guts
 axis silently dropped (weights renormalize per spec §4.3). Fine for a parked title;
 for a *scored* M4 cart the missing guts axis + `similarity.sdk_overlap = none` (no
 sdk_strings) skews the final — flag any scored M4 title for the checkpoint. M4 support
@@ -371,7 +372,10 @@ sidecars — no re-capture needed (the re-assessment rule above applies).
    Radirgy DC 2006), `senko` (2026-08-03 — 8 MiB bank, 6.29 MB nonzero above cap; main
    1.99× also near-gate — heavy either way; G.Rev's own Under Defeat DC port is the
    sibling precedent), `senkosp` (2026-08-03 — 8 MiB bank, 6.29 MB nonzero above cap;
-   main 33,453,344 B byte-identical to senko — same engine, deterministic measurement).
+   main 33,453,344 B byte-identical to senko — same engine, deterministic measurement),
+   `ausfache` (2026-08-03 — 8 MiB bank, 6.29 MB nonzero above cap; main 0.28× and VRAM
+   0.94× BOTH FIT — the only over-budget number is the sound bank; strongest unpark
+   candidate, no port of Ausf. Achse exists anywhere).
 2. **Streaming re-read penalty may be pessimistic for small-working-set loops.** cleoftp
    measured re-read ratio 0.77 (97.8 MiB streamed / 22.8 MiB unique over 600 s of attract
    loops) → streaming axis 69 — yet the actual Cleopatra port streams fine from GD-ROM,

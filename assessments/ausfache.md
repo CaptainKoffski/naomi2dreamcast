@@ -1,0 +1,101 @@
+# Akatsuki Blitzkampf Ausf. Achse (Japan) (841-0058C) (`ausfache`) — portability assessment
+
+## 1. Verdict
+
+| | |
+|---|---|
+| **Final score** | **PARKED — `G3 memory: aram peak > 2x DC capacity`** (not a numeric tier) |
+| Bottom line | The campaign's most extreme "only sound blocks it" case. The full 8 MiB Naomi ARAM bank is written at boot (4.00× the DC's 2 MiB AICA RAM) — the **ninth** boot-time full-bank G3-aram park — and it is the **only** number over budget in the entire sidecar: main-RAM DMA high-water is 4,777,120 B = **0.28×** (fits the DC's 16 MB with ~11 MB to spare, the campaign's lightest by far) and VRAM peak 7,892,608 B = **0.94×** (fits the 8 MB cap outright, nz_total 3,600,148 B, nothing above cap). The doujin-PC-origins prior is confirmed by measurement: 2003–2007-era PC assets fit DC hardware. If the kb §6 checkpoint softens the ARAM rule, ausfache leapfrogs `radirgyn` as THE unpark candidate — and since Ausf. Achse never left the arcade (no port on any platform), a 3-button fighter port would also be the most *valuable* target on the board. |
+| Assessed | 2026-08-03 · battery v2 · flycast `9e882cbd2` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+
+## 2. Identity
+
+| | |
+|---|---|
+| Set / family | `ausfache` (single member — `parent: null` in controls.json, no clones in naomi.cpp) |
+| Maker / year | Subtle Style, 2008 (arcade debut 2008-02-20). Doujin circle founded April 2000; Ausf. Achse is its only Naomi title ([Wikipedia](https://en.wikipedia.org/wiki/Akatsuki_Blitzkampf)) |
+| Genre / format | 2D fighter (queue genre "?" resolved), **cart, Naomi M4** 841-0058C, rom_board id `5504`, ROT0 — MAME src/mame/sega/naomi.cpp @59e7c0b GAME line 11116 (`naomim4`), ROM_START lines 6808–6822: 2× 64 MiB flash (ic8/ic9, IC10/IC11 populated-empty). **Clean PIC key** `317-05130-jpn.ic3` (CRC `eccdcd59`, no BAD_DUMP — contrast zunou's BAD_DUMP key at naomi.cpp:6669 that caused its G1; Flycast fork agrees, naomi_roms.cpp:4583). Arcadeitalia's "BAD DUMP" badge is stale metadata refuted by the primary source |
+| Official DC port | No — and no port of Ausf. Achse exists **anywhere**. Lineage: doujin PC *Akatsuki Shisei Ichigō* (2003) → *Akatsuki Blitzkampf* (PC, 2007-04-30) → *Ausf. Achse* (Naomi, 2008); sequels are the EN-Eins line (System Board Y2 2010, NESiCAxLive 2012/2023). A Windows port of Ausf. Achse announced 2019-03-29 was never released (COVID-delayed) ([Wikipedia](https://en.wikipedia.org/wiki/Akatsuki_Blitzkampf), [Akatsuki/En-Eins wiki](https://akatsuki-en1.fandom.com/wiki/Akatsuki_Blitzkampf)); no PS4 or Steam release |
+| Community ports | None found (searched 2026-08-02) — only generic "can Naomi run on DC" threads ([dreamcast-talk](https://www.dreamcast-talk.com/forum/viewtopic.php?t=2001), [GameFAQs](https://gamefaqs.gamespot.com/boards/916412-dreamcast/73913493)); YouTube "Dreamcast/Naomi" videos are emulator captures. An active Fightcade/Flycast netplay scene runs the Naomi version ([RetroAchievements](https://retroachievements.org/game/17891), [mainline Flycast video](https://www.youtube.com/watch?v=gBJtj_P6HJE)) |
+| Representative choice | Only member of its family |
+
+## 3. Boot & run evidence
+
+Boots: yes · handoff at 30.0 s · run 600 s · rom: `naomi/ausfache.zip` (single clean zip leg)
+Attract/demo reached: **title (conservative)** — sidecar `capture.coverage = "title"`;
+visual classification is impossible (see Display blindness), so the lower-bound label is
+used even though activity metrics show the game running for the full window.
+
+### Display blindness
+
+All 10 battery screenshots share a single MD5 — the same frozen NAOMI cart splash. That
+is a **stale TA frame** left in the GL display path (kb §4.m class, same as `kurucham` /
+`ss2005`), not a hang: underneath it the game verifiably runs — BIOS handoff at 30.0 s,
+3,600,148 B of nonzero VRAM drawn (vs the bare splash's ~237 KiB, kb §4.p), the full
+8 MiB ARAM bank loaded, and 415 cart-DMA events / 43,786,240 B streamed across the
+window. Note the contrast with §2's mainline-Flycast videos: mainline renders the game
+fine; under OUR fork the capture is display-blind — no contradiction, it is the kb §4.m
+stale-TA-frame mechanism in the fork's screenshot path.
+
+Screenshots kept (first + last, identical splash, proving the freeze):
+- `assessments/evidence/ausfache/shot-060s.png` — frozen NAOMI cart splash at t=60 s
+- `assessments/evidence/ausfache/shot-600s.png` — same splash at t=600 s, unchanged
+Anomalies: display blindness as above; none otherwise — single clean leg.
+
+## Gate
+
+**G3 memory: aram peak > 2x DC capacity.** `memory.aram.peak = 8,388,608 B` (exactly
+8 MiB, the full Naomi ARAM bank) against the DC's 2,097,152 B AICA RAM → utilization
+4.00×, past `region_score()`'s `u > 2.0` gate; `nz_above_cap = 6,291,456 B` nonzero
+above the cap at scan. Boot-time full-bank load — **ninth** in the kb §6 tally.
+
+**The sound bank is the only over-budget number in the sidecar.** Main-RAM DMA
+high-water `4,777,120 B` = 0.28× the DC's 16 MB — the campaign's lightest main figure —
+and VRAM peak `7,892,608 B` = 0.94× the 8 MB cap (nz_total `3,600,148 B`,
+`nz_above_cap = 0`). Every prior full-bank park carried at least one other over-cap
+region; ausfache carries none. The measurement confirms the research prior: this is a
+2D sprite fighter whose content was authored for a 2003–2007 low-spec doujin PC, and it
+fits DC budgets everywhere except the luxury full-bank sound load.
+
+What would unblock it: a per-title audio trim (downsample PCM/ADPCM — the standard
+full-bank remedy with released-port precedent, kb §4.d Ikaruga 4× trim) — and nothing
+else. If the kb §6 checkpoint softens the ARAM rule, this is the strongest unpark
+candidate in the campaign, ahead of `radirgyn` (which still carried main 1.17× /
+VRAM 1.33×).
+
+Context values quoted from the sidecar (no axis scores exist — the pipeline stops at
+the gate): streaming 415 DMA events, `43,786,240 B` total / `24,932,352 B` unique,
+re-read ratio 0.4306, steady-state 4.487 MB/min (`short_window: false`). Guts
+**unavailable**: M4 cart breaks the `cart2dat.py` static scan (kb §4.q fourth instance,
+`rom=0x40000000 len=0x100000`) → `guts.dat_available = false`, no sdk_strings, and
+`similarity.sdk_overlap = "none"` is an artifact of that gap, not evidence.
+
+## Risks & notes
+
+- **Port-planning takeaway, stated plainly: everything fits but sound.** Main 0.28×,
+  VRAM 0.94× (all nonzero content below cap), streaming light at 4.487 MB/min — the
+  8 MiB boot-time sound bank is the single blocker, and it is the blocker class with
+  the best released-port precedent (Ikaruga DC's 4× trim). No port of Ausf. Achse
+  exists on any platform, so a DC port would be uniquely valuable, not redundant.
+- **Display-path gap blocks emulator validation under our fork** — a stale TA frame
+  masks a running game (kb §4.m). Mainline Flycast demonstrably renders the title
+  (§2 links), so the gap is fork/capture-side; per the working-style rule, rendering
+  of any ported build must be verified on real DC hardware.
+- **M4 guts gap**: static analysis unavailable (kb §4.q), so code-size/MMIO/SDK
+  evidence is missing — a port project should extract the decrypted M4 image first.
+  M4 support in cart2dat is the fix if M4 titles start scoring.
+- **Controls are the easy axis**: `controls.device_class = stick` — 8-way stick +
+  3 attack buttons (A/B/C = Weak/Medium/Strong; throw and Reflector parry are
+  mechanics on the same buttons), 2P. 1:1 on a stock DC pad (A/B/X + Start) and
+  native on the DC Arcade Stick. Sources: MAME src/mame/sega/naomi.cpp @59e7c0b
+  INPUT_PORTS `naomi` (line 11116); Flycast per-title descriptor
+  `naomi_roms_input.h:195` `INPUT_3_BUTTONS("Weak Attack", "Medium Attack", "Strong
+  Attack")` (strongest citation);
+  [Mizuumi Controls](https://mizuumi.wiki/w/Akatsuki_Blitzkampf/Controls);
+  [arcadeitalia](http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=ausfache)
+  (the "6 buttons" there is the generic JVS standard declaration).
+- Main watermark `16,371,936 B` (informational, stale-data-prone) vs DMA high-water
+  4,777,120 B — a 3.4× gap; per the v1 limitation some CPU-written data above the
+  last DMA'd asset is likely, but even the full watermark still fits under 16 MB.
+- MAME status is the blanket naomi.cpp `GAME_FLAGS` (no per-title signal, kb §4.r);
+  the game runs under our fork and renders under mainline Flycast regardless.
