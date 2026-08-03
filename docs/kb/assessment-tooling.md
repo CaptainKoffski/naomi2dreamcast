@@ -318,6 +318,19 @@ for a *scored* M4 cart the missing guts axis + `similarity.sdk_overlap = none` (
 sdk_strings) skews the final — flag any scored M4 title for the checkpoint. M4 support
 in cart2dat is the fix if M4 titles start scoring.
 
+**r. `controls.json` `not_working` / sidecar `boot.mame_not_working` carry no signal for
+Naomi sets (senko research, 2026-08-03).** `not_working` is uniformly `False` across all
+of `controls.json` for two stacked reasons: (1) `controls_extract.py` line 87 tests
+`"MACHINE_NOT_WORKING" in flags` against the GAME line's *unexpanded* `GAME_FLAGS` macro
+token, which never matches; (2) even a full macro expansion would yield a uniform answer,
+because naomi.cpp's `GAME_FLAGS` (line 10914,
+`MACHINE_IMPERFECT_GRAPHICS|MACHINE_IMPERFECT_SOUND|MACHINE_NOT_WORKING`) is a blanket
+macro applied to every Naomi set — there is no per-title signal to extract either way.
+Consequence: the sidecar's `boot.mame_not_working` is meaningless for naomi.cpp sets, and
+doc phrasings like "MAME marks the set runnable" (used in earlier docs, e.g. kurucham's
+park era) overstate it. Rule: never cite `mame_not_working` as evidence in either
+direction for Naomi titles. No code fix needed — any parse yields a uniform answer.
+
 ## 5. Campaign start checklist
 
 The battery is calibrated (§3) and the queue is generated. From here the campaign is pure
@@ -355,7 +368,9 @@ sidecars — no re-capture needed (the re-assessment rule above applies).
    siblings Radirgy/Karous shipped DC ports with the same engine), `radirgyn` (2026-08-03 —
    second cart, 8 MiB bank, 6.27 MB nonzero above cap; main 1.17×/VRAM 1.33× otherwise
    nearly fit — first unpark candidate if the ARAM rule softens; own franchise shipped
-   Radirgy DC 2006).
+   Radirgy DC 2006), `senko` (2026-08-03 — 8 MiB bank, 6.29 MB nonzero above cap; main
+   1.99× also near-gate — heavy either way; G.Rev's own Under Defeat DC port is the
+   sibling precedent).
 2. **Streaming re-read penalty may be pessimistic for small-working-set loops.** cleoftp
    measured re-read ratio 0.77 (97.8 MiB streamed / 22.8 MiB unique over 600 s of attract
    loops) → streaming axis 69 — yet the actual Cleopatra port streams fine from GD-ROM,
