@@ -1,0 +1,102 @@
+{
+  "set": "mamonoro",
+  "title": "Mamoru-kun wa Norowarete Shimatta! (Japan)",
+  "maker": "G.Rev",
+  "year": "2008",
+  "format": "cart",
+  "assessed": "2026-08-03",
+  "versions": {
+    "flycast": "9e882cbd2",
+    "battery": "2",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/mamonoro.zip"
+  },
+  "boot": {
+    "ok": true,
+    "failure_class": null,
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 40.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true
+    },
+    "screenshots": [
+      "assessments/evidence/mamonoro/shot-060s.png",
+      "assessments/evidence/mamonoro/shot-121s.png",
+      "assessments/evidence/mamonoro/shot-183s.png",
+      "assessments/evidence/mamonoro/shot-246s.png",
+      "assessments/evidence/mamonoro/shot-310s.png",
+      "assessments/evidence/mamonoro/shot-362s.png",
+      "assessments/evidence/mamonoro/shot-426s.png",
+      "assessments/evidence/mamonoro/shot-490s.png",
+      "assessments/evidence/mamonoro/shot-544s.png",
+      "assessments/evidence/mamonoro/shot-609s.png"
+    ],
+    "coverage": "demo",
+    "watermarks_info": {
+      "main": 26744783,
+      "vram": 13449728,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "dma_high_water": 22092160
+    },
+    "vram": {
+      "peak": 13449728,
+      "nz_total": 7166193,
+      "nz_above_cap": 3958684,
+      "regs_last": "isp_base=400000 isp_limit=4c60c0 ol_base=508100 ol_limit=4c61c0 fb_w_sof1=11f000 fb_w_sof2=c00000 fb_r_sof1=51f000"
+    },
+    "aram": {
+      "peak": 8388608,
+      "nz_above_cap": 6291456
+    }
+  },
+  "streaming": {
+    "dma_events": 442,
+    "total_bytes": 102471680,
+    "unique_bytes": 55398400,
+    "reread_ratio": 0.4594,
+    "steady_mb_per_min": 8.909,
+    "short_window": false
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "static scan: load entry out of file: rom=0x40000000 len=0x200000",
+    "flags": [
+      "eeprom_bios"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "stick",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'naomi'",
+      "http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=mamonoro",
+      "https://en.wikipedia.org/wiki/Mamorukun_Curse!",
+      "https://blog.playstation.com/2013/06/25/how-to-shmup-mamorukun-curse-from-the-makers-of-ikaruga/"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": "G3 memory: aram peak > 2x DC capacity",
+  "scores": null
+}

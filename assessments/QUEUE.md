@@ -22,7 +22,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `dragntr3` — Dragon Treasure 3 (Rev A) (GDS-0041A) | `dragntr3` | Medal | 290.1 MB | parked |
 | `gunsur2` — Gun Survivor 2 Biohazard Code: Veronica (World, BHF2 Ver.E) | `gunsur2` | Gun (3-axis) | 175.7 MB | done |
 | `inunoos` — Inu no Osanpo / Dog Walking (Japan, Export, Rev A) | `inunoos` | Simulation | 79.7 MB | parked |
-| `mamonoro` — Mamoru-kun wa Norowarete Shimatta! (Japan) | `mamonoro` | ? | 146.1 MB | pending |
+| `mamonoro` — Mamoru-kun wa Norowarete Shimatta! (Japan) | `mamonoro` | Shmup ★ | 146.1 MB | parked |
 | `marstv` — Kasei Channel Mars TV (Japan) | `marstv` | ? | 57.8 MB | pending |
 | `moeru` — Moeru Casinyo (Japan) (GDL-0013) | `moeru` | ? | 98.0 MB | pending |
 | `pokasuka` — Pokasuka Ghost! (Japan) | `pokasuka` | ? | 142.3 MB | pending |

@@ -148,7 +148,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Jambo! Safari (Rev A) | `jambo` | **cart** | parent | 31.7 MB | Sports | No | not assessed |
 | Kasei Channel Mars TV (Japan) | `marstv` | **cart** | parent | 57.8 MB | ? | No | not assessed |
 | Kick '4' Cash (Export) | `kick4csh` | **cart** | parent | 42.6 MB | Gambling/medal ⚠ | No | not assessed |
-| Mamoru-kun wa Norowarete Shimatta! (Japan) | `mamonoro` | **cart** | parent | 146.1 MB | ? | No | not assessed |
+| Mamoru-kun wa Norowarete Shimatta! (Japan) | `mamonoro` | **cart** | parent | 146.1 MB | Shmup ★ | No | parked G3 · [notes](assessments/mamonoro.md) |
 | Marvel Vs. Capcom 2: New Age of Heroes (Export, Korea, Rev A) | `mvsc2` | **cart** | parent | 87.5 MB | Fighting | Yes (2000) | not assessed |
 | Mazan: Flash of the Blade (World, MAZ2 Ver.A) | `mazan` | **cart** | parent | 73.7 MB | Light-gun | No | not assessed |
 | Melty Blood Actress Again Version A (Japan, Rev A) | `mbaa` | **cart** | parent | 233.9 MB | Fighting | No | not assessed |
