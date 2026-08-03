@@ -422,5 +422,15 @@ sidecars — no re-capture needed (the re-assessment rule above applies).
    high-water with GD streaming volume across the campaign. Candidate fix: subtract (or
    separately report) DMA regions that are re-read-streamed rather than resident.
 
+4. **ARAM-exact-fit as a DC-authoring signal; controls 50 may over-penalize proven pad
+   ports (gunsur2, 2026-08-03).** `gunsur2` is the second ARAM-exact-fit data point after
+   `tetkiwam` (peak exactly 2,097,152 B, `nz_above_cap = 0`) — both are titles with direct
+   DC lineage (tetkiwam ships a DC build; gunsur2 is Nextech's adaptation of its own DC
+   Code: Veronica), so exact-fit ARAM is looking like a reliable authored-for-DC marker.
+   Controls question: `pad_adaptable` = 50 costs gunsur2 ~7 final points vs `dc_peripheral`
+   even though its own PS2 port shipped pad-native on a DualShock 2 — i.e. the adaptation
+   is not hypothetical but an already-shipped design. Check at the checkpoint: should an
+   official pad-native port of the same title lift `pad_adaptable` toward the 75 band?
+
 Rankings stay internally fair meanwhile — every game is measured by the same rules — but
 absolute scores near tier boundaries should be read with these two caveats in mind.
