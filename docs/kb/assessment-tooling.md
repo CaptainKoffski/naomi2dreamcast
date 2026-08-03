@@ -342,7 +342,9 @@ DIMM firmware read frame, so the loader never finds the boot binary. Expect the 
 full binary locally — it is network-uploaded from the main unit per naomi.cpp's comment
 above dragntr2). G1-class for the record, but all three titles are G2-parked regardless
 (satellite medal machines — `medal_hopper`), so the emulator gap needs no fix for this
-campaign.
+campaign. **Second instance confirmed:** dragntr2 (GDS-0037A, 2026-08-03) — same
+`gui.cpp:1358` decrypt-error signature on its zip leg 2 (leg 1 died earlier on an unrelated
+`Verify Failed` dynarec-init flake, driver.cpp:349).
 
 ## 5. Campaign start checklist
 

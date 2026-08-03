@@ -1,0 +1,96 @@
+{
+  "set": "dragntr2",
+  "title": "Dragon Treasure 2 (Rev A) (GDS-0037A)",
+  "maker": "Sega",
+  "year": "2004",
+  "format": "GD-ROM",
+  "assessed": "2026-08-03",
+  "versions": {
+    "flycast": "9e882cbd2",
+    "battery": "2",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/dragntr2/gds-0037a.chd"
+  },
+  "boot": {
+    "ok": false,
+    "failure_class": "no-handoff-120s",
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": false,
+      "t": null,
+      "aram_zeroed": false,
+      "vram_zeroed": false
+    },
+    "screenshots": [
+      "assessments/evidence/dragntr2/shot-060s.png",
+      "assessments/evidence/dragntr2/shot-121s.png"
+    ],
+    "coverage": null,
+    "watermarks_info": {
+      "main": 0,
+      "vram": 0,
+      "aram": 0
+    }
+  },
+  "memory": {
+    "main": {
+      "dma_high_water": 0
+    },
+    "vram": {
+      "peak": 0,
+      "nz_total": 0,
+      "nz_above_cap": 0,
+      "regs_last": ""
+    },
+    "aram": {
+      "peak": 0,
+      "nz_above_cap": 0
+    }
+  },
+  "streaming": {
+    "dma_events": 0,
+    "total_bytes": 0,
+    "unique_bytes": 0,
+    "reread_ratio": 0.0,
+    "steady_mb_per_min": null,
+    "short_window": true
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "skipped (--skip-static or no boot)",
+    "flags": [
+      "eeprom_bios",
+      "network"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "medal_hopper",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'naomi'",
+      "https://www.highwaygames.com/arcade-machines/dragon-treasure-medal-machine-9042/",
+      "MAME src/mame/sega/naomi.cpp @59e7c0b lines 9483-9490: '837-14457 SATL BD NAOMI DGS'; 'requires 837-14381 \"G2 EXPANSION BD\" I/O board, NetDIMM, IC Card reader SAXA HW210 and coin mechanics'; binary only first 16MB locally encrypted, rest network-uploaded from main unit, satellite PIC 317-0390-COM",
+      "https://en.wikipedia.org/wiki/Dragon_Treasure",
+      "http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=dragntr2"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": "G1 broken: no-handoff-120s",
+  "scores": null
+}

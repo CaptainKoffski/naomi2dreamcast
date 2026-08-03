@@ -69,7 +69,7 @@ off-ladder categories of RUNBOOK step 2 simultaneously:
    region (`satl_pic`, 317-0364-COM) alongside the main-unit PIC (naomi.cpp lines 9397–9433).
    The sequels make the dependence explicit: "data starting from 0x1000000 uploaded via network
    to satellite units and later decrypted using keys from satellite security PICs"
-   (naomi.cpp comment above `dragntr2`, lines ~11288–11292).
+   (naomi.cpp comment above `dragntr2`, lines 9483–9487).
 
 Note: arcadeitalia's "8-way joystick / 6 buttons" is MAME's generic `naomi` INPUT_PORTS
 placeholder (the real medal I/O is unemulated — GAME line 11202), not cabinet evidence.
@@ -90,7 +90,7 @@ would only surface the G2 park.
   Same "requires 837-14381 G2 EXPANSION BD, NetDIMM, IC Card reader SAXA HW210 and coin
   mechanics" comment on both ROM_STARTs; both share satellite PIC 317-0390-COM. They are
   **more** main-unit-dependent than DT1: the bulk of their binaries is network-uploaded from
-  the main unit and decrypted with the satellite key (naomi.cpp lines ~11288–11292). The
+  the main unit and decrypted with the satellite key (naomi.cpp lines 9483–9487). The
   netpic TODO names `dragntr[2]` — expect the same zip-leg decrypt failure.
 - **Boot-ID quirk (color):** all three Dragon Treasures boot with the SDK placeholder title
   `SAMPLE GAME MAX LONG NAME-`; Flycast special-cases them by rom name to substitute
