@@ -113,8 +113,9 @@ before treating it as a real failure or escalating to an explicit `--rom` overri
 **Second face on GD sets (kurucham, 2026-08-03):** the flake can also present as the NAOMI
 GD-ROM SYSTEM splash hanging for the entire window *with* a real ARAM handoff and live
 framebuffer flips — no DC BIOS menu, no `no-handoff-120s` abort, so it used to burn the
-full 600 s. Battery now aborts this face at `no-eeprom-180s` (upstream logs "Initializing
-Naomi EEPROM" seconds after any successful launch; its absence past 180 s is the flake)
+full 600 s. Battery now aborts this face at `no-eeprom-180s` (upstream logs "EEPROM: <h/v>
+monitor orientation" seconds after any successful launch; its absence past 180 s is the
+flake — see §4.n for why the earlier "Initializing Naomi EEPROM" marker was wrong)
 and auto-retries once, same as the menu face. **The flake clusters:** kurucham hit 5
 flaky legs across 3 consecutive battery invocations, then 4 consecutive manual/scripted
 launches all booted clean — do NOT read repeated flakes as determinism (see §4.l).
@@ -275,6 +276,17 @@ metrics before parking; visual coverage then can't be classified, so set the
 conservative `coverage = "title"` and document the display blindness. Raw-VRAM frame
 decoding (`FLYCAST_VRAMDUMP` + scratchpad `vramdump2png.py`, FB address/size from the
 `CLEO-VRAMDUMP` log line) is the way to check what such a title actually displays.
+
+**n. "Initializing Naomi EEPROM" is a first-boot line, not a boot marker (ss2005,
+2026-08-03).** `naomi_flashrom.cpp:148` logs it only when Flycast has no saved EEPROM
+for the game; with stored EEPROM data (any previously-launched title) only the
+unconditional `naomi_flashrom.cpp:209` "EEPROM: <horizontal/vertical> monitor
+orientation" line appears. The first `no-eeprom-180s` implementation grepped the
+conditional line and falsely killed 6 consecutive healthy ss2005 legs (game identified
+and running ~4 s after launch, verified by a plain-launch control). `eeprom_seen()` now
+greps "monitor orientation". Boot-marker rule: before trusting any stdout line as a
+universal signal, check its guard conditions in the upstream source — and prefer lines
+logged unconditionally on the success path.
 
 ## 5. Campaign start checklist
 

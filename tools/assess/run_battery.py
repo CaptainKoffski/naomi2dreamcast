@@ -54,11 +54,12 @@ def handoff_seen(logpath):
 
 
 def eeprom_seen(stdout_path):
-    # upstream naomi_flashrom.cpp logs this for every booting game, seconds after
-    # launch on this build — its absence past 180 s is the launch flake (kb §4.a/l)
+    # upstream naomi_flashrom.cpp:209 logs "EEPROM: <h/v> monitor orientation" on
+    # EVERY game boot; "Initializing Naomi EEPROM" fires only when no saved EEPROM
+    # exists (ss2005 false-abort, kb §4.n) — grep the unconditional line
     try:
         with open(stdout_path, "rb") as fh:
-            return b"Initializing Naomi EEPROM" in fh.read()
+            return b"monitor orientation" in fh.read()
     except OSError:
         return False
 
