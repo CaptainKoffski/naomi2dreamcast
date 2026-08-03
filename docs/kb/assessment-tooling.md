@@ -332,6 +332,18 @@ doc phrasings like "MAME marks the set runnable" (used in earlier docs, e.g. kur
 park era) overstate it. Rule: never cite `mame_not_working` as evidence in either
 direction for Naomi titles. No code fix needed — any parse yields a uniform answer.
 
+**s. Dragon Treasure zip legs die deterministically on the fork's netpic TODO (dragntr,
+2026-08-03).** Both zip legs exit with `ui/gui.cpp:1358 E[BOOT]: Naomi GDROM: Could not
+find the file to decrypt.` — first observed instance of the fork's own
+`core/hw/naomi/gdcartridge.cpp:487` TODO biting (`netpic = picdata[0x6ee]; // TODO
+dragntr[2] seem to prefer a 0 here`): the netpic byte from the real PIC misdirects the
+DIMM firmware read frame, so the loader never finds the boot binary. Expect the same for
+`dragntr2`/`dragntr3` (the TODO names dragntr[2]; their satellites don't even hold the
+full binary locally — it is network-uploaded from the main unit per naomi.cpp's comment
+above dragntr2). G1-class for the record, but all three titles are G2-parked regardless
+(satellite medal machines — `medal_hopper`), so the emulator gap needs no fix for this
+campaign.
+
 ## 5. Campaign start checklist
 
 The battery is calibrated (§3) and the queue is generated. From here the campaign is pure
