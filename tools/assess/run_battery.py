@@ -15,7 +15,7 @@ BIN = os.environ.get("FLYCAST_BIN", os.path.join(
     CLEO, "tools/flycast-src/build/Flycast.app/Contents/MacOS/Flycast"))
 ASSESS = os.path.join(REPO, "assessments")
 OUT = os.path.join(HERE, "out")
-BATTERY_VERSION = "3"  # v3: guest-mutating handoff zeroing replaced with host snapshot-diff; Vulkan build (fork 27d12da78) — v2 sidecars measured on a build that couldn't render the no-render class
+BATTERY_VERSION = "4"  # v4: ARAM rebaseline at ARM reset (BIOS 8MB sound-RAM-test sweep polluted first-DMA baselines: exact-0x600000 cohort) + periodic vblank profile sampling (cart-DMA-only sampling missed post-load steady state: ikaruga false no-render). v3: snapshot-diff instead of guest zeroing + Vulkan build. v2 and v3 sidecars are stale.
 HANDOFF_TAGS = (b"ARAMHANDOFF", b"CARTDMA")
 # Sets whose disc/feature set is network-bound (netpic/WCCF/satellite — GAME_FORMATS.md
 # Completeness section). Drives the guts 'network' penalty (spec §4.3).

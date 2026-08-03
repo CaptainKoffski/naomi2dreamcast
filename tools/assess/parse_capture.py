@@ -9,7 +9,8 @@ import bisect, json, re, sys
 MAIN_LO, MAIN_HI = 0x0c000000, 0x0e000000    # Naomi main-RAM physical window
 _DMA = re.compile(r"^CARTDMA src=([0-9a-f]+) dest=([0-9a-f]+) len=([0-9a-f]+)", re.I)
 _WM = re.compile(r"^WATERMARK region=(\w+) used=([0-9a-f]+) size=([0-9a-f]+)", re.I)
-_APROF = re.compile(r"^ARAMPROFILE high=([0-9a-f]+) nz=[0-9a-f]+ nz_below2m=[0-9a-f]+ nz_above2m=([0-9a-f]+)", re.I)
+_APROF = re.compile(r"^ARAMPROFILE high=([0-9a-f]+) nz=[0-9a-f]+ nz_below2m=[0-9a-f]+ nz_above2m=([0-9a-f]+)"
+                    r"(?: content_high=([0-9a-f]+) content_below2m=[0-9a-f]+ content_above2m=([0-9a-f]+))?", re.I)
 _VPROF = re.compile(r"^VRAMPROFILE high=([0-9a-f]+) nz=([0-9a-f]+) nz_below8m=([0-9a-f]+) nz_above8m=([0-9a-f]+)", re.I)
 _VREGS = re.compile(r"^VRAMREGS (.+)$")
 
@@ -43,6 +44,12 @@ def parse(text, timeline=None, handoff_window=120):
             dmas.append((t_of(end), src, dest, length))
         elif s.startswith("ARAMHANDOFF"):
             handoff["aram_zeroed"] = True
+        elif s.startswith("ARAMREBASE"):
+            # fork v4: ARAM baseline re-snapshotted at an AICA ARM reset (the game's
+            # sound-driver upload). Samples before the LAST rebase measured BIOS
+            # sound-RAM-test residue (the exact-0x600000 cohort, 2026-08-04) — the
+            # running max restarts here so peaks reflect the final baseline window.
+            aram = {"peak": 0, "nz_above_cap": 0}
         elif s.startswith("VRAMHANDOFF"):
             handoff["vram_zeroed"] = True
         elif s.startswith("SERIALPOKE"):
@@ -54,8 +61,14 @@ def parse(text, timeline=None, handoff_window=120):
             else:
                 m = _APROF.match(s)
                 if m:
-                    aram["peak"] = max(aram["peak"], int(m.group(1), 16))
-                    aram["nz_above_cap"] = max(aram["nz_above_cap"], int(m.group(2), 16))
+                    # fork v4 logs content_* fields (uniform-fill runs excluded —
+                    # the DIMM firmware's "DMPD" ARAM sweep is not sound content);
+                    # prefer them for the fit metric, fall back to raw diffs on
+                    # older logs
+                    peak_s = m.group(3) if m.group(3) is not None else m.group(1)
+                    above_s = m.group(4) if m.group(4) is not None else m.group(2)
+                    aram["peak"] = max(aram["peak"], int(peak_s, 16))
+                    aram["nz_above_cap"] = max(aram["nz_above_cap"], int(above_s, 16))
                 else:
                     m = _VPROF.match(s)
                     if m:
@@ -106,10 +119,13 @@ def parse(text, timeline=None, handoff_window=120):
                       "short_window": short_window},
         "serial_pokes": serial,
         # total nz, not nz_below8m: CPU-framebuffer 2D titles (kurucham) draw above
-        # the 8 MB line and are invisible to a below-8m check. Threshold 1 MiB: the
-        # bare NAOMI cart splash writes ~237 KiB (zunou false-positive, kb §4.p);
-        # every real boot observed writes >=2.29 MiB (tetkiwam, the smallest)
-        "boot_ok": bool(handoff["seen"] and vram["nz_total"] >= 0x100000),
+        # the 8 MB line and are invisible to a below-8m check. Threshold 512 KiB:
+        # the bare NAOMI cart splash writes ~237 KiB (zunou false-positive, kb §4.p);
+        # ikaruga's fully-rendered title screen measures 0.96 MiB (2026-08-04 — a
+        # static hardware-rendered title uploads ~1 MB of textures and nothing
+        # else; the old 1 MiB line false-parked it as no-render), so the threshold
+        # sits at the widest gap between splash and the smallest real boot
+        "boot_ok": bool(handoff["seen"] and vram["nz_total"] >= 0x80000),
     }
 
 
