@@ -358,6 +358,14 @@ GD-splash face at `no-eeprom-180s`. Trio summary: three sets, three zip-leg sign
 (decrypt ×2 / decrypt + init-flake / network-stall ×2), one shared root cause — satellite
 images without their main unit.
 
+**t. "requires 837-13844 JVS IO" in naomi.cpp does NOT imply exotic hardware (inunoos,
+2026-08-03).** 837-13844 is the standard encoder/analog-capable "I/O CNTL BD2" — Marine
+Fishing, Touch de Uno, Tokyo Bus Guide and inunoos all use it, mode-selected per game by
+DIPSW (naomi.cpp @59e7c0b lines 291–544, board firmware line 1028); only the input
+DEVICE wired on top of it matters for G2 calls. inunoos's treadmill + leash are plain
+rotary encoders on that board — upstream Flycast maps them to mouse movement
+(maple_jvs.cpp:1556–1560, 2388–2409) — hence `awkward`, not a G2 park.
+
 ## 5. Campaign start checklist
 
 The battery is calibrated (§3) and the queue is generated. From here the campaign is pure
@@ -401,7 +409,9 @@ sidecars — no re-capture needed (the re-assessment rule above applies).
    main 33,453,344 B byte-identical to senko — same engine, deterministic measurement),
    `ausfache` (2026-08-03 — 8 MiB bank, 6.29 MB nonzero above cap; main 0.28× and VRAM
    0.94× BOTH FIT — the only over-budget number is the sound bank; strongest unpark
-   candidate, no port of Ausf. Achse exists anywhere).
+   candidate, no port of Ausf. Achse exists anywhere), `inunoos` (2026-08-03 — TENTH,
+   and the earliest: a 2001 M2 cart, 8 MiB bank, 4.53 MB nonzero above cap — full-bank
+   loading was common Naomi practice from the start, not a late-era luxury).
 2. **Streaming re-read penalty may be pessimistic for small-working-set loops.** cleoftp
    measured re-read ratio 0.77 (97.8 MiB streamed / 22.8 MiB unique over 600 s of attract
    loops) → streaming axis 69 — yet the actual Cleopatra port streams fine from GD-ROM,
