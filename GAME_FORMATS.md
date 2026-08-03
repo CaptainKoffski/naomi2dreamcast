@@ -162,7 +162,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Project Justice / Moero! Justice Gakuen (Rev B) | `pjustic` | **cart** | parent | 126.1 MB | Fighting | Yes (2000) | not assessed |
 | Puyo Puyo Da! (Japan) | `puyoda` | **cart** | parent | 111.0 MB | Puzzle ★ | Yes (1999) | not assessed |
 | Quiz Aa! Megami-sama ~Tatakau Tsubasa to Tomoni~ (Japan) | `qmegamis` | **cart** | parent | 60.0 MB | Quiz ⚠ | No | not assessed |
-| Radirgy Noa (Japan) | `radirgyn` | **cart** | parent | 107.4 MB | Shmup ★ | No | not assessed |
+| Radirgy Noa (Japan) | `radirgyn` | **cart** | parent | 107.4 MB | Shmup ★ | No | parked G3 · [notes](assessments/radirgyn.md) |
 | Rhythm Tengoku (Japan) | `rhytngk` | **cart** | parent | 119.9 MB | Rhythm | No | not assessed |
 | Ring Out 4x4 (Rev A) | `ringout` | **cart** | parent | 39.0 MB | ? | No | not assessed |
 | Samba de Amigo ver. 2000 (Japan) | `samba2k` | **cart** | parent | 159.5 MB | Rhythm | Yes (2000) | not assessed |

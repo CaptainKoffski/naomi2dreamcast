@@ -1,0 +1,99 @@
+{
+  "set": "radirgyn",
+  "title": "Radirgy Noa (Japan)",
+  "maker": "Milestone / Lucky",
+  "year": "2009",
+  "format": "cart",
+  "assessed": "2026-08-03",
+  "versions": {
+    "flycast": "9e882cbd2",
+    "battery": "2",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/radirgyn.zip"
+  },
+  "boot": {
+    "ok": true,
+    "failure_class": null,
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 30.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true
+    },
+    "screenshots": [
+      "assessments/evidence/radirgyn/shot-060s.png",
+      "assessments/evidence/radirgyn/shot-121s.png",
+      "assessments/evidence/radirgyn/shot-183s.png",
+      "assessments/evidence/radirgyn/shot-246s.png",
+      "assessments/evidence/radirgyn/shot-308s.png",
+      "assessments/evidence/radirgyn/shot-360s.png",
+      "assessments/evidence/radirgyn/shot-424s.png",
+      "assessments/evidence/radirgyn/shot-487s.png",
+      "assessments/evidence/radirgyn/shot-549s.png",
+      "assessments/evidence/radirgyn/shot-602s.png"
+    ],
+    "coverage": "demo",
+    "watermarks_info": {
+      "main": 24850767,
+      "vram": 11195744,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "dma_high_water": 19552576
+    },
+    "vram": {
+      "peak": 11195744,
+      "nz_total": 5557130,
+      "nz_above_cap": 2335723,
+      "regs_last": "isp_base=400000 isp_limit=4fc8a0 ol_base=550b80 ol_limit=4fc9a0 fb_w_sof1=16a000 fb_w_sof2=c00000 fb_r_sof1=56a000"
+    },
+    "aram": {
+      "peak": 8388608,
+      "nz_above_cap": 6269011
+    }
+  },
+  "streaming": {
+    "dma_events": 290,
+    "total_bytes": 40585216,
+    "unique_bytes": 14110720,
+    "reread_ratio": 0.6523,
+    "steady_mb_per_min": 3.724,
+    "short_window": false
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "static scan: load entry out of file: rom=0x40000000 len=0x200000",
+    "flags": [
+      "eeprom_bios"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "stick",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'naomi'"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": "G3 memory: aram peak > 2x DC capacity",
+  "scores": null
+}

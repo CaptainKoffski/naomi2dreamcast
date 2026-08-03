@@ -13,7 +13,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `tetkiwam` — Tetris Kiwamemichi (Japan) (GDL-0020) | `tetkiwam` | Puzzle ★ | 62.3 MB | done |
 | `zunou` — Touch De Zunou (Japan, Rev A) | `zunou` | Puzzle ★ | 61.9 MB | parked |
 | `illvelo` — Illvelo (Illmatic Envelope) (Japan) | `illvelo` | Shmup ★ | 88.4 MB | parked |
-| `radirgyn` — Radirgy Noa (Japan) | `radirgyn` | Shmup ★ | 107.4 MB | pending |
+| `radirgyn` — Radirgy Noa (Japan) | `radirgyn` | Shmup ★ | 107.4 MB | parked |
 | `senko` — Senko no Ronde (Japan, Rev A) (GDL-0030A) | `senko`, `senkoo` | Shmup ★ | 241.0 MB | pending |
 | `senkosp` — Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | Shmup ★ | 237.7 MB | pending |
 | `ausfache` — Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | ? | 75.4 MB | pending |
