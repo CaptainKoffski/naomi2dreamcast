@@ -143,7 +143,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Gun Survivor 2 Biohazard Code: Veronica (World, BHF2 Ver.E) | `gunsur2` | **cart** | parent | 175.7 MB | ? | No | not assessed |
 | Heavy Metal: Geomatrix (Rev B) | `hmgeo` | **cart** | parent | 74.4 MB | Fighting | Yes (2001) | not assessed |
 | Idol Janshi Suchie-Pai 3 (Japan) | `suchie3` | **cart** | parent | 102.3 MB | Mahjong ⚠ | Partial | not assessed |
-| Illvelo (Illmatic Envelope) (Japan) | `illvelo` | **cart** | parent | 88.4 MB | Shmup ★ | No | not assessed |
+| Illvelo (Illmatic Envelope) (Japan) | `illvelo` | **cart** | parent | 88.4 MB | Shmup ★ | No | parked G3 · [notes](assessments/illvelo.md) |
 | Inu no Osanpo / Dog Walking (Japan, Export, Rev A) | `inunoos` | **cart** | parent | 79.7 MB | ? | No | not assessed |
 | Jambo! Safari (Rev A) | `jambo` | **cart** | parent | 31.7 MB | Sports | No | not assessed |
 | Kasei Channel Mars TV (Japan) | `marstv` | **cart** | parent | 57.8 MB | ? | No | not assessed |

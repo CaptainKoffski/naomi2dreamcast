@@ -310,7 +310,8 @@ nz_total = not running, whatever the score says.
 
 **q. M4-format carts break `cart2dat.py` static scan.** zunou (840-0166C, M4) fails
 with `static scan: load entry out of file: rom=0x40000000 len=0x380000` — the carve
-tooling assumes M1/M2-style load tables. Result: `guts.dat_available = false`, guts
+tooling assumes M1/M2-style load tables. (Second instance: illvelo, 841-0059C,
+`rom=0x40000000 len=0x200000`, 2026-08-03.) Result: `guts.dat_available = false`, guts
 axis silently dropped (weights renormalize per spec §4.3). Fine for a parked title;
 for a *scored* M4 cart the missing guts axis + `similarity.sdk_overlap = none` (no
 sdk_strings) skews the final — flag any scored M4 title for the checkpoint. M4 support
@@ -348,7 +349,9 @@ sidecars — no re-capture needed (the re-assessment rule above applies).
    (2026-08-02, first queue family — 8 MiB voice/BGM bank; but note its main 1.29× and
    VRAM 1.84× would keep it low-tier even with a softer ARAM rule), `ss2005`
    (2026-08-03 — 8 MiB bank, 6.29 MB nonzero above cap; main 1.64× also over), `takoron`
-   (2026-08-03 — 8 MiB bank, 4.43 MB nonzero above cap; main 1.75× and VRAM 1.81× also over).
+   (2026-08-03 — 8 MiB bank, 4.43 MB nonzero above cap; main 1.75× and VRAM 1.81× also over),
+   `illvelo` (2026-08-03 — first CART in the tally, 8 MiB bank, 6.29 MB nonzero above cap;
+   siblings Radirgy/Karous shipped DC ports with the same engine).
 2. **Streaming re-read penalty may be pessimistic for small-working-set loops.** cleoftp
    measured re-read ratio 0.77 (97.8 MiB streamed / 22.8 MiB unique over 600 s of attract
    loops) → streaming axis 69 — yet the actual Cleopatra port streams fine from GD-ROM,
