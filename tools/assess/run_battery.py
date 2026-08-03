@@ -216,6 +216,12 @@ def main():
     log = timeline = shots = None
     aborted, rom_used, best = "no-candidates", None, None
     raw = os.path.join(ASSESS, "evidence", setname, "raw")
+    # SSD hygiene: prior families' raw captures are regenerable scratch and grew past
+    # 10 GB by family 18 (mamonoro's run died ENOSPC mid-screenshot) — drop every
+    # other set's raw dir before capturing
+    for other in glob.glob(os.path.join(ASSESS, "evidence", "*", "raw")):
+        if other != raw:
+            shutil.rmtree(other, ignore_errors=True)
     for stale in glob.glob(os.path.join(raw, "stdout-leg*.log")):
         os.remove(stale)
     leg = 0

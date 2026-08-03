@@ -366,6 +366,14 @@ DEVICE wired on top of it matters for G2 calls. inunoos's treadmill + leash are 
 rotary encoders on that board — upstream Flycast maps them to mouse movement
 (maple_jvs.cpp:1556–1560, 2388–2409) — hence `awkward`, not a G2 park.
 
+**u. Raw capture debris fills the SSD by ~family 18 (2026-08-03).** Per-family
+`raw/cartlog.txt` files run 100–500 MB and were never cleaned across families; mamonoro's
+battery died `ENOSPC` mid-screenshot with the volume so full that even tool logging
+failed (recovery required a manual `rm -rf assessments/evidence/*/raw` from the user).
+The battery now deletes every OTHER set's `raw/` dir at run start — raw is regenerable
+scratch by design (§2), so nothing of record is lost; the current set's raw survives
+until the next family's run for post-hoc diagnosis.
+
 ## 5. Campaign start checklist
 
 The battery is calibrated (§3) and the queue is generated. From here the campaign is pure
