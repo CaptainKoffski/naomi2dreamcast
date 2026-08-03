@@ -318,7 +318,8 @@ sidecars — no re-capture needed (the re-assessment rule above applies).
    multiple, or score heavy-ARAM overshoot low instead of parking.
    Tally of G3-aram boot-time full-bank loads: `ikaruga` (calibration), `azumanga`
    (2026-08-02, first queue family — 8 MiB voice/BGM bank; but note its main 1.29× and
-   VRAM 1.84× would keep it low-tier even with a softer ARAM rule).
+   VRAM 1.84× would keep it low-tier even with a softer ARAM rule), `ss2005`
+   (2026-08-03 — 8 MiB bank, 6.29 MB nonzero above cap; main 1.64× also over).
 2. **Streaming re-read penalty may be pessimistic for small-working-set loops.** cleoftp
    measured re-read ratio 0.77 (97.8 MiB streamed / 22.8 MiB unique over 600 s of attract
    loops) → streaming axis 69 — yet the actual Cleopatra port streams fine from GD-ROM,
