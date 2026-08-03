@@ -1,0 +1,105 @@
+{
+  "set": "zunou",
+  "title": "Touch De Zunou (Japan, Rev A)",
+  "maker": "Sega",
+  "year": "2006",
+  "format": "cart",
+  "assessed": "2026-08-03",
+  "versions": {
+    "flycast": "9e882cbd2",
+    "battery": "2",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/zunou.zip"
+  },
+  "boot": {
+    "ok": false,
+    "failure_class": "no-render-after-handoff",
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 40.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true
+    },
+    "screenshots": [
+      "assessments/evidence/zunou/shot-060s.png",
+      "assessments/evidence/zunou/shot-121s.png",
+      "assessments/evidence/zunou/shot-183s.png",
+      "assessments/evidence/zunou/shot-245s.png",
+      "assessments/evidence/zunou/shot-306s.png",
+      "assessments/evidence/zunou/shot-368s.png",
+      "assessments/evidence/zunou/shot-420s.png",
+      "assessments/evidence/zunou/shot-482s.png",
+      "assessments/evidence/zunou/shot-544s.png",
+      "assessments/evidence/zunou/shot-606s.png"
+    ],
+    "coverage": null,
+    "watermarks_info": {
+      "main": 25419659,
+      "vram": 14423814,
+      "aram": 49402
+    }
+  },
+  "memory": {
+    "main": {
+      "dma_high_water": 26723680
+    },
+    "vram": {
+      "peak": 14423814,
+      "nz_total": 242798,
+      "nz_above_cap": 126612,
+      "regs_last": "isp_base=400000 isp_limit=50f700 ol_base=555780 ol_limit=50f800 fb_w_sof1=c00000 fb_w_sof2=c00000 fb_r_sof1=800000"
+    },
+    "aram": {
+      "peak": 49402,
+      "nz_above_cap": 0
+    }
+  },
+  "streaming": {
+    "dma_events": 316,
+    "total_bytes": 9425568,
+    "unique_bytes": 9425568,
+    "reread_ratio": 0.0,
+    "steady_mb_per_min": 0.0,
+    "short_window": false
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "skipped (--skip-static or no boot)",
+    "flags": [
+      "eeprom_bios"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "dc_peripheral",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'naomi'",
+      "MAME src/mame/sega/naomi.cpp @59e7c0b line 697: 'requires 837-14672 sensor board (SH4 based)' (cabinet is a touchscreen; generic 'naomi' ports are the kb 4.g trap)",
+      "Flycast core/hw/naomi/touchscreen.cpp @9e882cbd2 lines 35-44: '837-14672 touchscreen sensor board / used by Manic Panic Ghosts and Touch De Zunou' — SCIF serial pipe, reduces panel to per-player absPos + button A",
+      "Flycast core/hw/naomi/naomi_cart.cpp @9e882cbd2 line 691: gameId 'TOUCH DE ZUNO (JAPAN)' triggers touchscreen::init()",
+      "https://www.citylan.it/index.php/Touch_De_Zunou_(Japan,_Rev_A) (mirrors the MAME 837-14672 sensor-board comment)",
+      "http://adb.arcadeitalia.net/?mame=zunou (generic 8-way/6-button declaration — mirrors MAME generic ports, not cabinet evidence)",
+      "https://gamesdb.launchbox-app.com/games/details/102498-touch-de-zunou (full JP title 'Zunou Nouryoku Koujou Machine Touch de Zunou: Tanoshiku check? Soretomo Battle!?')"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": "G1 broken: no-render-after-handoff",
+  "scores": null
+}

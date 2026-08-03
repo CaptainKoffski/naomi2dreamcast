@@ -177,7 +177,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | The Typing of the Dead (Rev A) | `totd` | **cart** | parent | 89.4 MB | Typing ⚠ | Yes (2000) | not assessed |
 | Tokyo Bus Guide (Japan, Rev A) | `tokyobus` | **cart** | parent | 81.8 MB | Driving | Yes (1999) | not assessed |
 | Touch de Uno! 2 (Japan) | `tduno2` | **cart** | parent | 49.9 MB | ? | No | not assessed |
-| Touch De Zunou (Japan, Rev A) | `zunou` | **cart** | parent | 61.9 MB | Puzzle ★ | No | not assessed |
+| Touch De Zunou (Japan, Rev A) | `zunou` | **cart** | parent | 61.9 MB | Puzzle ★ | No | parked G1 · [notes](assessments/zunou.md) |
 | Toy Fighter | `toyfight` | **cart** | parent | 46.0 MB | Fighting | No | not assessed |
 | Virtua NBA (USA) | `virnba` | **cart** | parent | 100.2 MB | Sports | No | not assessed |
 | Virtua Striker 2 Ver. 2000 (Rev C) | `vs2_2k` | **cart** | parent | 60.9 MB | ? | Yes (2000) | not assessed |
