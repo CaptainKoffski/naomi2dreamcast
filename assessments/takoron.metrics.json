@@ -1,0 +1,227 @@
+{
+  "set": "takoron",
+  "title": "Noukone Puzzle Takoron (Japan) (GDL-0042)",
+  "maker": "Compile Heart",
+  "year": "2006",
+  "format": "GD-ROM",
+  "assessed": "2026-08-03",
+  "versions": {
+    "flycast": "9e882cbd2",
+    "battery": "2",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/takoron.zip"
+  },
+  "boot": {
+    "ok": true,
+    "failure_class": null,
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 30.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true
+    },
+    "screenshots": [
+      "assessments/evidence/takoron/shot-060s.png",
+      "assessments/evidence/takoron/shot-121s.png",
+      "assessments/evidence/takoron/shot-183s.png",
+      "assessments/evidence/takoron/shot-245s.png",
+      "assessments/evidence/takoron/shot-307s.png",
+      "assessments/evidence/takoron/shot-369s.png",
+      "assessments/evidence/takoron/shot-420s.png",
+      "assessments/evidence/takoron/shot-482s.png",
+      "assessments/evidence/takoron/shot-545s.png",
+      "assessments/evidence/takoron/shot-607s.png"
+    ],
+    "coverage": "title",
+    "watermarks_info": {
+      "main": 30425060,
+      "vram": 15222784,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "dma_high_water": 29360128
+    },
+    "vram": {
+      "peak": 15222784,
+      "nz_total": 5729465,
+      "nz_above_cap": 5728565,
+      "regs_last": "isp_base=0 isp_limit=283920 ol_base=35a180 ol_limit=283a20 fb_w_sof1=36a000 fb_w_sof2=c00000 fb_r_sof1=76a000"
+    },
+    "aram": {
+      "peak": 8388608,
+      "nz_above_cap": 4429878
+    }
+  },
+  "streaming": {
+    "dma_events": 75,
+    "total_bytes": 62215616,
+    "unique_bytes": 39146944,
+    "reread_ratio": 0.3708,
+    "steady_mb_per_min": 4.987,
+    "short_window": false
+  },
+  "guts": {
+    "code_bytes": 4194304,
+    "functions": 809,
+    "mmio_refs": {
+      "rtc": 4,
+      "g2ext": 30,
+      "scif": 2
+    },
+    "bios_refs": {},
+    "dat_available": true,
+    "carve_meta": {
+      "base": "0x0c020000",
+      "entry": "0x0c020800",
+      "size": 4194304,
+      "entries": [
+        [
+          0,
+          201457664,
+          4194304
+        ]
+      ],
+      "hdr_at": 0,
+      "title": "TAKO RON"
+    },
+    "flags": [
+      "eeprom_bios",
+      "serial",
+      "rtc"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": [
+      "CREDIT TO START                 CREDIT TO CONTINUE              ",
+      "- GAME TEST MENU -",
+      "INPUT TEST",
+      "GAME ASSIGNMENTS",
+      "BACKUP DATA CLEAR",
+      "SELECT WITH SERVICE BUTTON  AND PRESS TEST BUTTON",
+      "<<   INPUT TEST   >>",
+      "           1P   2P",
+      "UP       :",
+      "DOWN     :",
+      "LEFT     :",
+      "RIGHT    :",
+      "ROTATE(L):",
+      "ROTATE(R):",
+      "CANCEL   :",
+      "START    :",
+      "SERVICE  :",
+      "TEST     :",
+      "PRESS TEST AND SERVICE BUTTON TO EXIT",
+      "<<GAME ASSIGNMENTS>>",
+      "GAME LEVEL",
+      "  EASY < 1 2 3 4 5 > HARD",
+      "2P MODE WIN POINT",
+      "       < 1 2 3 4 > ",
+      "SPEED UP TIME(SEC)",
+      "       < 060 090 120 150 NON > ",
+      "<<BACKUP DATA CLEAR>>",
+      "YES(CLEAR)  COMPLETED",
+      "YES(CLEAR)",
+      "NO (CANCEL)",
+      "MAIN BD ID  %s",
+      "DIMM BD ID  %s",
+      "I/O BD IS NOT CONNECTED TO NAOMI BD.",
+      "COM. ERROR OCCURRED BETWEEN",
+      "                  NAOMI BD AND I/O BD.",
+      "I/O BOARD SPECIFICATION",
+      "~~~~~~~~~~~~~~~~~~~~~~~",
+      "  NAME         %s ",
+      "  PLAYERS      %d ",
+      "     BITS      %d ",
+      "     BYTES     %d ",
+      "  COIN CHUTES  %d ",
+      "  A/D CHANNELS %d ",
+      "I/O BD CONNECTED TO NAOMI BD",
+      "DOES NOT FULFILL THE GAME SPECS.",
+      "COIN CHUTE TYPE IS INDIVIDUAL.",
+      "SET COMMON IN COIN ASSIGNMENTS ",
+      "                         OF TEST MODE.",
+      "ERR_EEPROM_SIZE",
+      "ERR_BACKUP_SIZE",
+      "               WARNING",
+      "THIS GAME IS TO BE USED ONLY IN JAPAN.",
+      "EXPORT, SALES, DISTRIBUTION AND/OR",
+      "OPERATION OUTSIDE THIS AREA MAY",
+      "CONSTITUTE A VIOLATION OF INTERNATIONAL",
+      "LAWS ON COPYRIGHTS AND/OR INDUSTRIAL",
+      "PROPERTY RIGHTS AND SUBJECT THE",
+      "VIOLATING PARTY TO LEGAL PROCEEDINGS.",
+      "                (C)2006 COMPILE HEART",
+      "libintr Ver 1.051 Build:Feb 21 2000 21:12:57",
+      "nlajamma Ver 1.01 Build:May 18 2001 18:15:03",
+      "libsnd Ver.1.05a Build:Mar 16 2001 10:24:59",
+      "COPYRIGHT (C) SEGA ENTERPRISES,LTD.",
+      "NAOMI LIBRARY Ver 0.9 AM R&D",
+      "NAOMI LIBRARY Ver 0.9 AM R&D Build:Dec 17 2001 14:53:02",
+      "NLOBJPUT Ver 0.99 COPYRIGHT (C) SEGA ENTERPRISES,LTD.",
+      "NLOBJPUT Ver 0.99 SOFT R&D1 Build:Jul 30 2001 10:22:46",
+      "NLSPRITE Ver 0.21 COPYRIGHT (C) SEGA ENTERPRISES,LTD.",
+      "libspr Ver 0.21 Build:Oct 24 2002 10:43:33",
+      "syHw Ver 1.08am Build:Apr 15 2003 14:03:40",
+      "KAMUI2 Copyright (C) NEC Corporation 1999 kamui2 Ver 16,3,5,0 Build:Feb 24 2000 12:36:29",
+      "syExtChk Ver 2.04 Build:Dec 14 2000 15:49:52",
+      "syCache Ver 2.01 Build:Mar 01 2000 22:08:51",
+      "sySq Ver 1.50 Build:May 31 1999 16:26:00",
+      "syChain Ver 1.50am Build:Apr 15 2003 14:03:38",
+      "syInt Ver 2.02am Build:Apr 15 2003 14:03:39",
+      "syTmr Ver 1.04am Build:Apr 15 2003 14:03:41",
+      "syMmu Ver 1.50 Build:May 31 1999 16:25:13",
+      "syG2 Ver 1.02.02 Build:Oct 26 2000 16:59:55",
+      "KAMUI-Darkness Copyright (C) NEC Corporation 1999 kmdk Ver 1,3,2,0 Build:Feb 24 2000 12:34:26",
+      " --- ADDRESS CHECKER TRAP --- ",
+      "FR0-7:    ",
+      "FR8-15:   ",
+      "FR0-7(B): ",
+      "FR8-15(B):",
+      "R0-7:     ",
+      "R8-15:    ",
+      "R0-7(B):  ",
+      "Please, cancel the interrupt from ADRESS CHECKER, then hit RETURN key.",
+      "Please, cancel the interrupt from ADRESS CHECKER.",
+      "NTERPRISES CO,LTD.  1998",
+      "Mioz/Version 0.136000/Fri Dec 14 2001/NAOMI0.136000, Fri Dec 14 20011.400000, 13354.I1.500000, COMMAND.I1.300000, EEPROM.S1.300000, INTR.S1.400000, JVS.S1.100000, JVS1109.S1.300000, MACRO.I1.600000, MAIN.S1.500000, RAM.I1.200000, RS422.S",
+      "NTERPRISES CO,LTD.  1998",
+      "nlam/Version 2.220830/Wed Sep 7 2005/NAOMI LIBRARY FOR AM ",
+      "@Wed Sep 7 2005",
+      "?comread.c,v",
+      "?eeprom.c,v",
+      "?eeprom.h,v",
+      "?mapleam.h,v",
+      "?romread.c,v",
+      "?usereep.c,v"
+    ]
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "stick",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'naomi'",
+      "http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=takoron (8-way joystick + 6-button JVS standard declaration, 2P solo/concurrent)",
+      "https://gamesdb.launchbox-app.com/games/details/37904-noukone-puzzle-takoron (cursor movement + Main button rotates octopuses counter-clockwise)",
+      "https://en.wikipedia.org/wiki/Octomania (Wii port plays with pointer + single rotate button; arcade original 2006 Naomi GD-ROM)"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "partial",
+    "cart_loader_match": true
+  },
+  "gate": "G3 memory: aram peak > 2x DC capacity",
+  "scores": null
+}

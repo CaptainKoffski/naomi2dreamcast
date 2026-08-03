@@ -70,7 +70,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Moeru Casinyo (Japan) (GDL-0013) | `moeru` | **GD-ROM** | parent | 98.0 MB | ? | No | not assessed |
 | Monkey Ball (GDS-0008) | `monkeyba` | **GD-ROM** | parent | 82.5 MB | Action | No | not assessed |
 | Musapey's Choco Marker (Rev A) (GDL-0014A) | `chocomk` | **GD-ROM** | parent | 68.5 MB | Puzzle ★ | Yes (2002) | not assessed |
-| Noukone Puzzle Takoron (Japan) (GDL-0042) | `takoron` | **GD-ROM** | parent | 52.6 MB | Puzzle ★ | No | not assessed |
+| Noukone Puzzle Takoron (Japan) (GDL-0042) | `takoron` | **GD-ROM** | parent | 52.6 MB | Puzzle ★ | No | parked G3 · [notes](assessments/takoron.md) |
 | Psyvariar 2 - The Will To Fabricate (Japan) (GDL-0024) | `psyvar2` | **GD-ROM** | parent | 136.7 MB | Shmup ★ | Yes (2004) | not assessed |
 | Puyo Pop Fever (World) (GDS-0034) | `puyofev` | **GD-ROM** | parent | 150.3 MB | Puzzle ★ | Yes (2004) | not assessed |
 | Puyo Puyo Fever (Japan) (GDS-0031) | `puyofevj` | **GD-ROM** | clone of `puyofev` | 141.1 MB | Puzzle ★ | Yes (2004) | not assessed |
