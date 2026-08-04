@@ -4,10 +4,10 @@
   "maker": "G.Rev",
   "year": "2005",
   "format": "GD-ROM",
-  "assessed": "2026-08-03",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -26,23 +26,23 @@
   "capture": {
     "handoff": {
       "seen": true,
-      "t": 30.0,
+      "t": 20.0,
       "aram_zeroed": true,
       "vram_zeroed": true
     },
     "screenshots": [
       "assessments/evidence/senko/shot-060s.png",
       "assessments/evidence/senko/shot-121s.png",
-      "assessments/evidence/senko/shot-183s.png",
-      "assessments/evidence/senko/shot-246s.png",
-      "assessments/evidence/senko/shot-308s.png",
-      "assessments/evidence/senko/shot-360s.png",
-      "assessments/evidence/senko/shot-422s.png",
-      "assessments/evidence/senko/shot-485s.png",
+      "assessments/evidence/senko/shot-182s.png",
+      "assessments/evidence/senko/shot-243s.png",
+      "assessments/evidence/senko/shot-304s.png",
+      "assessments/evidence/senko/shot-365s.png",
+      "assessments/evidence/senko/shot-426s.png",
+      "assessments/evidence/senko/shot-487s.png",
       "assessments/evidence/senko/shot-548s.png",
-      "assessments/evidence/senko/shot-601s.png"
+      "assessments/evidence/senko/shot-609s.png"
     ],
-    "coverage": "demo",
+    "coverage": "title",
     "watermarks_info": {
       "main": 33554341,
       "vram": 12931936,
@@ -55,21 +55,21 @@
     },
     "vram": {
       "peak": 12931936,
-      "nz_total": 5070220,
-      "nz_above_cap": 4021088,
-      "regs_last": "isp_base=0 isp_limit=2200e0 ol_base=2d5680 ol_limit=2201e0 fb_w_sof1=6ea000 fb_w_sof2=c00000 fb_r_sof1=2ea000"
+      "nz_total": 5110148,
+      "nz_above_cap": 4072382,
+      "regs_last": "isp_base=400000 isp_limit=6200e0 ol_base=6d5680 ol_limit=6201e0 fb_w_sof1=6ea000 fb_w_sof2=c00000 fb_r_sof1=2ea000"
     },
     "aram": {
-      "peak": 8388608,
-      "nz_above_cap": 6291456
+      "peak": 2097136,
+      "nz_above_cap": 0
     }
   },
   "streaming": {
-    "dma_events": 337,
-    "total_bytes": 56293376,
-    "unique_bytes": 29962240,
-    "reread_ratio": 0.4677,
-    "steady_mb_per_min": 5.559,
+    "dma_events": 348,
+    "total_bytes": 61810688,
+    "unique_bytes": 34125824,
+    "reread_ratio": 0.4479,
+    "steady_mb_per_min": 5.555,
     "short_window": false
   },
   "guts": {
@@ -568,6 +568,14 @@
     "sdk_overlap": "partial",
     "cart_loader_match": true
   },
-  "gate": "G3 memory: aram peak > 2x DC capacity",
-  "scores": null
+  "gate": null,
+  "scores": {
+    "memory": 10.2,
+    "streaming": 82.6,
+    "guts": 85.0,
+    "controls": 100.0,
+    "similarity": 70.0,
+    "final": 36.1,
+    "tier": "C"
+  }
 }

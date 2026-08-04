@@ -1,5 +1,35 @@
 # Senko no Ronde (Japan, Rev A) (GDL-0030A) (`senko`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **36.1 (C)**.**
+> v2 parked it G3-aram via the DMPD fill artifact. v4: scored. Coverage title-⚠: attract rotation cycles ADX logo → story text → hiscore (shots 182/365/487/609) but no gameplay frame was sampled.
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **36.1 (C)** |
+| Coverage | title |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/senko.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 33,453,344 | 16,777,216 | 1.99 |  |
+| VRAM (write-truth diff) | 12,931,936 | 8,388,608 | 1.54 | nz_total 5,110,148 |
+| ARAM (content, fill-excluded) | 2,097,136 | 2,097,152 | 1.00 | content above cap 0 |
+
+Streaming: 348 DMA events · total 58.9 MB · unique 32.5 MB · re-read 0.4479 · steady 5.555 MB/min
+Axes: memory 10.2 · streaming 82.6 · guts 85.0 · controls 100.0 · similarity 70.0 → **final 36.1 (C)**
+Screenshots: `evidence/senko/shot-060s.png` · `evidence/senko/shot-182s.png` · `evidence/senko/shot-365s.png` · `evidence/senko/shot-487s.png` · `evidence/senko/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 ## 1. Verdict
 
 | | |
