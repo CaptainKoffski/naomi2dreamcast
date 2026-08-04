@@ -4,10 +4,10 @@
   "maker": "Altron / Taito",
   "year": "2002",
   "format": "GD-ROM",
-  "assessed": "2026-08-02",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -26,49 +26,50 @@
   "capture": {
     "handoff": {
       "seen": true,
-      "t": 30.0,
+      "t": 20.0,
       "aram_zeroed": true,
       "vram_zeroed": true
     },
     "screenshots": [
       "assessments/evidence/cleoftp/shot-060s.png",
       "assessments/evidence/cleoftp/shot-121s.png",
-      "assessments/evidence/cleoftp/shot-183s.png",
-      "assessments/evidence/cleoftp/shot-245s.png",
-      "assessments/evidence/cleoftp/shot-307s.png",
-      "assessments/evidence/cleoftp/shot-370s.png",
-      "assessments/evidence/cleoftp/shot-422s.png",
-      "assessments/evidence/cleoftp/shot-485s.png",
-      "assessments/evidence/cleoftp/shot-547s.png",
-      "assessments/evidence/cleoftp/shot-600s.png"
+      "assessments/evidence/cleoftp/shot-182s.png",
+      "assessments/evidence/cleoftp/shot-243s.png",
+      "assessments/evidence/cleoftp/shot-304s.png",
+      "assessments/evidence/cleoftp/shot-365s.png",
+      "assessments/evidence/cleoftp/shot-426s.png",
+      "assessments/evidence/cleoftp/shot-487s.png",
+      "assessments/evidence/cleoftp/shot-548s.png",
+      "assessments/evidence/cleoftp/shot-609s.png"
     ],
+    "coverage": "demo",
     "watermarks_info": {
       "main": 16252992,
-      "vram": 8181717,
-      "aram": 2097152
-    },
-    "coverage": "demo"
+      "vram": 9711616,
+      "aram": 8388608
+    }
   },
   "memory": {
     "main": {
       "dma_high_water": 11761888
     },
     "vram": {
-      "peak": 8181717,
-      "nz_above_cap": 0,
-      "regs_last": "isp_base=400000 isp_limit=4728a0 ol_base=498b80 ol_limit=4729a0 fb_w_sof1=b2000 fb_w_sof2=c00000 fb_r_sof1=b2000"
+      "peak": 9711616,
+      "nz_total": 4792822,
+      "nz_above_cap": 57048,
+      "regs_last": "isp_base=400000 isp_limit=4728a0 ol_base=498b80 ol_limit=4729a0 fb_w_sof1=b2000 fb_w_sof2=c00000 fb_r_sof1=4b2000"
     },
     "aram": {
-      "peak": 2097152,
+      "peak": 2094512,
       "nz_above_cap": 0
     }
   },
   "streaming": {
-    "dma_events": 835,
-    "total_bytes": 97761280,
+    "dma_events": 894,
+    "total_bytes": 104912896,
     "unique_bytes": 22827008,
-    "reread_ratio": 0.7665,
-    "steady_mb_per_min": 9.42,
+    "reread_ratio": 0.7824,
+    "steady_mb_per_min": 9.904,
     "short_window": false
   },
   "guts": {
@@ -619,12 +620,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 85.0,
-    "streaming": 69.0,
+    "memory": 56.6,
+    "streaming": 68.0,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 100.0,
-    "final": 84.2,
-    "tier": "S"
+    "final": 71.4,
+    "tier": "A"
   }
 }

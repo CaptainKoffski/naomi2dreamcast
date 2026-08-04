@@ -1,5 +1,35 @@
 # Cleopatra Fortune Plus (GDL-0012) (`cleoftp`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **71.4 (A)**.**
+> Score moved 84.2 → 71.4: v4's periodic (per-10 s) sampling catches steady-state memory peaks that v2's cart-DMA-only sampling missed. v2 under-measured; the S-tier was optimistic. Still #1.
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **71.4 (A)** |
+| Coverage | demo |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/cleoftp.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 11,761,888 | 16,777,216 | 0.70 |  |
+| VRAM (write-truth diff) | 9,711,616 | 8,388,608 | 1.16 | nz_total 4,792,822 |
+| ARAM (content, fill-excluded) | 2,094,512 | 2,097,152 | 1.00 | content above cap 0 |
+
+Streaming: 894 DMA events · total 100.1 MB · unique 21.8 MB · re-read 0.7824 · steady 9.904 MB/min
+Axes: memory 56.6 · streaming 68.0 · guts 85.0 · controls 100.0 · similarity 100.0 → **final 71.4 (A)**
+Screenshots: `evidence/cleoftp/shot-060s.png` · `evidence/cleoftp/shot-243s.png` · `evidence/cleoftp/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 > **Calibration reference — already fan-ported (`../cleopatra`); not a queue entry.**
 > This is Calibration A: the control test that decides whether the assessment
 > battery itself is trustworthy. All numbers below are checked against the
