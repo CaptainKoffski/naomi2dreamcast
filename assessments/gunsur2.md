@@ -1,5 +1,35 @@
 # Gun Survivor 2 Biohazard Code: Veronica (World, BHF2 Ver.E) (`gunsur2`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **33.4 (C)**.**
+> 33.4 C reproduced on v4 (was 33.4 C on v2) with researched `pad_adaptable` controls restored after the re-run reset them to the `stick` hint (fixed in run_battery).
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **33.4 (C)** |
+| Coverage | demo |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/gunsur2.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 31,610,624 | 16,777,216 | 1.88 |  |
+| VRAM (write-truth diff) | 16,140,288 | 8,388,608 | 1.92 | nz_total 5,038,850 |
+| ARAM (content, fill-excluded) | 2,097,136 | 2,097,152 | 1.00 | content above cap 0 |
+
+Streaming: 357 DMA events · total 124.3 MB · unique 38.7 MB · re-read 0.6889 · steady 11.662 MB/min
+Axes: memory 13.0 · streaming 67.9 · guts 80.0 · controls 50.0 · similarity 40.0 → **final 33.4 (C)**
+Screenshots: `evidence/gunsur2/shot-060s.png` · `evidence/gunsur2/shot-365s.png` · `evidence/gunsur2/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 ## 1. Verdict
 
 | | |

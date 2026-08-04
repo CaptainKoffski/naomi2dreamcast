@@ -4,10 +4,10 @@
   "maker": "Capcom / Namco",
   "year": "2001",
   "format": "cart",
-  "assessed": "2026-08-03",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -34,19 +34,19 @@
       "assessments/evidence/gunsur2/shot-060s.png",
       "assessments/evidence/gunsur2/shot-121s.png",
       "assessments/evidence/gunsur2/shot-182s.png",
-      "assessments/evidence/gunsur2/shot-244s.png",
-      "assessments/evidence/gunsur2/shot-305s.png",
-      "assessments/evidence/gunsur2/shot-367s.png",
-      "assessments/evidence/gunsur2/shot-429s.png",
-      "assessments/evidence/gunsur2/shot-480s.png",
-      "assessments/evidence/gunsur2/shot-542s.png",
-      "assessments/evidence/gunsur2/shot-603s.png"
+      "assessments/evidence/gunsur2/shot-243s.png",
+      "assessments/evidence/gunsur2/shot-304s.png",
+      "assessments/evidence/gunsur2/shot-365s.png",
+      "assessments/evidence/gunsur2/shot-426s.png",
+      "assessments/evidence/gunsur2/shot-487s.png",
+      "assessments/evidence/gunsur2/shot-548s.png",
+      "assessments/evidence/gunsur2/shot-609s.png"
     ],
     "coverage": "demo",
     "watermarks_info": {
       "main": 33553964,
       "vram": 16140288,
-      "aram": 2097152
+      "aram": 8388608
     }
   },
   "memory": {
@@ -55,21 +55,21 @@
     },
     "vram": {
       "peak": 16140288,
-      "nz_total": 4929040,
-      "nz_above_cap": 4365778,
+      "nz_total": 5038850,
+      "nz_above_cap": 4427374,
       "regs_last": "isp_base=400000 isp_limit=68f700 ol_base=74c180 ol_limit=68f800 fb_w_sof1=c00000 fb_w_sof2=c00000 fb_r_sof1=800000"
     },
     "aram": {
-      "peak": 2097152,
+      "peak": 2097136,
       "nz_above_cap": 0
     }
   },
   "streaming": {
-    "dma_events": 346,
-    "total_bytes": 126228480,
+    "dma_events": 357,
+    "total_bytes": 130347008,
     "unique_bytes": 40552448,
-    "reread_ratio": 0.6787,
-    "steady_mb_per_min": 11.305,
+    "reread_ratio": 0.6889,
+    "steady_mb_per_min": 11.662,
     "short_window": false
   },
   "guts": {
@@ -627,7 +627,7 @@
   "gate": null,
   "scores": {
     "memory": 13.0,
-    "streaming": 68.6,
+    "streaming": 67.9,
     "guts": 80.0,
     "controls": 50.0,
     "similarity": 40.0,
