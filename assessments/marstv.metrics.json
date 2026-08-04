@@ -4,10 +4,10 @@
   "maker": "Sega",
   "year": "1999",
   "format": "cart",
-  "assessed": "2026-08-03",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -26,26 +26,26 @@
   "capture": {
     "handoff": {
       "seen": true,
-      "t": 40.0,
+      "t": 30.0,
       "aram_zeroed": true,
       "vram_zeroed": true
     },
     "screenshots": [
       "assessments/evidence/marstv/shot-060s.png",
       "assessments/evidence/marstv/shot-121s.png",
-      "assessments/evidence/marstv/shot-184s.png",
-      "assessments/evidence/marstv/shot-248s.png",
-      "assessments/evidence/marstv/shot-301s.png",
-      "assessments/evidence/marstv/shot-366s.png",
-      "assessments/evidence/marstv/shot-422s.png",
-      "assessments/evidence/marstv/shot-490s.png",
-      "assessments/evidence/marstv/shot-546s.png",
-      "assessments/evidence/marstv/shot-603s.png"
+      "assessments/evidence/marstv/shot-182s.png",
+      "assessments/evidence/marstv/shot-243s.png",
+      "assessments/evidence/marstv/shot-304s.png",
+      "assessments/evidence/marstv/shot-365s.png",
+      "assessments/evidence/marstv/shot-426s.png",
+      "assessments/evidence/marstv/shot-487s.png",
+      "assessments/evidence/marstv/shot-548s.png",
+      "assessments/evidence/marstv/shot-609s.png"
     ],
-    "coverage": "title",
+    "coverage": "demo",
     "watermarks_info": {
       "main": 25984736,
-      "vram": 14235648,
+      "vram": 14350336,
       "aram": 8388608
     }
   },
@@ -54,22 +54,22 @@
       "dma_high_water": 25984736
     },
     "vram": {
-      "peak": 14235648,
-      "nz_total": 5048671,
-      "nz_above_cap": 2664632,
+      "peak": 14350336,
+      "nz_total": 5788726,
+      "nz_above_cap": 3366032,
       "regs_last": "isp_base=400000 isp_limit=510f00 ol_base=55c280 ol_limit=511000 fb_w_sof1=c00000 fb_w_sof2=c00000 fb_r_sof1=800000"
     },
     "aram": {
-      "peak": 8388608,
-      "nz_above_cap": 81598
+      "peak": 2147400,
+      "nz_above_cap": 47694
     }
   },
   "streaming": {
-    "dma_events": 141,
-    "total_bytes": 177912960,
+    "dma_events": 164,
+    "total_bytes": 209528960,
     "unique_bytes": 54971872,
-    "reread_ratio": 0.691,
-    "steady_mb_per_min": 18.165,
+    "reread_ratio": 0.7376,
+    "steady_mb_per_min": 21.076,
     "short_window": false
   },
   "guts": {
@@ -620,6 +620,14 @@
     "sdk_overlap": "partial",
     "cart_loader_match": false
   },
-  "gate": "G3 memory: aram peak > 2x DC capacity",
-  "scores": null
+  "gate": null,
+  "scores": {
+    "memory": 21.6,
+    "streaming": 54.2,
+    "guts": 90.0,
+    "controls": 100.0,
+    "similarity": 40.0,
+    "final": 42.8,
+    "tier": "B"
+  }
 }
