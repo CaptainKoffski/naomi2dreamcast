@@ -4,10 +4,10 @@
   "maker": "Milestone / Lucky",
   "year": "2009",
   "format": "cart",
-  "assessed": "2026-08-03",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -26,21 +26,21 @@
   "capture": {
     "handoff": {
       "seen": true,
-      "t": 30.0,
+      "t": 20.0,
       "aram_zeroed": true,
       "vram_zeroed": true
     },
     "screenshots": [
       "assessments/evidence/radirgyn/shot-060s.png",
       "assessments/evidence/radirgyn/shot-121s.png",
-      "assessments/evidence/radirgyn/shot-183s.png",
-      "assessments/evidence/radirgyn/shot-246s.png",
-      "assessments/evidence/radirgyn/shot-308s.png",
-      "assessments/evidence/radirgyn/shot-360s.png",
-      "assessments/evidence/radirgyn/shot-424s.png",
+      "assessments/evidence/radirgyn/shot-182s.png",
+      "assessments/evidence/radirgyn/shot-243s.png",
+      "assessments/evidence/radirgyn/shot-304s.png",
+      "assessments/evidence/radirgyn/shot-365s.png",
+      "assessments/evidence/radirgyn/shot-426s.png",
       "assessments/evidence/radirgyn/shot-487s.png",
-      "assessments/evidence/radirgyn/shot-549s.png",
-      "assessments/evidence/radirgyn/shot-602s.png"
+      "assessments/evidence/radirgyn/shot-548s.png",
+      "assessments/evidence/radirgyn/shot-609s.png"
     ],
     "coverage": "demo",
     "watermarks_info": {
@@ -55,21 +55,21 @@
     },
     "vram": {
       "peak": 11195744,
-      "nz_total": 5557130,
-      "nz_above_cap": 2335723,
+      "nz_total": 5585861,
+      "nz_above_cap": 2525451,
       "regs_last": "isp_base=400000 isp_limit=4fc8a0 ol_base=550b80 ol_limit=4fc9a0 fb_w_sof1=16a000 fb_w_sof2=c00000 fb_r_sof1=56a000"
     },
     "aram": {
-      "peak": 8388608,
-      "nz_above_cap": 6269011
+      "peak": 2252880,
+      "nz_above_cap": 122039
     }
   },
   "streaming": {
-    "dma_events": 290,
-    "total_bytes": 40585216,
+    "dma_events": 304,
+    "total_bytes": 45332480,
     "unique_bytes": 14110720,
-    "reread_ratio": 0.6523,
-    "steady_mb_per_min": 3.724,
+    "reread_ratio": 0.6887,
+    "steady_mb_per_min": 4.164,
     "short_window": false
   },
   "guts": {
@@ -94,6 +94,14 @@
     "sdk_overlap": "none",
     "cart_loader_match": false
   },
-  "gate": "G3 memory: aram peak > 2x DC capacity",
-  "scores": null
+  "gate": null,
+  "scores": {
+    "memory": 36.6,
+    "streaming": 75.5,
+    "guts": null,
+    "controls": 100.0,
+    "similarity": 20.0,
+    "final": 46.1,
+    "tier": "B"
+  }
 }

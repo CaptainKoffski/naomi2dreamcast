@@ -1,5 +1,35 @@
 # Radirgy Noa (Japan) (841-0062C) (`radirgyn`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **46.1 (B)**.**
+> v2 parked it G3-aram via the DMPD fill artifact. v4: scored, demo coverage.
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **46.1 (B)** |
+| Coverage | demo |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/radirgyn.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 19,552,576 | 16,777,216 | 1.17 |  |
+| VRAM (write-truth diff) | 11,195,744 | 8,388,608 | 1.33 | nz_total 5,585,861 |
+| ARAM (content, fill-excluded) | 2,252,880 | 2,097,152 | 1.07 | content above cap 122,039 |
+
+Streaming: 304 DMA events · total 43.2 MB · unique 13.5 MB · re-read 0.6887 · steady 4.164 MB/min
+Axes: memory 36.6 · streaming 75.5 · guts None · controls 100.0 · similarity 20.0 → **final 46.1 (B)**
+Screenshots: `evidence/radirgyn/shot-060s.png` · `evidence/radirgyn/shot-365s.png` · `evidence/radirgyn/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 ## 1. Verdict
 
 | | |
