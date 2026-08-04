@@ -1,5 +1,35 @@
 # Kurukuru Chameleon (Japan) (GDL-0034) (`kurucham`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **45.8 (B)**.**
+> 45.8 B stands (same final as v2), but now measured on a rendering build with demo coverage — the v2 run was headless (zeroing-era) and its title-⚠ was an artifact.
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **45.8 (B)** |
+| Coverage | demo |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/kurucham.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 27,449,344 | 16,777,216 | 1.64 |  |
+| VRAM (write-truth diff) | 14,770,864 | 8,388,608 | 1.76 | nz_total 5,612,977 |
+| ARAM (content, fill-excluded) | 2,395,328 | 2,097,152 | 1.14 | content above cap 282,380 |
+
+Streaming: 2621 DMA events · total 84.8 MB · unique 27.5 MB · re-read 0.6758 · steady 7.226 MB/min
+Axes: memory 19.6 · streaming 74.1 · guts 85.0 · controls 100.0 · similarity 70.0 → **final 45.8 (B)**
+Screenshots: `evidence/kurucham/shot-060s.png` · `evidence/kurucham/shot-365s.png` · `evidence/kurucham/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 ## 1. Verdict
 
 | | |
