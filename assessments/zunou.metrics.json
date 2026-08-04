@@ -4,10 +4,10 @@
   "maker": "Sega",
   "year": "2006",
   "format": "cart",
-  "assessed": "2026-08-03",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -20,61 +20,61 @@
   },
   "boot": {
     "ok": false,
-    "failure_class": "no-render-after-handoff",
+    "failure_class": "frozen-splash-bad-dump (agent override: shots 304-609s byte-identical md5 79dd7b8c; 317-0435-JPN key PIC BAD_DUMP)",
     "mame_not_working": false
   },
   "capture": {
     "handoff": {
       "seen": true,
-      "t": 40.0,
+      "t": 20.0,
       "aram_zeroed": true,
       "vram_zeroed": true
     },
     "screenshots": [
       "assessments/evidence/zunou/shot-060s.png",
       "assessments/evidence/zunou/shot-121s.png",
-      "assessments/evidence/zunou/shot-183s.png",
-      "assessments/evidence/zunou/shot-245s.png",
-      "assessments/evidence/zunou/shot-306s.png",
-      "assessments/evidence/zunou/shot-368s.png",
-      "assessments/evidence/zunou/shot-420s.png",
-      "assessments/evidence/zunou/shot-482s.png",
-      "assessments/evidence/zunou/shot-544s.png",
-      "assessments/evidence/zunou/shot-606s.png"
+      "assessments/evidence/zunou/shot-182s.png",
+      "assessments/evidence/zunou/shot-243s.png",
+      "assessments/evidence/zunou/shot-304s.png",
+      "assessments/evidence/zunou/shot-365s.png",
+      "assessments/evidence/zunou/shot-426s.png",
+      "assessments/evidence/zunou/shot-487s.png",
+      "assessments/evidence/zunou/shot-548s.png",
+      "assessments/evidence/zunou/shot-609s.png"
     ],
     "coverage": null,
     "watermarks_info": {
-      "main": 25419659,
-      "vram": 14423814,
-      "aram": 49402
+      "main": 27867787,
+      "vram": 15276001,
+      "aram": 8388608
     }
   },
   "memory": {
     "main": {
-      "dma_high_water": 26723680
+      "dma_high_water": 27867776
     },
     "vram": {
-      "peak": 14423814,
-      "nz_total": 242798,
-      "nz_above_cap": 126612,
-      "regs_last": "isp_base=400000 isp_limit=50f700 ol_base=555780 ol_limit=50f800 fb_w_sof1=c00000 fb_w_sof2=c00000 fb_r_sof1=800000"
+      "peak": 15276001,
+      "nz_total": 1072807,
+      "nz_above_cap": 545327,
+      "regs_last": "isp_base=0 isp_limit=10f700 ol_base=155780 ol_limit=10f800 fb_w_sof1=800000 fb_w_sof2=c00000 fb_r_sof1=c00000"
     },
     "aram": {
-      "peak": 49402,
-      "nz_above_cap": 0
+      "peak": 8372164,
+      "nz_above_cap": 32712
     }
   },
   "streaming": {
-    "dma_events": 316,
-    "total_bytes": 9425568,
-    "unique_bytes": 9425568,
+    "dma_events": 351,
+    "total_bytes": 10569632,
+    "unique_bytes": 10569632,
     "reread_ratio": 0.0,
     "steady_mb_per_min": 0.0,
     "short_window": false
   },
   "guts": {
     "dat_available": false,
-    "error": "skipped (--skip-static or no boot)",
+    "error": "static scan: load entry out of file: rom=0x40000000 len=0x380000",
     "flags": [
       "eeprom_bios"
     ],
@@ -88,10 +88,10 @@
     "sources": [
       "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'naomi'",
       "MAME src/mame/sega/naomi.cpp @59e7c0b line 697: 'requires 837-14672 sensor board (SH4 based)' (cabinet is a touchscreen; generic 'naomi' ports are the kb 4.g trap)",
-      "Flycast core/hw/naomi/touchscreen.cpp @9e882cbd2 lines 35-44: '837-14672 touchscreen sensor board / used by Manic Panic Ghosts and Touch De Zunou' — SCIF serial pipe, reduces panel to per-player absPos + button A",
+      "Flycast core/hw/naomi/touchscreen.cpp @9e882cbd2 lines 35-44: '837-14672 touchscreen sensor board / used by Manic Panic Ghosts and Touch De Zunou' \u2014 SCIF serial pipe, reduces panel to per-player absPos + button A",
       "Flycast core/hw/naomi/naomi_cart.cpp @9e882cbd2 line 691: gameId 'TOUCH DE ZUNO (JAPAN)' triggers touchscreen::init()",
       "https://www.citylan.it/index.php/Touch_De_Zunou_(Japan,_Rev_A) (mirrors the MAME 837-14672 sensor-board comment)",
-      "http://adb.arcadeitalia.net/?mame=zunou (generic 8-way/6-button declaration — mirrors MAME generic ports, not cabinet evidence)",
+      "http://adb.arcadeitalia.net/?mame=zunou (generic 8-way/6-button declaration \u2014 mirrors MAME generic ports, not cabinet evidence)",
       "https://gamesdb.launchbox-app.com/games/details/102498-touch-de-zunou (full JP title 'Zunou Nouryoku Koujou Machine Touch de Zunou: Tanoshiku check? Soretomo Battle!?')"
     ]
   },
@@ -100,6 +100,6 @@
     "sdk_overlap": "none",
     "cart_loader_match": false
   },
-  "gate": "G1 broken: no-render-after-handoff",
+  "gate": "G1 broken: frozen-splash-bad-dump (agent override: shots 304-609s byte-identical md5 79dd7b8c; 317-0435-JPN key PIC BAD_DUMP)",
   "scores": null
 }

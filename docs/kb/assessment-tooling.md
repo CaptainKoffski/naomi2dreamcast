@@ -558,3 +558,19 @@ The two signature constants are canaries, not tunables; if a new shared
 structure appears (same exact values across unrelated games, or present in a
 splash-only control run), that is a new signature to *prove* (control run) and
 add — never a number to hand-wave past.
+
+### §8 addendum — zunou cart-splash control run results (2026-08-04)
+
+- **No cart-BIOS logo signature exists.** The frozen-splash control (zunou) does
+  not reproduce ausfache's 40,664 B @ 0x93e738 above-cap remainder — those bytes
+  cannot be attributed to the BIOS and stay charged to ausfache. Exact-match
+  discipline held: no control-run proof, no exclusion.
+- **`boot_ok`'s vram threshold is a gross filter only.** zunou's pixel-frozen
+  splash writes 1,072,807 B of VRAM diff — MORE than ikaruga's real title screen
+  (1,002,408 B). No nz_total threshold separates them. The screenshot-based
+  representativeness check (RUNBOOK per-family step) is the authoritative boot
+  verdict; agent overrides of `boot.ok` must cite evidence in the sidecar
+  (zunou precedent: byte-identical shots 304–609 s + BAD_DUMP key PIC).
+- zunou also shows the ARAM address-vs-content divergence (peak address 8 MB,
+  content above cap 32,712 B) — more campaign-checkpoint evidence that the G3
+  gate should weigh content, not high-address (§6).

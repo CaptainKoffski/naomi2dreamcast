@@ -1,5 +1,18 @@
 # Touch De Zunou (Japan, Rev A) (840-0166C) (`zunou`) — portability assessment
 
+> **Battery v4 control run (2026-08-04): still parked — `G1 broken: frozen-splash-bad-dump`.**
+> Run deliberately as the cart-splash control for the BIOS-VRAM-signature work
+> (kb §8). Two findings: (1) it did NOT reproduce ausfache's small above-cap VRAM
+> remainder, so no cart-logo exclusion exists — ausfache's score stands on its own
+> bytes. (2) The frozen splash writes 1.07 MB of VRAM (more than ikaruga's real
+> title screen), so the automatic `boot_ok` threshold passed it and mis-parked it
+> G3-ARAM; reclassified by the RUNBOOK representativeness check with evidence:
+> shots 304s–609s are byte-identical (`md5 79dd7b8c…`, `evidence/zunou/shot-304s.png`
+> = `shot-609s.png`) and the 317-0435-JPN key PIC is a BAD_DUMP — the game cannot
+> decrypt and freezes. Lesson recorded in kb §8: `vram nz_total` cannot separate a
+> frozen splash from a static title; the screenshot-based representativeness check
+> is the real gate.
+
 ## 1. Verdict
 
 | | |
