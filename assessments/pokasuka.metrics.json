@@ -1,0 +1,100 @@
+{
+  "set": "pokasuka",
+  "title": "Pokasuka Ghost! (Japan)",
+  "maker": "Sega",
+  "year": "2007",
+  "format": "cart",
+  "assessed": "2026-08-04",
+  "versions": {
+    "flycast": "4b59eceff",
+    "battery": "4",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/pokasuka.zip"
+  },
+  "boot": {
+    "ok": true,
+    "failure_class": null,
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 20.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true
+    },
+    "screenshots": [
+      "assessments/evidence/pokasuka/shot-060s.png",
+      "assessments/evidence/pokasuka/shot-121s.png",
+      "assessments/evidence/pokasuka/shot-182s.png",
+      "assessments/evidence/pokasuka/shot-243s.png",
+      "assessments/evidence/pokasuka/shot-304s.png",
+      "assessments/evidence/pokasuka/shot-365s.png",
+      "assessments/evidence/pokasuka/shot-426s.png",
+      "assessments/evidence/pokasuka/shot-487s.png",
+      "assessments/evidence/pokasuka/shot-548s.png",
+      "assessments/evidence/pokasuka/shot-609s.png"
+    ],
+    "coverage": "demo",
+    "watermarks_info": {
+      "main": 33554432,
+      "vram": 10465280,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "dma_high_water": 33030144
+    },
+    "vram": {
+      "peak": 10465280,
+      "nz_total": 3589799,
+      "nz_above_cap": 1866630,
+      "regs_last": "isp_base=400000 isp_limit=573960 ol_base=60b980 ol_limit=573a60 fb_w_sof1=21f000 fb_w_sof2=c00000 fb_r_sof1=61f000"
+    },
+    "aram": {
+      "peak": 8339264,
+      "nz_above_cap": 5068309
+    }
+  },
+  "streaming": {
+    "dma_events": 11406,
+    "total_bytes": 141940864,
+    "unique_bytes": 36576864,
+    "reread_ratio": 0.7423,
+    "steady_mb_per_min": 12.448,
+    "short_window": false
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "static scan: load entry out of file: rom=0x40000000 len=0x300000",
+    "flags": [
+      "eeprom_bios"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "touchscreen",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'naomi'",
+      "attract instruction \u753b\u9762\u3092\u30bf\u30c3\u30c1\u3057\u3066\u306d ('touch the screen') \u2014 assessments/evidence/pokasuka/shot-609s.png (2026-08-04)"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": "G3 memory: aram peak > 2x DC capacity",
+  "scores": null
+}

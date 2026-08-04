@@ -25,7 +25,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `mamonoro` — Mamoru-kun wa Norowarete Shimatta! (Japan) | `mamonoro` | Shmup ★ | 146.1 MB | done |
 | `marstv` — Kasei Channel Mars TV (Japan) | `marstv` | Party | 57.8 MB | done |
 | `moeru` — Moeru Casinyo (Japan) (GDL-0013) | `moeru` | ? | 98.0 MB | done |
-| `pokasuka` — Pokasuka Ghost! (Japan) | `pokasuka` | ? | 142.3 MB | pending |
+| `pokasuka` — Pokasuka Ghost! (Japan) | `pokasuka` | ? | 142.3 MB | parked |
 | `ringout` — Ring Out 4x4 (Rev A) | `ringout` | ? | 39.0 MB | pending |
 | `shootopl` — Shootout Pool | `shootopl` | ? | 16.6 MB | pending |
 | `tduno2` — Touch de Uno! 2 (Japan) | `tduno2` | ? | 49.9 MB | pending |
