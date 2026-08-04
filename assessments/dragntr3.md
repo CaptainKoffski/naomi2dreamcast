@@ -1,5 +1,35 @@
 # Dragon Treasure 3 (Rev A) (GDS-0041A) (`dragntr3`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **PARKED — `G1 broken: no-render-after-handoff`**.**
+> Boots to the NAOMI GD-ROM splash then stalls polling the network: "Network command received cmd 1. Need full NetDIMM?" (`gdcartridge.cpp:761`, shot-609s = splash). NetDIMM satellite medal cabinet; park correct, class corrected.
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **PARKED — `G1 broken: no-render-after-handoff`** |
+| Coverage | ? (never booted) |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=False · handoff 20.0 s · run 600 s · rom `naomi/dragntr3.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 10,713,280 | 16,777,216 | 0.64 |  |
+| VRAM (write-truth diff) | 9,711,616 | 8,388,608 | 1.16 | nz_total 70,244 |
+| ARAM (content, fill-excluded) | 4,606,288 | 2,097,152 | 2.20 | content above cap 2,240,615 |
+
+Streaming: 126 DMA events · total 3.8 MB · unique 3.8 MB · re-read 0.0 · steady 0.0 MB/min
+Gate: `G1 broken: no-render-after-handoff` — see the note above; axes not computed (`scores: null`).
+Screenshots: `evidence/dragntr3/shot-060s.png` · `evidence/dragntr3/shot-365s.png` · `evidence/dragntr3/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 ## 1. Verdict
 
 | | |

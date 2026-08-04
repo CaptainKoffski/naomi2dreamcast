@@ -4,10 +4,10 @@
   "maker": "Sega",
   "year": "2005",
   "format": "GD-ROM",
-  "assessed": "2026-08-03",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -16,53 +16,61 @@
     "steady_after_s": 120,
     "shot_interval_s": 60,
     "boot_timeout_s": 120,
-    "rom_used": "naomi/dragntr3/gds-0041a.chd"
+    "rom_used": "naomi/dragntr3.zip"
   },
   "boot": {
     "ok": false,
-    "failure_class": "no-handoff-120s",
+    "failure_class": "no-render-after-handoff",
     "mame_not_working": false
   },
   "capture": {
     "handoff": {
-      "seen": false,
-      "t": null,
-      "aram_zeroed": false,
-      "vram_zeroed": false
+      "seen": true,
+      "t": 20.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true
     },
     "screenshots": [
       "assessments/evidence/dragntr3/shot-060s.png",
-      "assessments/evidence/dragntr3/shot-121s.png"
+      "assessments/evidence/dragntr3/shot-121s.png",
+      "assessments/evidence/dragntr3/shot-182s.png",
+      "assessments/evidence/dragntr3/shot-243s.png",
+      "assessments/evidence/dragntr3/shot-304s.png",
+      "assessments/evidence/dragntr3/shot-365s.png",
+      "assessments/evidence/dragntr3/shot-426s.png",
+      "assessments/evidence/dragntr3/shot-487s.png",
+      "assessments/evidence/dragntr3/shot-548s.png",
+      "assessments/evidence/dragntr3/shot-609s.png"
     ],
     "coverage": null,
     "watermarks_info": {
-      "main": 0,
-      "vram": 0,
-      "aram": 0
+      "main": 15728704,
+      "vram": 9711616,
+      "aram": 8388608
     }
   },
   "memory": {
     "main": {
-      "dma_high_water": 0
+      "dma_high_water": 10713280
     },
     "vram": {
-      "peak": 0,
-      "nz_total": 0,
-      "nz_above_cap": 0,
-      "regs_last": ""
+      "peak": 9711616,
+      "nz_total": 70244,
+      "nz_above_cap": 57048,
+      "regs_last": "isp_base=0 isp_limit=12c8a0 ol_base=190b80 ol_limit=12c9a0 fb_w_sof1=1aa000 fb_w_sof2=c00000 fb_r_sof1=1aa000"
     },
     "aram": {
-      "peak": 0,
-      "nz_above_cap": 0
+      "peak": 4606288,
+      "nz_above_cap": 2240615
     }
   },
   "streaming": {
-    "dma_events": 0,
-    "total_bytes": 0,
-    "unique_bytes": 0,
+    "dma_events": 126,
+    "total_bytes": 4020224,
+    "unique_bytes": 4020224,
     "reread_ratio": 0.0,
-    "steady_mb_per_min": null,
-    "short_window": true
+    "steady_mb_per_min": 0.0,
+    "short_window": false
   },
   "guts": {
     "dat_available": false,
@@ -91,6 +99,6 @@
     "sdk_overlap": "none",
     "cart_loader_match": false
   },
-  "gate": "G1 broken: no-handoff-120s",
+  "gate": "G1 broken: no-render-after-handoff",
   "scores": null
 }
