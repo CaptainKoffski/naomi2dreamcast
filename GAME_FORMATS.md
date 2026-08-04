@@ -41,7 +41,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Capcom Vs. SNK 2: Millionaire Fighting 2001 (Japan, Rev A) (GDL-0007A) | `cvs2mf` | **GD-ROM** | clone of `cvs2` | 149.5 MB | Fighting | Yes (2001) | not assessed |
 | Capcom Vs. SNK: Millennium Fight 2000 Pro (Japan) (GDL-0004) | `cvsgd` | **GD-ROM** | parent | 125.2 MB | Fighting | Yes (2001) | not assessed |
 | Chaos Field (Japan) (GDL-0025) | `cfield` | **GD-ROM** | parent | 142.9 MB | Shmup ★ | Yes (2004) | not assessed |
-| Cleopatra Fortune Plus (GDL-0012) | `cleoftp` | **GD-ROM** | parent | 65.8 MB | Puzzle ★ | No | **71.4** A · [assessment](assessments/cleoftp.md) |
+| Cleopatra Fortune Plus (GDL-0012) | `cleoftp` | **GD-ROM** | parent | 65.8 MB | Puzzle ★ | No | **84.0** S · [assessment](assessments/cleoftp.md) |
 | Confidential Mission (GDS-0001) | `confmiss` | **GD-ROM** | parent | 126.4 MB | Light-gun | Yes (2001) | not assessed |
 | Doki Doki Idol Star Seeker (GDL-0005) | `starseek` | **GD-ROM** | parent | 37.2 MB | ? | Yes (2002) | not assessed |
 | Dragon Treasure (Rev A) (GDS-0030A) | `dragntra` | **GD-ROM** | clone of `dragntr` | 142.4 MB | Medal | No | see [`dragntr`](assessments/dragntr.md) |
@@ -67,7 +67,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Melty Blood Act Cadenza Version B2 (Japan) (GDL-0039A) | `meltyb` | **GD-ROM** | parent | 202.9 MB | Fighting | No | not assessed |
 | Mobile Suit Gundam: Federation Vs. Zeon (GDL-0001) | `gundmgd` | **GD-ROM** | parent | 142.3 MB | Fighting | Yes (2002) | not assessed |
 | Mobile Suit Gundam: Federation Vs. Zeon DX (USA, Japan) (GDL-0006) | `gundmxgd` | **GD-ROM** | parent | 172.9 MB | Fighting | Yes (2002) | not assessed |
-| Moeru Casinyo (Japan) (GDL-0013) | `moeru` | **GD-ROM** | parent | 98.0 MB | ? | No | **68.4** A · [assessment](assessments/moeru.md) |
+| Moeru Casinyo (Japan) (GDL-0013) | `moeru` | **GD-ROM** | parent | 98.0 MB | ? | No | **80.5** S · [assessment](assessments/moeru.md) |
 | Monkey Ball (GDS-0008) | `monkeyba` | **GD-ROM** | parent | 82.5 MB | Action | No | not assessed |
 | Musapey's Choco Marker (Rev A) (GDL-0014A) | `chocomk` | **GD-ROM** | parent | 68.5 MB | Puzzle ★ | Yes (2002) | not assessed |
 | Noukone Puzzle Takoron (Japan) (GDL-0042) | `takoron` | **GD-ROM** | parent | 52.6 MB | Puzzle ★ | No | parked G3 · [notes](assessments/takoron.md) |

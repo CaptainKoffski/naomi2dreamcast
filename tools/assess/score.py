@@ -9,6 +9,37 @@ WEIGHTS = {"memory": 0.40, "streaming": 0.20, "guts": 0.20, "controls": 0.10, "s
 AXIS_FLOOR = 10.0   # spec §4: axes live in [10,100]; a 0 would annihilate the geometric mean
 
 
+class MetricRegression(SystemExit):
+    """A known instrumentation-artifact signature reappeared, or an anchor title
+    parked. Scoring REFUSES to produce a verdict from poisoned measurements —
+    REQUIREMENTS.md ('rendered by Naomi BIOS and not the game itself... just
+    noise. We need to avoid it during data collection or data assessment phase')
+    and docs/kb/assessment-tooling.md §7."""
+
+
+# VRAM structures drawn by the Naomi BIOS, not the game — identified by an EXACT
+# (peak, nz_above_cap) pair. Proof: dragntr3 never boots past the GD-ROM splash
+# yet reports values byte-identical to booted GD titles (cleoftp/moeru/ikaruga/
+# tetkiwam, 2026-08-04). This is REQUIREMENTS.md's "9.4 mb during the Naomi logo
+# show time" caveat: 0x943000 == 9,711,616 == 9.4 MB. When a sidecar matches, the
+# game's own VRAM content is proven <= cap (the entire above-cap diff IS the
+# logo), so the scored peak clamps to the cap (conservative: u=1.0 floor 85).
+BIOS_VRAM_SIGNATURES = {
+    (0x943000, 57048): "GD-ROM BIOS logo (control: dragntr3 splash-only run, identical values)",
+}
+
+# The GD DIMM firmware's "DMPD" ARAM sweep counted as usage: every byte in
+# [2 MB, 8 MB) differing. The v4 content metric excludes it; this exact value
+# reappearing means the content metric regressed (kb §7 canary).
+ARAM_DMPD_ABOVE_CAP = 0x600000
+
+# Titles that verifiably ran on real DC hardware (cleoftp: the ../cleopatra fan
+# port this whole project is calibrated against; ikaruga: official 2002 DC
+# release). A park on one of these is impossible-by-evidence — it means the
+# instrumentation or harness broke, never the game. Refuse to write the verdict.
+DC_SHIPPED_ANCHORS = {"cleoftp", "ikaruga"}
+
+
 def _lerp(x, x0, x1, y0, y1):
     return y0 + (y1 - y0) * (x - x0) / (x1 - x0)
 
@@ -104,18 +135,39 @@ def final_score(axes):
     return round(s, 1)
 
 
+def _check_anchor(sc):
+    if sc["gate"] and sc["set"] in DC_SHIPPED_ANCHORS:
+        raise MetricRegression(
+            f"METRIC REGRESSION: anchor title '{sc['set']}' parked ({sc['gate']}) — "
+            f"this game verifiably runs on real DC hardware, so the measurement or "
+            f"harness is broken, not the game. No verdict written. Diagnose the "
+            f"instrumentation first (kb §7).")
+
+
 def score_sidecar(sc):
-    """Fill sc['scores'] / sc['gate'] from a spec-§5.2 sidecar. Mutates and returns sc."""
+    """Fill sc['scores'] / sc['gate'] from a spec-§5.2 sidecar. Mutates and returns sc.
+    Raises MetricRegression instead of writing a verdict from poisoned measurements."""
     sc["gate"] = None
     sc["scores"] = None
+    if sc["memory"]["aram"].get("nz_above_cap") == ARAM_DMPD_ABOVE_CAP:
+        raise MetricRegression(
+            f"METRIC REGRESSION: '{sc['set']}' aram nz_above_cap == 0x600000 exactly — "
+            f"the DIMM 'DMPD' fill signature. The ARAM content metric has regressed "
+            f"(kb §7); refusing to score.")
     if not sc["boot"]["ok"]:
         sc["gate"] = "G1 broken: " + (sc["boot"].get("failure_class") or "no boot")
+        _check_anchor(sc)
         return sc
+    vram_peak = sc["memory"]["vram"]["peak"]
+    bios_noise = BIOS_VRAM_SIGNATURES.get((vram_peak, sc["memory"]["vram"].get("nz_above_cap")))
+    if bios_noise is not None:
+        vram_peak = min(vram_peak, CAPS["vram"])
     mem, gated = memory_axis({"main": sc["memory"]["main"]["dma_high_water"],
-                              "vram": sc["memory"]["vram"]["peak"],
+                              "vram": vram_peak,
                               "aram": sc["memory"]["aram"]["peak"]})
     if mem is None:
         sc["gate"] = f"G3 memory: {gated} peak > 2x DC capacity"
+        _check_anchor(sc)
         return sc
     ctrl = controls_axis(sc["controls"]["device_class"])
     if ctrl is None:
@@ -139,6 +191,8 @@ def score_sidecar(sc):
     sc["scores"] = {k: (round(v, 1) if v is not None else None) for k, v in axes.items()}
     sc["scores"]["final"] = f
     sc["scores"]["tier"] = tier(f)
+    if bios_noise is not None:
+        sc["scores"]["vram_bios_noise_excluded"] = bios_noise
     return sc
 
 

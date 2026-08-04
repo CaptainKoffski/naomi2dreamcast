@@ -5,7 +5,14 @@ Spec: `docs/superpowers/specs/2026-08-02-portability-assessment-design.md`.
 
 ## Once per session
 
-1. `python3 tools/assess/tests/test_score.py` → must print `ALL OK` (toolchain sanity).
+1. `python3 tools/assess/tests/test_score.py` and
+   `python3 tools/assess/tests/test_metric_guards.py` → must print `ALL OK`.
+   `run_battery.py` also runs both automatically and **refuses to start** if they
+   fail. The guards enforce REQUIREMENTS.md's "BIOS noise is not game usage"
+   caveat: known artifact signatures refuse to score, and the anchor titles
+   (`cleoftp`, `ikaruga` — verifiably run on real DC) must never park. NEVER
+   weaken a guard test to make a run pass — a red guard means the
+   instrumentation regressed (kb §7), not that the test is stale.
 2. If `tools/assess/out/controls.json` is missing:
    `mkdir -p tools/assess/out && python3 tools/assess/controls_extract.py > tools/assess/out/controls.json`
 3. Naomi BIOS must be at `~/Library/Application Support/Flycast/data/naomi.zip`

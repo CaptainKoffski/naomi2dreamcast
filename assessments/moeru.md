@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **Final score** | **68.4** (A) — #2 overall |
+| **Final score** | **80.5** (S) — #2 overall |
 | Bottom line | A Katana/Ninja2-SDK casino minigame collection from the reference maker (Altron) that fits every DC region comfortably once measured correctly; the previous "G1 broken: emulator-exited" park was an instrumentation/harness artifact stack, not the game. |
 | Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
@@ -35,7 +35,7 @@ Screenshots: `evidence/moeru/shot-060s.png` · `evidence/moeru/shot-365s.png` ·
 Anomalies: one launch-flake leg (dynarec-init assert, known class) on the first
 attempt of the final battery pass; retry ran the full window.
 
-## 4. Memory fit (axis: 56.6)
+## 4. Memory fit (axis: 85.0)
 
 | Region | Peak | DC capacity | Utilization | Evidence |
 |---|---|---|---|---|
@@ -43,9 +43,11 @@ attempt of the final battery pass; retry ran the full window.
 | VRAM (write-truth diff) | 9,711,616 | 8,388,608 | 1.16 | `VRAMPROFILE` (nz_total 4,523,535; nz above cap only 57,048) |
 | ARAM (content, fill-excluded) | 1,509,920 | 2,097,152 | 0.72 | `ARAMPROFILE` content fields |
 
-VRAM peak-address is 16% over the 8 MB line but the actual content above the cap
-is only 56 KB (`nz_above_cap`) — an address-layout artifact a port relocates for
-free; ARAM and main RAM fit outright.
+VRAM's raw peak-address is 16% over the 8 MB line, but the above-cap diff is the
+GD BIOS logo framebuffer signature (57,048 B @ 0x943000 — REQUIREMENTS.md's
+"9.4 mb during the Naomi logo show time" caveat, proven non-game by the dragntr3
+splash-only control). `score.py` excludes it (`scores.vram_bios_noise_excluded`);
+the game's own content fits every region.
 
 ## 5. Cart streaming (axis: 55.1)
 
@@ -69,14 +71,12 @@ sidecar). Casino menu game — trivially pad-mappable.
 
 ## 8. Score computation
 
-final = 56.6^.40 · 55.1^.20 · 85.0^.20 · 100.0^.10 · 100.0^.10 = **68.4** (A)
+final = 85.0^.40 · 55.1^.20 · 85.0^.20 · 100.0^.10 · 100.0^.10 = **80.5** (S)
 Similarity: developer match **yes** (Altron is the reference maker), SDK overlap
 full, loader match yes → 100.
 
 ## 9. Risks & notes
 
-- VRAM peak-address exceeds 8 MB (u=1.16) but only 56 KB of content sits above the
-  cap — verify relocation is as free as it looks before trusting the Mem axis.
 - 19.9 MB/min steady GD re-streaming (re-read ratio 0.77) is the main porting cost:
   the attract loop cycles minigame assets; GD-ROM seek/stream behavior on real DC
   hardware must be validated early.

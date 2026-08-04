@@ -521,3 +521,40 @@ game behavior. Root-caused and fixed across battery v3 (fork `27d12da78`) and v4
   chasing for a DC-port ranking.
 - **Fill signature is the regression canary:** any future sidecar showing
   `aram nz_above_cap == 0x600000` exactly means the content metric regressed.
+
+## 8. Score r2 (2026-08-04): BIOS VRAM logo scored as game usage — and the guards that now prohibit the whole class
+
+REQUIREMENTS.md warned about exactly this before the campaign started: *"we
+initially mistakenly assessed peak memory consumption as 9.4 mb ... during the
+Naomi logo show time, rendered by Naomi BIOS and not the game itself ... just
+noise."* The v4 battery walked into it anyway: the wider sampling window caught
+the GD BIOS logo framebuffer at `0x943000` (= 9,711,616 = **9.4 MB**) with
+exactly **57,048** changed bytes above the 8 MB cap, and the address-peak region
+score charged it to the game — cleoftp dropped S→A (84.2→71.4) on pure BIOS
+noise. Proof it is non-game: `dragntr3` never boots past the GD-ROM splash yet
+reports byte-identical values; cleoftp/moeru/ikaruga/tetkiwam all match exactly.
+
+Corrections and the **strict prohibition** now in tooling:
+
+- `score.py BIOS_VRAM_SIGNATURES`: an exact `(vram peak, nz_above_cap)` match
+  proves the game's own content ≤ cap → scored peak clamps to the cap.
+  Recorded in the sidecar as `scores.vram_bios_noise_excluded`. cleoftp → 84.0 S,
+  moeru → 80.5 S.
+- `score.py MetricRegression`: scoring **raises instead of writing a verdict**
+  when (a) the ARAM DMPD signature (`nz_above_cap == 0x600000` exactly)
+  reappears, or (b) an anchor title parks. `DC_SHIPPED_ANCHORS = {cleoftp,
+  ikaruga}` — titles that verifiably run on real DC hardware; a park on one is
+  impossible-by-evidence, so it is always a tooling regression. This is the
+  control-test principle made mandatory.
+- `tools/assess/tests/test_metric_guards.py`: the invariants as executable
+  tests, including one that re-scores the committed anchor sidecars.
+  `run_battery.selftest()` runs them plus `test_score.py` before every family
+  and refuses to start on failure.
+
+Rule for future agents: **measurement provenance is part of the measurement.**
+Before scoring any figure, ask what wrote those bytes — game, BIOS, DIMM
+firmware, or the emulator. If a metric can't answer, the metric is not done.
+The two signature constants are canaries, not tunables; if a new shared
+structure appears (same exact values across unrelated games, or present in a
+splash-only control run), that is a new signature to *prove* (control run) and
+add — never a number to hand-wave past.

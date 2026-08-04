@@ -1,0 +1,93 @@
+#!/usr/bin/env python3
+"""Guards against the REQUIREMENTS.md "BIOS noise scored as game usage" mistake.
+run_battery refuses to start unless this prints ALL OK — these invariants are the
+strict prohibition, not advice. Never weaken a test here to make a run pass:
+a failure means the instrumentation regressed (kb §7), not that the test is old."""
+import copy, json, os, sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.dirname(HERE))
+import score  # noqa: E402
+
+ASSESS = os.path.normpath(os.path.join(HERE, "..", "..", "..", "assessments"))
+
+
+def base_sc(**over):
+    sc = {
+        "set": "synth",
+        "boot": {"ok": True, "failure_class": None},
+        "memory": {"main": {"dma_high_water": 8 << 20},
+                   "vram": {"peak": 6 << 20, "nz_above_cap": 0},
+                   "aram": {"peak": 1 << 20, "nz_above_cap": 0}},
+        "streaming": {"steady_mb_per_min": 5.0, "reread_ratio": 0.05},
+        "guts": {"dat_available": False},
+        "controls": {"device_class": "stick"},
+        "similarity": {"developer_match": False, "sdk_overlap": "none",
+                       "cart_loader_match": False},
+    }
+    sc.update(over)
+    return sc
+
+
+def test_gd_bios_logo_excluded():
+    """The 9.4 MB Naomi-logo VRAM peak (REQUIREMENTS.md caveat) must not score."""
+    sc = base_sc()
+    sc["memory"]["vram"] = {"peak": 0x943000, "nz_above_cap": 57048}
+    score.score_sidecar(sc)
+    assert sc["gate"] is None
+    # clamped to cap -> vram u=1.0 -> 85.0; without exclusion it would be 56.6
+    assert sc["scores"]["memory"] == 85.0, sc["scores"]
+    assert "GD-ROM BIOS logo" in sc["scores"]["vram_bios_noise_excluded"]
+
+
+def test_signature_requires_exact_match():
+    """One byte off the signature = real game content -> normal (penalized) scoring."""
+    sc = base_sc()
+    sc["memory"]["vram"] = {"peak": 0x943000, "nz_above_cap": 57049}
+    score.score_sidecar(sc)
+    assert sc["gate"] is None
+    assert sc["scores"]["memory"] < 60.0, sc["scores"]
+    assert "vram_bios_noise_excluded" not in sc["scores"]
+
+
+def test_dmpd_signature_refuses_to_score():
+    """aram nz_above_cap == 0x600000 exactly = the DIMM fill counted as usage."""
+    sc = base_sc()
+    sc["memory"]["aram"] = {"peak": 8 << 20, "nz_above_cap": 0x600000}
+    try:
+        score.score_sidecar(sc)
+    except score.MetricRegression:
+        return
+    raise AssertionError("DMPD signature was scored instead of refused")
+
+
+def test_anchor_title_must_never_park():
+    """cleoftp/ikaruga run on real DC hardware; a park on them = broken tooling."""
+    for anchor, bad in (("cleoftp", {"memory": {"main": {"dma_high_water": 8 << 20},
+                                                "vram": {"peak": 6 << 20, "nz_above_cap": 0},
+                                                "aram": {"peak": 5 << 20, "nz_above_cap": 3 << 20}}}),
+                        ("ikaruga", {"boot": {"ok": False, "failure_class": "no-render-after-handoff"}})):
+        sc = base_sc(set=anchor, **bad)
+        try:
+            score.score_sidecar(sc)
+        except score.MetricRegression:
+            continue
+        raise AssertionError(f"anchor {anchor} parked without raising")
+
+
+def test_committed_anchor_sidecars_score_clean():
+    """The real committed sidecars must stay unparked with sane memory axes."""
+    for s, min_mem in (("cleoftp", 80.0), ("ikaruga", 20.0)):
+        p = os.path.join(ASSESS, s + ".metrics.json")
+        sc = copy.deepcopy(json.load(open(p)))
+        score.score_sidecar(sc)
+        assert sc["gate"] is None, (s, sc["gate"])
+        assert sc["scores"]["memory"] >= min_mem, (s, sc["scores"])
+
+
+if __name__ == "__main__":
+    for name, fn in sorted(globals().items()):
+        if name.startswith("test_"):
+            fn()
+            print(name, "OK")
+    print("ALL OK")

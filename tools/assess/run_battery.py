@@ -185,7 +185,21 @@ def similarity(row, fmt, guts):
             "cart_loader_match": fmt == ref["format"] and guts.get("dat_available", False)}
 
 
+def selftest():
+    # Strict prohibition (REQUIREMENTS.md: BIOS noise must never be scored as game
+    # usage; kb §7): the battery refuses to run at all unless the metric
+    # invariants hold. Never bypass this to "just get a run" — a red test means
+    # the measurements would be untrustworthy.
+    for t in ("test_score.py", "test_metric_guards.py"):
+        r = subprocess.run([sys.executable, os.path.join(HERE, "tests", t)],
+                           capture_output=True, text=True)
+        if r.returncode != 0 or "ALL OK" not in r.stdout:
+            sys.exit(f"SELF-TEST FAILED ({t}) — battery refuses to run:\n"
+                     f"{r.stdout}{r.stderr}")
+
+
 def main():
+    selftest()
     args = sys.argv[1:]
     setname = args[0]
     secs = int(args[args.index("--secs") + 1]) if "--secs" in args else 600

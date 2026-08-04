@@ -620,12 +620,13 @@
   },
   "gate": null,
   "scores": {
-    "memory": 56.6,
+    "memory": 85.0,
     "streaming": 55.1,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 100.0,
-    "final": 68.4,
-    "tier": "A"
+    "final": 80.5,
+    "tier": "S",
+    "vram_bios_noise_excluded": "GD-ROM BIOS logo (control: dragntr3 splash-only run, identical values)"
   }
 }

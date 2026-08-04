@@ -1,7 +1,7 @@
 # Cleopatra Fortune Plus (GDL-0012) (`cleoftp`) — portability assessment
 
-> **Battery v4 re-assessment (2026-08-04): **71.4 (A)**.**
-> Score moved 84.2 → 71.4: v4's periodic (per-10 s) sampling catches steady-state memory peaks that v2's cart-DMA-only sampling missed. v2 under-measured; the S-tier was optimistic. Still #1.
+> **Battery v4 re-assessment (2026-08-04, score r2): **84.0 (S)**.**
+> Effectively confirms the v2 result (84.2; the residue is streaming run-to-run noise). An interim v4 score of 71.4 was wrong: the wider sampling window caught the **GD BIOS logo framebuffer at 0x943000 (9.4 MB)** and charged it to the game — the exact caveat REQUIREMENTS.md warned about. Proven non-game by the dragntr3 control (never boots past the splash, byte-identical values); `score.py` now excludes the signature and refuses to score if an anchor title parks.
 > Below the v4 section is the battery v2-era assessment: its *measured* figures
 > (boot evidence, memory, streaming, score) are **superseded**; the identity,
 > controls-research and similarity sections remain valid. Instrumentation
@@ -11,7 +11,7 @@
 
 | | |
 |---|---|
-| **Final** | **71.4 (A)** |
+| **Final** | **84.0 (S)** |
 | Coverage | demo |
 | Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 | Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/cleoftp.zip` |
@@ -19,11 +19,11 @@
 | Region | v4 peak | DC cap | u | Note |
 |---|---|---|---|---|
 | Main RAM (DMA high-water) | 11,761,888 | 16,777,216 | 0.70 |  |
-| VRAM (write-truth diff) | 9,711,616 | 8,388,608 | 1.16 | nz_total 4,792,822 |
+| VRAM (write-truth diff) | 9,711,616 | 8,388,608 | 1.16→1.00 | nz_total 4,792,822; above-cap diff = BIOS logo signature (57,048 @ 0x943000), excluded by score.py |
 | ARAM (content, fill-excluded) | 2,094,512 | 2,097,152 | 1.00 | content above cap 0 |
 
 Streaming: 894 DMA events · total 100.1 MB · unique 21.8 MB · re-read 0.7824 · steady 9.904 MB/min
-Axes: memory 56.6 · streaming 68.0 · guts 85.0 · controls 100.0 · similarity 100.0 → **final 71.4 (A)**
+Axes: memory 85.0 · streaming 68.0 · guts 85.0 · controls 100.0 · similarity 100.0 → **final 84.0 (S)** (`scores.vram_bios_noise_excluded` in sidecar)
 Screenshots: `evidence/cleoftp/shot-060s.png` · `evidence/cleoftp/shot-243s.png` · `evidence/cleoftp/shot-609s.png`
 
 ---
