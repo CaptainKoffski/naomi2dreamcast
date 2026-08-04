@@ -4,10 +4,10 @@
   "maker": "Starfish",
   "year": "2005",
   "format": "GD-ROM",
-  "assessed": "2026-08-03",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -26,23 +26,23 @@
   "capture": {
     "handoff": {
       "seen": true,
-      "t": 30.0,
+      "t": 20.0,
       "aram_zeroed": true,
       "vram_zeroed": true
     },
     "screenshots": [
       "assessments/evidence/ss2005/shot-060s.png",
       "assessments/evidence/ss2005/shot-121s.png",
-      "assessments/evidence/ss2005/shot-183s.png",
-      "assessments/evidence/ss2005/shot-245s.png",
-      "assessments/evidence/ss2005/shot-307s.png",
-      "assessments/evidence/ss2005/shot-369s.png",
-      "assessments/evidence/ss2005/shot-421s.png",
-      "assessments/evidence/ss2005/shot-483s.png",
-      "assessments/evidence/ss2005/shot-546s.png",
-      "assessments/evidence/ss2005/shot-608s.png"
+      "assessments/evidence/ss2005/shot-182s.png",
+      "assessments/evidence/ss2005/shot-243s.png",
+      "assessments/evidence/ss2005/shot-304s.png",
+      "assessments/evidence/ss2005/shot-365s.png",
+      "assessments/evidence/ss2005/shot-426s.png",
+      "assessments/evidence/ss2005/shot-487s.png",
+      "assessments/evidence/ss2005/shot-548s.png",
+      "assessments/evidence/ss2005/shot-609s.png"
     ],
-    "coverage": "title",
+    "coverage": "demo",
     "watermarks_info": {
       "main": 32505920,
       "vram": 11476544,
@@ -55,21 +55,21 @@
     },
     "vram": {
       "peak": 11476544,
-      "nz_total": 2751329,
-      "nz_above_cap": 2750429,
-      "regs_last": "isp_base=0 isp_limit=27c8a0 ol_base=350b80 ol_limit=27c9a0 fb_w_sof1=36a000 fb_w_sof2=c00000 fb_r_sof1=36a000"
+      "nz_total": 2752783,
+      "nz_above_cap": 2751866,
+      "regs_last": "isp_base=400000 isp_limit=67c8a0 ol_base=750b80 ol_limit=67c9a0 fb_w_sof1=76a000 fb_w_sof2=c00000 fb_r_sof1=36a000"
     },
     "aram": {
-      "peak": 8388608,
-      "nz_above_cap": 6291456
+      "peak": 3666896,
+      "nz_above_cap": 1435800
     }
   },
   "streaming": {
-    "dma_events": 3200,
-    "total_bytes": 80242688,
-    "unique_bytes": 32032768,
-    "reread_ratio": 0.6008,
-    "steady_mb_per_min": 7.316,
+    "dma_events": 3204,
+    "total_bytes": 80599040,
+    "unique_bytes": 32378880,
+    "reread_ratio": 0.5983,
+    "steady_mb_per_min": 7.181,
     "short_window": false
   },
   "guts": {
@@ -569,6 +569,14 @@
     "sdk_overlap": "partial",
     "cart_loader_match": true
   },
-  "gate": "G3 memory: aram peak > 2x DC capacity",
-  "scores": null
+  "gate": null,
+  "scores": {
+    "memory": 20.1,
+    "streaming": 76.1,
+    "guts": 85.0,
+    "controls": 100.0,
+    "similarity": 70.0,
+    "final": 46.5,
+    "tier": "B"
+  }
 }
