@@ -4,10 +4,10 @@
   "maker": "Treasure",
   "year": "2001",
   "format": "GD-ROM",
-  "assessed": "2026-08-02",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -26,41 +26,42 @@
   "capture": {
     "handoff": {
       "seen": true,
-      "t": 30.0,
+      "t": 20.0,
       "aram_zeroed": true,
       "vram_zeroed": true
     },
     "screenshots": [
       "assessments/evidence/ikaruga/shot-060s.png",
       "assessments/evidence/ikaruga/shot-121s.png",
-      "assessments/evidence/ikaruga/shot-183s.png",
-      "assessments/evidence/ikaruga/shot-244s.png",
-      "assessments/evidence/ikaruga/shot-306s.png",
-      "assessments/evidence/ikaruga/shot-368s.png",
-      "assessments/evidence/ikaruga/shot-420s.png",
-      "assessments/evidence/ikaruga/shot-482s.png",
-      "assessments/evidence/ikaruga/shot-544s.png",
-      "assessments/evidence/ikaruga/shot-606s.png"
+      "assessments/evidence/ikaruga/shot-182s.png",
+      "assessments/evidence/ikaruga/shot-243s.png",
+      "assessments/evidence/ikaruga/shot-304s.png",
+      "assessments/evidence/ikaruga/shot-365s.png",
+      "assessments/evidence/ikaruga/shot-426s.png",
+      "assessments/evidence/ikaruga/shot-487s.png",
+      "assessments/evidence/ikaruga/shot-548s.png",
+      "assessments/evidence/ikaruga/shot-609s.png"
     ],
+    "coverage": "title",
     "watermarks_info": {
       "main": 32505920,
-      "vram": 6814341,
+      "vram": 9711616,
       "aram": 8388608
-    },
-    "coverage": "title"
+    }
   },
   "memory": {
     "main": {
       "dma_high_water": 27935968
     },
     "vram": {
-      "peak": 6814341,
-      "nz_above_cap": 0,
-      "regs_last": "isp_base=0 isp_limit=1bc8a0 ol_base=250b80 ol_limit=1bc9a0 fb_w_sof1=26a000 fb_w_sof2=c00000 fb_r_sof1=26a000"
+      "peak": 9711616,
+      "nz_total": 1002408,
+      "nz_above_cap": 57048,
+      "regs_last": "isp_base=400000 isp_limit=5bc8a0 ol_base=650b80 ol_limit=5bc9a0 fb_w_sof1=66a000 fb_w_sof2=c00000 fb_r_sof1=26a000"
     },
     "aram": {
-      "peak": 8388608,
-      "nz_above_cap": 6291456
+      "peak": 1897200,
+      "nz_above_cap": 0
     }
   },
   "streaming": {
@@ -68,7 +69,7 @@
     "total_bytes": 9027584,
     "unique_bytes": 3518464,
     "reread_ratio": 0.6103,
-    "steady_mb_per_min": 0.132,
+    "steady_mb_per_min": 0.128,
     "short_window": false
   },
   "guts": {
@@ -617,6 +618,14 @@
     "sdk_overlap": "partial",
     "cart_loader_match": true
   },
-  "gate": "G3 memory: aram peak > 2x DC capacity",
-  "scores": null
+  "gate": null,
+  "scores": {
+    "memory": 23.4,
+    "streaming": 77.4,
+    "guts": 85.0,
+    "controls": 100.0,
+    "similarity": 70.0,
+    "final": 49.6,
+    "tier": "B"
+  }
 }

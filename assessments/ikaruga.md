@@ -1,5 +1,35 @@
 # Ikaruga (GDL-0010) (`ikaruga`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **49.6 (B)**.**
+> v2's G3-aram was the DMPD fill artifact — the old §Gate's "full-bank load" inference was wrong, and its own risk-flag ("gate may be too aggressive") is resolved: the measurement was at fault, not the gate. A v3 interim run also false-parked no-render (cart-DMA-only sampling + 1 MiB threshold vs its 0.96 MiB static title). v4: 49.6 B; ARAM content 1.81 MiB fits DC — as the shipped DC port always implied. Coverage still title-only (FREE PLAY suppresses attract; the v2 doc's calibration-countdown finding stands).
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **49.6 (B)** |
+| Coverage | title |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/ikaruga.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 27,935,968 | 16,777,216 | 1.67 |  |
+| VRAM (write-truth diff) | 9,711,616 | 8,388,608 | 1.16 | nz_total 1,002,408 |
+| ARAM (content, fill-excluded) | 1,897,200 | 2,097,152 | 0.90 | content above cap 0 |
+
+Streaming: 396 DMA events · total 8.6 MB · unique 3.4 MB · re-read 0.6103 · steady 0.128 MB/min
+Axes: memory 23.4 · streaming 77.4 · guts 85.0 · controls 100.0 · similarity 70.0 → **final 49.6 (B)**
+Screenshots: `evidence/ikaruga/shot-060s.png` · `evidence/ikaruga/shot-365s.png` · `evidence/ikaruga/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 > **Calibration reference — official DC port exists (2002); not a queue entry.**
 > This is Calibration B: the control test that decides whether GD-ROM/DIMM
 > reads route through the same logged `CARTDMA` path the battery already
