@@ -478,3 +478,46 @@ sidecars — no re-capture needed (the re-assessment rule above applies).
 
 Rankings stay internally fair meanwhile — every game is measured by the same rules — but
 absolute scores near tier boundaries should be read with these two caveats in mind.
+
+## 7. Battery v4 (2026-08-04): the write-truth ARAM metric measured a fill pattern, not content
+
+The 2026-08-03 campaign's verdicts were dominated by instrumentation artifacts, not
+game behavior. Root-caused and fixed across battery v3 (fork `27d12da78`) and v4
+(fork `4b59eceff`); every v2/v3 sidecar is stale (RUNBOOK re-assessment rule).
+
+- **v3 fixes:** (a) instrumentation must never mutate guest state — the v2 handoff
+  *zeroing* of ARAM/VRAM broke rendering for the entire no-render class (moeru A/B
+  proof); replaced with host-side snapshot+diff. (b) The fork must build with
+  `USE_VULKAN=ON` — the GL backend never presents CPU-framebuffer paints (DIMM
+  "NOW LOADING", 2D CPU-FB titles). (c) GD sets launch from the companion zip only;
+  a bare `.chd` boots as a Dreamcast disc (DC BIOS menu). (d) HWW/HWR logging gated
+  behind `FLYCAST_HWLOG` (alternating-pair dedup miss → ~230 MB/min log → ENOSPC).
+- **v4 fix 1 — the DMPD fill.** The GD DIMM firmware sweeps unused ARAM with a
+  repeating 4-byte tag `44 4D 50 44` ("DMPD"). An ikaruga `FLYCAST_ARAMDUMP`
+  showed the entire upper 6 MB as one repeated 16-byte block. Any write-truth diff
+  counts that as usage: ten families G3-parked with the telltale
+  `nz_above2m == 0x600000` **exactly**. ARM-reset re-baselining cannot dodge it
+  (the sweep lands after the last reset on affected titles). Fix: `ARAMPROFILE`
+  `content_*` counters skip interiors of runs of identical 16-byte blocks — on the
+  ikaruga dump this keeps 1.44 MiB of real sound data and drops the fill to 16 B.
+  Ikaruga's real content fits DC ARAM, as its shipped DC port always implied —
+  §4's "G3 gate too aggressive" suspicion is resolved: the *measurement* was wrong.
+- **v4 fix 2 — sampling cadence.** Profiles fired only on cart DMA; titles that
+  stop DMAing after load were never sampled at steady state (ikaruga's rendered
+  title parsed as no-render). Now also sampled every 600 vblanks (~10 s).
+- **v4 fix 3 — boot_ok threshold.** 1 MiB → 512 KiB `vram.nz_total`: a static
+  hardware-rendered title (ikaruga) legitimately writes only ~0.96 MiB of
+  textures; the bare cart splash (the false-positive guard) writes 237 KiB.
+- **v4 fix 4 — re-runs must not reset controls research.** `run_battery` now
+  carries the prior sidecar's `device_class`/`sources` forward; the first v4 pass
+  silently reverted dragntr* `medal_hopper`→`stick` and gunsur2
+  `pad_adaptable`→`stick` (restored from archived sidecars).
+- **Dragon Treasure trio reclassified.** dragntr/dragntr2: no bootable payload in
+  the disc image — flycast "Naomi GDROM: Could not find the file to decrypt."
+  (`gdcartridge.cpp:611`; netpic TODO at `:487`). dragntr3 boots to splash then
+  stalls polling the network ("Network command received cmd 1. Need full
+  NetDIMM?", `gdcartridge.cpp:761`). NetDIMM satellite medal cabinets —
+  `medal_hopper` would gate G2 even if they booted. Not emulator defects worth
+  chasing for a DC-port ranking.
+- **Fill signature is the regression canary:** any future sidecar showing
+  `aram nz_above_cap == 0x600000` exactly means the content metric regressed.

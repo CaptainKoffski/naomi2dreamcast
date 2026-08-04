@@ -302,6 +302,20 @@ def main():
                                  f"'{row['input_ports']}'"]},
         "similarity": similarity(row, fmt, guts),
     }
+    # controls research (RUNBOOK step 2) lives only in the sidecar — a re-run must
+    # not reset it to the MAME hint (2026-08-04: dragntr* lost medal_hopper->stick,
+    # gunsur2 pad_adaptable->stick, and every researched citation was dropped)
+    prior_path = os.path.join(ASSESS, setname + ".metrics.json")
+    if os.path.exists(prior_path):
+        try:
+            with open(prior_path) as fh:
+                pc = json.load(fh).get("controls", {})
+            if pc.get("device_class") not in (None, "review", row["device_class_hint"]):
+                sc["controls"]["device_class"] = pc["device_class"]
+            if len(pc.get("sources", [])) > 1:
+                sc["controls"]["sources"] = pc["sources"]
+        except (OSError, json.JSONDecodeError):
+            pass
     if sc["controls"]["device_class"] == "review":
         sc["gate"] = None
         sc["scores"] = None

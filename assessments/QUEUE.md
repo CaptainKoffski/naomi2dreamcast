@@ -8,23 +8,23 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 |---|---|---|---|---|
 | `azumanga` — Azumanga Daioh Puzzle Bobble (GDL-0018) | `azumanga` | Puzzle ★ | 86.7 MB | parked |
 | `kurucham` — Kurukuru Chameleon (Japan) (GDL-0034) | `kurucham` | Puzzle ★ | 41.6 MB | done |
-| `ss2005` — Super Shanghai 2005 (Japan, Rev A) (GDL-0031A) | `ss2005`, `ss2005o` | Puzzle ★ | 63.1 MB | parked |
+| `ss2005` — Super Shanghai 2005 (Japan, Rev A) (GDL-0031A) | `ss2005`, `ss2005o` | Puzzle ★ | 63.1 MB | done |
 | `takoron` — Noukone Puzzle Takoron (Japan) (GDL-0042) | `takoron` | Puzzle ★ | 52.6 MB | parked |
 | `tetkiwam` — Tetris Kiwamemichi (Japan) (GDL-0020) | `tetkiwam` | Puzzle ★ | 62.3 MB | done |
 | `zunou` — Touch De Zunou (Japan, Rev A) | `zunou` | Puzzle ★ | 61.9 MB | parked |
-| `illvelo` — Illvelo (Illmatic Envelope) (Japan) | `illvelo` | Shmup ★ | 88.4 MB | parked |
-| `radirgyn` — Radirgy Noa (Japan) | `radirgyn` | Shmup ★ | 107.4 MB | parked |
-| `senko` — Senko no Ronde (Japan, Rev A) (GDL-0030A) | `senko`, `senkoo` | Shmup ★ | 241.0 MB | parked |
-| `senkosp` — Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | Shmup ★ | 237.7 MB | parked |
-| `ausfache` — Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | ? | 75.4 MB | parked |
+| `illvelo` — Illvelo (Illmatic Envelope) (Japan) | `illvelo` | Shmup ★ | 88.4 MB | done |
+| `radirgyn` — Radirgy Noa (Japan) | `radirgyn` | Shmup ★ | 107.4 MB | done |
+| `senko` — Senko no Ronde (Japan, Rev A) (GDL-0030A) | `senko`, `senkoo` | Shmup ★ | 241.0 MB | done |
+| `senkosp` — Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | Shmup ★ | 237.7 MB | done |
+| `ausfache` — Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | ? | 75.4 MB | done |
 | `dragntr` — Dragon Treasure (Rev B) (GDS-0030B) | `dragntr`, `dragntra` | Medal | 142.3 MB | parked |
 | `dragntr2` — Dragon Treasure 2 (Rev A) (GDS-0037A) | `dragntr2` | Medal | 231.6 MB | parked |
 | `dragntr3` — Dragon Treasure 3 (Rev A) (GDS-0041A) | `dragntr3` | Medal | 290.1 MB | parked |
 | `gunsur2` — Gun Survivor 2 Biohazard Code: Veronica (World, BHF2 Ver.E) | `gunsur2` | Gun (3-axis) | 175.7 MB | done |
 | `inunoos` — Inu no Osanpo / Dog Walking (Japan, Export, Rev A) | `inunoos` | Simulation | 79.7 MB | parked |
-| `mamonoro` — Mamoru-kun wa Norowarete Shimatta! (Japan) | `mamonoro` | Shmup ★ | 146.1 MB | parked |
-| `marstv` — Kasei Channel Mars TV (Japan) | `marstv` | Party | 57.8 MB | parked |
-| `moeru` — Moeru Casinyo (Japan) (GDL-0013) | `moeru` | ? | 98.0 MB | pending |
+| `mamonoro` — Mamoru-kun wa Norowarete Shimatta! (Japan) | `mamonoro` | Shmup ★ | 146.1 MB | done |
+| `marstv` — Kasei Channel Mars TV (Japan) | `marstv` | Party | 57.8 MB | done |
+| `moeru` — Moeru Casinyo (Japan) (GDL-0013) | `moeru` | ? | 98.0 MB | done |
 | `pokasuka` — Pokasuka Ghost! (Japan) | `pokasuka` | ? | 142.3 MB | pending |
 | `ringout` — Ring Out 4x4 (Rev A) | `ringout` | ? | 39.0 MB | pending |
 | `shootopl` — Shootout Pool | `shootopl` | ? | 16.6 MB | pending |
