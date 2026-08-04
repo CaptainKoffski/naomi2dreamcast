@@ -4,10 +4,10 @@
   "maker": "Compile Heart",
   "year": "2006",
   "format": "GD-ROM",
-  "assessed": "2026-08-03",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -26,23 +26,23 @@
   "capture": {
     "handoff": {
       "seen": true,
-      "t": 30.0,
+      "t": 20.0,
       "aram_zeroed": true,
       "vram_zeroed": true
     },
     "screenshots": [
       "assessments/evidence/takoron/shot-060s.png",
       "assessments/evidence/takoron/shot-121s.png",
-      "assessments/evidence/takoron/shot-183s.png",
-      "assessments/evidence/takoron/shot-245s.png",
-      "assessments/evidence/takoron/shot-307s.png",
-      "assessments/evidence/takoron/shot-369s.png",
-      "assessments/evidence/takoron/shot-420s.png",
-      "assessments/evidence/takoron/shot-482s.png",
-      "assessments/evidence/takoron/shot-545s.png",
-      "assessments/evidence/takoron/shot-607s.png"
+      "assessments/evidence/takoron/shot-182s.png",
+      "assessments/evidence/takoron/shot-243s.png",
+      "assessments/evidence/takoron/shot-304s.png",
+      "assessments/evidence/takoron/shot-365s.png",
+      "assessments/evidence/takoron/shot-426s.png",
+      "assessments/evidence/takoron/shot-487s.png",
+      "assessments/evidence/takoron/shot-548s.png",
+      "assessments/evidence/takoron/shot-609s.png"
     ],
-    "coverage": "title",
+    "coverage": "demo",
     "watermarks_info": {
       "main": 30425060,
       "vram": 15222784,
@@ -55,21 +55,21 @@
     },
     "vram": {
       "peak": 15222784,
-      "nz_total": 5729465,
-      "nz_above_cap": 5728565,
-      "regs_last": "isp_base=0 isp_limit=283920 ol_base=35a180 ol_limit=283a20 fb_w_sof1=36a000 fb_w_sof2=c00000 fb_r_sof1=76a000"
+      "nz_total": 5965059,
+      "nz_above_cap": 5963259,
+      "regs_last": "isp_base=400000 isp_limit=683920 ol_base=75a180 ol_limit=683a20 fb_w_sof1=76a000 fb_w_sof2=c00000 fb_r_sof1=36a000"
     },
     "aram": {
-      "peak": 8388608,
-      "nz_above_cap": 4429878
+      "peak": 8257552,
+      "nz_above_cap": 4336179
     }
   },
   "streaming": {
     "dma_events": 75,
     "total_bytes": 62215616,
-    "unique_bytes": 39146944,
-    "reread_ratio": 0.3708,
-    "steady_mb_per_min": 4.987,
+    "unique_bytes": 34952640,
+    "reread_ratio": 0.4382,
+    "steady_mb_per_min": 4.852,
     "short_window": false
   },
   "guts": {

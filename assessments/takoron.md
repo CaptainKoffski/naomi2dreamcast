@@ -1,5 +1,35 @@
 # Noukone Puzzle Takoron (Japan) (GDL-0042) (`takoron`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **PARKED — `G3 memory: aram peak > 2x DC capacity`**.**
+> Park **confirmed** under the v4 content metric: 4.14 MiB of genuine sound content above the DC cap — a real G3, not the fill artifact. Tutorial demo renders (shot-609s).
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **PARKED — `G3 memory: aram peak > 2x DC capacity`** |
+| Coverage | demo |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/takoron.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 29,360,128 | 16,777,216 | 1.75 |  |
+| VRAM (write-truth diff) | 15,222,784 | 8,388,608 | 1.81 | nz_total 5,965,059 |
+| ARAM (content, fill-excluded) | 8,257,552 | 2,097,152 | 3.94 | content above cap 4,336,179 |
+
+Streaming: 75 DMA events · total 59.3 MB · unique 33.3 MB · re-read 0.4382 · steady 4.852 MB/min
+Gate: `G3 memory: aram peak > 2x DC capacity` — see the note above; axes not computed (`scores: null`).
+Screenshots: `evidence/takoron/shot-060s.png` · `evidence/takoron/shot-365s.png` · `evidence/takoron/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 ## 1. Verdict
 
 | | |
