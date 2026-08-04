@@ -1,5 +1,35 @@
 # Illvelo (Illmatic Envelope) (Japan) (841-0059C) (`illvelo`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **34.1 (C)**.**
+> v2 parked it G3-aram via the DMPD fill artifact (`nz_above2m == 0x600000` exactly). v4 content metric: scored.
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **34.1 (C)** |
+| Coverage | demo |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/illvelo.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 27,289,280 | 16,777,216 | 1.63 |  |
+| VRAM (write-truth diff) | 14,172,160 | 8,388,608 | 1.69 | nz_total 4,744,109 |
+| ARAM (content, fill-excluded) | 2,097,136 | 2,097,152 | 1.00 | content above cap 0 |
+
+Streaming: 3245 DMA events · total 155.8 MB · unique 35.7 MB · re-read 0.7711 · steady 16.073 MB/min
+Axes: memory 22.4 · streaming 60.1 · guts None · controls 100.0 · similarity 20.0 → **final 34.1 (C)**
+Screenshots: `evidence/illvelo/shot-060s.png` · `evidence/illvelo/shot-365s.png` · `evidence/illvelo/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 ## 1. Verdict
 
 | | |
