@@ -1,5 +1,35 @@
 # Mamoru-kun wa Norowarete Shimatta! (Japan) (841-0060C) (`mamonoro`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **36.8 (C)**.**
+> v2 parked it G3-aram via the DMPD fill artifact. v4 content metric: scored; attract demo renders (logo-overlay gameplay, shot-182s).
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **36.8 (C)** |
+| Coverage | demo |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/mamonoro.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 22,092,160 | 16,777,216 | 1.32 |  |
+| VRAM (write-truth diff) | 13,718,016 | 8,388,608 | 1.64 | nz_total 7,422,814 |
+| ARAM (content, fill-excluded) | 2,064,240 | 2,097,152 | 0.98 | content above cap 0 |
+
+Streaming: 617 DMA events · total 136.5 MB · unique 53.3 MB · re-read 0.6095 · steady 13.057 MB/min
+Axes: memory 24.6 · streaming 68.0 · guts None · controls 100.0 · similarity 20.0 → **final 36.8 (C)**
+Screenshots: `evidence/mamonoro/shot-060s.png` · `evidence/mamonoro/shot-182s.png` · `evidence/mamonoro/shot-365s.png` · `evidence/mamonoro/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 ## 1. Verdict
 
 | | |
