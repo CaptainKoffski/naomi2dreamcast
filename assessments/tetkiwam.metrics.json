@@ -4,10 +4,10 @@
   "maker": "Success",
   "year": "2004",
   "format": "GD-ROM",
-  "assessed": "2026-08-03",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -26,27 +26,27 @@
   "capture": {
     "handoff": {
       "seen": true,
-      "t": 30.0,
+      "t": 20.0,
       "aram_zeroed": true,
       "vram_zeroed": true
     },
     "screenshots": [
       "assessments/evidence/tetkiwam/shot-060s.png",
       "assessments/evidence/tetkiwam/shot-121s.png",
-      "assessments/evidence/tetkiwam/shot-183s.png",
-      "assessments/evidence/tetkiwam/shot-246s.png",
-      "assessments/evidence/tetkiwam/shot-308s.png",
-      "assessments/evidence/tetkiwam/shot-361s.png",
-      "assessments/evidence/tetkiwam/shot-424s.png",
-      "assessments/evidence/tetkiwam/shot-488s.png",
-      "assessments/evidence/tetkiwam/shot-542s.png",
-      "assessments/evidence/tetkiwam/shot-606s.png"
+      "assessments/evidence/tetkiwam/shot-182s.png",
+      "assessments/evidence/tetkiwam/shot-243s.png",
+      "assessments/evidence/tetkiwam/shot-304s.png",
+      "assessments/evidence/tetkiwam/shot-365s.png",
+      "assessments/evidence/tetkiwam/shot-426s.png",
+      "assessments/evidence/tetkiwam/shot-487s.png",
+      "assessments/evidence/tetkiwam/shot-548s.png",
+      "assessments/evidence/tetkiwam/shot-609s.png"
     ],
-    "coverage": "title",
+    "coverage": "demo",
     "watermarks_info": {
       "main": 32508220,
-      "vram": 7763712,
-      "aram": 2097152
+      "vram": 9711616,
+      "aram": 8388608
     }
   },
   "memory": {
@@ -54,22 +54,22 @@
       "dma_high_water": 30495872
     },
     "vram": {
-      "peak": 7763712,
-      "nz_total": 2292917,
-      "nz_above_cap": 0,
+      "peak": 9711616,
+      "nz_total": 2388788,
+      "nz_above_cap": 57048,
       "regs_last": "isp_base=0 isp_limit=12c8a0 ol_base=190b80 ol_limit=12c9a0 fb_w_sof1=1aa000 fb_w_sof2=c00000 fb_r_sof1=5aa000"
     },
     "aram": {
-      "peak": 2097152,
+      "peak": 2031344,
       "nz_above_cap": 0
     }
   },
   "streaming": {
-    "dma_events": 1356,
-    "total_bytes": 99764224,
-    "unique_bytes": 35414016,
-    "reread_ratio": 0.645,
-    "steady_mb_per_min": 8.353,
+    "dma_events": 1446,
+    "total_bytes": 107792384,
+    "unique_bytes": 35442688,
+    "reread_ratio": 0.6712,
+    "steady_mb_per_min": 9.098,
     "short_window": false
   },
   "guts": {
@@ -625,11 +625,11 @@
   "gate": null,
   "scores": {
     "memory": 17.3,
-    "streaming": 73.4,
+    "streaming": 71.8,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 70.0,
-    "final": 43.5,
+    "final": 43.3,
     "tier": "B"
   }
 }

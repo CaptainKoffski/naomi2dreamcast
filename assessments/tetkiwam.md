@@ -1,5 +1,35 @@
 # Tetris Kiwamemichi (Japan) (GDL-0020) (`tetkiwam`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **43.3 (B)**.**
+> 43.3 B (was 43.5 on v2), now with demo coverage — two-board Tetris attract runs (shot-365s); the v2 title-⚠ was the headless-era artifact.
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **43.3 (B)** |
+| Coverage | demo |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/tetkiwam.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 30,495,872 | 16,777,216 | 1.82 |  |
+| VRAM (write-truth diff) | 9,711,616 | 8,388,608 | 1.16 | nz_total 2,388,788 |
+| ARAM (content, fill-excluded) | 2,031,344 | 2,097,152 | 0.97 | content above cap 0 |
+
+Streaming: 1446 DMA events · total 102.8 MB · unique 33.8 MB · re-read 0.6712 · steady 9.098 MB/min
+Axes: memory 17.3 · streaming 71.8 · guts 85.0 · controls 100.0 · similarity 70.0 → **final 43.3 (B)**
+Screenshots: `evidence/tetkiwam/shot-060s.png` · `evidence/tetkiwam/shot-365s.png` · `evidence/tetkiwam/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 ## 1. Verdict
 
 | | |
