@@ -4,10 +4,10 @@
   "maker": "Wow Entertainment / Sega",
   "year": "2001",
   "format": "cart",
-  "assessed": "2026-08-03",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -26,23 +26,23 @@
   "capture": {
     "handoff": {
       "seen": true,
-      "t": 30.0,
+      "t": 20.0,
       "aram_zeroed": true,
       "vram_zeroed": true
     },
     "screenshots": [
       "assessments/evidence/inunoos/shot-060s.png",
       "assessments/evidence/inunoos/shot-121s.png",
-      "assessments/evidence/inunoos/shot-183s.png",
-      "assessments/evidence/inunoos/shot-247s.png",
-      "assessments/evidence/inunoos/shot-309s.png",
-      "assessments/evidence/inunoos/shot-362s.png",
-      "assessments/evidence/inunoos/shot-424s.png",
-      "assessments/evidence/inunoos/shot-489s.png",
-      "assessments/evidence/inunoos/shot-542s.png",
+      "assessments/evidence/inunoos/shot-182s.png",
+      "assessments/evidence/inunoos/shot-243s.png",
+      "assessments/evidence/inunoos/shot-304s.png",
+      "assessments/evidence/inunoos/shot-365s.png",
+      "assessments/evidence/inunoos/shot-426s.png",
+      "assessments/evidence/inunoos/shot-487s.png",
+      "assessments/evidence/inunoos/shot-548s.png",
       "assessments/evidence/inunoos/shot-609s.png"
     ],
-    "coverage": "title",
+    "coverage": "demo",
     "watermarks_info": {
       "main": 33030208,
       "vram": 12845578,
@@ -55,21 +55,21 @@
     },
     "vram": {
       "peak": 12845578,
-      "nz_total": 7050109,
-      "nz_above_cap": 4263397,
-      "regs_last": "isp_base=0 isp_limit=fc8a0 ol_base=150b80 ol_limit=fc9a0 fb_w_sof1=16a000 fb_w_sof2=c00000 fb_r_sof1=16a000"
+      "nz_total": 7049666,
+      "nz_above_cap": 4262946,
+      "regs_last": "isp_base=0 isp_limit=fc8a0 ol_base=150b80 ol_limit=fc9a0 fb_w_sof1=16a000 fb_w_sof2=c00000 fb_r_sof1=56a000"
     },
     "aram": {
-      "peak": 8388608,
-      "nz_above_cap": 4529830
+      "peak": 8257552,
+      "nz_above_cap": 4621681
     }
   },
   "streaming": {
-    "dma_events": 2681,
-    "total_bytes": 124239072,
-    "unique_bytes": 27943488,
-    "reread_ratio": 0.7751,
-    "steady_mb_per_min": 11.386,
+    "dma_events": 2841,
+    "total_bytes": 133768288,
+    "unique_bytes": 27533728,
+    "reread_ratio": 0.7942,
+    "steady_mb_per_min": 12.29,
     "short_window": false
   },
   "guts": {

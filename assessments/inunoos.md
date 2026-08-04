@@ -1,5 +1,35 @@
 # Inu no Osanpo / Dog Walking (Japan, Export, Rev A) (840-0073) (`inunoos`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **PARKED — `G3 memory: aram peak > 2x DC capacity`**.**
+> Park **confirmed** under the v4 content metric: 4.41 MiB of genuine sound content above the DC cap — a real G3, not the fill artifact. Researched `awkward` controls restored.
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **PARKED — `G3 memory: aram peak > 2x DC capacity`** |
+| Coverage | demo |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/inunoos.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 29,180,960 | 16,777,216 | 1.74 |  |
+| VRAM (write-truth diff) | 12,845,578 | 8,388,608 | 1.53 | nz_total 7,049,666 |
+| ARAM (content, fill-excluded) | 8,257,552 | 2,097,152 | 3.94 | content above cap 4,621,681 |
+
+Streaming: 2841 DMA events · total 127.6 MB · unique 26.3 MB · re-read 0.7942 · steady 12.29 MB/min
+Gate: `G3 memory: aram peak > 2x DC capacity` — see the note above; axes not computed (`scores: null`).
+Screenshots: `evidence/inunoos/shot-060s.png` · `evidence/inunoos/shot-365s.png` · `evidence/inunoos/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 ## 1. Verdict
 
 | | |
