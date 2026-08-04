@@ -4,10 +4,10 @@
   "maker": "Sega",
   "year": "2003",
   "format": "GD-ROM",
-  "assessed": "2026-08-03",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -16,11 +16,11 @@
     "steady_after_s": 120,
     "shot_interval_s": 60,
     "boot_timeout_s": 120,
-    "rom_used": "naomi/dragntr/gds-0030b.chd"
+    "rom_used": "naomi/dragntr.zip"
   },
   "boot": {
     "ok": false,
-    "failure_class": "no-handoff-120s",
+    "failure_class": "emulator-exited",
     "mame_not_working": false
   },
   "capture": {
@@ -30,10 +30,7 @@
       "aram_zeroed": false,
       "vram_zeroed": false
     },
-    "screenshots": [
-      "assessments/evidence/dragntr/shot-060s.png",
-      "assessments/evidence/dragntr/shot-121s.png"
-    ],
+    "screenshots": [],
     "coverage": null,
     "watermarks_info": {
       "main": 0,
@@ -91,6 +88,6 @@
     "sdk_overlap": "none",
     "cart_loader_match": false
   },
-  "gate": "G1 broken: no-handoff-120s",
+  "gate": "G1 broken: emulator-exited",
   "scores": null
 }

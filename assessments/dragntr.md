@@ -1,5 +1,35 @@
 # Dragon Treasure (Rev B) (GDS-0030B) (`dragntr`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **PARKED — `G1 broken: emulator-exited`**.**
+> Reclassified: flycast finds no bootable payload in the disc — "Naomi GDROM: Could not find the file to decrypt." (`gdcartridge.cpp:611`, netpic TODO `:487`). NetDIMM satellite medal cabinet; `medal_hopper` would gate G2 even if it booted.
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **PARKED — `G1 broken: emulator-exited`** |
+| Coverage | ? (never booted) |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=False · handoff None s · run 600 s · rom `naomi/dragntr.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 0 | 16,777,216 | 0.00 |  |
+| VRAM (write-truth diff) | 0 | 8,388,608 | 0.00 | nz_total 0 |
+| ARAM (content, fill-excluded) | 0 | 2,097,152 | 0.00 | content above cap 0 |
+
+Streaming: 0 DMA events · total 0.0 MB · unique 0.0 MB · re-read 0.0 · steady None MB/min
+Gate: `G1 broken: emulator-exited` — see the note above; axes not computed (`scores: null`).
+Screenshots: none (no boot)
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 ## 1. Verdict
 
 | | |
