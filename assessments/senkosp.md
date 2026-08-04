@@ -1,5 +1,35 @@
 # Senko no Ronde Special (Export, Japan) (GDL-0038) (`senkosp`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **36.6 (C)**.**
+> v2 parked it G3-aram via the DMPD fill artifact. v4: scored, demo coverage (arena gameplay in shot-609s).
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **36.6 (C)** |
+| Coverage | demo |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/senkosp.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 33,453,344 | 16,777,216 | 1.99 |  |
+| VRAM (write-truth diff) | 11,897,553 | 8,388,608 | 1.42 | nz_total 4,055,692 |
+| ARAM (content, fill-excluded) | 2,097,136 | 2,097,152 | 1.00 | content above cap 0 |
+
+Streaming: 178 DMA events · total 26.6 MB · unique 17.5 MB · re-read 0.3437 · steady 2.349 MB/min
+Axes: memory 10.2 · streaming 87.8 · guts 85.0 · controls 100.0 · similarity 70.0 → **final 36.6 (C)**
+Screenshots: `evidence/senkosp/shot-060s.png` · `evidence/senkosp/shot-304s.png` · `evidence/senkosp/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 ## 1. Verdict
 
 | | |
