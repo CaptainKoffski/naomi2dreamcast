@@ -1,5 +1,35 @@
 # Akatsuki Blitzkampf Ausf. Achse (Japan) (841-0058C) (`ausfache`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **58.4 (B)**.**
+> v2 parked it G3-aram with the telltale `nz_above2m == 0x600000` — the DIMM "DMPD" fill counted as sound usage. v4 content metric: real ARAM content fits.
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **58.4 (B)** |
+| Coverage | demo |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/ausfache.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 5,065,888 | 16,777,216 | 0.30 |  |
+| VRAM (write-truth diff) | 9,692,984 | 8,388,608 | 1.16 | nz_total 3,691,629 |
+| ARAM (content, fill-excluded) | 2,097,136 | 2,097,152 | 1.00 | content above cap 0 |
+
+Streaming: 459 DMA events · total 47.9 MB · unique 23.6 MB · re-read 0.5066 · steady 5.059 MB/min
+Axes: memory 57.0 · streaming 79.8 · guts None · controls 100.0 · similarity 20.0 → **final 58.4 (B)**
+Screenshots: `evidence/ausfache/shot-060s.png` · `evidence/ausfache/shot-365s.png` · `evidence/ausfache/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 ## 1. Verdict
 
 | | |

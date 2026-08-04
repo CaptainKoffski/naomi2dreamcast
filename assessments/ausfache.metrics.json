@@ -4,10 +4,10 @@
   "maker": "Subtle Style",
   "year": "2008",
   "format": "cart",
-  "assessed": "2026-08-03",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -26,50 +26,50 @@
   "capture": {
     "handoff": {
       "seen": true,
-      "t": 30.0,
+      "t": 20.0,
       "aram_zeroed": true,
       "vram_zeroed": true
     },
     "screenshots": [
       "assessments/evidence/ausfache/shot-060s.png",
       "assessments/evidence/ausfache/shot-121s.png",
-      "assessments/evidence/ausfache/shot-183s.png",
-      "assessments/evidence/ausfache/shot-246s.png",
-      "assessments/evidence/ausfache/shot-308s.png",
-      "assessments/evidence/ausfache/shot-360s.png",
-      "assessments/evidence/ausfache/shot-422s.png",
-      "assessments/evidence/ausfache/shot-485s.png",
+      "assessments/evidence/ausfache/shot-182s.png",
+      "assessments/evidence/ausfache/shot-243s.png",
+      "assessments/evidence/ausfache/shot-304s.png",
+      "assessments/evidence/ausfache/shot-365s.png",
+      "assessments/evidence/ausfache/shot-426s.png",
+      "assessments/evidence/ausfache/shot-487s.png",
       "assessments/evidence/ausfache/shot-548s.png",
-      "assessments/evidence/ausfache/shot-600s.png"
+      "assessments/evidence/ausfache/shot-609s.png"
     ],
-    "coverage": "title",
+    "coverage": "demo",
     "watermarks_info": {
-      "main": 16371936,
-      "vram": 7892608,
+      "main": 16349952,
+      "vram": 9692984,
       "aram": 8388608
     }
   },
   "memory": {
     "main": {
-      "dma_high_water": 4777120
+      "dma_high_water": 5065888
     },
     "vram": {
-      "peak": 7892608,
-      "nz_total": 3600148,
-      "nz_above_cap": 0,
-      "regs_last": "isp_base=0 isp_limit=81060 ol_base=ac080 ol_limit=81160 fb_w_sof1=ca000 fb_w_sof2=c00000 fb_r_sof1=4ca000"
+      "peak": 9692984,
+      "nz_total": 3691629,
+      "nz_above_cap": 40664,
+      "regs_last": "isp_base=400000 isp_limit=481060 ol_base=4ac080 ol_limit=481160 fb_w_sof1=4ca000 fb_w_sof2=c00000 fb_r_sof1=ca000"
     },
     "aram": {
-      "peak": 8388608,
-      "nz_above_cap": 6291456
+      "peak": 2097136,
+      "nz_above_cap": 0
     }
   },
   "streaming": {
-    "dma_events": 415,
-    "total_bytes": 43786240,
-    "unique_bytes": 24932352,
-    "reread_ratio": 0.4306,
-    "steady_mb_per_min": 4.487,
+    "dma_events": 459,
+    "total_bytes": 50223104,
+    "unique_bytes": 24778752,
+    "reread_ratio": 0.5066,
+    "steady_mb_per_min": 5.059,
     "short_window": false
   },
   "guts": {
@@ -97,6 +97,14 @@
     "sdk_overlap": "none",
     "cart_loader_match": false
   },
-  "gate": "G3 memory: aram peak > 2x DC capacity",
-  "scores": null
+  "gate": null,
+  "scores": {
+    "memory": 57.0,
+    "streaming": 79.8,
+    "guts": null,
+    "controls": 100.0,
+    "similarity": 20.0,
+    "final": 58.4,
+    "tier": "B"
+  }
 }
