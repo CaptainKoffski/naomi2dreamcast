@@ -1,5 +1,35 @@
 # Azumanga Daioh Puzzle Bobble (GDL-0018) (`azumanga`) — portability assessment
 
+> **Battery v4 re-assessment (2026-08-04): **PARKED — `G3 memory: aram peak > 2x DC capacity`**.**
+> Park **confirmed** under the v4 content metric: 1.63 MiB of genuine (non-fill) sound content above the DC cap — with the below-cap driver/data this cannot fit 2 MiB. This is a real G3, unlike the fill-artifact cohort.
+> Below the v4 section is the battery v2-era assessment: its *measured* figures
+> (boot evidence, memory, streaming, score) are **superseded**; the identity,
+> controls-research and similarity sections remain valid. Instrumentation
+> root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v4 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **PARKED — `G3 memory: aram peak > 2x DC capacity`** |
+| Coverage | demo |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/azumanga.zip` |
+
+| Region | v4 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (DMA high-water) | 21,645,536 | 16,777,216 | 1.29 |  |
+| VRAM (write-truth diff) | 15,450,112 | 8,388,608 | 1.84 | nz_total 10,105,382 |
+| ARAM (content, fill-excluded) | 6,053,632 | 2,097,152 | 2.89 | content above cap 1,709,398 |
+
+Streaming: 446 DMA events · total 55.9 MB · unique 16.3 MB · re-read 0.7088 · steady 4.976 MB/min
+Gate: `G3 memory: aram peak > 2x DC capacity` — see the note above; axes not computed (`scores: null`).
+Screenshots: `evidence/azumanga/shot-060s.png` · `evidence/azumanga/shot-365s.png` · `evidence/azumanga/shot-609s.png`
+
+---
+
+# Historical: battery v2 assessment (measurements superseded)
+
 ## 1. Verdict
 
 | | |

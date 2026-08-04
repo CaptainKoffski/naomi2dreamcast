@@ -4,10 +4,10 @@
   "maker": "MOSS (Taito license)",
   "year": "2002",
   "format": "GD-ROM",
-  "assessed": "2026-08-02",
+  "assessed": "2026-08-04",
   "versions": {
-    "flycast": "9e882cbd2",
-    "battery": "2",
+    "flycast": "4b59eceff",
+    "battery": "4",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -26,21 +26,21 @@
   "capture": {
     "handoff": {
       "seen": true,
-      "t": 30.0,
+      "t": 20.0,
       "aram_zeroed": true,
       "vram_zeroed": true
     },
     "screenshots": [
       "assessments/evidence/azumanga/shot-060s.png",
       "assessments/evidence/azumanga/shot-121s.png",
-      "assessments/evidence/azumanga/shot-183s.png",
-      "assessments/evidence/azumanga/shot-246s.png",
-      "assessments/evidence/azumanga/shot-309s.png",
-      "assessments/evidence/azumanga/shot-361s.png",
-      "assessments/evidence/azumanga/shot-425s.png",
-      "assessments/evidence/azumanga/shot-488s.png",
-      "assessments/evidence/azumanga/shot-541s.png",
-      "assessments/evidence/azumanga/shot-605s.png"
+      "assessments/evidence/azumanga/shot-182s.png",
+      "assessments/evidence/azumanga/shot-243s.png",
+      "assessments/evidence/azumanga/shot-304s.png",
+      "assessments/evidence/azumanga/shot-365s.png",
+      "assessments/evidence/azumanga/shot-426s.png",
+      "assessments/evidence/azumanga/shot-487s.png",
+      "assessments/evidence/azumanga/shot-548s.png",
+      "assessments/evidence/azumanga/shot-609s.png"
     ],
     "coverage": "demo",
     "watermarks_info": {
@@ -55,20 +55,21 @@
     },
     "vram": {
       "peak": 15450112,
-      "nz_above_cap": 6688529,
-      "regs_last": "isp_base=0 isp_limit=1000e0 ol_base=155680 ol_limit=1001e0 fb_w_sof1=56a000 fb_w_sof2=c00000 fb_r_sof1=56a000"
+      "nz_total": 10105382,
+      "nz_above_cap": 6674248,
+      "regs_last": "isp_base=0 isp_limit=1000e0 ol_base=155680 ol_limit=1001e0 fb_w_sof1=56a000 fb_w_sof2=c00000 fb_r_sof1=16a000"
     },
     "aram": {
-      "peak": 8388608,
-      "nz_above_cap": 6224467
+      "peak": 6053632,
+      "nz_above_cap": 1709398
     }
   },
   "streaming": {
-    "dma_events": 386,
-    "total_bytes": 52217856,
+    "dma_events": 446,
+    "total_bytes": 58658816,
     "unique_bytes": 17082368,
-    "reread_ratio": 0.6729,
-    "steady_mb_per_min": 4.628,
+    "reread_ratio": 0.7088,
+    "steady_mb_per_min": 4.976,
     "short_window": false
   },
   "guts": {
