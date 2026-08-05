@@ -4,10 +4,10 @@
   "maker": "Subtle Style",
   "year": "2008",
   "format": "cart",
-  "assessed": "2026-08-04",
+  "assessed": "2026-08-06",
   "versions": {
-    "flycast": "4b59eceff",
-    "battery": "4",
+    "flycast": "ebae3b513",
+    "battery": "5",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -54,9 +54,9 @@
       "dma_high_water": 5065888
     },
     "vram": {
-      "peak": 9692984,
+      "peak": 7892608,
       "nz_total": 3691629,
-      "nz_above_cap": 40664,
+      "nz_above_cap": 0,
       "regs_last": "isp_base=400000 isp_limit=481060 ol_base=4ac080 ol_limit=481160 fb_w_sof1=4ca000 fb_w_sof2=c00000 fb_r_sof1=ca000"
     },
     "aram": {
@@ -69,7 +69,7 @@
     "total_bytes": 50223104,
     "unique_bytes": 24778752,
     "reread_ratio": 0.5066,
-    "steady_mb_per_min": 5.059,
+    "steady_mb_per_min": 5.062,
     "short_window": false
   },
   "guts": {
@@ -99,12 +99,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 57.0,
+    "memory": 85.0,
     "streaming": 79.8,
     "guts": null,
     "controls": 100.0,
     "similarity": 20.0,
-    "final": 58.4,
-    "tier": "B"
+    "final": 71.3,
+    "tier": "A"
   }
 }

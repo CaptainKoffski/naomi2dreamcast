@@ -1,30 +1,46 @@
 # Akatsuki Blitzkampf Ausf. Achse (Japan) (841-0058C) (`ausfache`) — portability assessment
 
-> **Battery v4 re-assessment (2026-08-04): **58.4 (B)**.**
-> v2 parked it G3-aram with the telltale `nz_above2m == 0x600000` — the DIMM "DMPD" fill counted as sound usage. v4 content metric: real ARAM content fits.
-> Below the v4 section is the battery v2-era assessment: its *measured* figures
-> (boot evidence, memory, streaming, score) are **superseded**; the identity,
-> controls-research and similarity sections remain valid. Instrumentation
-> root-cause: `docs/kb/assessment-tooling.md` §7.
+> **Battery v5 re-assessment (2026-08-06): **71.3 (A)**.**
+> v4's 58.4 (B) charged the game for 40,664 B of VRAM above the DC cap at
+> `0x93e738` — proven to be the Naomi BIOS boot-screen texture sheet (fonts +
+> NAOMI logo), uploaded **pre-handoff** and captured by a v4 sampling hole
+> (profile tick armed before the VRAM baseline exists → diff vs zero →
+> max-merged into the game peak). A dump-instrumented control run reproduced
+> the artifact byte-exactly pre-handoff and showed **zero** game writes above
+> 8 MB across the whole window. Root-cause + proof:
+> `docs/kb/assessment-tooling.md` §9. The v2-era section at the bottom keeps
+> the identity/controls/similarity research; its measured figures are
+> superseded (kb §7) — note its VRAM figure 7,892,608 matches v5 exactly.
 
-## v4 verdict & measurements
+## v5 verdict & measurements
 
 | | |
 |---|---|
-| **Final** | **58.4 (B)** |
-| Coverage | demo |
-| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final** | **71.3 (A)** |
+| Coverage | demo (live attract gameplay in `shot-609s.png`) |
+| Assessed | 2026-08-06 · battery v5 · flycast `ebae3b513` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 | Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/ausfache.zip` |
 
-| Region | v4 peak | DC cap | u | Note |
+| Region | v5 peak | DC cap | u | Note |
 |---|---|---|---|---|
 | Main RAM (DMA high-water) | 5,065,888 | 16,777,216 | 0.30 |  |
-| VRAM (write-truth diff) | 9,692,984 | 8,388,608 | 1.16 | nz_total 3,691,629 |
+| VRAM (write-truth diff, post-handoff) | 7,892,608 | 8,388,608 | 0.94 | nz_total 3,691,629 · **0 above cap** |
 | ARAM (content, fill-excluded) | 2,097,136 | 2,097,152 | 1.00 | content above cap 0 |
 
-Streaming: 459 DMA events · total 47.9 MB · unique 23.6 MB · re-read 0.5066 · steady 5.059 MB/min
-Axes: memory 57.0 · streaming 79.8 · guts None · controls 100.0 · similarity 20.0 → **final 58.4 (B)**
+Streaming: 459 DMA events · total 47.9 MB · unique 23.6 MB · re-read 0.5066 · steady 5.062 MB/min
+Axes: memory 85.0 · streaming 79.8 · guts None · controls 100.0 · similarity 20.0 → **final 71.3 (A)**
+Every metric except the corrected VRAM peak is byte-identical to the v4 run (459
+DMA events, same watermarks) — the fork binary is unchanged; only the parser
+stopped counting the pre-handoff BIOS sample. ARAM sits 16 B under the DC cap
+(u ≈ 1.00, the binding memory region): a port still wants the standard audio
+trim margin, but nothing is over budget anywhere.
 Screenshots: `evidence/ausfache/shot-060s.png` · `evidence/ausfache/shot-365s.png` · `evidence/ausfache/shot-609s.png`
+
+## Historical: battery v4 measurements (superseded by v5, kb §9)
+
+v4 (2026-08-04, flycast `4b59eceff`): final **58.4 (B)** — memory 57.0 with
+VRAM "peak" 9,692,984 / 40,664 B above cap. Both figures were the pre-handoff
+BIOS boot-frame artifact; all other v4 numbers match v5 above.
 
 ---
 
