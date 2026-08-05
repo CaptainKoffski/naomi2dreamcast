@@ -1,6 +1,6 @@
 # Radirgy Noa (Japan) (841-0062C) (`radirgyn`) — portability assessment
 
-> **Battery v4 re-assessment (2026-08-04): **46.1 (B)**.**
+> **Battery v4 re-assessment (2026-08-04): **55.9 (B)**.**
 > v2 parked it G3-aram via the DMPD fill artifact. v4: scored, demo coverage.
 > Below the v4 section is the battery v2-era assessment: its *measured* figures
 > (boot evidence, memory, streaming, score) are **superseded**; the identity,
@@ -11,7 +11,7 @@
 
 | | |
 |---|---|
-| **Final** | **46.1 (B)** |
+| **Final** | **55.9 (B)** |
 | Coverage | demo |
 | Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 | Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/radirgyn.zip` |
@@ -23,7 +23,7 @@
 | ARAM (content, fill-excluded) | 2,252,880 | 2,097,152 | 1.07 | content above cap 122,039 |
 
 Streaming: 304 DMA events · total 43.2 MB · unique 13.5 MB · re-read 0.6887 · steady 4.164 MB/min
-Axes: memory 36.6 · streaming 75.5 · guts None · controls 100.0 · similarity 20.0 → **final 46.1 (B)**
+Axes: memory 36.6 · streaming 75.5 · guts 85.0 · controls 100.0 · similarity 40.0 → **final 55.9 (B)**
 Screenshots: `evidence/radirgyn/shot-060s.png` · `evidence/radirgyn/shot-365s.png` · `evidence/radirgyn/shot-609s.png`
 
 ---
@@ -97,13 +97,20 @@ sound design demonstrably compresses into the DC's 2 MiB AICA RAM. The 4× bank 
 Naomi-side luxury, not intrinsic unportability. **If the kb §6 checkpoint softens the
 ARAM rule, `radirgyn` is the first unpark candidate.**
 
-Guts is **unavailable**: the M4 static scan failed with
+Guts was **unavailable at v2 time**: the M4 static scan failed with
 `static scan: load entry out of file: rom=0x40000000 len=0x200000` — third instance
-of the kb §4.q M4-cart carve failure (after `zunou`, `illvelo`), so `guts.flags` is
-BIOS-only (`[eeprom_bios]`) and `sdk_strings` is empty. Similarity inputs from the
-sidecar: `developer_match: false`, `sdk_overlap: "none"`, `cart_loader_match: false` —
-the developer false is the same reference-list artifact flagged in the `illvelo` doc,
-despite Milestone's in-franchise DC porting pedigree.
+of the kb §4.q M4-cart carve failure (after `zunou`, `illvelo`), so `guts.flags` was
+BIOS-only (`[eeprom_bios]`) and `sdk_strings` was empty. Similarity inputs from the
+sidecar at that time: `developer_match: false`, `sdk_overlap: "none"`,
+`cart_loader_match: false` — the developer false is the same reference-list artifact
+flagged in the `illvelo` doc, despite Milestone's in-franchise DC porting pedigree.
+**Re-scanned 2026-08-06** after the `carve_boot.py` bit-30 fix: the M4 load-entry rom
+offset carries bit 30 as an encrypted-read flag, not a file offset (MAME
+`src/mame/sega/naomim4.cpp:124-125` @59e7c0b, Flycast `m4cartridge.cpp:115,132`
+@ebae3b513); masking it (`& 0x1ffffffe`) lets the scan carve and Ghidra-analyze the
+2 MiB boot blob → `guts.dat_available = true`, guts axis **85.0**,
+`similarity.sdk_overlap = "partial"`, similarity axis **40.0** (`developer_match` and
+`cart_loader_match` remain false — v4 axes above; capture itself was not re-run).
 
 What would unblock it: a per-title audio trim (downsample the PCM banks / ADPCM) —
 standard porting work with **same-franchise** released-port precedent — plus modest
@@ -121,9 +128,10 @@ main-RAM (1.17×) and VRAM (1.33×, mostly relocatable) reduction.
   [Radirgy DB fan wiki](https://radirgy.neocities.org/tips/noa/);
   [HandWiki](https://handwiki.org/wiki/Software:Radirgy_Noa). The Wii/X360/PC ports
   shipped on standard pads, confirming pad-friendliness.
-- **Guts axis missing (kb §4.q third instance).** Fine for a parked title; if a softer
-  ARAM rule un-parks it, cart2dat needs M4 support first or the guts/similarity axes
-  will skew the score (no sdk_strings → `sdk_overlap: none`).
+- **M4 guts gap: closed 2026-08-06.** `carve_boot.py` now masks bit 30 (the M4
+  encrypted-read flag) on cart load-entry offsets, so the static scan carves and
+  Ghidra-analyzes the boot blob. Re-scored via `tools/assess/rescore_static.py`
+  (guts 85.0, similarity 40.0, final 55.9 B above); capture was not re-run.
 - MAME emulation status: blanket naomi.cpp `GAME_FLAGS`
   (`MACHINE_IMPERFECT_GRAPHICS|MACHINE_IMPERFECT_SOUND|MACHINE_NOT_WORKING`, line
   10914), mirrored by arcadeitalia as "preliminary" — yet the title runs and renders

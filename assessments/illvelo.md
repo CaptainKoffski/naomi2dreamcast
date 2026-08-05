@@ -1,6 +1,6 @@
 # Illvelo (Illmatic Envelope) (Japan) (841-0059C) (`illvelo`) — portability assessment
 
-> **Battery v4 re-assessment (2026-08-04): **34.1 (C)**.**
+> **Battery v4 re-assessment (2026-08-04): **43.9 (B)**.**
 > v2 parked it G3-aram via the DMPD fill artifact (`nz_above2m == 0x600000` exactly). v4 content metric: scored.
 > Below the v4 section is the battery v2-era assessment: its *measured* figures
 > (boot evidence, memory, streaming, score) are **superseded**; the identity,
@@ -11,7 +11,7 @@
 
 | | |
 |---|---|
-| **Final** | **34.1 (C)** |
+| **Final** | **43.9 (B)** |
 | Coverage | demo |
 | Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 | Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/illvelo.zip` |
@@ -23,7 +23,7 @@
 | ARAM (content, fill-excluded) | 2,097,136 | 2,097,152 | 1.00 | content above cap 0 |
 
 Streaming: 3245 DMA events · total 155.8 MB · unique 35.7 MB · re-read 0.7711 · steady 16.073 MB/min
-Axes: memory 22.4 · streaming 60.1 · guts None · controls 100.0 · similarity 20.0 → **final 34.1 (C)**
+Axes: memory 22.4 · streaming 60.1 · guts 85.0 · controls 100.0 · similarity 40.0 → **final 43.9 (B)**
 Screenshots: `evidence/illvelo/shot-060s.png` · `evidence/illvelo/shot-365s.png` · `evidence/illvelo/shot-609s.png`
 
 ---
@@ -93,14 +93,22 @@ it above the 8 MB line — the address-extent artifact of an asset store parked 
 Context values quoted from the sidecar (no axis scores exist — the pipeline stops at the
 gate): streaming 2,775 DMA events, `150,388,736 B` total / `32,053,248 B` unique,
 re-read ratio 0.7869, steady-state 15.214 MB/min (`short_window: false`) — the highest
-streaming volume in the campaign so far. Guts is **unavailable**: the M4 static scan
-failed with `static scan: load entry out of file: rom=0x40000000 len=0x200000` — second
-instance of the kb §4.q M4-cart carve failure (first: `zunou`) — so `guts.flags` is
-BIOS-only (`[eeprom_bios]`) and `sdk_strings` is empty. Similarity inputs from the
-sidecar: `developer_match: false`, `sdk_overlap: "none"`, `cart_loader_match: false` —
-the developer false is a reference-list artifact (the similarity reference's `makers`
-list contains only `Altron / Taito`), despite Milestone's directly relevant DC porting
-pedigree; worth a checkpoint note if the similarity axis is ever revised.
+streaming volume in the campaign so far. Guts was **unavailable at v2 time**: the M4
+static scan failed with `static scan: load entry out of file: rom=0x40000000
+len=0x200000` — second instance of the kb §4.q M4-cart carve failure (first: `zunou`)
+— so `guts.flags` was BIOS-only (`[eeprom_bios]`) and `sdk_strings` was empty.
+Similarity inputs from the sidecar at that time: `developer_match: false`,
+`sdk_overlap: "none"`, `cart_loader_match: false` — the developer false is a
+reference-list artifact (the similarity reference's `makers` list contains only
+`Altron / Taito`), despite Milestone's directly relevant DC porting pedigree; worth a
+checkpoint note if the similarity axis is ever revised. **Re-scanned 2026-08-06**
+after the `carve_boot.py` bit-30 fix: the M4 load-entry rom offset carries bit 30 as
+an encrypted-read flag, not a file offset (MAME `src/mame/sega/naomim4.cpp:124-125`
+@59e7c0b, Flycast `m4cartridge.cpp:115,132` @ebae3b513); masking it (`& 0x1ffffffe`)
+lets the scan carve and Ghidra-analyze the 2 MiB boot blob → `guts.dat_available =
+true`, guts axis **85.0**, `similarity.sdk_overlap = "partial"`, similarity axis
+**40.0** (`developer_match` and `cart_loader_match` remain false — v4 axes above;
+capture itself was not re-run).
 
 What would unblock it: a per-title audio trim (downsample the PCM banks / ADPCM) —
 standard porting work with **in-family** released-port precedent (Radirgy/Karous DC),
@@ -117,9 +125,11 @@ plus main-RAM/VRAM reduction as above.
   the 32.05 MB unique working set is the number that matters for GD feasibility, and the
   re-read-heavy pattern is the small-working-set loop the kb §6 item 2 checkpoint already
   flags as cache-friendly rather than disqualifying.
-- **Guts axis missing (M4 scan failure, kb §4.q second instance).** Fine for a parked
-  title; if a softer ARAM rule ever un-parks M4 carts, cart2dat needs M4 support first or
-  the guts/similarity axes will skew the score (no sdk_strings → `sdk_overlap: none`).
+- **M4 guts gap: closed 2026-08-06.** `carve_boot.py` now masks bit 30 (the M4
+  encrypted-read flag) on cart load-entry offsets, so the static scan carves and
+  Ghidra-analyzes the boot blob. Re-scored via `tools/assess/rescore_static.py`
+  (guts 85.0, similarity 40.0, final 43.9 B above — up from tier C); capture was not
+  re-run.
 - **Controls are the easy axis**: `controls.device_class = stick` — 8-way stick + 3
   buttons (A shot, B DOLL module control, C MEGALOPHAZ bomb; auto-shield when not
   firing), 1:1 on a stock DC pad. Sources: MAME src/mame/sega/naomi.cpp @59e7c0b
