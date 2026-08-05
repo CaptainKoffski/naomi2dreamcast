@@ -1,6 +1,6 @@
 # Assessment battery — tooling & reproducibility record
 
-Campaign version: **battery v2** (`BATTERY_VERSION = "2"` in `tools/assess/run_battery.py`).
+Campaign version: **battery v5** (`BATTERY_VERSION = "5"` in `tools/assess/run_battery.py`; v3 §7, v4 §7, v5 §9).
 This doc is the reproducibility record required before the campaign runs the 84-family
 queue in `assessments/QUEUE.md` — exact tool versions, invocation, env knobs, what each run
 produces/discards, the two calibration results that establish the battery is trustworthy,
@@ -574,3 +574,61 @@ add — never a number to hand-wave past.
 - zunou also shows the ARAM address-vs-content divergence (peak address 8 MB,
   content above cap 32,712 B) — more campaign-checkpoint evidence that the G3
   gate should weigh content, not high-address (§6).
+
+## 9. Battery v5 (2026-08-06): the pre-handoff sampling hole — ausfache's 40,664 B was the BIOS boot-screen texture
+
+Answering "what writes VRAM 0x93e738" (the sole above-cap remainder that held
+ausfache at B): **nothing in the game does.** The bytes are the Naomi BIOS
+boot-screen texture sheet — font glyph atlases plus the red NAOMI-logo art,
+uploaded via the 64-bit/texture path to linear `0x92c000..0x93e737` during BIOS
+boot, **before** the first cart DMA. Decoded from a raw dump they render as the
+BIOS glyph/logo sheets (twiddled 16-bit textures).
+
+### The hole
+
+v4's `cartlog_aram_rebaseline()` allocates `cartlog_aram_base` at the pre-DMA
+BIOS-jingle ARM reset, which arms `cartlog_profiles_tick()` **before handoff**.
+`cartlog_vram_profile()` then runs with `cartlog_vram_base == nullptr` and
+diffs raw VRAM **against zero** — a different measurement (BIOS-era content
+scan, exactly the WATERMARK trap §7 exists to avoid). `parse_capture` max-merged
+that one line into the game's peak. v2 never saw it (profiles only fired on
+cart DMA, post-handoff by construction); v4 created it while fixing the ARAM
+baseline (§7). One-line battery v5 fix: `parse_capture` ignores `VRAMPROFILE`
+lines until `VRAMHANDOFF`; test `test_pre_handoff_vram_noise` pins it. Fork
+unchanged (`ebae3b513`, binary identical to the v4 one).
+
+### Proof (diagnostic run 2026-08-06, 480 s, FLYCAST_VRAMDUMP)
+
+- Fresh cartlog reproduces the artifact in the **pre-handoff sample only**:
+  `ARAMREBASE` (line 1419) → `VRAMPROFILE high=93e738 … nz_above8m=9ed8`
+  (line 6242) → `VRAMHANDOFF` (line 9161). All 53 post-handoff samples:
+  `nz_above8m=0`.
+- Pre-handoff raw VRAM dump contains **exactly 40,664** nonzero bytes above
+  8 MB at `0x92c000..0x93e737` — byte-count- and peak-exact vs the v4 sidecar.
+- Across 40 dumps spanning boot → 170 s of attract, **zero** bytes above 8 MB
+  change: the game never touches the region.
+- Game's true post-handoff VRAM peak: `0x786e80` = 7,893,120 B = **0.941×**
+  the DC cap — matching the v2-era figure (7,892,608 B).
+
+### Fallout
+
+- **Why the zunou control (§8 addendum) missed it:** the control compared
+  post-handoff diff profiles; the artifact lives in the single pre-baseline
+  vs-zero sample. The exact-match refusal was correct discipline on
+  incommensurable data.
+- **The GD cohort's `(0x943000, 57048)` signature is almost certainly the same
+  hole** — dragntr3 never boots past the GD splash yet logs it, which is
+  exactly what a pre-handoff sample does. The §8 clamp keeps those five scores
+  as **conservative lower bounds** (clamp scores u=1.0; the true post-handoff
+  peak may be below cap). Their v4 cartlogs are deleted; only re-runs can
+  refine them. `BIOS_VRAM_SIGNATURES` stays as a canary: post-v5, those exact
+  values must never appear again — if one does, a post-handoff sample produced
+  it and something regressed.
+- Only titles whose recorded value **equals** the artifact were affected (the
+  GD five + ausfache); every other v4 sidecar's vram figures are dominated by
+  larger post-handoff values under max-merge and stand as-is.
+
+Rule for future agents, sharpening §8's provenance rule: **a diff is only as
+meaningful as its baseline.** A sample taken before the baseline exists is not
+"the same metric, earlier" — it is a different measurement and must never be
+merged into the same running max.

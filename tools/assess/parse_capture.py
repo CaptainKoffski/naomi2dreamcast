@@ -71,7 +71,10 @@ def parse(text, timeline=None, handoff_window=120):
                     aram["nz_above_cap"] = max(aram["nz_above_cap"], int(above_s, 16))
                 else:
                     m = _VPROF.match(s)
-                    if m:
+                    # pre-VRAMHANDOFF samples diff raw BIOS VRAM vs a null
+                    # baseline (fork ticks can start at a pre-DMA ARM reset) —
+                    # BIOS boot-frame bytes above 8 MB are not game usage
+                    if m and handoff["vram_zeroed"]:
                         vram["peak"] = max(vram["peak"], int(m.group(1), 16))
                         vram["nz_total"] = max(vram["nz_total"], int(m.group(2), 16))
                         vram["nz_below_max"] = max(vram["nz_below_max"], int(m.group(3), 16))

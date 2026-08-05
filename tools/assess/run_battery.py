@@ -15,7 +15,7 @@ BIN = os.environ.get("FLYCAST_BIN", os.path.join(
     CLEO, "tools/flycast-src/build/Flycast.app/Contents/MacOS/Flycast"))
 ASSESS = os.path.join(REPO, "assessments")
 OUT = os.path.join(HERE, "out")
-BATTERY_VERSION = "4"  # v4: ARAM rebaseline at ARM reset (BIOS 8MB sound-RAM-test sweep polluted first-DMA baselines: exact-0x600000 cohort) + periodic vblank profile sampling (cart-DMA-only sampling missed post-load steady state: ikaruga false no-render). v3: snapshot-diff instead of guest zeroing + Vulkan build. v2 and v3 sidecars are stale.
+BATTERY_VERSION = "5"  # v5: parse_capture drops pre-VRAMHANDOFF VRAMPROFILE samples — the v4 ARM-reset rebase let profile ticks fire before first cart DMA, and a null vram baseline diffs raw BIOS VRAM vs zero: the BIOS boot-frame block above 8 MB (cart 40664B@0x93e738 / GD 57048B@0x943000) max-merged into game peaks (ausfache root cause, kb §8). Fork unchanged. v4 sidecars stay valid EXCEPT the exact-artifact cohort: GD five are signature-clamped (conservative — true peak may be lower), ausfache re-assessed. v4: ARAM rebaseline at ARM reset + periodic vblank sampling. v2/v3 stale.
 HANDOFF_TAGS = (b"ARAMHANDOFF", b"CARTDMA")
 # Sets whose disc/feature set is network-bound (netpic/WCCF/satellite — GAME_FORMATS.md
 # Completeness section). Drives the guts 'network' penalty (spec §4.3).

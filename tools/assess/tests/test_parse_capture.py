@@ -47,6 +47,24 @@ def test_parse():
     assert m["serial_pokes"] == 1
     assert m["boot_ok"] is True     # handoff seen + vram nz_below8m >= 0x10000
 
+def test_pre_handoff_vram_noise():
+    # v4 hole (ausfache 2026-08-05): an ARM-reset pre-DMA enables profile ticks
+    # before the first CARTDMA, and cartlog_vram_profile with a null baseline
+    # diffs raw BIOS VRAM vs zero — the cart-BIOS boot frame above 8 MB
+    # (high=93e738, nz_above8m=9ed8) then max-merges into the game's peak.
+    # Pre-VRAMHANDOFF profile lines are a different measurement: drop them.
+    log = (
+        "ARAMREBASE armrst size=800000\n"
+        "VRAMPROFILE high=93e738 nz=d264 nz_below8m=338c nz_above8m=9ed8 size=1000000\n"
+        "CARTDMA src=00010000 dest=0c020000 len=100000\n"
+        "ARAMHANDOFF baselined size=800000\n"
+        "VRAMHANDOFF baselined size=1000000\n"
+        "VRAMPROFILE high=726180 nz=306790 nz_below8m=306790 nz_above8m=0 size=1000000\n"
+    )
+    m = parse_capture.parse(log)
+    assert m["vram"]["peak"] == 0x726180, hex(m["vram"]["peak"])
+    assert m["vram"]["nz_above_cap"] == 0
+
 def test_no_timeline_no_boot():
     m = parse_capture.parse("WATERMARK region=main used=5 size=2000000\n")
     assert m["handoff"]["seen"] is False and m["boot_ok"] is False
@@ -54,5 +72,6 @@ def test_no_timeline_no_boot():
 
 if __name__ == "__main__":
     test_parse(); print("test_parse OK")
+    test_pre_handoff_vram_noise(); print("test_pre_handoff_vram_noise OK")
     test_no_timeline_no_boot(); print("test_no_timeline_no_boot OK")
     print("ALL OK")
