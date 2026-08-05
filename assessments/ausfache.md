@@ -1,6 +1,6 @@
 # Akatsuki Blitzkampf Ausf. Achse (Japan) (841-0058C) (`ausfache`) — portability assessment
 
-> **Battery v5 re-assessment (2026-08-06): **71.3 (A)**.**
+> **Battery v5 re-assessment (2026-08-06): **79.1 (A)**.**
 > v4's 58.4 (B) charged the game for 40,664 B of VRAM above the DC cap at
 > `0x93e738` — proven to be the Naomi BIOS boot-screen texture sheet (fonts +
 > NAOMI logo), uploaded **pre-handoff** and captured by a v4 sampling hole
@@ -16,7 +16,7 @@
 
 | | |
 |---|---|
-| **Final** | **71.3 (A)** |
+| **Final** | **79.1 (A)** |
 | Coverage | demo (live attract gameplay in `shot-609s.png`) |
 | Assessed | 2026-08-06 · battery v5 · flycast `ebae3b513` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 | Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/ausfache.zip` |
@@ -28,7 +28,7 @@
 | ARAM (content, fill-excluded) | 2,097,136 | 2,097,152 | 1.00 | content above cap 0 |
 
 Streaming: 459 DMA events · total 47.9 MB · unique 23.6 MB · re-read 0.5066 · steady 5.062 MB/min
-Axes: memory 85.0 · streaming 79.8 · guts None · controls 100.0 · similarity 20.0 → **final 71.3 (A)**
+Axes: memory 85.0 · streaming 79.8 · guts 85.0 · controls 100.0 · similarity 40.0 → **final 79.1 (A)**
 Every metric except the corrected VRAM peak is byte-identical to the v4 run (459
 DMA events, same watermarks) — the fork binary is unchanged; only the parser
 stopped counting the pre-handoff BIOS sample. ARAM sits 16 B under the DC cap
@@ -111,10 +111,17 @@ VRAM 1.33×).
 
 Context values quoted from the sidecar (no axis scores exist — the pipeline stops at
 the gate): streaming 415 DMA events, `43,786,240 B` total / `24,932,352 B` unique,
-re-read ratio 0.4306, steady-state 4.487 MB/min (`short_window: false`). Guts
-**unavailable**: M4 cart breaks the `cart2dat.py` static scan (kb §4.q fourth instance,
-`rom=0x40000000 len=0x100000`) → `guts.dat_available = false`, no sdk_strings, and
-`similarity.sdk_overlap = "none"` is an artifact of that gap, not evidence.
+re-read ratio 0.4306, steady-state 4.487 MB/min (`short_window: false`). Guts were
+**unavailable at v2 time**: the M4 cart broke the `cart2dat.py` static scan (kb §4.q
+fourth instance, `rom=0x40000000 len=0x100000`) → `guts.dat_available = false`, no
+sdk_strings, and `similarity.sdk_overlap = "none"` was an artifact of that gap, not
+evidence. **Re-scanned 2026-08-06** after the `carve_boot.py` bit-30 fix: the M4
+load-entry rom offset carries bit 30 as an encrypted-read flag, not a file offset
+(MAME `src/mame/sega/naomim4.cpp:124-125` @59e7c0b, Flycast `m4cartridge.cpp:115,132`
+@ebae3b513); masking it (`& 0x1ffffffe`) lets the scan carve and Ghidra-analyze the
+1 MiB boot blob → `guts.dat_available = true`, guts axis **85.0**,
+`similarity.sdk_overlap = "partial"`, similarity axis **40.0** (v5 axes above;
+capture itself was not re-run).
 
 ## Risks & notes
 
@@ -127,9 +134,10 @@ re-read ratio 0.4306, steady-state 4.487 MB/min (`short_window: false`). Guts
   masks a running game (kb §4.m). Mainline Flycast demonstrably renders the title
   (§2 links), so the gap is fork/capture-side; per the working-style rule, rendering
   of any ported build must be verified on real DC hardware.
-- **M4 guts gap**: static analysis unavailable (kb §4.q), so code-size/MMIO/SDK
-  evidence is missing — a port project should extract the decrypted M4 image first.
-  M4 support in cart2dat is the fix if M4 titles start scoring.
+- **M4 guts gap: closed 2026-08-06.** `carve_boot.py` now masks bit 30 (the M4
+  encrypted-read flag) on cart load-entry offsets, so the static scan carves and
+  Ghidra-analyzes the boot blob. Re-scored via `tools/assess/rescore_static.py`
+  (guts 85.0, similarity 40.0, final 79.1 A above); capture was not re-run.
 - **Controls are the easy axis**: `controls.device_class = stick` — 8-way stick +
   3 attack buttons (A/B/C = Weak/Medium/Strong; throw and Reflector parry are
   mechanics on the same buttons), 2P. 1:1 on a stock DC pad (A/B/X + Start) and
