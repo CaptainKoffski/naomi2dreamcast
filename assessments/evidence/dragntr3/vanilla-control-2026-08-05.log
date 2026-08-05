@@ -1,0 +1,21 @@
+2026-08-05 23:36:08.851 Flycast[88092:15260234] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/0x/_x8gmsbd3b1b6lct7zpdj4vr0000gn/T/com.flyinghead.Flycast.savedState
+2026-08-05 23:36:08.950 Flycast[88092:15260234] ℹ️ sdl/sdl.cpp:775 N[RENDERER]: Monitor refresh rate: 60 Hz (1440 x 900)
+2026-08-05 23:36:08.952 Flycast[88092:15260234] ℹ️ rend/vulkan/vulkan_context.cpp:271 N[RENDERER]: Vulkan API 1.1. Device Apple M1
+2026-08-05 23:36:08.954 Flycast[88092:15260234] ℹ️ rend/vulkan/vulkan_context.cpp:425 N[RENDERER]: Device extension enabled: VK_KHR_swapchain
+2026-08-05 23:36:08.954 Flycast[88092:15260234] ℹ️ rend/vulkan/vulkan_context.cpp:425 N[RENDERER]: Device extension enabled: VK_KHR_portability_subset
+2026-08-05 23:36:08.954 Flycast[88092:15260234] ℹ️ rend/vulkan/vulkan_context.cpp:425 N[RENDERER]: Device extension enabled: VK_EXT_metal_objects
+2026-08-05 23:36:08.954 Flycast[88092:15260234] ℹ️ rend/vulkan/vulkan_context.cpp:428 N[RENDERER]: Device extension unavailable: VK_EXT_provoking_vertex
+2026-08-05 23:36:10.466 Flycast[88092:15260234] ℹ️ rend/vulkan/vulkan_context.h:326 N[RENDERER]: Using depth format D32SfloatS8Uint tiling Optimal
+2026-08-05 23:36:10.471 Flycast[88092:15260234] ℹ️ ui/gui.cpp:341 N[RENDERER]: Screen DPI is 227, size 1780 x 1336. Scaling by 1.70
+2026-08-05 23:36:11.023 Flycast[88092:15260234] ℹ️ rend/vulkan/vulkan_renderer.cpp:240 N[RENDERER]: VulkanRenderer::Init
+2026-08-05 23:36:11.027 Flycast[88092:15260342] ℹ️ hw/mem/addrspace.cpp:425 N[VMEM]: Info: nvmem is enabled
+2026-08-05 23:36:11.033 Flycast[88092:15260342] ℹ️ hw/mem/addrspace.cpp:461 N[VMEM]: BASE 0x137e20000 RAM(16 MB) 0x143e20000 VRAM64(8 MB) 0x13be20000 ARAM(2 MB) 0x157e20000
+2026-08-05 23:36:11.039 Flycast[88092:15260342] ℹ️ hw/mem/addrspace.cpp:425 N[VMEM]: Info: nvmem is enabled
+2026-08-05 23:36:11.052 Flycast[88092:15260342] ℹ️ hw/mem/addrspace.cpp:461 N[VMEM]: BASE 0x137e20000 RAM(32 MB) 0x143e20000 VRAM64(16 MB) 0x13be20000 ARAM(8 MB) 0x157e20000
+2026-08-05 23:36:11.072 Flycast[88092:15260342] ℹ️ hw/naomi/naomi_cart.cpp:673 N[NAOMI]: NAOMI GAME ID [DRAGON TREASURE 3] region ff players 0 vertical 0
+2026-08-05 23:36:11.072 Flycast[88092:15260342] ℹ️ emulator.cpp:63 N[BOOT]: Game ID is [DRAGON TREASURE 3]
+2026-08-05 23:36:11.079 Flycast[88092:15260342] ℹ️ hw/naomi/naomi_flashrom.cpp:148 N[NAOMI]: Initializing Naomi EEPROM for game SAMPLE GAME MAX LONG NAME-      
+2026-08-05 23:36:11.079 Flycast[88092:15260342] ℹ️ emulator.cpp:63 N[BOOT]: Game ID is [DRAGON TREASURE 3]
+2026-08-05 23:36:11.116 Flycast[88092:15260234] ℹ️ rend/vulkan/vulkan_context.h:326 N[RENDERER]: Using depth format D32SfloatS8Uint tiling Optimal
+2026-08-05 23:36:23.762 Flycast[88092:15260348] 🛑 hw/naomi/gdcartridge.cpp:758 W[NAOMI]: Network command received cmd 1. Need full NetDIMM?
+2026-08-05 23:36:23.763 Flycast[88092:15260348] 🛑 hw/naomi/gdcartridge.cpp:758 W[NAOMI]: Network command received cmd 1. Need full NetDIMM?

@@ -2,6 +2,19 @@
 
 > **Battery v4 re-assessment (2026-08-04): **PARKED — `G1 broken: no-render-after-handoff`**.**
 > Boots to the NAOMI GD-ROM splash then stalls polling the network: "Network command received cmd 1. Need full NetDIMM?" (`gdcartridge.cpp:761`, shot-609s = splash). NetDIMM satellite medal cabinet; park correct, class corrected.
+>
+> **Vanilla control run (2026-08-05): identical stall — not a fork bug.** Vanilla
+> Flycast v2.6 (build `392a429e8`, `/Applications/Flycast.app`, shared `emu.cfg`)
+> reproduces the exact signature: boots to GAME ID `[DRAGON TREASURE 3]`, then
+> `Network command received cmd 1. Need full NetDIMM?` ×2 (vanilla
+> `gdcartridge.cpp:758`) ~12 s in, then silence (`evidence/dragntr3/vanilla-control-2026-08-05.log`).
+> The fork's naomi-side diff vs its base `4126f1464` is additive logging only
+> (`git diff` — cartlog + `GetDmaSrcOffset`); the stalling code is byte-identical
+> upstream code: `GDCartridge::process()` rejects the whole network command group,
+> and the `NetDimm` class (selected only for vf4*/mj1/wccf*, `naomi_cart.cpp:283`)
+> stubs `accept`/`bind` anyway. Satellite payload above 0x1000000 is served over
+> the network by the main unit (MAME naomi.cpp @59e7c0b lines 9483–9487), so the
+> bytes to run don't exist locally in any emulator.
 > Below the v4 section is the battery v2-era assessment: its *measured* figures
 > (boot evidence, memory, streaming, score) are **superseded**; the identity,
 > controls-research and similarity sections remain valid. Instrumentation
