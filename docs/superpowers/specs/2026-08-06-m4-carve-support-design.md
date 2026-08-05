@@ -79,8 +79,9 @@ existing functions only:
 3. `run_battery.guts_flags(...)` and `run_battery.similarity(...)`
    recomputed — **similarity moves too**: `cart_loader_match` requires
    `dat_available`, `sdk_overlap` requires sdk_strings.
-4. Merge into the sidecar (same field shape run_battery writes,
-   sdk_strings excluded from the stored guts block as today).
+4. Merge into the sidecar (same field shape run_battery writes:
+   guts spread + flags + extra_bios_classes + sdk_strings last,
+   run_battery.py:310-312).
 5. `score.score_sidecar(...)`, write back.
 
 Sidecar `versions`/`assessed`/capture fields stay untouched — the
