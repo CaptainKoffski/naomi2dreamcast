@@ -26,6 +26,34 @@ Streaming: 446 DMA events · total 55.9 MB · unique 16.3 MB · re-read 0.7088 �
 Gate: `G3 memory: aram peak > 2x DC capacity` — see the note above; axes not computed (`scores: null`).
 Screenshots: `evidence/azumanga/shot-060s.png` · `evidence/azumanga/shot-365s.png` · `evidence/azumanga/shot-609s.png`
 
+### ARAM bank-structure verification (2026-08-04, informational — no score impact)
+
+Question: is the above-cap ARAM content removable without scattered pointer
+remapping? Verified **yes** against a live dump (fork `4b59eceff`,
+`FLYCAST_ARAMDUMP`, 155 s run reaching VS demo; parser:
+`tools/assess/parse_osb.py`; dump not committed — copyrighted game data):
+
+- 5 `SOSB` one-shot banks resident (`0x18000`, `0x101be0`, `0x2ddf40`,
+  `0x4ba2a0`, `0x592a00`), 2.33 MiB, 63 tones. Header = magic + version +
+  size + tone count + tone-record offset table, **all offsets relative to
+  bank start**; each `SOSP` tone record carries a **bank-relative** u32
+  sample-data offset. 63/63 offsets in-bank; in all 5 banks the first sample
+  starts exactly where tone records end; every bank ends `ENDB` at its
+  declared size.
+- Banks are stacked back-to-back 16-byte-aligned (bank 1 ends `0x101bd0`,
+  bank 2 starts `0x101be0`) — position-independent blobs by construction.
+- The ARM7 driver (bottom of ARAM, < `0x9000`) embeds `SOSB`/`SMPB`/`SOSP`/
+  `ENDB` as code literals: the driver parses headers and resolves absolute
+  addresses; game code holds bank bases only.
+- Raw `.p16` BGM is headerless and sits in the gaps between banks (e.g.
+  ~1.4 MB between banks 2 and 3) — not reachable by magic-scan; it is the
+  natural GD-stream candidate in a port.
+
+Consequence: the "what would unblock it" audio trim is a **bank rebuild +
+base move**, not pointer archaeology — upgraded from assumption to verified.
+Caveat: field semantics beyond the offsets (rates/lengths) are an empirical
+read, not from a spec; sample storage order ≠ tone order.
+
 ---
 
 # Historical: battery v2 assessment (measurements superseded)
