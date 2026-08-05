@@ -30,6 +30,11 @@ def carve(data):
     fixed = []
     for rom, ram, n in entries:
         if hdr == 0:
+            # Bits 31/29 are never legitimate (29-bit address + bit-30 flag is
+            # the whole legal space) — a set bit there is a corrupt/misdecrypted
+            # table, not data the mask below may silently swallow.
+            if rom & 0xa0000000:
+                raise ValueError(f"load entry has illegal flag bits: rom=0x{rom:x}")
             # Cart images: bit 30 of a load-entry rom offset is the M4
             # encrypted-read flag, and cart addressing is 29-bit — apply the
             # hardware decode. MAME naomim4.cpp:124-125 @59e7c0b
@@ -52,6 +57,11 @@ def carve(data):
     for rom, ram, n in fixed:
         blob[ram - base:ram - base + n] = data[rom:rom + n]
     entry, _test_ep = struct.unpack_from("<II", data, hdr + 0x420)
+    # A mis-carve that survives the offset checks almost always leaves the
+    # entrypoint outside the carved image — make that loud, not a Ghidra mystery.
+    if not base <= entry < top:
+        raise ValueError(f"entrypoint 0x{entry:x} outside carved image "
+                         f"0x{base:x}..0x{top:x}")
     meta = {"base": f"0x{base:08x}", "entry": f"0x{entry:08x}", "size": len(blob),
             "entries": [[r, m, n] for r, m, n in fixed], "hdr_at": hdr, "title": title}
     return bytes(blob), meta
