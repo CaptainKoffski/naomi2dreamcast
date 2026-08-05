@@ -10,8 +10,9 @@ chip only decrypts selectively-protected sections streamed at runtime (port
 Blob layout + rules transcribed from Flycast core/hw/naomi/naomi_cart.cpp
 (the ROM-load loop) and naomi_roms.cpp (the per-game Games[] table).
 
-M1/M4 carts encrypt the WHOLE ROM (stream cipher) -> assembly alone yields
-garbage; this refuses them. GD-ROM games use chd2dat.sh instead.
+M1/M4 carts encrypt the WHOLE ROM (stream cipher): M4 is assembled then
+stream-decrypted in place via m4dec (subkeys from the PIC Key blob); M1 boot
+code is plaintext (asset data stays LZSS-compressed). GD-ROM uses chd2dat.sh.
 """
 import os, re, sys, subprocess, tempfile
 

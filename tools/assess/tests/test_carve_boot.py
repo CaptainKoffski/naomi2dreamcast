@@ -57,9 +57,26 @@ def test_carve_garbage_raises_valueerror():
     except ValueError:
         pass
 
+def test_carve_m4_encrypted_entry():
+    # M4 load entries set bit 30 of the rom offset as the "read via decryption
+    # stream" flag, not an address bit (kb §4.q: rom=0x40000000 across 5 sets).
+    # For cart images (hdr at 0) carve must apply the hardware address decode.
+    img = bytearray(0x2000)
+    img[0:5] = b"NAOMI"
+    img[0x30:0x36] = b"M4TEST"
+    struct.pack_into("<III", img, 0x360, 0x40000000 | 0x1000, 0x8c020000, 0x100)
+    struct.pack_into("<I", img, 0x360 + 12, 0xFFFFFFFF)      # terminator
+    struct.pack_into("<II", img, 0x420, 0x8c020000, 0x8c020000)
+    img[0x1000:0x1100] = b"M" * 0x100
+    blob, meta = carve_boot.carve(bytes(img))
+    assert meta["hdr_at"] == 0 and meta["title"] == "M4TEST"
+    assert blob[0:0x100] == b"M" * 0x100
+    assert meta["entries"] == [[0x1000, 0x8c020000, 0x100]]   # masked offset recorded
+
 if __name__ == "__main__":
     test_carve_at_0(); print("test_carve_at_0 OK")
     test_carve_at_800000(); print("test_carve_at_800000 OK")
     test_carve_fallback(); print("test_carve_fallback OK")
     test_carve_garbage_raises_valueerror(); print("test_carve_garbage_raises_valueerror OK")
+    test_carve_m4_encrypted_entry(); print("test_carve_m4_encrypted_entry OK")
     print("ALL OK")

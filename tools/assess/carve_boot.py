@@ -4,6 +4,7 @@ Header layout per ../cleopatra/scripts/parse_header.py (netboot rom.py cross-che
 magic@hdr+0, Japan title@hdr+0x30, main load entries@hdr+0x360, entrypoints@hdr+0x420.
 ROM offsets are absolute file offsets; if an entry runs past EOF we retry hdr-relative
 (GD .dat images place the header at 0x800000).
+Cart images decode load-entry offsets with the M4 mask (bit 30 = encrypted-read flag, naomim4.cpp:124-125 / m4cartridge.cpp:115,131).
 Usage: carve_boot.py <dat> <outstem>   -> <outstem>.boot.bin + <outstem>.meta.json"""
 import json, struct, sys
 
@@ -28,6 +29,15 @@ def carve(data):
         raise ValueError("no main load entries")
     fixed = []
     for rom, ram, n in entries:
+        if hdr == 0:
+            # Cart images: bit 30 of a load-entry rom offset is the M4
+            # encrypted-read flag, and cart addressing is 29-bit — apply the
+            # hardware decode. MAME naomim4.cpp:124-125 @59e7c0b
+            # (rom_cur_address = address & 0x1ffffffe; encryption =
+            # rom_offset & 0x40000000), Flycast m4cartridge.cpp:115,131
+            # @ebae3b513. cart2dat's m4dec already wrote plaintext, so the
+            # masked value is a plain file offset.
+            rom &= 0x1ffffffe
         # GD-ROM .dat entries may use small hdr-relative offsets; try hdr-relative for small values.
         # hdr-relative rom that is accidentally in-bounds under absolute read is undetectable here;
         # calibration byte-compares against known-good boot.bin (planned Task 9) is the real guard.
