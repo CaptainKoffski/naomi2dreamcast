@@ -335,6 +335,26 @@ for a *scored* M4 cart the missing guts axis + `similarity.sdk_overlap = none` (
 sdk_strings) skews the final — flag any scored M4 title for the checkpoint. M4 support
 in cart2dat is the fix if M4 titles start scoring.
 
+**RESOLVED 2026-08-06.** Root cause was not missing M4 support in `cart2dat.py`
+(decrypt exists since `e027619`) but `carve_boot.py` reading the load-entry rom
+offset raw: bit 30 is the M4 encrypted-read flag and cart addressing is 29-bit —
+MAME `naomim4.cpp:124-125` @59e7c0b (`rom_cur_address = address & 0x1ffffffe;
+encryption = rom_offset & 0x40000000`), Flycast `m4cartridge.cpp:115,132`
+@ebae3b513 (line 132 holds `rom_cur_address = RomPioOffset & 0x1ffffffe;` — not
+131, which is a brace; the fix commit's own message cites 131, stale). `carve_boot.py`
+(`32e99e3`) now applies `& 0x1ffffffe` to cart images (hdr at 0); the GD `.dat` path
+is unchanged.
+The four scored titles were re-scored with the new committed driver
+`tools/assess/rescore_static.py` (re-runs `static_scan` + `guts_flags` + `similarity`
++ `score_sidecar` against the existing sidecar; capture provenance untouched),
+ausfache validated end-to-end first: ausfache 71.3 A → 79.1 A; radirgyn 46.1 B →
+55.9 B; mamonoro 36.8 C → 46.6 B (tier crossing); illvelo 34.1 C → 43.9 B (tier
+crossing). All four gained `guts` 85.0 (flags `eeprom_bios`+`serial`+`rtc`, penalty
+15) and `similarity` 40.0 (`sdk_overlap: partial` — sdk_strings now available),
+which also resolves this lesson's own `sdk_overlap = none` warning above.
+Future M4 titles scan normally, no extra step. zunou stays G1-parked (bad key-PIC
+dump, `frozen-splash-bad-dump`); guts is moot there.
+
 **r. `controls.json` `not_working` / sidecar `boot.mame_not_working` carry no signal for
 Naomi sets (senko research, 2026-08-03).** `not_working` is uniformly `False` across all
 of `controls.json` for two stacked reasons: (1) `controls_extract.py` line 87 tests
