@@ -448,6 +448,13 @@ families are assessed, review the measured distributions and decide**. Re-scorin
 edit `score.py`, bump `BATTERY_VERSION`, re-run `score.py` + `gen_tables.py` over all
 sidecars — no re-capture needed (the re-assessment rule above applies).
 
+Backlog briefs queued for this checkpoint (2026-08-06, full context in each):
+`docs/superpowers/specs/backlog-aram-gate-volume.md` (G3 keyed on address vs volume —
+gwing2/zerogu2 divergent pair) and `docs/superpowers/specs/backlog-vram-fb-masking.md`
+(FB placement charged as VRAM usage — chocomk). Checkpoint-independent instrumentation
+work: `docs/superpowers/specs/backlog-main-ram-snapshot-diff.md` (PIO blindness §4.v +
+the v1 main-RAM limitation).
+
 1. **G3-ARAM threshold (2× cap) may be too aggressive.** Ikaruga's Naomi image loads a full
    8 MiB ARAM bank (4× DC's 2 MiB) at boot — yet its official 2002 DC port shipped inside
    2 MiB: a real port achieved a 4× sound trim (downsampling/ADPCM), so "beyond plausible
