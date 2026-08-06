@@ -13,6 +13,10 @@ Spec: `docs/superpowers/specs/2026-08-02-portability-assessment-design.md`.
    (`cleoftp`, `ikaruga` — verifiably run on real DC) must never park. NEVER
    weaken a guard test to make a run pass — a red guard means the
    instrumentation regressed (kb §7), not that the test is stale.
+   `selftest()` also golden-hash-calibrates the carve pipeline (~15 s: carves
+   inunoos/ausfache/ikaruga, compares against committed hashes — kb §10). On
+   `CALIBRATION GUARD FAILED`: **investigate the drift**; `--bless` is only
+   for a pipeline change you made on purpose, never a way to get a run.
 2. If `tools/assess/out/controls.json` is missing:
    `mkdir -p tools/assess/out && python3 tools/assess/controls_extract.py > tools/assess/out/controls.json`
 3. Naomi BIOS must be at `~/Library/Application Support/Flycast/data/naomi.zip`
