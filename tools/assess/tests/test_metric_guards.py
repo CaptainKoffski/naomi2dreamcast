@@ -103,6 +103,16 @@ def test_blind_main_shape_never_scores_100():
     assert sc["scores"]["memory"] < 100.0, sc["scores"]
 
 
+def test_sgtetris_pio_face_stays_measured():
+    """kb §4.v RESOLVED regression control: the PIO-loading cart must stay
+    measurable. If this committed sidecar's shape degrades (handoff lost,
+    trigger wrong, main blind), the PIO handoff trigger has regressed."""
+    sc = json.load(open(os.path.join(ASSESS, "sgtetris.metrics.json")))
+    assert sc["capture"]["handoff"]["seen"] is True
+    assert sc["capture"]["handoff"]["trigger"] == "pio"
+    assert sc["memory"]["main"]["peak"] > 0
+
+
 if __name__ == "__main__":
     for name, fn in sorted(globals().items()):
         if name.startswith("test_"):

@@ -426,6 +426,23 @@ streaming figures cover only non-main DMA traffic. On any sidecar with
 `dma_high_water = 0` but `dma_events > 0`, treat main-RAM fit as unmeasured (watermark
 is the only, stale-prone, indicator) and say so in the doc.
 
+**RESOLVED 2026-08-07.** Battery v6 (kb §11; fork commit `65f9f7857`) replaces the
+DMA-only handoff detector with a unified bulk-transfer trigger: baseline all three
+regions (ARAM/VRAM/MAIN) at the first `CARTDMA` **or** the moment cumulative PIO
+`ROM_DATA` reads cross 32 KB, whichever fires first, and tag the marker lines with
+`trigger=dma|pio`. sgtetris is now measured end-to-end for the first time
+(`handoff.trigger = "pio"` at 20.0 s, 27,167,524 B streamed via PIO, `dma_events = 0`,
+1,078 `CARTPIO offset=` pokes) — see `assessments/sgtetris.md`. It no longer parks on
+the G1 instrumentation blindness; it parks on a real `G3 memory: aram` gate instead,
+and that park is itself premium checkpoint evidence: content above the 2 MiB ARAM cap
+is only **8 bytes** (`nz_above_cap = 8`) at a content-high address of u = 3.94 — the
+most extreme address-vs-volume divergence recorded, ahead of marstv's 81,598 B (§6 item
+5 class). A regression golden
+(`tools/assess/tests/test_metric_guards.py::test_sgtetris_pio_face_stays_measured`)
+pins this shape so the PIO trigger can't silently regress. gwing2's partial face
+(main-RAM axis blind despite a DMA handoff) is addressed the same way but gets its own
+measured main-RAM figure at its own v6 re-run, not here.
+
 ## 5. Campaign start checklist
 
 The battery is calibrated (§3) and the queue is generated. From here the campaign is pure
