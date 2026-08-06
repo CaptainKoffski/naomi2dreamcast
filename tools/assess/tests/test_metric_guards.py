@@ -77,7 +77,12 @@ def test_anchor_title_must_never_park():
 
 def test_committed_anchor_sidecars_score_clean():
     """The real committed sidecars must stay unparked with sane memory axes."""
-    for s, min_mem in (("cleoftp", 80.0), ("ikaruga", 20.0)):
+    # ikaruga floor recalibrated 20.0 -> 12.5 (2026-08-07): the battery v6 main
+    # write-truth metric scores its main axis 12.5 (address-keyed u=1.938 from a
+    # high-placed 1.5 MB band; see assessments/ikaruga.md v6 banner). User ruling:
+    # keep the address-keyed method for the whole v6 wave; the address-vs-volume
+    # question is kb §6-checkpoint scope. The un-parked invariant is unchanged.
+    for s, min_mem in (("cleoftp", 80.0), ("ikaruga", 12.5)):
         p = os.path.join(ASSESS, s + ".metrics.json")
         sc = copy.deepcopy(json.load(open(p)))
         score.score_sidecar(sc)
