@@ -4,10 +4,10 @@
   "maker": "Treasure",
   "year": "2001",
   "format": "GD-ROM",
-  "assessed": "2026-08-04",
+  "assessed": "2026-08-06",
   "versions": {
-    "flycast": "4b59eceff",
-    "battery": "4",
+    "flycast": "ebae3b513",
+    "battery": "5",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -54,9 +54,9 @@
       "dma_high_water": 27935968
     },
     "vram": {
-      "peak": 9711616,
+      "peak": 7535232,
       "nz_total": 1002408,
-      "nz_above_cap": 57048,
+      "nz_above_cap": 0,
       "regs_last": "isp_base=400000 isp_limit=5bc8a0 ol_base=650b80 ol_limit=5bc9a0 fb_w_sof1=66a000 fb_w_sof2=c00000 fb_r_sof1=26a000"
     },
     "aram": {

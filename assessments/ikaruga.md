@@ -1,5 +1,12 @@
 # Ikaruga (GDL-0010) (`ikaruga`) — portability assessment
 
+> **Battery v5 re-run (2026-08-06): **49.6 (B)** — confirmed; VRAM now truly fits.**
+> v5's pre-`VRAMHANDOFF` sample drop (kb §9) replaces the signature-clamped VRAM value
+> with a clean measurement: peak 7,535,232 B (0.90×, `nz_above_cap = 0`) — under the DC's
+> 8 MB, as the shipped DC port always implied. Main 27,935,968 B still binds the memory
+> axis (23.4); final unchanged at 49.6 B. Coverage still title-only (FREE PLAY suppresses
+> attract). Sidecar: flycast `ebae3b513`, battery 5.
+
 > **Battery v4 re-assessment (2026-08-04): **49.6 (B)**.**
 > v2's G3-aram was the DMPD fill artifact — the old §Gate's "full-bank load" inference was wrong, and its own risk-flag ("gate may be too aggressive") is resolved: the measurement was at fault, not the gate. A v3 interim run also false-parked no-render (cart-DMA-only sampling + 1 MiB threshold vs its 0.96 MiB static title). v4: 49.6 B; ARAM content 1.81 MiB fits DC — as the shipped DC port always implied. Coverage still title-only (FREE PLAY suppresses attract; the v2 doc's calibration-countdown finding stands).
 > Below the v4 section is the battery v2-era assessment: its *measured* figures

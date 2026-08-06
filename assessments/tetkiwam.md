@@ -1,5 +1,12 @@
 # Tetris Kiwamemichi (Japan) (GDL-0020) (`tetkiwam`) — portability assessment
 
+> **Battery v5 re-run (2026-08-06): **43.3 (B)** — confirmed; VRAM artifact gone.**
+> v5's pre-`VRAMHANDOFF` sample drop (kb §9) removes the BIOS boot-frame block from the
+> VRAM peak: now 7,763,712 B (0.93×, fits under 8 MB — vindicating the v2-era §4
+> argument), vs the v4 table's artifact-inflated 9,711,616 B. Main 30,495,872 B still
+> binds (memory 17.3); ARAM 2,031,344 B; final unchanged at 43.3 B, coverage demo.
+> Sidecar: flycast `ebae3b513`, battery 5.
+
 > **Battery v4 re-assessment (2026-08-04): **43.3 (B)**.**
 > 43.3 B (was 43.5 on v2), now with demo coverage — two-board Tetris attract runs (shot-365s); the v2 title-⚠ was the headless-era artifact.
 > Below the v4 section is the battery v2-era assessment: its *measured* figures

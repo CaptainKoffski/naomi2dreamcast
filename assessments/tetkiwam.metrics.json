@@ -4,10 +4,10 @@
   "maker": "Success",
   "year": "2004",
   "format": "GD-ROM",
-  "assessed": "2026-08-04",
+  "assessed": "2026-08-06",
   "versions": {
-    "flycast": "4b59eceff",
-    "battery": "4",
+    "flycast": "ebae3b513",
+    "battery": "5",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -54,9 +54,9 @@
       "dma_high_water": 30495872
     },
     "vram": {
-      "peak": 9711616,
+      "peak": 7763712,
       "nz_total": 2388788,
-      "nz_above_cap": 57048,
+      "nz_above_cap": 0,
       "regs_last": "isp_base=0 isp_limit=12c8a0 ol_base=190b80 ol_limit=12c9a0 fb_w_sof1=1aa000 fb_w_sof2=c00000 fb_r_sof1=5aa000"
     },
     "aram": {
@@ -69,7 +69,7 @@
     "total_bytes": 107792384,
     "unique_bytes": 35442688,
     "reread_ratio": 0.6712,
-    "steady_mb_per_min": 9.098,
+    "steady_mb_per_min": 9.1,
     "short_window": false
   },
   "guts": {

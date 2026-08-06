@@ -1,5 +1,11 @@
 # Cleopatra Fortune Plus (GDL-0012) (`cleoftp`) — portability assessment
 
+> **Battery v5 re-run (2026-08-06): **84.0 (S)** — confirmed, now on a clean VRAM measurement.**
+> v5 drops pre-`VRAMHANDOFF` VRAMPROFILE samples (kb §9), so the GD BIOS boot-frame
+> block no longer needs the score-side signature clamp: VRAM peak is now the true
+> 8,181,717 B (0.98×), main 11,761,888 B, ARAM 2,094,512 B; memory axis 85.1,
+> final unchanged at 84.0 S. Sidecar: flycast `ebae3b513`, battery 5, coverage demo.
+
 > **Battery v4 re-assessment (2026-08-04, score r2): **84.0 (S)**.**
 > Effectively confirms the v2 result (84.2; the residue is streaming run-to-run noise). An interim v4 score of 71.4 was wrong: the wider sampling window caught the **GD BIOS logo framebuffer at 0x943000 (9.4 MB)** and charged it to the game — the exact caveat REQUIREMENTS.md warned about. Proven non-game by the dragntr3 control (never boots past the splash, byte-identical values); `score.py` now excludes the signature and refuses to score if an anchor title parks.
 > Below the v4 section is the battery v2-era assessment: its *measured* figures

@@ -1,5 +1,12 @@
 # Moeru Casinyo (Japan) (GDL-0013) (`moeru`) — portability assessment
 
+> **Battery v5 re-run (2026-08-06): **81.6 (S)** — up from 80.5; still #2 overall.**
+> v5's pre-`VRAMHANDOFF` sample drop (kb §9) yields a clean VRAM peak of 8,066,096 B
+> (0.96×, was signature-clamped); memory axis 85.0 → 87.9 (main 11,237,600 B,
+> ARAM 1,509,920 B). Coverage demo. The v4 figures below are superseded where they
+> differ; identity/controls/similarity sections remain valid. Sidecar: flycast
+> `ebae3b513`, battery 5.
+
 ## 1. Verdict
 
 | | |
