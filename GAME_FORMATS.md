@@ -117,7 +117,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | **cart** | parent | 75.4 MB | ? | No | **79.1** A · [assessment](assessments/ausfache.md) |
 | Alien Front (Rev T) | `alienfnt` | **cart** | parent | 45.9 MB | Action | Partial | not assessed |
 | Asian Dynamite / Dynamite Deka EX | `asndynmt` | **cart** | parent | 148.0 MB | Beat-em-up | No | not assessed |
-| Cannon Spike / Gun Spike | `cspike` | **cart** | parent | 63.6 MB | Shmup ★ | Yes (2000) | not assessed |
+| Cannon Spike / Gun Spike | `cspike` | **cart** | parent | 63.6 MB | Shmup ★ | Yes (2000) | parked G3 · [notes](assessments/cspike.md) |
 | Capcom Vs. SNK: Millennium Fight 2000 (Rev C) | `capsnk` | **cart** | parent | 95.6 MB | Fighting | Yes (2000) | not assessed |
 | Cosmic Smash (Rev A) | `csmash` | **cart** | parent | 42.8 MB | ? | Yes (2001) | not assessed |
 | Crackin' DJ | `crackndj` | **cart** | parent | 108.0 MB | Rhythm | No | not assessed |
