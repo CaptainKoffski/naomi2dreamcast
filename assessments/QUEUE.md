@@ -20,7 +20,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `zerogu2` — Zero Gunner 2 | `zerogu2` | Shmup ★ (DC 2001) | 46.6 MB | parked |
 | `gwing2` — Giga Wing 2 | `gwing2` | Shmup ★ (DC 2001) | 57.6 MB | parked |
 | `cspike` — Cannon Spike / Gun Spike | `cspike` | Shmup ★ (DC 2000) | 63.6 MB | parked |
-| `chocomk` — Musapey's Choco Marker (Rev A) (GDL-0014A) | `chocomk` | Puzzle ★ (DC 2002) | 68.5 MB | pending |
+| `chocomk` — Musapey's Choco Marker (Rev A) (GDL-0014A) | `chocomk` | Puzzle ★ (DC 2002) | 68.5 MB | done |
 | `ausfache` — Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | ? | 75.4 MB | done |
 | `dragntr` — Dragon Treasure (Rev B) (GDS-0030B) | `dragntr`, `dragntra` | Medal | 142.3 MB | parked |
 | `dragntr2` — Dragon Treasure 2 (Rev A) (GDS-0037A) | `dragntr2` | Medal | 231.6 MB | parked |
