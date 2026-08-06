@@ -185,7 +185,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | World Kicks (World, WK2 Ver.A) | `wldkicks` | **cart** | parent | 74.3 MB | Sports | No | not assessed |
 | World Series 99 / Super Major League 99 | `smlg99` | **cart** | parent | 109.7 MB | Sports | No | not assessed |
 | WWF Royal Rumble | `wwfroyal` | **cart** | parent | 104.6 MB | ? | Yes (2000) | not assessed |
-| Zero Gunner 2 | `zerogu2` | **cart** | parent | 46.6 MB | Shmup ★ | Yes (2001) | not assessed |
+| Zero Gunner 2 | `zerogu2` | **cart** | parent | 46.6 MB | Shmup ★ | Yes (2001) | parked G3 · [notes](assessments/zerogu2.md) |
 | Zombie Revenge (Rev A) | `zombrvn` | **cart** | parent | 97.2 MB | Beat-em-up | Yes (1999) | not assessed |
 
 ### Partial DC-port notes
