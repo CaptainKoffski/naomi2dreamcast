@@ -196,6 +196,14 @@ def selftest():
         if r.returncode != 0 or "ALL OK" not in r.stdout:
             sys.exit(f"SELF-TEST FAILED ({t}) — battery refuses to run:\n"
                      f"{r.stdout}{r.stderr}")
+    # Same posture for the carve pipeline: golden-hash calibration (kb §10)
+    # catches silent producer/carve drift the per-title guards can't see.
+    # ~15 s (chd2dat dominates) against a 10+ minute battery.
+    r = subprocess.run([sys.executable, os.path.join(HERE, "calibration.py")],
+                       capture_output=True, text=True)
+    if r.returncode != 0:
+        sys.exit("SELF-TEST FAILED (calibration guard) — battery refuses to run:\n"
+                 f"{r.stdout}{r.stderr}")
 
 
 def main():
