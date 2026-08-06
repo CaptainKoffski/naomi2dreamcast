@@ -419,6 +419,12 @@ visible ⇒ this class, park with an agent-override note (zunou precedent) and r
 research; only a DC-BIOS-menu/GD-splash screenshot justifies the 4.a flake retry logic.
 Unblock: a DMA-independent handoff signal (instrument PIO cart reads, or detect PC
 leaving the BIOS region), then re-run.
+**Partial face (gwing2, same day):** a PIO-loading cart can still fire `ARAMHANDOFF`
+(handoff detected, run measured) while `main.dma_high_water` stays 0 — the main-RAM
+axis is then blind and would score 100.0 from nothing if no other gate fires; its
+streaming figures cover only non-main DMA traffic. On any sidecar with
+`dma_high_water = 0` but `dma_events > 0`, treat main-RAM fit as unmeasured (watermark
+is the only, stale-prone, indicator) and say so in the doc.
 
 ## 5. Campaign start checklist
 
