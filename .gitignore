@@ -19,3 +19,4 @@ tools/dat-extract/m4dec
 # assessment battery scratch + raw evidence (regenerable; may embed dumped bytes)
 tools/assess/out/
 assessments/evidence/*/raw/
+__pycache__/
