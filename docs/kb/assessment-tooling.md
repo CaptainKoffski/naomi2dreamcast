@@ -652,3 +652,28 @@ Rule for future agents, sharpening §8's provenance rule: **a diff is only as
 meaningful as its baseline.** A sample taken before the baseline exists is not
 "the same metric, earlier" — it is a different measurement and must never be
 merged into the same running max.
+
+## 10. Calibration guard (2026-08-06): golden-hash backstop for silent carve drift
+
+The bit-30 mask (32e99e3) plus carve_boot's two cheap guards (illegal flag
+bits, entrypoint-in-range, 22d765f) leave one undetectable window: garbage
+within the legal bits that lands in-file carves plausible-but-wrong bytes.
+Per-title that is unfixable at carve time — the backstop is pipeline-level:
+`tools/assess/calibration.py` carves three golden sets end-to-end
+(cart2dat/chd2dat → carve_boot) and compares sha256 + carve meta against the
+committed `tools/assess/calibration-goldens.json`.
+
+- Goldens: inunoos (M2), ausfache (M4), ikaruga (GD) — one per producer
+  flavor; ikaruga doubles as a `DC_SHIPPED_ANCHOR` control. Full pass ~15 s
+  (chd2dat ≈ 13 s dominates; measured 2026-08-06).
+- Runs unconditionally in `run_battery.selftest()`: any mismatch refuses the
+  battery — the §7/§8 refuse-to-score posture, applied to the carve pipeline.
+  Environment drift (chdman upgrade, recompiled extract_dat) is covered
+  precisely because the check runs every battery, not only on repo changes.
+- Failure output names the stage: `.dat` sha256 drift = producer
+  (cart2dat/m4dec/chd2dat); boot-hash or base/entry/size drift = carver.
+- Only hashes and carve metadata are committed — never ROM-derived bytes.
+- Regen after an INTENTIONAL pipeline change:
+  `python3 tools/assess/calibration.py --bless`, then review the JSON diff
+  (every changed hash must be explained by the change) and commit.
+- Design + decisions: `docs/superpowers/specs/2026-08-06-calibration-guard-design.md`.

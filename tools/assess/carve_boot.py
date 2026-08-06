@@ -45,7 +45,7 @@ def carve(data):
             rom &= 0x1ffffffe
         # GD-ROM .dat entries may use small hdr-relative offsets; try hdr-relative for small values.
         # hdr-relative rom that is accidentally in-bounds under absolute read is undetectable here;
-        # calibration byte-compares against known-good boot.bin (planned Task 9) is the real guard.
+        # calibration.py's golden-hash guard (runs in selftest; kb §10) is the pipeline-level backstop.
         if hdr > 0 and rom < 0x100000:
             rom = hdr + rom                       # Small rom values are hdr-relative
         if rom + n > len(data):

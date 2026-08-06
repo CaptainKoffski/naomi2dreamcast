@@ -1,8 +1,8 @@
 # Backlog: carve-pipeline calibration guard
 
-**Status:** not started. Written 2026-08-06 as the session brief for a future
-session — start that session with:
-`Implement the calibration guard per docs/superpowers/specs/backlog-calibration-guard.md`
+**Status:** implemented 2026-08-06 — see
+`2026-08-06-calibration-guard-design.md` (design) and kb §10 (regen
+procedure). Kept as the motivating brief.
 
 This is the thing `tools/assess/carve_boot.py`'s comment calls the "planned
 Task 9" byte-compare. Note: that name collides with the *historical* Tasks
