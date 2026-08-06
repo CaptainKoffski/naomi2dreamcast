@@ -4,10 +4,10 @@
   "maker": "Altron / Taito",
   "year": "2002",
   "format": "GD-ROM",
-  "assessed": "2026-08-06",
+  "assessed": "2026-08-07",
   "versions": {
-    "flycast": "ebae3b513",
-    "battery": "5",
+    "flycast": "65f9f7857",
+    "battery": "6",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -28,7 +28,9 @@
       "seen": true,
       "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/cleoftp/shot-060s.png",
@@ -51,11 +53,14 @@
   },
   "memory": {
     "main": {
+      "peak": 16252992,
+      "nz_total": 10537833,
+      "nz_above_cap": 0,
       "dma_high_water": 11761888
     },
     "vram": {
       "peak": 8181717,
-      "nz_total": 4792822,
+      "nz_total": 4802218,
       "nz_above_cap": 0,
       "regs_last": "isp_base=400000 isp_limit=4728a0 ol_base=498b80 ol_limit=4729a0 fb_w_sof1=b2000 fb_w_sof2=c00000 fb_r_sof1=4b2000"
     },
@@ -69,8 +74,9 @@
     "total_bytes": 104912896,
     "unique_bytes": 22827008,
     "reread_ratio": 0.7824,
-    "steady_mb_per_min": 9.908,
-    "short_window": false
+    "steady_mb_per_min": 9.904,
+    "short_window": false,
+    "pio_bytes": 1049920
   },
   "guts": {
     "code_bytes": 1048576,

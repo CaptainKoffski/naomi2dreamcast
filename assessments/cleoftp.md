@@ -1,5 +1,25 @@
 # Cleopatra Fortune Plus (GDL-0012) (`cleoftp`) — portability assessment
 
+> **Battery v6 re-run (2026-08-07): 84.0 (S)** — anchor validates; main RAM is write-truth measured for the first time.
+> Sidecar: flycast `65f9f7857`, battery 6. Main write-truth peak **16,252,992 B** (u = 0.969,
+> `nz_above_cap` = 0) from the fork's new MAINPROFILE/MAINHIST snapshot+diff pass, sitting
+> alongside the historical DMA high-water **11,761,888 B**, which reproduces bit-identically
+> as `main.dma_high_water` (now informational — the floor the write-truth respects). Zero
+> changed bytes above the 16 MB DC cap turns the shipped-port "fits in DC RAM" claim into a
+> write-truth-confirmed fact, not just a DMA-accounting inference. Two findings, recorded
+> honestly: (1) `capture.handoff.trigger = "pio"`, not the plan's predicted `"dma"` — the GD
+> DIMM boot PIO-loads its ~1 MB boot segment (`pio_bytes` 1,049,920) *before* the first cart
+> DMA, so the unified "first bulk transfer" handoff correctly fired on the PIO threshold; the
+> plan's prediction was wrong, the spec's semantics were right. (2) ARAM peak **2,094,512 B**
+> vs. the historical exact 2,097,152 B (−2,640 B, 0.13%) is a run-variance caveat to the
+> "bit-identical" reproduction claim, not a regression: a baseline race at the last ARM-reset
+> rebase (top-of-bank bytes already uploaded at the rebase instant land in the baseline),
+> stable at 70/70 samples this run, ARAM code paths untouched by the v6 fork diff,
+> `nz_above_cap` still 0; score impact +0.1 memory, final unchanged. VRAM peak 8,181,717 B
+> stays bit-identical to every prior clean run. Scores: memory 85.1, streaming 68.0, guts
+> 85.0, controls 100, similarity 100 → **final unchanged at 84.0 (S), no park** — the control
+> test (CLAUDE.md rule 2) holds.
+
 > **Battery v5 re-run (2026-08-06): **84.0 (S)** — confirmed, now on a clean VRAM measurement.**
 > v5 drops pre-`VRAMHANDOFF` VRAMPROFILE samples (kb §9), so the GD BIOS boot-frame
 > block no longer needs the score-side signature clamp: VRAM peak is now the true
