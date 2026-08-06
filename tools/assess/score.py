@@ -162,9 +162,16 @@ def score_sidecar(sc):
     bios_noise = BIOS_VRAM_SIGNATURES.get((vram_peak, sc["memory"]["vram"].get("nz_above_cap")))
     if bios_noise is not None:
         vram_peak = min(vram_peak, CAPS["vram"])
-    mem, gated = memory_axis({"main": sc["memory"]["main"]["dma_high_water"],
-                              "vram": vram_peak,
-                              "aram": sc["memory"]["aram"]["peak"]})
+    # v6: prefer the write-truth peak (MAINPROFILE snapshot+diff); legacy
+    # pre-v6 sidecars fall back to the CARTDMA-dest high-water. A booted title
+    # with NEITHER measured is a blind metric (PIO loader — gwing2, kb §4.v),
+    # not a zero-footprint game: drop the region from the min() (spec §4.3
+    # renormalize precedent) and flag it — u=0 must never fabricate a 100.
+    main_peak = sc["memory"]["main"].get("peak") or sc["memory"]["main"]["dma_high_water"]
+    peaks = {"vram": vram_peak, "aram": sc["memory"]["aram"]["peak"]}
+    if main_peak:
+        peaks["main"] = main_peak
+    mem, gated = memory_axis(peaks)
     if mem is None:
         sc["gate"] = f"G3 memory: {gated} peak > 2x DC capacity"
         _check_anchor(sc)
@@ -191,6 +198,8 @@ def score_sidecar(sc):
     sc["scores"] = {k: (round(v, 1) if v is not None else None) for k, v in axes.items()}
     sc["scores"]["final"] = f
     sc["scores"]["tier"] = tier(f)
+    if not main_peak:
+        sc["scores"]["main_unmeasured"] = True
     if bios_noise is not None:
         sc["scores"]["vram_bios_noise_excluded"] = bios_noise
     return sc

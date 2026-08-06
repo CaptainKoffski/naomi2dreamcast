@@ -85,6 +85,19 @@ def test_committed_anchor_sidecars_score_clean():
         assert sc["scores"]["memory"] >= min_mem, (s, sc["scores"])
 
 
+def test_blind_main_shape_never_scores_100():
+    """kb §4.v: dma_high_water == 0 with dma_events > 0 = main axis BLIND
+    (PIO loader). score.py must drop+flag the region — a fabricated
+    main u=0 -> 100 is the gwing2 100-from-nothing hazard."""
+    sc = base_sc()
+    sc["memory"]["main"] = {"dma_high_water": 0}
+    sc["memory"]["vram"] = {"peak": 7 << 20, "nz_above_cap": 0}   # u=0.875
+    sc["streaming"]["dma_events"] = 1344
+    score.score_sidecar(sc)
+    assert sc["scores"]["main_unmeasured"] is True
+    assert sc["scores"]["memory"] < 100.0, sc["scores"]
+
+
 if __name__ == "__main__":
     for name, fn in sorted(globals().items()):
         if name.startswith("test_"):

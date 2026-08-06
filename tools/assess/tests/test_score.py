@@ -97,6 +97,50 @@ def test_score_sidecar_none_streaming():
     exp = math.exp(0.5 * math.log(85) + 0.25 * math.log(90) + 0.125 * math.log(100) + 0.125 * math.log(100))
     assert out["scores"]["final"] == round(exp, 1)
 
+def test_main_unmeasured_never_100():
+    # gwing2 shape (kb §4.v): PIO loader — dma_high_water 0 with real DMA
+    # events means the main axis is BLIND, not "u=0 -> 100". The region drops
+    # from the memory min() (spec §4.3 renormalize precedent) and a flag
+    # records it in the sidecar.
+    sc = {
+        "set": "synth-pio",
+        "boot": {"ok": True},
+        "memory": {"main": {"dma_high_water": 0},
+                   "vram": {"peak": 8066048, "nz_above_cap": 0},   # u=0.96
+                   "aram": {"peak": 2097152, "nz_above_cap": 0}},  # u=1.0 -> 85
+        "streaming": {"steady_mb_per_min": 1.155, "reread_ratio": 0.72,
+                      "dma_events": 1344},
+        "guts": {"dat_available": False},
+        "controls": {"device_class": "stick"},
+        "similarity": {"developer_match": False, "sdk_overlap": "none",
+                       "cart_loader_match": False},
+    }
+    score.score_sidecar(sc)
+    assert sc["gate"] is None
+    assert sc["scores"]["main_unmeasured"] is True
+    assert sc["scores"]["memory"] == 85.0, sc["scores"]   # min(vram, aram)
+
+def test_main_write_truth_preferred():
+    # v6 sidecar: memory.main.peak (write-truth) is the scored figure even
+    # when dma_high_water is 0 (PIO loader, now measured) — no flag.
+    sc = {
+        "set": "synth-v6",
+        "boot": {"ok": True},
+        "memory": {"main": {"peak": 5 * MB, "nz_total": 4 * MB,
+                            "nz_above_cap": 0, "dma_high_water": 0},
+                   "vram": {"peak": 6 * MB, "nz_above_cap": 0},
+                   "aram": {"peak": 1 * MB, "nz_above_cap": 0}},
+        "streaming": {"steady_mb_per_min": 2.0, "reread_ratio": 0.05},
+        "guts": {"dat_available": False},
+        "controls": {"device_class": "stick"},
+        "similarity": {"developer_match": False, "sdk_overlap": "none",
+                       "cart_loader_match": False},
+    }
+    score.score_sidecar(sc)
+    assert sc["gate"] is None
+    assert "main_unmeasured" not in sc["scores"], sc["scores"]
+    assert sc["scores"]["memory"] == 100.0, sc["scores"]  # all three regions fit
+
 if __name__ == "__main__":
     for n, f in sorted(globals().items()):
         if n.startswith("test_") and callable(f):
