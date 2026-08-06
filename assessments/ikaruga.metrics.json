@@ -4,10 +4,10 @@
   "maker": "Treasure",
   "year": "2001",
   "format": "GD-ROM",
-  "assessed": "2026-08-06",
+  "assessed": "2026-08-07",
   "versions": {
-    "flycast": "ebae3b513",
-    "battery": "5",
+    "flycast": "65f9f7857",
+    "battery": "6",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -28,7 +28,9 @@
       "seen": true,
       "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/ikaruga/shot-060s.png",
@@ -51,11 +53,14 @@
   },
   "memory": {
     "main": {
+      "peak": 32505920,
+      "nz_total": 2959601,
+      "nz_above_cap": 1558254,
       "dma_high_water": 27935968
     },
     "vram": {
       "peak": 7535232,
-      "nz_total": 1002408,
+      "nz_total": 1011820,
       "nz_above_cap": 0,
       "regs_last": "isp_base=400000 isp_limit=5bc8a0 ol_base=650b80 ol_limit=5bc9a0 fb_w_sof1=66a000 fb_w_sof2=c00000 fb_r_sof1=26a000"
     },
@@ -70,7 +75,8 @@
     "unique_bytes": 3518464,
     "reread_ratio": 0.6103,
     "steady_mb_per_min": 0.128,
-    "short_window": false
+    "short_window": false,
+    "pio_bytes": 1049920
   },
   "guts": {
     "code_bytes": 1048576,
@@ -620,12 +626,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 23.4,
+    "memory": 12.5,
     "streaming": 77.4,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 70.0,
-    "final": 49.6,
-    "tier": "B"
+    "final": 38.6,
+    "tier": "C"
   }
 }

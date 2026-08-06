@@ -1,5 +1,45 @@
 # Ikaruga (GDL-0010) (`ikaruga`) — portability assessment
 
+> **Battery v6 re-run (2026-08-07): **38.6 (C)** — main axis measured for the first time; anchor did not park.**
+> flycast `65f9f7857`, battery 6. `capture.handoff.trigger = "pio"`, `pio_bytes = 1,049,920` —
+> byte-identical to Calibration A's cleoftp figure (Task 5): the GD DIMM bootstrap PIO-loads
+> the same ~1 MB boot segment on every GD title before its first cart DMA.
+> Main write-truth peak **32,505,920 B** (u = 1.938 vs the DC's 16,777,216 B cap) now feeds the
+> memory axis, replacing the old DMA-high-water estimate (27,935,968 B — still reported as
+> `main.dma_high_water`, informational only from v6 on). `nz_above_cap` is only **1,558,254 B**
+> (≈1.49 MiB): the peak sits just 1,048,512 B (≈1.0 MiB) under the G3 gate's `u > 2.0` ceiling —
+> close, but `score.py`'s `DC_SHIPPED_ANCHORS` refusal-to-park guard (`score.py:139`, would raise
+> `MetricRegression` rather than write a park verdict for this title) stayed on standby and wasn't
+> triggered: `gate` came back `null`, no park, the anchor rule held.
+> Memory axis: main's `region_score` = 12.5 (down from v5's DMA-based 23.4) now binds the `min()`
+> over main/vram/aram — vram 92.6 (u=0.898) and aram 92.2 (u=0.905) both fit and reproduce v5
+> bit-identically (untouched by the v6 fork diff) — so memory axis = **12.5**. `final_score`
+> (geometric mean over memory 12.5, streaming 77.4, guts 85.0, controls 100.0, similarity 70.0)
+> = **38.6**, crossing the B (≥40) / C (≥20) boundary. B→C is entirely the main axis entering the
+> score for the first time on a real write-truth measurement — not a regression in the game, the
+> port, or the harness.
+>
+> **§6-checkpoint finding (no `score.py` change made here):** the final MAINHIST sample
+> (128 × 256 KiB buckets over `mem_b[0..32 MB)`, `assessments/evidence/ikaruga/raw/cartlog.txt`)
+> shows only 2,959,601 B (≈2.82 MiB) total changed vs. baseline at steady state — 1,401,347 B
+> (≈1.34 MiB) in a solid band ~0.26–2.36 MB (well under the cap) and 1,558,254 B (≈1.49 MiB) in a
+> solid band ~25.7–28.6 MB (above the cap; a handful of buckets further up carry only tens of
+> bytes each, noise). Meanwhile `dma_high_water` (27,935,968 B) implies ~9 MB of cart DMA landed
+> above the 16 MB cap over the whole run — but write-truth's snapshot+diff correctly discounts
+> almost all of that as re-writes of identical bytes (a streaming/caching pattern, not new
+> footprint), leaving only the ~1.49 MiB band genuinely different from baseline. So u = 1.938 —
+> and the B→C tier drop — is driven by the *address* that one small residual band reaches
+> (25–28 MB), not by bulk usage. This is the main-axis instance of the address-vs-volume
+> divergence already flagged for ARAM (kb §6 item 5, `gwing2` tension 1), now evidenced on a
+> DC-shipped anchor whose official 2002 port ran inside the real 16 MB of DC main RAM. Checkpoint
+> data only.
+>
+> Coverage still title-only (`"title"`, hand-restored — `run_battery.py` writes
+> `capture.coverage: null` on every re-run; same standing trap noted in Task 5's cleoftp doc).
+> Screenshots re-curated to 4 distinct frames: `shot-060s.png`/`shot-304s.png` (calibration
+> countdown, 256 → 13) and `shot-365s.png`/`shot-609s.png` (title screen, both blink states —
+> carried over bit-identical from v4/v5).
+
 > **Battery v5 re-run (2026-08-06): **49.6 (B)** — confirmed; VRAM now truly fits.**
 > v5's pre-`VRAMHANDOFF` sample drop (kb §9) replaces the signature-clamped VRAM value
 > with a clean measurement: peak 7,535,232 B (0.90×, `nz_above_cap = 0`) — under the DC's
