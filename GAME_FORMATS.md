@@ -67,7 +67,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Melty Blood Act Cadenza Version B2 (Japan) (GDL-0039A) | `meltyb` | **GD-ROM** | parent | 202.9 MB | Fighting | No | not assessed |
 | Mobile Suit Gundam: Federation Vs. Zeon (GDL-0001) | `gundmgd` | **GD-ROM** | parent | 142.3 MB | Fighting | Yes (2002) | not assessed |
 | Mobile Suit Gundam: Federation Vs. Zeon DX (USA, Japan) (GDL-0006) | `gundmxgd` | **GD-ROM** | parent | 172.9 MB | Fighting | Yes (2002) | not assessed |
-| Moeru Casinyo (Japan) (GDL-0013) | `moeru` | **GD-ROM** | parent | 98.0 MB | ? | No | **80.5** S · [assessment](assessments/moeru.md) |
+| Moeru Casinyo (Japan) (GDL-0013) | `moeru` | **GD-ROM** | parent | 98.0 MB | ? | No | **81.6** S · [assessment](assessments/moeru.md) |
 | Monkey Ball (GDS-0008) | `monkeyba` | **GD-ROM** | parent | 82.5 MB | Action | No | not assessed |
 | Musapey's Choco Marker (Rev A) (GDL-0014A) | `chocomk` | **GD-ROM** | parent | 68.5 MB | Puzzle ★ | Yes (2002) | not assessed |
 | Noukone Puzzle Takoron (Japan) (GDL-0042) | `takoron` | **GD-ROM** | parent | 52.6 MB | Puzzle ★ | No | parked G3 · [notes](assessments/takoron.md) |
@@ -114,7 +114,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | World Series Baseball / Super Major League (GDS-0010) | `wsbbgd` | **GD-ROM** | parent | 157.8 MB | Sports | No | not assessed |
 | 18 Wheeler: American Pro Trucker (deluxe, Rev A) | `18wheelr` | **cart** | parent | 105.3 MB | Driving | Yes (2000) | not assessed |
 | Airline Pilots (World, Rev B) | `alpilot` | **cart** | parent | 41.3 MB | Driving | No | not assessed |
-| Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | **cart** | parent | 75.4 MB | ? | No | **58.4** B · [assessment](assessments/ausfache.md) |
+| Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | **cart** | parent | 75.4 MB | ? | No | **79.1** A · [assessment](assessments/ausfache.md) |
 | Alien Front (Rev T) | `alienfnt` | **cart** | parent | 45.9 MB | Action | Partial | not assessed |
 | Asian Dynamite / Dynamite Deka EX | `asndynmt` | **cart** | parent | 148.0 MB | Beat-em-up | No | not assessed |
 | Cannon Spike / Gun Spike | `cspike` | **cart** | parent | 63.6 MB | Shmup ★ | Yes (2000) | not assessed |
@@ -143,12 +143,12 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Gun Survivor 2 Biohazard Code: Veronica (World, BHF2 Ver.E) | `gunsur2` | **cart** | parent | 175.7 MB | Gun (3-axis) | No | **33.4** C · [assessment](assessments/gunsur2.md) |
 | Heavy Metal: Geomatrix (Rev B) | `hmgeo` | **cart** | parent | 74.4 MB | Fighting | Yes (2001) | not assessed |
 | Idol Janshi Suchie-Pai 3 (Japan) | `suchie3` | **cart** | parent | 102.3 MB | Mahjong ⚠ | Partial | not assessed |
-| Illvelo (Illmatic Envelope) (Japan) | `illvelo` | **cart** | parent | 88.4 MB | Shmup ★ | No | **34.1** C · [assessment](assessments/illvelo.md) |
+| Illvelo (Illmatic Envelope) (Japan) | `illvelo` | **cart** | parent | 88.4 MB | Shmup ★ | No | **43.9** B · [assessment](assessments/illvelo.md) |
 | Inu no Osanpo / Dog Walking (Japan, Export, Rev A) | `inunoos` | **cart** | parent | 79.7 MB | Simulation | No | parked G3 · [notes](assessments/inunoos.md) |
 | Jambo! Safari (Rev A) | `jambo` | **cart** | parent | 31.7 MB | Sports | No | not assessed |
 | Kasei Channel Mars TV (Japan) | `marstv` | **cart** | parent | 57.8 MB | Party | No | **42.8** B · [assessment](assessments/marstv.md) |
 | Kick '4' Cash (Export) | `kick4csh` | **cart** | parent | 42.6 MB | Gambling/medal ⚠ | No | not assessed |
-| Mamoru-kun wa Norowarete Shimatta! (Japan) | `mamonoro` | **cart** | parent | 146.1 MB | Shmup ★ | No | **36.8** C · [assessment](assessments/mamonoro.md) |
+| Mamoru-kun wa Norowarete Shimatta! (Japan) | `mamonoro` | **cart** | parent | 146.1 MB | Shmup ★ | No | **46.6** B · [assessment](assessments/mamonoro.md) |
 | Marvel Vs. Capcom 2: New Age of Heroes (Export, Korea, Rev A) | `mvsc2` | **cart** | parent | 87.5 MB | Fighting | Yes (2000) | not assessed |
 | Mazan: Flash of the Blade (World, MAZ2 Ver.A) | `mazan` | **cart** | parent | 73.7 MB | Light-gun | No | not assessed |
 | Melty Blood Actress Again Version A (Japan, Rev A) | `mbaa` | **cart** | parent | 233.9 MB | Fighting | No | not assessed |
@@ -162,13 +162,13 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Project Justice / Moero! Justice Gakuen (Rev B) | `pjustic` | **cart** | parent | 126.1 MB | Fighting | Yes (2000) | not assessed |
 | Puyo Puyo Da! (Japan) | `puyoda` | **cart** | parent | 111.0 MB | Puzzle ★ | Yes (1999) | not assessed |
 | Quiz Aa! Megami-sama ~Tatakau Tsubasa to Tomoni~ (Japan) | `qmegamis` | **cart** | parent | 60.0 MB | Quiz ⚠ | No | not assessed |
-| Radirgy Noa (Japan) | `radirgyn` | **cart** | parent | 107.4 MB | Shmup ★ | No | **46.1** B · [assessment](assessments/radirgyn.md) |
+| Radirgy Noa (Japan) | `radirgyn` | **cart** | parent | 107.4 MB | Shmup ★ | No | **55.9** B · [assessment](assessments/radirgyn.md) |
 | Rhythm Tengoku (Japan) | `rhytngk` | **cart** | parent | 119.9 MB | Rhythm | No | not assessed |
 | Ring Out 4x4 (Rev A) | `ringout` | **cart** | parent | 39.0 MB | ? | No | not assessed |
 | Samba de Amigo ver. 2000 (Japan) | `samba2k` | **cart** | parent | 159.5 MB | Rhythm | Yes (2000) | not assessed |
 | Sega Marine Fishing | `smarinef` | **cart** | parent | 35.6 MB | Fishing ⚠ | Yes (2000) | not assessed |
 | Sega Strike Fighter (Rev A) | `sstrkfgt` | **cart** | parent | 75.9 MB | Fighting | No | not assessed |
-| Sega Tetris | `sgtetris` | **cart** | parent | 33.7 MB | Puzzle ★ | Yes (2000) | not assessed |
+| Sega Tetris | `sgtetris` | **cart** | parent | 33.7 MB | Puzzle ★ | Yes (2000) | parked G1 · [notes](assessments/sgtetris.md) |
 | Shin Nihon Pro Wrestling Toukon Retsuden 4 Arcade Edition (Japan, TRF1 Ver.A) | `toukon4` | **cart** | parent | 217.0 MB | Fighting | Yes (1999) | not assessed |
 | Shooting Love 2007 (Japan) | `sl2007` | **cart** | parent | 109.3 MB | Light-gun | No | not assessed |
 | Shootout Pool | `shootopl` | **cart** | parent | 16.6 MB | ? | No | not assessed |

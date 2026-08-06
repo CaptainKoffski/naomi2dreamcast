@@ -1,0 +1,93 @@
+{
+  "set": "sgtetris",
+  "title": "Sega Tetris",
+  "maker": "Sega",
+  "year": "1999",
+  "format": "cart",
+  "assessed": "2026-08-06",
+  "versions": {
+    "flycast": "ebae3b513",
+    "battery": "5",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/sgtetris.zip"
+  },
+  "boot": {
+    "ok": false,
+    "failure_class": "no-handoff-120s (agent override: NOT the kb 4.a flake \u2014 game visibly boots and runs: shot-060s title, shot-121s attract how-to-play demo; both legs emitted zero CARTDMA/ARAMHANDOFF tags; watermarks main 29,130,560 / vram 15,230,976 show real activity \u2014 instrumentation blind spot for a cart that loads without cart DMA)",
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": false,
+      "t": null,
+      "aram_zeroed": false,
+      "vram_zeroed": false
+    },
+    "screenshots": [
+      "assessments/evidence/sgtetris/shot-060s.png",
+      "assessments/evidence/sgtetris/shot-121s.png"
+    ],
+    "coverage": "demo",
+    "watermarks_info": {
+      "main": 29130560,
+      "vram": 15230976,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "dma_high_water": 0
+    },
+    "vram": {
+      "peak": 0,
+      "nz_total": 0,
+      "nz_above_cap": 0,
+      "regs_last": "isp_base=400000 isp_limit=56f700 ol_base=5d5780 ol_limit=56f800 fb_w_sof1=800000 fb_w_sof2=c00000 fb_r_sof1=c00000"
+    },
+    "aram": {
+      "peak": 8257552,
+      "nz_above_cap": 8
+    }
+  },
+  "streaming": {
+    "dma_events": 0,
+    "total_bytes": 0,
+    "unique_bytes": 0,
+    "reread_ratio": 0.0,
+    "steady_mb_per_min": null,
+    "short_window": true
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "skipped (--skip-static or no boot)",
+    "flags": [
+      "eeprom_bios"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "stick",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'naomi'",
+      "http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=sgtetris (8-way joystick, 6-button JVS standard declaration, 2P)",
+      "https://tetris.wiki/Sega_Tetris (2 rotate buttons L/R; left-turn-only secret bonus; NAOMI DAS bug carried to DC port)"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": "G1 broken: no-handoff-120s",
+  "scores": null
+}

@@ -405,6 +405,21 @@ The battery now deletes every OTHER set's `raw/` dir at run start — raw is reg
 scratch by design (§2), so nothing of record is lost; the current set's raw survives
 until the next family's run for post-hoc diagnosis.
 
+**v. `no-handoff-120s` with the GAME on screen = handoff-detector blind spot, not the
+4.a flake (sgtetris, 2026-08-06).** A third face of `no-handoff-120s`: screenshots show
+the actual game at title (60 s) and attract demo (121 s) — not the DC BIOS menu (4.a
+face 1) nor the GD splash (face 2) — yet both legs' cartlogs contain zero
+`ARAMHANDOFF`/`CARTDMA` tags. `handoff_seen()` keys exclusively on those two tags
+(`run_battery.py` `HANDOFF_TAGS`), so a cart that loads without cart DMA (PIO reads —
+the `RomPioOffset` path in the fork's cart code) is invisible to it, every downstream
+metric stays undefined, and the title parks as G1 despite verifiably running.
+Content watermarks corroborate the game ran (sgtetris: main 29.1 MB, vram 15.2 MB).
+Triage rule: on any `no-handoff-120s` park, look at the screenshots FIRST — game
+visible ⇒ this class, park with an agent-override note (zunou precedent) and record
+research; only a DC-BIOS-menu/GD-splash screenshot justifies the 4.a flake retry logic.
+Unblock: a DMA-independent handoff signal (instrument PIO cart reads, or detect PC
+leaving the BIOS region), then re-run.
+
 ## 5. Campaign start checklist
 
 The battery is calibrated (§3) and the queue is generated. From here the campaign is pure

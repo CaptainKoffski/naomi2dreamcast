@@ -16,6 +16,11 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `radirgyn` — Radirgy Noa (Japan) | `radirgyn` | Shmup ★ | 107.4 MB | done |
 | `senko` — Senko no Ronde (Japan, Rev A) (GDL-0030A) | `senko`, `senkoo` | Shmup ★ | 241.0 MB | done |
 | `senkosp` — Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | Shmup ★ | 237.7 MB | done |
+| `sgtetris` — Sega Tetris | `sgtetris` | Puzzle ★ (DC 2000) | 33.7 MB | parked |
+| `zerogu2` — Zero Gunner 2 | `zerogu2` | Shmup ★ (DC 2001) | 46.6 MB | pending |
+| `gwing2` — Giga Wing 2 | `gwing2` | Shmup ★ (DC 2001) | 57.6 MB | pending |
+| `cspike` — Cannon Spike / Gun Spike | `cspike` | Shmup ★ (DC 2000) | 63.6 MB | pending |
+| `chocomk` — Musapey's Choco Marker (Rev A) (GDL-0014A) | `chocomk` | Puzzle ★ (DC 2002) | 68.5 MB | pending |
 | `ausfache` — Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | ? | 75.4 MB | done |
 | `dragntr` — Dragon Treasure (Rev B) (GDS-0030B) | `dragntr`, `dragntra` | Medal | 142.3 MB | parked |
 | `dragntr2` — Dragon Treasure 2 (Rev A) (GDS-0037A) | `dragntr2` | Medal | 231.6 MB | parked |
@@ -92,3 +97,4 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `luptype` — Lupin The Third - The Typing (Rev A) (GDS-0021A) | `luptype` | Typing ⚠ | 153.9 MB | pending |
 
 Excluded beyond official DC ports: `cleoftp` (reference — already fan-ported (`../cleopatra`)).
+Exception (2026-08-06, user request): the five smallest DC-ported ★ families (`sgtetris`, `zerogu2`, `gwing2`, `cspike`, `chocomk`) were pulled into the queue as reference/validation assessments — every never-on-DC ★ family was already done or parked, and GAME_FORMATS.md marks a `Yes` DC port as "not a reason to skip".
