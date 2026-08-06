@@ -49,3 +49,87 @@ def compare(goldens, results):
         if s not in seen:
             failures.append(f"{s}: golden set not checked")
     return failures
+
+
+def rom_path(setname, flavor):
+    """Path of the local ROM artifact the producer needs, or None if absent."""
+    if flavor == "GD":
+        hits = glob.glob(os.path.join(NAOMI, setname, "*.chd"))
+        return hits[0] if hits else None
+    z = os.path.join(NAOMI, setname + ".zip")
+    return z if os.path.isfile(z) else None
+
+
+def produce(setname, flavor, outdir):
+    """Run the .dat producer + carve; return the hash/meta result dict.
+    The decrypted .dat is deleted before this returns; the carved blob is
+    hashed in memory and never written."""
+    cmd = (["./chd2dat.sh", setname, outdir] if flavor == "GD"
+           else ["python3", "cart2dat.py", setname, outdir])
+    r = subprocess.run(cmd, cwd=DAT_EXTRACT, capture_output=True, text=True)
+    dat = os.path.join(outdir, setname + ".dat")
+    if r.returncode != 0 or not os.path.isfile(dat):
+        raise RuntimeError(f"{setname}: producer failed:\n"
+                           f"{(r.stdout + r.stderr)[-2000:]}")
+    with open(dat, "rb") as fh:
+        data = fh.read()
+    os.remove(dat)                       # decrypted dump never persists
+    blob, meta = carve_boot.carve(data)
+    return {"set": setname, "flavor": flavor, "cmd": " ".join(cmd[:2]),
+            "dat_sha256": hashlib.sha256(data).hexdigest(),
+            "boot_sha256": hashlib.sha256(blob).hexdigest(),
+            "base": meta["base"], "entry": meta["entry"], "size": meta["size"]}
+
+
+def _line(cmd):
+    try:
+        out = subprocess.run(cmd, capture_output=True, text=True).stdout
+        return out.splitlines()[0].strip() if out.strip() else "unknown"
+    except OSError:
+        return "unknown"
+
+
+def main():
+    bless = "--bless" in sys.argv
+    missing = [s for s, f in SETS if rom_path(s, f) is None]
+    if missing:
+        sys.exit("CALIBRATION GUARD: golden ROM(s) missing under "
+                 f"{NAOMI}: {', '.join(missing)} — cannot establish pipeline "
+                 "health, refusing (this machine is the designated runner).")
+    if not bless and not os.path.isfile(GOLDENS_PATH):
+        sys.exit(f"CALIBRATION GUARD: no golden table at {GOLDENS_PATH} — "
+                 "run calibration.py --bless, review, commit.")
+    tmp = tempfile.mkdtemp(prefix="calibration-")
+    try:
+        results = [produce(s, f, tmp) for s, f in SETS]
+    except (RuntimeError, ValueError, struct.error, OSError) as e:
+        # carve_boot.carve raises ValueError; struct.error on a short file.
+        sys.exit(f"CALIBRATION GUARD: pipeline run failed — {e}")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    if bless:
+        table = {"blessed": time.strftime("%Y-%m-%d"),
+                 "repo_commit": _line(["git", "-C", REPO, "rev-parse", "--short", "HEAD"]),
+                 "chdman": _line(["chdman", "--version"]),
+                 "regen": "python3 tools/assess/calibration.py --bless   "
+                          "# then review the diff (every changed hash must be "
+                          "explained by your change) and commit",
+                 "sets": results}
+        with open(GOLDENS_PATH, "w") as fh:
+            json.dump(table, fh, indent=2)
+        print(f"BLESSED {len(results)} sets -> {os.path.relpath(GOLDENS_PATH, REPO)}")
+        return
+    with open(GOLDENS_PATH) as fh:
+        goldens = json.load(fh)
+    failures = compare(goldens, results)
+    if failures:
+        sys.exit("CALIBRATION GUARD FAILED — carve-pipeline drift, a drifted "
+                 "pipeline must never write a verdict:\n  "
+                 + "\n  ".join(failures)
+                 + "\nIf this change is INTENTIONAL: python3 tools/assess/"
+                   "calibration.py --bless, review the diff, commit (kb §10).")
+    print(f"calibration OK ({len(results)} sets)")
+
+
+if __name__ == "__main__":
+    main()

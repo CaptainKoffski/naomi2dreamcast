@@ -1,0 +1,38 @@
+{
+  "blessed": "2026-08-06",
+  "repo_commit": "494a23a",
+  "chdman": "chdman - MAME Compressed Hunks of Data (CHD) manager 0.289 (unknown)",
+  "regen": "python3 tools/assess/calibration.py --bless   # then review the diff (every changed hash must be explained by your change) and commit",
+  "sets": [
+    {
+      "set": "inunoos",
+      "flavor": "M2",
+      "cmd": "python3 cart2dat.py",
+      "dat_sha256": "1ccddea101f9e38ec2ef9570e675b09f6fcbb3cafc05120e8d4af77453364cfc",
+      "boot_sha256": "cc89bbbaab47fd7eb836ab015421c2ddf111a3b38d30da22bab27285e6c48539",
+      "base": "0x0c020000",
+      "entry": "0x0c021000",
+      "size": 2097152
+    },
+    {
+      "set": "ausfache",
+      "flavor": "M4",
+      "cmd": "python3 cart2dat.py",
+      "dat_sha256": "42bc1292b2e19e420e99842613dea6eeb6d387f7e059534adaef6f1b8f4c787e",
+      "boot_sha256": "cfd8460ec1ba24c79ddbe37a3fde444e5005dba29eb8cad38d6bf3e024eba2fe",
+      "base": "0x8c020000",
+      "entry": "0x8c021000",
+      "size": 1048576
+    },
+    {
+      "set": "ikaruga",
+      "flavor": "GD",
+      "cmd": "./chd2dat.sh ikaruga",
+      "dat_sha256": "d435938becdeb7945ccaee77d88a0fd787b5920797616459d9ce6d3506f147b4",
+      "boot_sha256": "bcab6911ab9f8318c0aff9e7826ea869ec5f4412679cfbb8c6be112dc36cc43d",
+      "base": "0x8c020000",
+      "entry": "0x8c021000",
+      "size": 1048576
+    }
+  ]
+}
