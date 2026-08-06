@@ -13,6 +13,9 @@ _APROF = re.compile(r"^ARAMPROFILE high=([0-9a-f]+) nz=[0-9a-f]+ nz_below2m=[0-9
                     r"(?: content_high=([0-9a-f]+) content_below2m=[0-9a-f]+ content_above2m=([0-9a-f]+))?", re.I)
 _VPROF = re.compile(r"^VRAMPROFILE high=([0-9a-f]+) nz=([0-9a-f]+) nz_below8m=([0-9a-f]+) nz_above8m=([0-9a-f]+)", re.I)
 _VREGS = re.compile(r"^VRAMREGS (.+)$")
+_MPROF = re.compile(r"^MAINPROFILE high=([0-9a-f]+) nz=([0-9a-f]+) nz_below16m=[0-9a-f]+ nz_above16m=([0-9a-f]+)", re.I)
+_PIOC = re.compile(r"^CARTPIOCNT bytes=([0-9a-f]+)", re.I)
+_TRIG = re.compile(r"trigger=(\w+)")
 
 
 def parse(text, timeline=None, handoff_window=120):
@@ -26,12 +29,15 @@ def parse(text, timeline=None, handoff_window=120):
         return ts[i] if i < len(ts) else ts[-1]
 
     pos = 0
-    handoff = {"seen": False, "t": None, "aram_zeroed": False, "vram_zeroed": False}
+    handoff = {"seen": False, "t": None, "aram_zeroed": False, "vram_zeroed": False,
+               "main_baselined": False, "trigger": None}
     wm = {}
     vram = {"peak": 0, "nz_total": 0, "nz_above_cap": 0, "nz_below_max": 0, "regs_last": ""}
     aram = {"peak": 0, "nz_above_cap": 0}
+    main = {"peak": 0, "nz_total": 0, "nz_above_cap": 0}
     dmas = []           # (t, src, dest, length)
     serial = 0
+    pio_bytes = 0
     for line in text.splitlines(keepends=True):
         end = pos + len(line)
         s = line.rstrip("\n")
@@ -42,16 +48,27 @@ def parse(text, timeline=None, handoff_window=120):
                 handoff["seen"] = True
                 handoff["t"] = t_of(end)
             dmas.append((t_of(end), src, dest, length))
-        elif s.startswith("ARAMHANDOFF"):
-            handoff["aram_zeroed"] = True
+        elif s.startswith(("ARAMHANDOFF", "VRAMHANDOFF", "MAINHANDOFF")):
+            if s.startswith("ARAMHANDOFF"):
+                handoff["aram_zeroed"] = True
+            elif s.startswith("VRAMHANDOFF"):
+                handoff["vram_zeroed"] = True
+            else:
+                handoff["main_baselined"] = True
+            # v6: PIO-loading carts fire no CARTDMA line at all (sgtetris,
+            # kb §4.v) — the handoff markers themselves are the boot signal
+            if not handoff["seen"]:
+                handoff["seen"] = True
+                handoff["t"] = t_of(end)
+            mt = _TRIG.search(s)
+            if mt and handoff["trigger"] is None:
+                handoff["trigger"] = mt.group(1)
         elif s.startswith("ARAMREBASE"):
             # fork v4: ARAM baseline re-snapshotted at an AICA ARM reset (the game's
             # sound-driver upload). Samples before the LAST rebase measured BIOS
             # sound-RAM-test residue (the exact-0x600000 cohort, 2026-08-04) — the
             # running max restarts here so peaks reflect the final baseline window.
             aram = {"peak": 0, "nz_above_cap": 0}
-        elif s.startswith("VRAMHANDOFF"):
-            handoff["vram_zeroed"] = True
         elif s.startswith("SERIALPOKE"):
             serial += 1
         else:
@@ -83,6 +100,19 @@ def parse(text, timeline=None, handoff_window=120):
                         m = _VREGS.match(s)
                         if m:
                             vram["regs_last"] = m.group(1)
+                        else:
+                            m = _MPROF.match(s)
+                            # pre-MAINHANDOFF samples would diff vs a null
+                            # baseline — a different measurement (kb §9); the
+                            # fork skips them, drop any anyway
+                            if m and handoff["main_baselined"]:
+                                main["peak"] = max(main["peak"], int(m.group(1), 16))
+                                main["nz_total"] = max(main["nz_total"], int(m.group(2), 16))
+                                main["nz_above_cap"] = max(main["nz_above_cap"], int(m.group(3), 16))
+                            else:
+                                m = _PIOC.match(s)
+                                if m:
+                                    pio_bytes = max(pio_bytes, int(m.group(1), 16))
         pos = end
 
     main_hw = max((dest + n - MAIN_LO for _, _, dest, n in dmas if MAIN_LO <= dest < MAIN_HI),
@@ -111,7 +141,9 @@ def parse(text, timeline=None, handoff_window=120):
 
     return {
         "handoff": handoff,
-        "main": {"dma_high_water": main_hw, "watermark_max": wm.get("main", 0)},
+        "main": {"dma_high_water": main_hw, "watermark_max": wm.get("main", 0),
+                 "peak": main["peak"], "nz_total": main["nz_total"],
+                 "nz_above_cap": main["nz_above_cap"]},
         "vram": {"peak": vram["peak"], "nz_total": vram["nz_total"],
                  "nz_above_cap": vram["nz_above_cap"],
                  "watermark_max": wm.get("vram", 0), "regs_last": vram["regs_last"]},
@@ -119,7 +151,7 @@ def parse(text, timeline=None, handoff_window=120):
                  "watermark_max": wm.get("aram", 0)},
         "streaming": {"dma_events": len(dmas), "total_bytes": total, "unique_bytes": unique,
                       "reread_ratio": round(reread, 4), "steady_mb_per_min": steady,
-                      "short_window": short_window},
+                      "short_window": short_window, "pio_bytes": pio_bytes},
         "serial_pokes": serial,
         # total nz, not nz_below8m: CPU-framebuffer 2D titles (kurucham) draw above
         # the 8 MB line and are invisible to a below-8m check. Threshold 512 KiB:

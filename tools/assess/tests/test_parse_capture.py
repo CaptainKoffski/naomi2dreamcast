@@ -70,8 +70,48 @@ def test_no_timeline_no_boot():
     assert m["handoff"]["seen"] is False and m["boot_ok"] is False
     assert m["streaming"]["steady_mb_per_min"] is None and m["streaming"]["short_window"] is True
 
+def test_pio_handoff_and_main_profile():
+    # v6 PIO face (sgtetris, kb §4.v): no CARTDMA line ever — handoff.seen
+    # must latch on the marker lines themselves. Pre-MAINHANDOFF MAINPROFILE
+    # samples diff vs a null baseline (a different measurement, kb §9) and
+    # must be dropped — the exact pre-VRAMHANDOFF rule, applied to main.
+    log = (
+        "CARTPIO offset=00000000\n"
+        "MAINPROFILE high=1d00000 nz=400000 nz_below16m=300000 nz_above16m=100000 size=2000000\n"
+        "ARAMHANDOFF baselined size=800000 trigger=pio\n"
+        "VRAMHANDOFF baselined size=1000000 trigger=pio\n"
+        "MAINHANDOFF baselined size=2000000 trigger=pio\n"
+        "MAINPROFILE high=4c0000 nz=3c0000 nz_below16m=3c0000 nz_above16m=0 size=2000000\n"
+        "MAINPROFILE high=980000 nz=700000 nz_below16m=700000 nz_above16m=0 size=2000000\n"
+        "VRAMPROFILE high=300000 nz=200000 nz_below8m=200000 nz_above8m=0 size=1000000\n"
+        "CARTPIOCNT bytes=2f0000\n"
+    )
+    m = parse_capture.parse(log)
+    assert m["handoff"]["seen"] is True and m["handoff"]["trigger"] == "pio"
+    assert m["handoff"]["main_baselined"] is True
+    assert m["main"]["peak"] == 0x980000, hex(m["main"]["peak"])
+    assert m["main"]["nz_total"] == 0x700000 and m["main"]["nz_above_cap"] == 0
+    assert m["main"]["dma_high_water"] == 0
+    assert m["streaming"]["pio_bytes"] == 0x2f0000
+    assert m["streaming"]["dma_events"] == 0
+    assert m["boot_ok"] is True     # vram nz_total 0x200000 >= 0x80000
+
+def test_dma_trigger_and_main_above_cap():
+    log = (
+        "CARTDMA src=00010000 dest=0c020000 len=100000\n"
+        "ARAMHANDOFF baselined size=800000 trigger=dma\n"
+        "VRAMHANDOFF baselined size=1000000 trigger=dma\n"
+        "MAINHANDOFF baselined size=2000000 trigger=dma\n"
+        "MAINPROFILE high=1100000 nz=e00000 nz_below16m=d00000 nz_above16m=100000 size=2000000\n"
+    )
+    m = parse_capture.parse(log)
+    assert m["handoff"]["trigger"] == "dma"
+    assert m["main"]["peak"] == 0x1100000 and m["main"]["nz_above_cap"] == 0x100000
+
 if __name__ == "__main__":
     test_parse(); print("test_parse OK")
     test_pre_handoff_vram_noise(); print("test_pre_handoff_vram_noise OK")
     test_no_timeline_no_boot(); print("test_no_timeline_no_boot OK")
+    test_pio_handoff_and_main_profile(); print("test_pio_handoff_and_main_profile OK")
+    test_dma_trigger_and_main_above_cap(); print("test_dma_trigger_and_main_above_cap OK")
     print("ALL OK")
