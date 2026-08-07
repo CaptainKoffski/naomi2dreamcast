@@ -1,11 +1,48 @@
 # Kasei Channel Mars TV (Japan) (840-0025C) (`marstv`) — portability assessment
 
+> **Battery v8 vram-fb-masking re-run (2026-08-07): 47.6 (B)** — spec
+> `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
+> park, boot ok, PIO handoff at 20.0 s. Main RAM reproduces bit-identically to v4
+> (25,984,736 B). ARAM `content_total` 2,053,563 B (u=0.979, sub 86.6) is measured by
+> volume for the first time (v7-class keying — this doc never ran v6/v7 individually).
+> **VRAM flips from address high-water (14,350,336 B, u=1.71, sub 21.6) to FB-masked
+> content: `content_total` 5,047,259 B + `2×fb_bytes` 1,228,800 B (`fb_bytes` 614,400 B,
+> exactly 640×480×2) = fit 6,276,059 B, u=0.748 → sub 100.0** — a rise, as required.
+> Main RAM's write-truth sub-score (28.0, u=1.548) is now the binding region, exactly the
+> design doc's predicted "main 28.0 becomes binding". Memory axis **21.6 → 28.0**, final
+> **42.8 → 47.6**, tier unchanged **B**. Sanity clean: `fb_bytes` == 614,400,
+> `content_total + fb_masked_nz` matches `nz_total` exactly in the raw log
+> (5,047,259 + 594,393 = 5,641,652). Coverage re-annotated `demo` (unchanged — display
+> blindness from the v2 era stays fixed, as it was under v4).
+
 > **Battery v4 re-assessment (2026-08-04): **42.8 (B)**.**
 > v2 parked it G3-aram; the park note already flagged "content above cap only 80 KB: gate-metric divergence". v4's content metric vindicates that: 42.8 B.
-> Below the v4 section is the battery v2-era assessment: its *measured* figures
-> (boot evidence, memory, streaming, score) are **superseded**; the identity,
-> controls-research and similarity sections remain valid. Instrumentation
+> Below the v8 section is the battery v4-era assessment, itself superseding the v2-era
+> assessment below that; each section's *measured* figures (boot evidence, memory,
+> streaming, score) are **superseded** by the section above it — the identity,
+> controls-research and similarity sections remain valid throughout. Instrumentation
 > root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v8 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **47.6 (B)** |
+| Coverage | demo |
+| Assessed | 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/marstv.zip` |
+
+| Region | Peak / fit | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (write-truth) | 25,984,736 | 16,777,216 | 1.548 | bit-identical to v4's DMA-high-water figure — write-truth found nothing beyond it here; sub 28.0, now binding |
+| VRAM (FB-masked content + 2×FB) | 6,276,059 (content_total 5,047,259 + 2×fb_bytes 1,228,800) | 8,388,608 | 0.748 | battery v8 re-keying — sub 100.0, was 21.6 under address high-water (14,350,336, u=1.71) |
+| ARAM (content, volume-keyed) | 2,053,563 | 2,097,152 | 0.979 | sub 86.6, first content-volume measurement (v7-class keying); was 1.02× / content above cap 47,694 under the old address peak |
+
+Streaming: 164 DMA events · total 199.8 MB · unique 52.4 MB · re-read 0.7376 · steady 21.076 MB/min (reproduces v4 within noise)
+Axes: memory 28.0 · streaming 54.3 · guts 90.0 · controls 100.0 · similarity 40.0 → **final 47.6 (B)**
+Screenshots: `evidence/marstv/shot-060s.png` · `shot-365s.png` · `shot-609s.png` (same 3-shot curation as v4 — title/eerie-face screen ×2, attract camera-minigame instructions)
+
+---
 
 ## v4 verdict & measurements
 

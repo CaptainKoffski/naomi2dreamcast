@@ -4,10 +4,10 @@
   "maker": "Sega",
   "year": "1999",
   "format": "cart",
-  "assessed": "2026-08-04",
+  "assessed": "2026-08-07",
   "versions": {
-    "flycast": "4b59eceff",
-    "battery": "4",
+    "flycast": "f014a410c",
+    "battery": "8",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -26,9 +26,11 @@
   "capture": {
     "handoff": {
       "seen": true,
-      "t": 30.0,
+      "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/marstv/shot-060s.png",
@@ -45,23 +47,29 @@
     "coverage": "demo",
     "watermarks_info": {
       "main": 25984736,
-      "vram": 14350336,
+      "vram": 14229504,
       "aram": 8388608
     }
   },
   "memory": {
     "main": {
+      "peak": 25984736,
+      "nz_total": 9091782,
+      "nz_above_cap": 798810,
       "dma_high_water": 25984736
     },
     "vram": {
-      "peak": 14350336,
-      "nz_total": 5788726,
-      "nz_above_cap": 3366032,
-      "regs_last": "isp_base=400000 isp_limit=510f00 ol_base=55c280 ol_limit=511000 fb_w_sof1=c00000 fb_w_sof2=c00000 fb_r_sof1=800000"
+      "peak": 14229504,
+      "nz_total": 5641652,
+      "nz_above_cap": 3281430,
+      "regs_last": "isp_base=400000 isp_limit=510f00 ol_base=55c280 ol_limit=511000 fb_w_sof1=c00000 fb_w_sof2=c00000 fb_r_sof1=800000",
+      "content_total": 5047259,
+      "fb_bytes": 614400
     },
     "aram": {
       "peak": 2147400,
-      "nz_above_cap": 47694
+      "nz_above_cap": 47694,
+      "content_total": 2053563
     }
   },
   "streaming": {
@@ -69,8 +77,9 @@
     "total_bytes": 209528960,
     "unique_bytes": 54971872,
     "reread_ratio": 0.7376,
-    "steady_mb_per_min": 21.076,
-    "short_window": false
+    "steady_mb_per_min": 20.991,
+    "short_window": false,
+    "pio_bytes": 2098688
   },
   "guts": {
     "code_bytes": 2097152,
@@ -622,12 +631,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 21.6,
-    "streaming": 54.2,
+    "memory": 28.0,
+    "streaming": 54.3,
     "guts": 90.0,
     "controls": 100.0,
     "similarity": 40.0,
-    "final": 42.8,
+    "final": 47.6,
     "tier": "B"
   }
 }
