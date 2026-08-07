@@ -110,8 +110,13 @@ unchanged under the fallback.
 
 ### Versioning / comparability
 
-- **No `BATTERY_VERSION` bump** — capture format unchanged (parser+scorer
-  only, per the brief's constraint). Wave sidecars stamp battery "6".
+- **`BATTERY_VERSION` bumps "6" → "7"** (user ruling at spec review,
+  overriding the brief's no-bump-if-capture-unchanged clause): the sidecar
+  schema gains `aram.content_total` and the scoring semantics change, so the
+  provenance column in `RANKING.md` should distinguish volume-keyed runs.
+  v7 note: ARAM volume keying — parser captures the fork's already-logged
+  `content_below2m`; gate+axis keyed on `content_total`, address fallback.
+  Wave sidecars stamp battery "7". No fork change; capture format identical.
 - The semantics change is recorded as a **kb §6 checkpoint entry**: the
   ruling, the gwing2/takoron evidence pair, the sgtetris addendum, and the
   item-1 deferral.
