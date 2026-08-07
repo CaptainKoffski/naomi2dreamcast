@@ -1,11 +1,54 @@
 # Illvelo (Illmatic Envelope) (Japan) (841-0059C) (`illvelo`) — portability assessment
 
+> **Battery v8 vram-fb-masking re-run (2026-08-07): 34.7 (C)** — spec
+> `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
+> park, boot ok, PIO handoff at 20.0 s (v4 had 20.0 s too). **VRAM flips from address
+> high-water (14,172,160 B, u=1.69, sub 22.4) to FB-masked content: `content_total`
+> 4,390,214 B + `2×fb_bytes` 1,228,800 B (`fb_bytes` 614,400 B — this title runs a
+> rotated 480×640 panel, `docs/kb/assessment-tooling.md` §3, but 480×640×2 is the same
+> byte count as 640×480×2, so the sanity check passes unchanged) = fit 5,619,014 B,
+> u=0.670 → sub 100.0** — a rise, as required. ARAM `content_total` 762,858 B (u=0.364)
+> → sub 100.0, first content-volume measurement (v7-class keying). **MAIN, first
+> write-truth measured (v6 instrumentation): peak 32,505,920 B (`0x1F00040`) — this is
+> the same byte-identical shared-structure signature already documented on ikaruga
+> (Task 6), kurucham, and ss2005 (kb `assessment-tooling.md` §6 item 3 / §8: "a shared
+> 64-byte structure at 0x1F00000–0x1F0003F" on GD-ROM titles, address-keyed main scoring
+> deliberately kept per the standing 2026-08-07 ruling — not a new finding, not an
+> instrumentation bug, not per-title-decided mid-wave)** — sub-score **12.5**, now
+> binding. Memory axis **22.4 → 12.5**, final **43.9 → 34.7**, tier **B → C**. Sanity
+> clean: `content_total + fb_masked_nz` matches `nz_total` exactly in the raw log
+> (4,390,214 + 334,112 = 4,724,326). Coverage re-annotated `demo` (unchanged — live
+> gameplay, ranking-window desktop, and title/logo frames all still present; curated set
+> re-picked at this run's own shot timestamps).
+
 > **Battery v4 re-assessment (2026-08-04): **43.9 (B)**.**
 > v2 parked it G3-aram via the DMPD fill artifact (`nz_above2m == 0x600000` exactly). v4 content metric: scored.
-> Below the v4 section is the battery v2-era assessment: its *measured* figures
-> (boot evidence, memory, streaming, score) are **superseded**; the identity,
-> controls-research and similarity sections remain valid. Instrumentation
+> Below the v8 section is the battery v4-era assessment, itself superseding the v2-era
+> assessment below that; each section's *measured* figures (boot evidence, memory,
+> streaming, score) are **superseded** by the section above it — the identity,
+> controls-research and similarity sections remain valid throughout. Instrumentation
 > root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v8 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **34.7 (C)** |
+| Coverage | demo |
+| Assessed | 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/illvelo.zip` |
+
+| Region | Peak / fit | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (write-truth) | 32,505,920 (`0x1F00040`) | 16,777,216 | 1.938 | shared GD-ROM structure signature (kb §6 item 3 / §8, same value as ikaruga/kurucham/ss2005); sub 12.5, now binding |
+| VRAM (FB-masked content + 2×FB) | 5,619,014 (content_total 4,390,214 + 2×fb_bytes 1,228,800) | 8,388,608 | 0.670 | battery v8 re-keying — sub 100.0, was 22.4 under address high-water (14,172,160, u=1.69) |
+| ARAM (content, volume-keyed) | 762,858 | 2,097,152 | 0.364 | sub 100.0, first content-volume measurement (v7-class keying); was 1.00× / content above cap 0 under the old address peak |
+
+Streaming: 3,244 DMA events · total 163.3 MB · unique 37.3 MB · re-read 0.7715 · steady 16.063 MB/min (reproduces v4's 3,245 events / 16.073 MB/min within run-to-run noise)
+Axes: memory 12.5 · streaming 60.1 · guts 85.0 · controls 100.0 · similarity 40.0 → **final 34.7 (C)**
+Screenshots: `evidence/illvelo/shot-060s.png` · `shot-121s.png` · `shot-304s.png` · `shot-548s.png` · `shot-609s.png` (re-curated at this run's shot timestamps — black story-text card, MADOWS ranking-window desktop, live ILLMATIC ENVELOPE gameplay ×2, MILESTONE INC. logo card)
+
+---
 
 ## v4 verdict & measurements
 
