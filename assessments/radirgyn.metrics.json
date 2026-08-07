@@ -4,10 +4,10 @@
   "maker": "Milestone / Lucky",
   "year": "2009",
   "format": "cart",
-  "assessed": "2026-08-04",
+  "assessed": "2026-08-08",
   "versions": {
-    "flycast": "4b59eceff",
-    "battery": "4",
+    "flycast": "f014a410c",
+    "battery": "8",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -28,7 +28,9 @@
       "seen": true,
       "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/radirgyn/shot-060s.png",
@@ -51,17 +53,23 @@
   },
   "memory": {
     "main": {
+      "peak": 24850767,
+      "nz_total": 10831427,
+      "nz_above_cap": 4250690,
       "dma_high_water": 19552576
     },
     "vram": {
       "peak": 11195744,
-      "nz_total": 5585861,
+      "nz_total": 5595261,
       "nz_above_cap": 2525451,
-      "regs_last": "isp_base=400000 isp_limit=4fc8a0 ol_base=550b80 ol_limit=4fc9a0 fb_w_sof1=16a000 fb_w_sof2=c00000 fb_r_sof1=56a000"
+      "regs_last": "isp_base=400000 isp_limit=4fc8a0 ol_base=550b80 ol_limit=4fc9a0 fb_w_sof1=16a000 fb_w_sof2=c00000 fb_r_sof1=56a000",
+      "content_total": 5123604,
+      "fb_bytes": 614400
     },
     "aram": {
       "peak": 2252880,
-      "nz_above_cap": 122039
+      "nz_above_cap": 122039,
+      "content_total": 2041920
     }
   },
   "streaming": {
@@ -70,7 +78,8 @@
     "unique_bytes": 14110720,
     "reread_ratio": 0.6887,
     "steady_mb_per_min": 4.164,
-    "short_window": false
+    "short_window": false,
+    "pio_bytes": 2099776
   },
   "guts": {
     "code_bytes": 2097152,
@@ -620,12 +629,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 36.6,
+    "memory": 30.8,
     "streaming": 75.5,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 40.0,
-    "final": 55.9,
+    "final": 52.1,
     "tier": "B"
   }
 }

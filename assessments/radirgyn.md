@@ -1,11 +1,50 @@
 # Radirgy Noa (Japan) (841-0062C) (`radirgyn`) — portability assessment
 
+> **Battery v8 vram-fb-masking re-run (2026-08-07): 52.1 (B)** — spec
+> `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
+> park, boot ok, PIO handoff at 20.0 s. Streaming reproduces essentially identically
+> (304 DMA events, re-read 0.6887, steady 4.164 MB/min — bit-identical to v4). Main peak
+> matches this doc's old "informational" watermark exactly (24,850,767 B). ARAM
+> `content_total` 2,041,920 B (u=0.974) → sub 87.0, first content-volume measurement
+> (v7-class keying). **VRAM flips from address high-water (11,195,744 B, u=1.33, sub
+> 36.6) to FB-masked content: `content_total` 5,123,604 B + `2×fb_bytes` 1,228,800 B
+> (`fb_bytes` 614,400 B, exactly 640×480×2) = fit 6,352,404 B, u=0.757 → sub 100.0** — a
+> rise, as required. Main RAM's write-truth sub (30.8, u=1.481) is now the binding
+> region — lower than the design doc's speculative "main 55.2" bound, the same
+> measurement-decides pattern seen on gunsur2/illvelo/mamonoro this wave (write-truth
+> found real above-cap content the old DMA figure missed). Memory axis **36.6 → 30.8**,
+> final **55.9 → 52.1**, tier unchanged **B**. Sanity clean: `content_total +
+> fb_masked_nz` matches `nz_total` exactly in the raw log (5,123,604 + 471,657 =
+> 5,595,261). Coverage re-annotated `demo` (unchanged).
+
 > **Battery v4 re-assessment (2026-08-04): **55.9 (B)**.**
 > v2 parked it G3-aram via the DMPD fill artifact. v4: scored, demo coverage.
-> Below the v4 section is the battery v2-era assessment: its *measured* figures
-> (boot evidence, memory, streaming, score) are **superseded**; the identity,
-> controls-research and similarity sections remain valid. Instrumentation
+> Below the v8 section is the battery v4-era assessment, itself superseding the v2-era
+> assessment below that; each section's *measured* figures (boot evidence, memory,
+> streaming, score) are **superseded** by the section above it — the identity,
+> controls-research and similarity sections remain valid throughout. Instrumentation
 > root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v8 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **52.1 (B)** |
+| Coverage | demo |
+| Assessed | 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/radirgyn.zip` |
+
+| Region | Peak / fit | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (write-truth) | 24,850,767 | 16,777,216 | 1.481 | matches the doc's old "informational" watermark exactly (real writes, not stale data); sub 30.8, now binding |
+| VRAM (FB-masked content + 2×FB) | 6,352,404 (content_total 5,123,604 + 2×fb_bytes 1,228,800) | 8,388,608 | 0.757 | battery v8 re-keying — sub 100.0, was 36.6 under address high-water (11,195,744, u=1.33) |
+| ARAM (content, volume-keyed) | 2,041,920 | 2,097,152 | 0.974 | sub 87.0, first content-volume measurement (v7-class keying); was 1.07× / content above cap 122,039 under the old address peak |
+
+Streaming: 304 DMA events · total 45.3 MB · unique 14.1 MB · re-read 0.6887 · steady 4.164 MB/min (bit-identical to v4)
+Axes: memory 30.8 · streaming 75.5 · guts 85.0 · controls 100.0 · similarity 40.0 → **final 52.1 (B)**
+Screenshots: `evidence/radirgyn/shot-060s.png` · `shot-365s.png` · `shot-609s.png` (same 3-shot curation as v4 — story-panel "INSERT COIN(S)" ×2, attract gameplay)
+
+---
 
 ## v4 verdict & measurements
 
