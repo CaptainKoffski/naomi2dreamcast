@@ -4,10 +4,10 @@
   "maker": "G.Rev",
   "year": "2008",
   "format": "cart",
-  "assessed": "2026-08-04",
+  "assessed": "2026-08-08",
   "versions": {
-    "flycast": "4b59eceff",
-    "battery": "4",
+    "flycast": "f014a410c",
+    "battery": "8",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -28,7 +28,9 @@
       "seen": true,
       "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/mamonoro/shot-060s.png",
@@ -51,17 +53,23 @@
   },
   "memory": {
     "main": {
+      "peak": 26807247,
+      "nz_total": 12939092,
+      "nz_above_cap": 6337712,
       "dma_high_water": 22092160
     },
     "vram": {
       "peak": 13718016,
-      "nz_total": 7422814,
+      "nz_total": 7434215,
       "nz_above_cap": 4251550,
-      "regs_last": "isp_base=400000 isp_limit=4c60c0 ol_base=508100 ol_limit=4c61c0 fb_w_sof1=51f000 fb_w_sof2=c00000 fb_r_sof1=11f000"
+      "regs_last": "isp_base=400000 isp_limit=4c60c0 ol_base=508100 ol_limit=4c61c0 fb_w_sof1=51f000 fb_w_sof2=c00000 fb_r_sof1=11f000",
+      "content_total": 6535347,
+      "fb_bytes": 917760
     },
     "aram": {
       "peak": 2064240,
-      "nz_above_cap": 0
+      "nz_above_cap": 0,
+      "content_total": 1265219
     }
   },
   "streaming": {
@@ -69,8 +77,9 @@
     "total_bytes": 143163392,
     "unique_bytes": 55900160,
     "reread_ratio": 0.6095,
-    "steady_mb_per_min": 13.057,
-    "short_window": false
+    "steady_mb_per_min": 13.088,
+    "short_window": false,
+    "pio_bytes": 2099776
   },
   "guts": {
     "code_bytes": 2097152,
@@ -623,12 +632,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 24.6,
-    "streaming": 68.0,
+    "memory": 26.1,
+    "streaming": 67.9,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 40.0,
-    "final": 46.6,
+    "final": 47.8,
     "tier": "B"
   }
 }

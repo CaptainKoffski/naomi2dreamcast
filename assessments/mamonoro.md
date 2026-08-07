@@ -1,11 +1,56 @@
 # Mamoru-kun wa Norowarete Shimatta! (Japan) (841-0060C) (`mamonoro`) — portability assessment
 
+> **Battery v8 vram-fb-masking re-run (2026-08-07): 47.8 (B)** — spec
+> `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
+> park, boot ok, PIO handoff at 20.0 s. Leg 1 hit an `emulator-exited` flake (Flycast
+> process died mid-run, a known operational flake class, kb §7); the battery's automatic
+> leg-2 retry ran the full 600 s window cleanly — used for all figures below. Main peak
+> reproduces the doc's own "informational" watermark exactly (26,807,247 B, same
+> real-writes-not-noise pattern as chocomk/sgtetris/gunsur2/marstv). ARAM `content_total`
+> 1,265,219 B (u=0.603) → sub 100.0, first content-volume measurement (v7-class keying).
+> **VRAM: `fb_bytes` reads 917,760 B, not the anchors' 614,400 B** — investigated before
+> trusting it (this title is ROT270 free-scrolling, per §2/§3, and `fb_bytes` is computed
+> straight from live `FB_R_SIZE`/`FB_W_LINESTRIDE` PowerVR2 registers each sample,
+> `naomi.cpp cartlog_vram_profile()`, not an independent counter) — the earliest samples
+> read the BIOS-default 614,400 B (`0x96000`, matching the anchors exactly), then flip to
+> a stable 917,760 B (`0xE0100`) from early gameplay onward and stay there for the rest of
+> the 600 s window: a genuine, stable, game-programmed mode change, not register garbage
+> (consistent with a scroll buffer taller than the visible 480×640 crop, an ordinary
+> technique for a free-scrolling shmup). `content_total` 6,535,347 B + `2×fb_bytes`
+> 1,835,520 B = fit 8,370,867 B, u=0.998 → sub **85.2** — still a rise (was 24.6 under
+> address high-water, u=1.64). Main RAM's write-truth sub (26.1, u=1.598) is the binding
+> region regardless. Memory axis **24.6 → 26.1**, final **46.6 → 47.8**, tier unchanged
+> **B**. Sanity: `content_total + fb_masked_nz` matches `nz_total` exactly in the raw log
+> (6,535,347 + 700,924 = 7,236,271). Coverage re-annotated `demo` (unchanged).
+
 > **Battery v4 re-assessment (2026-08-04): **46.6 (B)**.**
 > v2 parked it G3-aram via the DMPD fill artifact. v4 content metric: scored; attract demo renders (logo-overlay gameplay, shot-182s).
-> Below the v4 section is the battery v2-era assessment: its *measured* figures
-> (boot evidence, memory, streaming, score) are **superseded**; the identity,
-> controls-research and similarity sections remain valid. Instrumentation
+> Below the v8 section is the battery v4-era assessment, itself superseding the v2-era
+> assessment below that; each section's *measured* figures (boot evidence, memory,
+> streaming, score) are **superseded** by the section above it — the identity,
+> controls-research and similarity sections remain valid throughout. Instrumentation
 > root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v8 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **47.8 (B)** |
+| Coverage | demo |
+| Assessed | 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s (leg 2 of 2 — leg 1 `emulator-exited` flake, auto-retried) · rom `naomi/mamonoro.zip` |
+
+| Region | Peak / fit | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (write-truth) | 26,807,247 | 16,777,216 | 1.598 | matches the doc's old "informational" watermark exactly (real writes, not stale data); sub 26.1, binding |
+| VRAM (FB-masked content + 2×FB) | 8,370,867 (content_total 6,535,347 + 2×fb_bytes 1,835,520) | 8,388,608 | 0.998 | `fb_bytes` 917,760 B (not the standard 614,400 — verified genuine, see banner) — sub 85.2, was 24.6 under address high-water (13,718,016, u=1.64) |
+| ARAM (content, volume-keyed) | 1,265,219 | 2,097,152 | 0.603 | sub 100.0, first content-volume measurement (v7-class keying); was 0.98× under the old address peak |
+
+Streaming: 617 DMA events · total 136.5 MB · unique 53.3 MB · re-read 0.6095 · steady 13.057 MB/min (reproduces v4 within noise)
+Axes: memory 26.1 · streaming 67.9 · guts 85.0 · controls 100.0 · similarity 40.0 → **final 47.8 (B)**
+Screenshots: `evidence/mamonoro/shot-121s.png` · `shot-182s.png` · `shot-243s.png` · `shot-426s.png` · `shot-548s.png` (re-curated this run — manga story card, title over shrine island, Beniko ranking table, night-stage gameplay with HUD, character panel)
+
+---
 
 ## v4 verdict & measurements
 
