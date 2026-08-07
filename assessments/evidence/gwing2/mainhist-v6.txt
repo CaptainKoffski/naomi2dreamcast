@@ -1,0 +1,4 @@
+# gwing2 v6 final hist/profile lines
+MAINHIST 16f86 3e7b0 3dcac 3994a 2e978 37d2d 183ac 4f21 0 0 7 0 0 0 0 0 10662 15d42 15fd5 1d44 68 ab9 11ea4 1bfea 357b 2e235 38b36 37678 372b7 39a32 3a16e 37b77 33eaa 37388 364f8 33945 3759b 17192 0 0 1070c 29657 246ed 36ee1 3ad86 3ce3a 2d94d 1c383 3d859 3dd3d 1dea5 0 370fd 3c895 3cbcc 36382 0 0 0 1dc8f 0 0 af35 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+ARAMPROFILE high=7fbfc0 nz=1f6e63 nz_below2m=1e3152 nz_above2m=13d11 content_high=7fbfc0 content_below2m=1e1996 content_above2m=bd79 size=800000
+CARTPIOCNT bytes=36db2e0

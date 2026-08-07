@@ -1,0 +1,6 @@
+# sgtetris v6 final hist lines + aram profile (saved before raw/ cleanup)
+MAINHIST 170c4 3dc81 36a1a 3a38d 2d1ad 330fa 10487 0 0 0 0 0 0 0 0 7ec1 15ead 0 0 0 3c1f8 3ec9b 3ff7f 40000 3fec3 3fd28 3fb4a 3edbc 40000 40000 37 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 245 12123 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2fe29 20ae0 2dd8e 3ea79 3ea3a 3e2f8 27ee4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 32e88 24baf 0 0 175b2 17593 16ec6 16cf2 13206 161df 1607d 1779e 19a35 19db6 190c9 163cd 1cb94 1c4f2 17a80 3149 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+VRAMHIST 0 0 0 0 0 0 0 c 0 0 666 2cee 0 0 708 1d2ad 309ac 3e812 3d499 3e0f9 3fde8 3fe4f 3ffed 3fc86 3f1f1 3f7b8 40000 3ff35 3f8da 3fb65 40000 2c000 0 0 0 0 83ce d224 30a1f 3b484 366d2 3d398 38e7e 1f702 21cde 35fb9 35ccd 22030 20e75 3f05c 3f674 3f7a0 3cb05 3d5d3 3f90d 40000 40000 40000 3fe04 40000 e171 0 0 0 
+ARAMHIST 3905d 3e0c1 3bd8e 3cbd5 3b961 3e4a5 22859 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 8000 
+ARAMPROFILE high=7f0000 nz=1940e0 nz_below2m=18c0e0 nz_above2m=8000 content_high=7e0010 content_below2m=1854b1 content_above2m=8 size=800000
+CARTPIOCNT bytes=19e8b24

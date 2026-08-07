@@ -540,8 +540,12 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
       (`nz_above_cap`) spans 1.35 MB (kurucham) to 7.27 MB (tetkiwam) to 8.6 MB (parked
       takoron, for reference). Consequence: GD finals bunch at 38.1–38.6 C — under
       address keying the main axis has no discriminating power across GD titles; the
-      differences live in `nz_total`/`nz_above_cap`/MAINHIST, all now recorded in every
-      v6 sidecar. Per-title v6 results: kurucham 38.3 C (was 45.8 B) — nz_total
+      differences live in `nz_total`/`nz_above_cap` (in every v6 sidecar) and MAINHIST
+      (not sidecar data — the final-sample snapshots for the 7 non-cleoftp wave titles
+      are committed as `assessments/evidence/<set>/mainhist-v6.txt`; cleoftp's was not
+      retained, regenerable by a re-run; full per-sample hist streams otherwise live only
+      in each run's `raw/cartlog.txt` until the next battery rotates it). Per-title v6
+      results: kurucham 38.3 C (was 45.8 B) — nz_total
       2,703,775, nz_above_cap 1,352,471; ss2005 38.5 C, still un-parked (v2's G3-aram was
       the stale DMPD-fill-era metric; the v4 content-metric correction holds under v6:
       aram peak 3,666,896, `u`=1.75, above_cap 1,435,800) — nz_total 6,815,290,

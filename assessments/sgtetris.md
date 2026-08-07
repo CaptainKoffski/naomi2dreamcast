@@ -45,9 +45,9 @@ Anomalies: kb §4.v's G1 blindness for this title is **CLOSED** — see § Gate.
 | ARAM (content, fill-excluded) | 8,257,552 | 2,097,152 | **3.94** | content above cap **8 bytes only** (`nz_above_cap = 8`); raw nz_above2m is 32,768 B — the fill-exclusion is doing real work here. NOT the DMPD fill canary (that requires `nz_above_cap == 0x600000` exactly, kb §8/§4) |
 
 Streaming: `dma_events = 0` · `pio_bytes = 27,167,524` (~27 MB streamed via PIO over the
-600 s window — a lower bound; the cumulative counter only starts contributing once the
-32 KB handoff threshold trips, so the first ~32 KB of loads before that point aren't
-counted) · 1,078 `CARTPIO offset=` pokes logged total. The entire cart loads and streams
+600 s window — a lower bound; the counter (`CARTPIOCNT`) is cumulative from the first PIO
+read, not gated by the handoff threshold — only the main-RAM handoff *baseline* snapshot
+is taken at the 32 KB crossing) · 1,078 `CARTPIO offset=` pokes logged total. The entire cart loads and streams
 by PIO — zero cart-DMA traffic the whole run.
 
 **§6 checkpoint data point:** sgtetris is now the most extreme G3-aram address-vs-volume
