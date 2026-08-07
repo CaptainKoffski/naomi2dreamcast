@@ -41,7 +41,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Capcom Vs. SNK 2: Millionaire Fighting 2001 (Japan, Rev A) (GDL-0007A) | `cvs2mf` | **GD-ROM** | clone of `cvs2` | 149.5 MB | Fighting | Yes (2001) | not assessed |
 | Capcom Vs. SNK: Millennium Fight 2000 Pro (Japan) (GDL-0004) | `cvsgd` | **GD-ROM** | parent | 125.2 MB | Fighting | Yes (2001) | not assessed |
 | Chaos Field (Japan) (GDL-0025) | `cfield` | **GD-ROM** | parent | 142.9 MB | Shmup ★ | Yes (2004) | not assessed |
-| Cleopatra Fortune Plus (GDL-0012) | `cleoftp` | **GD-ROM** | parent | 65.8 MB | Puzzle ★ | No | **84.8** S · [assessment](assessments/cleoftp.md) |
+| Cleopatra Fortune Plus (GDL-0012) | `cleoftp` | **GD-ROM** | parent | 65.8 MB | Puzzle ★ | No | **84.9** S · [assessment](assessments/cleoftp.md) |
 | Confidential Mission (GDS-0001) | `confmiss` | **GD-ROM** | parent | 126.4 MB | Light-gun | Yes (2001) | not assessed |
 | Doki Doki Idol Star Seeker (GDL-0005) | `starseek` | **GD-ROM** | parent | 37.2 MB | ? | Yes (2002) | not assessed |
 | Dragon Treasure (Rev A) (GDS-0030A) | `dragntra` | **GD-ROM** | clone of `dragntr` | 142.4 MB | Medal | No | see [`dragntr`](assessments/dragntr.md) |
@@ -67,9 +67,9 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Melty Blood Act Cadenza Version B2 (Japan) (GDL-0039A) | `meltyb` | **GD-ROM** | parent | 202.9 MB | Fighting | No | not assessed |
 | Mobile Suit Gundam: Federation Vs. Zeon (GDL-0001) | `gundmgd` | **GD-ROM** | parent | 142.3 MB | Fighting | Yes (2002) | not assessed |
 | Mobile Suit Gundam: Federation Vs. Zeon DX (USA, Japan) (GDL-0006) | `gundmxgd` | **GD-ROM** | parent | 172.9 MB | Fighting | Yes (2002) | not assessed |
-| Moeru Casinyo (Japan) (GDL-0013) | `moeru` | **GD-ROM** | parent | 98.0 MB | ? | No | **81.6** S · [assessment](assessments/moeru.md) |
+| Moeru Casinyo (Japan) (GDL-0013) | `moeru` | **GD-ROM** | parent | 98.0 MB | ? | No | **82.2** S · [assessment](assessments/moeru.md) |
 | Monkey Ball (GDS-0008) | `monkeyba` | **GD-ROM** | parent | 82.5 MB | Action | No | not assessed |
-| Musapey's Choco Marker (Rev A) (GDL-0014A) | `chocomk` | **GD-ROM** | parent | 68.5 MB | Puzzle ★ | Yes (2002) | **52.5** B · [assessment](assessments/chocomk.md) |
+| Musapey's Choco Marker (Rev A) (GDL-0014A) | `chocomk` | **GD-ROM** | parent | 68.5 MB | Puzzle ★ | Yes (2002) | **76.7** A · [assessment](assessments/chocomk.md) |
 | Noukone Puzzle Takoron (Japan) (GDL-0042) | `takoron` | **GD-ROM** | parent | 52.6 MB | Puzzle ★ | No | parked G3 · [notes](assessments/takoron.md) |
 | Psyvariar 2 - The Will To Fabricate (Japan) (GDL-0024) | `psyvar2` | **GD-ROM** | parent | 136.7 MB | Shmup ★ | Yes (2004) | not assessed |
 | Puyo Pop Fever (World) (GDS-0034) | `puyofev` | **GD-ROM** | parent | 150.3 MB | Puzzle ★ | Yes (2004) | not assessed |
@@ -140,15 +140,15 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Giant Gram: All Japan Pro Wrestling 2 (Japan) | `ggram2` | **cart** | parent | 57.0 MB | Fighting | Yes (1999) | not assessed |
 | Giga Wing 2 | `gwing2` | **cart** | parent | 57.6 MB | Shmup ★ | Yes (2001) | **78.6** A · [assessment](assessments/gwing2.md) |
 | Guilty Gear X | `ggx` | **cart** | parent | 89.1 MB | Fighting | Yes (2000) | not assessed |
-| Gun Survivor 2 Biohazard Code: Veronica (World, BHF2 Ver.E) | `gunsur2` | **cart** | parent | 175.7 MB | Gun (3-axis) | No | **33.4** C · [assessment](assessments/gunsur2.md) |
+| Gun Survivor 2 Biohazard Code: Veronica (World, BHF2 Ver.E) | `gunsur2` | **cart** | parent | 175.7 MB | Gun (3-axis) | No | **30.0** C · [assessment](assessments/gunsur2.md) |
 | Heavy Metal: Geomatrix (Rev B) | `hmgeo` | **cart** | parent | 74.4 MB | Fighting | Yes (2001) | not assessed |
 | Idol Janshi Suchie-Pai 3 (Japan) | `suchie3` | **cart** | parent | 102.3 MB | Mahjong ⚠ | Partial | not assessed |
-| Illvelo (Illmatic Envelope) (Japan) | `illvelo` | **cart** | parent | 88.4 MB | Shmup ★ | No | **43.9** B · [assessment](assessments/illvelo.md) |
+| Illvelo (Illmatic Envelope) (Japan) | `illvelo` | **cart** | parent | 88.4 MB | Shmup ★ | No | **34.7** C · [assessment](assessments/illvelo.md) |
 | Inu no Osanpo / Dog Walking (Japan, Export, Rev A) | `inunoos` | **cart** | parent | 79.7 MB | Simulation | No | parked G3 · [notes](assessments/inunoos.md) |
 | Jambo! Safari (Rev A) | `jambo` | **cart** | parent | 31.7 MB | Sports | No | not assessed |
-| Kasei Channel Mars TV (Japan) | `marstv` | **cart** | parent | 57.8 MB | Party | No | **42.8** B · [assessment](assessments/marstv.md) |
+| Kasei Channel Mars TV (Japan) | `marstv` | **cart** | parent | 57.8 MB | Party | No | **47.6** B · [assessment](assessments/marstv.md) |
 | Kick '4' Cash (Export) | `kick4csh` | **cart** | parent | 42.6 MB | Gambling/medal ⚠ | No | not assessed |
-| Mamoru-kun wa Norowarete Shimatta! (Japan) | `mamonoro` | **cart** | parent | 146.1 MB | Shmup ★ | No | **46.6** B · [assessment](assessments/mamonoro.md) |
+| Mamoru-kun wa Norowarete Shimatta! (Japan) | `mamonoro` | **cart** | parent | 146.1 MB | Shmup ★ | No | **47.8** B · [assessment](assessments/mamonoro.md) |
 | Marvel Vs. Capcom 2: New Age of Heroes (Export, Korea, Rev A) | `mvsc2` | **cart** | parent | 87.5 MB | Fighting | Yes (2000) | not assessed |
 | Mazan: Flash of the Blade (World, MAZ2 Ver.A) | `mazan` | **cart** | parent | 73.7 MB | Light-gun | No | not assessed |
 | Melty Blood Actress Again Version A (Japan, Rev A) | `mbaa` | **cart** | parent | 233.9 MB | Fighting | No | not assessed |
@@ -162,13 +162,13 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Project Justice / Moero! Justice Gakuen (Rev B) | `pjustic` | **cart** | parent | 126.1 MB | Fighting | Yes (2000) | not assessed |
 | Puyo Puyo Da! (Japan) | `puyoda` | **cart** | parent | 111.0 MB | Puzzle ★ | Yes (1999) | not assessed |
 | Quiz Aa! Megami-sama ~Tatakau Tsubasa to Tomoni~ (Japan) | `qmegamis` | **cart** | parent | 60.0 MB | Quiz ⚠ | No | not assessed |
-| Radirgy Noa (Japan) | `radirgyn` | **cart** | parent | 107.4 MB | Shmup ★ | No | **55.9** B · [assessment](assessments/radirgyn.md) |
+| Radirgy Noa (Japan) | `radirgyn` | **cart** | parent | 107.4 MB | Shmup ★ | No | **52.1** B · [assessment](assessments/radirgyn.md) |
 | Rhythm Tengoku (Japan) | `rhytngk` | **cart** | parent | 119.9 MB | Rhythm | No | not assessed |
 | Ring Out 4x4 (Rev A) | `ringout` | **cart** | parent | 39.0 MB | ? | No | not assessed |
 | Samba de Amigo ver. 2000 (Japan) | `samba2k` | **cart** | parent | 159.5 MB | Rhythm | Yes (2000) | not assessed |
 | Sega Marine Fishing | `smarinef` | **cart** | parent | 35.6 MB | Fishing ⚠ | Yes (2000) | not assessed |
 | Sega Strike Fighter (Rev A) | `sstrkfgt` | **cart** | parent | 75.9 MB | Fighting | No | not assessed |
-| Sega Tetris | `sgtetris` | **cart** | parent | 33.7 MB | Puzzle ★ | Yes (2000) | **38.7** C · [assessment](assessments/sgtetris.md) |
+| Sega Tetris | `sgtetris` | **cart** | parent | 33.7 MB | Puzzle ★ | Yes (2000) | **47.4** B · [assessment](assessments/sgtetris.md) |
 | Shin Nihon Pro Wrestling Toukon Retsuden 4 Arcade Edition (Japan, TRF1 Ver.A) | `toukon4` | **cart** | parent | 217.0 MB | Fighting | Yes (1999) | not assessed |
 | Shooting Love 2007 (Japan) | `sl2007` | **cart** | parent | 109.3 MB | Light-gun | No | not assessed |
 | Shootout Pool | `shootopl` | **cart** | parent | 16.6 MB | ? | No | not assessed |
