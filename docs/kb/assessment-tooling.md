@@ -467,7 +467,8 @@ sidecars — no re-capture needed (the re-assessment rule above applies).
 
 Backlog briefs queued for this checkpoint (2026-08-06, full context in each):
 `docs/superpowers/specs/backlog-aram-gate-volume.md` (G3 keyed on address vs volume —
-gwing2/zerogu2 divergent pair) — **landed 2026-08-07 as battery v7, §6 item 6.** Also
+gwing2/zerogu2 divergent pair) (the ruling's forcing pair became gwing2/takoron —
+item 6) — **landed 2026-08-07 as battery v7, §6 item 6.** Also
 queued: `docs/superpowers/specs/backlog-vram-fb-masking.md` (FB placement charged as
 VRAM usage — chocomk). Checkpoint-independent instrumentation work:
 `docs/superpowers/specs/backlog-main-ram-snapshot-diff.md` (PIO blindness §4.v +
@@ -604,8 +605,10 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
    (v5/v6's `nz_above_cap` of ~48.7 KB assumed a full 2 MiB below-cap fill, but measured
    below-cap content is sparser than that), same qualitative story either way: `gwing2`
    un-parks. `takoron`, by contrast, carries 4,347,346 B of real content above cap
-   (volume-u 3.02) and stays parked exactly as it did under address-keying — address-u
-   could not tell these two cases apart; content-keying does. **Addendum found
+   (battery v6 measurement; the v7 re-run measured `nz_above_cap` = 4,341,109 B,
+   essentially unchanged) (volume-u 3.02) and stays parked exactly as it did under
+   address-keying — address-u could not tell these two cases apart; content-keying
+   does. **Addendum found
    in-session:** the design brief's list of seven ARAM-parked sets missed `sgtetris` —
    parked with `nz_above_cap = 8 B`, a divergence even more extreme than `gwing2`'s
    (address-u 3.94 against 8 bytes of real overflow, per §4.v's RESOLVED note). Eight
@@ -625,16 +628,21 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
    rose to 79.8 A and 84.8 S; volume-keying can only raise a final, never lower one
    (design Rulings item 5).
 
-   Four of the ten wave sets (`ausfache`, `azumanga`, `zerogu2`, `inunoos`) had skipped
-   battery v6 entirely (last real run v4 or v5), so main-RAM write-truth was measured
-   for the first time in the same v7 run as the ARAM re-key — two independent
-   instrumentation changes landing together, called out per-set in the wave report.
-   Neither produced an out-of-bound gate flip, but two of the four sit almost exactly
-   on the main-RAM u=2.0 edge: `azumanga` main u=1.988, and `pokasuka` main peak
-   exactly 33,554,432 B = `0x2000000` (u=2.000 precisely) — a round-number curiosity
-   mirroring item 3's stream-cache-placement pattern above, moot for gating today since
-   ARAM already gates first in iteration order but worth the same future eye if the
-   ARAM axis is ever further relaxed.
+   Six of the ten wave sets (`ausfache` v5, `azumanga` v4, `cspike` v5, `zerogu2` v5,
+   `inunoos` v4, `pokasuka` v4) had skipped battery v6 entirely (last real run v4 or
+   v5), so main-RAM write-truth was measured for the first time in the same v7 run as
+   the ARAM re-key — two independent instrumentation changes landing together, called
+   out per-set in the wave report. Neither produced an out-of-bound gate flip, but two
+   of the six sit almost exactly on the main-RAM u=2.0 edge: `azumanga` main u=1.988,
+   and `pokasuka` main peak exactly 33,554,432 B = `0x2000000` (u=2.000 precisely) — a
+   round-number curiosity mirroring item 3's stream-cache-placement pattern above,
+   moot for gating today since ARAM already gates first in iteration order but worth
+   the same future eye if the ARAM axis is ever further relaxed. (`cspike` and
+   `pokasuka` were the easiest two of the six to miss as first-time measurements:
+   cspike's new write-truth peak, 17,948,000 B, lands exactly on its old
+   `dma_high_water` value, and pokasuka's, 33,554,432 B, nearly matches its old
+   33,030,144 B — the numbers looked unchanged enough to read as reproductions rather
+   than genuinely new measurements.)
 
    **Item 1 deferral:** the 2× ARAM multiple itself — the question ikaruga's official
    DC port (a real, released 4× sound-data trim) raised — is now decidable against

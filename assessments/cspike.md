@@ -34,7 +34,7 @@ Anomalies: none — DMA loader (main high-water live, unlike the gwing2/sgtetris
 
 | Region | Peak | DC cap | u | Note |
 |---|---|---|---|---|
-| Main RAM (DMA high-water) | 17,948,000 | 16,777,216 | 1.07 | watermark equal — mild overrun; sub-score ~72.4 |
+| Main RAM (write-truth diff) | 17,948,000 | 16,777,216 | 1.07 | nz_total 8,435,427 · above cap 1,142,859; sub-score ~72.4 |
 | VRAM (write-truth diff) | 10,516,642 | 8,388,608 | 1.25 | nz_total 3,608,767 · above cap 1,872,598; sub-score ~39.9 |
 | ARAM (content volume, fill-excluded) | 3,654,043 | 2,097,152 | **1.742** | `content_total` (§6 volume-keyed, battery v7) — sub-score 20.3, the binding region; old content-high address peak 8,257,552 (u=3.94, pre-v7 keying, gated) unchanged, same 1,649,859 B above the 2 MB line either way |
 
