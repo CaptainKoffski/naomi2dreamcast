@@ -6,8 +6,8 @@
   "format": "GD-ROM",
   "assessed": "2026-08-07",
   "versions": {
-    "flycast": "65f9f7857",
-    "battery": "6",
+    "flycast": "f014a410c",
+    "battery": "8",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -62,11 +62,14 @@
       "peak": 7535232,
       "nz_total": 1011820,
       "nz_above_cap": 0,
-      "regs_last": "isp_base=400000 isp_limit=5bc8a0 ol_base=650b80 ol_limit=5bc9a0 fb_w_sof1=66a000 fb_w_sof2=c00000 fb_r_sof1=26a000"
+      "regs_last": "isp_base=400000 isp_limit=5bc8a0 ol_base=650b80 ol_limit=5bc9a0 fb_w_sof1=66a000 fb_w_sof2=c00000 fb_r_sof1=26a000",
+      "content_total": 498525,
+      "fb_bytes": 614400
     },
     "aram": {
       "peak": 1897200,
-      "nz_above_cap": 0
+      "nz_above_cap": 0,
+      "content_total": 1517703
     }
   },
   "streaming": {

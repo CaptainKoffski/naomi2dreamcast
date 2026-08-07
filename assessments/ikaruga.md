@@ -1,5 +1,28 @@
 # Ikaruga (GDL-0010) (`ikaruga`) — portability assessment
 
+> **Battery v8 vram-fb-masking re-run (2026-08-07): 38.6 (C)** — anchor control run for
+> the fork change; reproduces cleanly, no park, final unchanged exactly as the design doc
+> predicted ("main 12.5 still binds") — spec `2026-08-07-vram-fb-masking-design.md`.
+> Sidecar: flycast `f014a410c`, battery 8. Reproduction check vs. the v6 run below: main
+> peak 32,505,920 B, VRAM peak 7,535,232 B, ARAM peak 1,897,200 B — all three bit-identical
+> (`shot-060s.png`/`shot-304s.png`/`shot-365s.png` are byte-identical PNGs to the last
+> committed run too; only `shot-609s.png` differs, the "PRESS START BUTTON" blink-state
+> alternation already documented below). Well inside the ~10% control-test bound (CLAUDE.md
+> rule 2). New VRAM keying (ruling 1): fork emits FB-masked `content_total` 498,525 B +
+> `fb_bytes` 614,400 B (exactly 640×480×2, this anchor's expected FB size); `fit =
+> content_total + 2×fb_bytes` = 1,727,325 B, u = 0.206 (well inside the spec's `≈ ≤ 0.9`
+> anchor bound) → VRAM sub-score 100.0 (u ≤ 0.80), up from v6's address-keyed 92.6.
+> Incidental side effect of running current `score.py` on this anchor for the first time
+> since the v7 ARAM wave (which never touched ikaruga — ARAM isn't its binding region):
+> ARAM also gains `content_total` = 1,517,703 B (u = 0.724) → sub-score 100.0, up from
+> v6's address-keyed 92.2. Neither move matters: main's write-truth sub-score 12.5 (u =
+> 1.938, unchanged since v6) still binds `min()` over the three regions, so **memory axis
+> stays 12.5**, and **final stays 38.6 (C)** — the anchor's whole point here is to prove the
+> fork build measures correctly without disturbing this pinned score, and it does. Coverage
+> re-annotated `title` (unchanged — the fresh run's screenshots reach only the same
+> brightness-calibration countdown → static title screen, FREE PLAY still suppresses
+> attract).
+
 > **Battery v6 re-run (2026-08-07): **38.6 (C)** — main axis measured for the first time; anchor did not park.**
 > flycast `65f9f7857`, battery 6. `capture.handoff.trigger = "pio"`, `pio_bytes = 1,049,920` —
 > byte-identical to Calibration A's cleoftp figure (Task 5): the GD DIMM bootstrap PIO-loads
@@ -71,7 +94,7 @@
 
 Streaming: 396 DMA events · total 8.6 MB · unique 3.4 MB · re-read 0.6103 · steady 0.128 MB/min
 Axes: memory 23.4 · streaming 77.4 · guts 85.0 · controls 100.0 · similarity 70.0 → **final 49.6 (B)**
-Screenshots: `evidence/ikaruga/shot-060s.png` · `evidence/ikaruga/shot-365s.png` · `evidence/ikaruga/shot-609s.png`
+Screenshots: `evidence/ikaruga/shot-060s.png` · `evidence/ikaruga/shot-304s.png` · `evidence/ikaruga/shot-365s.png` · `evidence/ikaruga/shot-609s.png` (curated set re-confirmed under the v8 re-run — calibration countdown + title screen only, coverage `title`, unchanged since v6)
 
 ---
 
@@ -90,7 +113,7 @@ Screenshots: `evidence/ikaruga/shot-060s.png` · `evidence/ikaruga/shot-365s.png
 |---|---|
 | **Final score** | **PARKED — `G3 memory: aram peak > 2x DC capacity`** (not a numeric tier) |
 | Bottom line | The calibration's actual target passed: GD/DIMM reads are fully visible through the logged `CARTDMA` path (396 events, reproduced identically across a 360 s and a 600 s run) — no C++ instrumentation change needed. The game separately gates at **G3** because its ARAM write-truth peak (8 MiB) is exactly 4× the DC's 2 MiB AICA RAM; this is real, deterministic cart data, not a battery defect, and does not affect the GD-path finding. |
-| Assessed | 2026-08-02 · battery v2 · flycast `9e882cbd2` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Assessed | 2026-08-02 · battery v2 · flycast `9e882cbd2` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b`; vram-fb-masking re-run 2026-08-07 · battery v8 · flycast `f014a410c` |
 
 ## 2. Identity
 
