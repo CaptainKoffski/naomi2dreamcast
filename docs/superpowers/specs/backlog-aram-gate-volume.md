@@ -1,8 +1,8 @@
 # Backlog: re-key the G3-ARAM gate on content volume, not address
 
-**Status:** proposed 2026-08-06 (batch: DC-ported ★ assessments). Not started —
-**deliberately parked for the §6 scoring-semantics checkpoint (~30 assessed
-families)**; do not change the gate mid-campaign.
+**Status:** LANDED 2026-08-07 as battery v7 — design
+`2026-08-07-aram-gate-volume-design.md`, kb §6 checkpoint entry records the
+ruling and wave results. Kept as the motivating brief.
 
 ## Goal
 

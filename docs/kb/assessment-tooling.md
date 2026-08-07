@@ -467,9 +467,10 @@ sidecars — no re-capture needed (the re-assessment rule above applies).
 
 Backlog briefs queued for this checkpoint (2026-08-06, full context in each):
 `docs/superpowers/specs/backlog-aram-gate-volume.md` (G3 keyed on address vs volume —
-gwing2/zerogu2 divergent pair) and `docs/superpowers/specs/backlog-vram-fb-masking.md`
-(FB placement charged as VRAM usage — chocomk). Checkpoint-independent instrumentation
-work: `docs/superpowers/specs/backlog-main-ram-snapshot-diff.md` (PIO blindness §4.v +
+gwing2/zerogu2 divergent pair) — **landed 2026-08-07 as battery v7, §6 item 6.** Also
+queued: `docs/superpowers/specs/backlog-vram-fb-masking.md` (FB placement charged as
+VRAM usage — chocomk). Checkpoint-independent instrumentation work:
+`docs/superpowers/specs/backlog-main-ram-snapshot-diff.md` (PIO blindness §4.v +
 the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
 
 1. **G3-ARAM threshold (2× cap) may be too aggressive.** Ikaruga's Naomi image loads a full
@@ -582,6 +583,63 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
    content rule would let marstv through with essentially DC-fitting sound. Re-scoring
    all parked sidecars under a content rule requires NO re-runs: `nz_above_cap` is
    already recorded in every sidecar.
+   **Closing note (2026-08-07):** the content rule argued for here is now the shipped
+   rule — see item 6.
+6. **G3-ARAM gate + axis re-keyed on content volume — ruling landed (2026-08-07,
+   battery v7).** The §6 checkpoint was ruled **open at 25 assessed families** (user
+   decision, this session) — this is the first §6 semantics change decided under it.
+   Design: `docs/superpowers/specs/2026-08-07-aram-gate-volume-design.md`. Ruling: the
+   ARAM `u > 2.0` G3 park *and* the memory-axis sub-score are now keyed on
+   `content_total` (`content_below2m + content_above2m`, per-sample-max across the
+   run — never `max(below) + max(above)`, which could combine bytes from two snapshots
+   into a volume that never existed at once) instead of the content high-water
+   *address*; pre-v7 sidecars lacking `content_total` fall back to `peak` — since
+   `content_total ≤ content_high + 1` always, the fallback can only *under*-score,
+   never over-score, so none of the other 15 already-assessed families needed a
+   re-run. `BATTERY_VERSION` bumped "6" → "7".
+
+   Evidence pair that forced the change: `gwing2` parked at address-u 3.99 (peak keyed
+   to the full 8 MiB bank) from only 48,674 B of content above the 2 MiB cap; measured
+   volume-u came back 0.964 (battery v7) — below even the design's own ≈1.023 bound
+   (v5/v6's `nz_above_cap` of ~48.7 KB assumed a full 2 MiB below-cap fill, but measured
+   below-cap content is sparser than that), same qualitative story either way: `gwing2`
+   un-parks. `takoron`, by contrast, carries 4,347,346 B of real content above cap
+   (volume-u 3.02) and stays parked exactly as it did under address-keying — address-u
+   could not tell these two cases apart; content-keying does. **Addendum found
+   in-session:** the design brief's list of seven ARAM-parked sets missed `sgtetris` —
+   parked with `nz_above_cap = 8 B`, a divergence even more extreme than `gwing2`'s
+   (address-u 3.94 against 8 bytes of real overflow, per §4.v's RESOLVED note). Eight
+   sets were ARAM-parked, not seven.
+
+   Measured volume-u distribution across all 10 wave sets (battery v7,
+   `assessments/*.metrics.json` → `memory.aram.content_total`): `gwing2` 2,021,207 B
+   (u=0.964, un-parks) · `sgtetris` 1,604,876 B (u=0.765, un-parks) · `ausfache`
+   1,561,912 B (u=0.745, stays scored) · `cleoftp` 1,963,361 B (u=0.936, anchor, stays
+   scored) · `azumanga` 3,475,221 B (u=1.657, un-parks) · `cspike` 3,654,043 B
+   (u=1.742, un-parks) · `zerogu2` 4,115,639 B (u=1.962, un-parks — the genuine
+   borderline case the design predicted at ≈2.02, landed just under the u>2.0 gate by
+   measurement, not by construction) · `takoron` 6,333,113 B (u=3.020, stays parked,
+   message now reads "aram content > 2x DC capacity") · `inunoos` 6,597,975 B
+   (u=3.146, stays parked) · `pokasuka` 7,064,300 B (u=3.369, stays parked).
+   `ausfache`/`cleoftp` — the two scored families whose binding min region was ARAM —
+   rose to 79.8 A and 84.8 S; volume-keying can only raise a final, never lower one
+   (design Rulings item 5).
+
+   Four of the ten wave sets (`ausfache`, `azumanga`, `zerogu2`, `inunoos`) had skipped
+   battery v6 entirely (last real run v4 or v5), so main-RAM write-truth was measured
+   for the first time in the same v7 run as the ARAM re-key — two independent
+   instrumentation changes landing together, called out per-set in the wave report.
+   Neither produced an out-of-bound gate flip, but two of the four sit almost exactly
+   on the main-RAM u=2.0 edge: `azumanga` main u=1.988, and `pokasuka` main peak
+   exactly 33,554,432 B = `0x2000000` (u=2.000 precisely) — a round-number curiosity
+   mirroring item 3's stream-cache-placement pattern above, moot for gating today since
+   ARAM already gates first in iteration order but worth the same future eye if the
+   ARAM axis is ever further relaxed.
+
+   **Item 1 deferral:** the 2× ARAM multiple itself — the question ikaruga's official
+   DC port (a real, released 4× sound-data trim) raised — is now decidable against
+   this measured volume distribution instead of the old address figures. Explicitly
+   left **open**: this is the next §6 ruling, not part of this change.
 
 Rankings stay internally fair meanwhile — every game is measured by the same rules — but
 absolute scores near tier boundaries should be read with these two caveats in mind.
