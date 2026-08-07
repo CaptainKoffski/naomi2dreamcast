@@ -6,7 +6,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 
 | Representative | Family members | Genre | Size | Status |
 |---|---|---|---|---|
-| `azumanga` — Azumanga Daioh Puzzle Bobble (GDL-0018) | `azumanga` | Puzzle ★ | 86.7 MB | parked |
+| `azumanga` — Azumanga Daioh Puzzle Bobble (GDL-0018) | `azumanga` | Puzzle ★ | 86.7 MB | done |
 | `kurucham` — Kurukuru Chameleon (Japan) (GDL-0034) | `kurucham` | Puzzle ★ | 41.6 MB | done |
 | `ss2005` — Super Shanghai 2005 (Japan, Rev A) (GDL-0031A) | `ss2005`, `ss2005o` | Puzzle ★ | 63.1 MB | done |
 | `takoron` — Noukone Puzzle Takoron (Japan) (GDL-0042) | `takoron` | Puzzle ★ | 52.6 MB | parked |
@@ -16,10 +16,10 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `radirgyn` — Radirgy Noa (Japan) | `radirgyn` | Shmup ★ | 107.4 MB | done |
 | `senko` — Senko no Ronde (Japan, Rev A) (GDL-0030A) | `senko`, `senkoo` | Shmup ★ | 241.0 MB | done |
 | `senkosp` — Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | Shmup ★ | 237.7 MB | done |
-| `sgtetris` — Sega Tetris | `sgtetris` | Puzzle ★ (DC 2000) | 33.7 MB | parked |
-| `zerogu2` — Zero Gunner 2 | `zerogu2` | Shmup ★ (DC 2001) | 46.6 MB | parked |
-| `gwing2` — Giga Wing 2 | `gwing2` | Shmup ★ (DC 2001) | 57.6 MB | parked |
-| `cspike` — Cannon Spike / Gun Spike | `cspike` | Shmup ★ (DC 2000) | 63.6 MB | parked |
+| `sgtetris` — Sega Tetris | `sgtetris` | Puzzle ★ (DC 2000) | 33.7 MB | done |
+| `zerogu2` — Zero Gunner 2 | `zerogu2` | Shmup ★ (DC 2001) | 46.6 MB | done |
+| `gwing2` — Giga Wing 2 | `gwing2` | Shmup ★ (DC 2001) | 57.6 MB | done |
+| `cspike` — Cannon Spike / Gun Spike | `cspike` | Shmup ★ (DC 2000) | 63.6 MB | done |
 | `chocomk` — Musapey's Choco Marker (Rev A) (GDL-0014A) | `chocomk` | Puzzle ★ (DC 2002) | 68.5 MB | done |
 | `ausfache` — Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | ? | 75.4 MB | done |
 | `dragntr` — Dragon Treasure (Rev B) (GDS-0030B) | `dragntr`, `dragntra` | Medal | 142.3 MB | parked |

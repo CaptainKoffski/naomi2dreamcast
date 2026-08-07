@@ -35,13 +35,13 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 
 | Title (MAME) | Shortname | Format | Set | Size | Genre | DC port | Status |
 |---|---|---|---|---|---|---|---|
-| Azumanga Daioh Puzzle Bobble (GDL-0018) | `azumanga` | **GD-ROM** | parent | 86.7 MB | Puzzle ★ | No | parked G3 · [notes](assessments/azumanga.md) |
+| Azumanga Daioh Puzzle Bobble (GDL-0018) | `azumanga` | **GD-ROM** | parent | 86.7 MB | Puzzle ★ | No | **35.8** C · [assessment](assessments/azumanga.md) |
 | Border Down (Rev A) (GDL-0023A) | `bdrdown` | **GD-ROM** | parent | 203.3 MB | Shmup ★ | Yes (2003) | not assessed |
 | Capcom Vs. SNK 2: Mark Of The Millennium 2001 (USA) (GDL-0008) | `cvs2` | **GD-ROM** | parent | 157.4 MB | Fighting | Yes (2001) | not assessed |
 | Capcom Vs. SNK 2: Millionaire Fighting 2001 (Japan, Rev A) (GDL-0007A) | `cvs2mf` | **GD-ROM** | clone of `cvs2` | 149.5 MB | Fighting | Yes (2001) | not assessed |
 | Capcom Vs. SNK: Millennium Fight 2000 Pro (Japan) (GDL-0004) | `cvsgd` | **GD-ROM** | parent | 125.2 MB | Fighting | Yes (2001) | not assessed |
 | Chaos Field (Japan) (GDL-0025) | `cfield` | **GD-ROM** | parent | 142.9 MB | Shmup ★ | Yes (2004) | not assessed |
-| Cleopatra Fortune Plus (GDL-0012) | `cleoftp` | **GD-ROM** | parent | 65.8 MB | Puzzle ★ | No | **84.0** S · [assessment](assessments/cleoftp.md) |
+| Cleopatra Fortune Plus (GDL-0012) | `cleoftp` | **GD-ROM** | parent | 65.8 MB | Puzzle ★ | No | **84.8** S · [assessment](assessments/cleoftp.md) |
 | Confidential Mission (GDS-0001) | `confmiss` | **GD-ROM** | parent | 126.4 MB | Light-gun | Yes (2001) | not assessed |
 | Doki Doki Idol Star Seeker (GDL-0005) | `starseek` | **GD-ROM** | parent | 37.2 MB | ? | Yes (2002) | not assessed |
 | Dragon Treasure (Rev A) (GDS-0030A) | `dragntra` | **GD-ROM** | clone of `dragntr` | 142.4 MB | Medal | No | see [`dragntr`](assessments/dragntr.md) |
@@ -114,10 +114,10 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | World Series Baseball / Super Major League (GDS-0010) | `wsbbgd` | **GD-ROM** | parent | 157.8 MB | Sports | No | not assessed |
 | 18 Wheeler: American Pro Trucker (deluxe, Rev A) | `18wheelr` | **cart** | parent | 105.3 MB | Driving | Yes (2000) | not assessed |
 | Airline Pilots (World, Rev B) | `alpilot` | **cart** | parent | 41.3 MB | Driving | No | not assessed |
-| Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | **cart** | parent | 75.4 MB | ? | No | **79.1** A · [assessment](assessments/ausfache.md) |
+| Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | **cart** | parent | 75.4 MB | ? | No | **79.8** A · [assessment](assessments/ausfache.md) |
 | Alien Front (Rev T) | `alienfnt` | **cart** | parent | 45.9 MB | Action | Partial | not assessed |
 | Asian Dynamite / Dynamite Deka EX | `asndynmt` | **cart** | parent | 148.0 MB | Beat-em-up | No | not assessed |
-| Cannon Spike / Gun Spike | `cspike` | **cart** | parent | 63.6 MB | Shmup ★ | Yes (2000) | parked G3 · [notes](assessments/cspike.md) |
+| Cannon Spike / Gun Spike | `cspike` | **cart** | parent | 63.6 MB | Shmup ★ | Yes (2000) | **42.8** B · [assessment](assessments/cspike.md) |
 | Capcom Vs. SNK: Millennium Fight 2000 (Rev C) | `capsnk` | **cart** | parent | 95.6 MB | Fighting | Yes (2000) | not assessed |
 | Cosmic Smash (Rev A) | `csmash` | **cart** | parent | 42.8 MB | ? | Yes (2001) | not assessed |
 | Crackin' DJ | `crackndj` | **cart** | parent | 108.0 MB | Rhythm | No | not assessed |
@@ -138,7 +138,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Ferrari F355 Challenge 2 - International Course Edition (twin/deluxe) | `f355twn2` | **cart** | parent | 104.7 MB | Driving | No | not assessed |
 | Giant Gram 2000 | `gram2000` | **cart** | parent | 114.8 MB | Fighting | Yes (2000) | not assessed |
 | Giant Gram: All Japan Pro Wrestling 2 (Japan) | `ggram2` | **cart** | parent | 57.0 MB | Fighting | Yes (1999) | not assessed |
-| Giga Wing 2 | `gwing2` | **cart** | parent | 57.6 MB | Shmup ★ | Yes (2001) | parked G3 · [notes](assessments/gwing2.md) |
+| Giga Wing 2 | `gwing2` | **cart** | parent | 57.6 MB | Shmup ★ | Yes (2001) | **78.6** A · [assessment](assessments/gwing2.md) |
 | Guilty Gear X | `ggx` | **cart** | parent | 89.1 MB | Fighting | Yes (2000) | not assessed |
 | Gun Survivor 2 Biohazard Code: Veronica (World, BHF2 Ver.E) | `gunsur2` | **cart** | parent | 175.7 MB | Gun (3-axis) | No | **33.4** C · [assessment](assessments/gunsur2.md) |
 | Heavy Metal: Geomatrix (Rev B) | `hmgeo` | **cart** | parent | 74.4 MB | Fighting | Yes (2001) | not assessed |
@@ -168,7 +168,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Samba de Amigo ver. 2000 (Japan) | `samba2k` | **cart** | parent | 159.5 MB | Rhythm | Yes (2000) | not assessed |
 | Sega Marine Fishing | `smarinef` | **cart** | parent | 35.6 MB | Fishing ⚠ | Yes (2000) | not assessed |
 | Sega Strike Fighter (Rev A) | `sstrkfgt` | **cart** | parent | 75.9 MB | Fighting | No | not assessed |
-| Sega Tetris | `sgtetris` | **cart** | parent | 33.7 MB | Puzzle ★ | Yes (2000) | parked G3 · [notes](assessments/sgtetris.md) |
+| Sega Tetris | `sgtetris` | **cart** | parent | 33.7 MB | Puzzle ★ | Yes (2000) | **38.7** C · [assessment](assessments/sgtetris.md) |
 | Shin Nihon Pro Wrestling Toukon Retsuden 4 Arcade Edition (Japan, TRF1 Ver.A) | `toukon4` | **cart** | parent | 217.0 MB | Fighting | Yes (1999) | not assessed |
 | Shooting Love 2007 (Japan) | `sl2007` | **cart** | parent | 109.3 MB | Light-gun | No | not assessed |
 | Shootout Pool | `shootopl` | **cart** | parent | 16.6 MB | ? | No | not assessed |
@@ -185,7 +185,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | World Kicks (World, WK2 Ver.A) | `wldkicks` | **cart** | parent | 74.3 MB | Sports | No | not assessed |
 | World Series 99 / Super Major League 99 | `smlg99` | **cart** | parent | 109.7 MB | Sports | No | not assessed |
 | WWF Royal Rumble | `wwfroyal` | **cart** | parent | 104.6 MB | ? | Yes (2000) | not assessed |
-| Zero Gunner 2 | `zerogu2` | **cart** | parent | 46.6 MB | Shmup ★ | Yes (2001) | parked G3 · [notes](assessments/zerogu2.md) |
+| Zero Gunner 2 | `zerogu2` | **cart** | parent | 46.6 MB | Shmup ★ | Yes (2001) | **34.3** C · [assessment](assessments/zerogu2.md) |
 | Zombie Revenge (Rev A) | `zombrvn` | **cart** | parent | 97.2 MB | Beat-em-up | Yes (1999) | not assessed |
 
 ### Partial DC-port notes
