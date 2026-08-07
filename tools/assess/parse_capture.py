@@ -11,7 +11,9 @@ _DMA = re.compile(r"^CARTDMA src=([0-9a-f]+) dest=([0-9a-f]+) len=([0-9a-f]+)", 
 _WM = re.compile(r"^WATERMARK region=(\w+) used=([0-9a-f]+) size=([0-9a-f]+)", re.I)
 _APROF = re.compile(r"^ARAMPROFILE high=([0-9a-f]+) nz=[0-9a-f]+ nz_below2m=[0-9a-f]+ nz_above2m=([0-9a-f]+)"
                     r"(?: content_high=([0-9a-f]+) content_below2m=([0-9a-f]+) content_above2m=([0-9a-f]+))?", re.I)
-_VPROF = re.compile(r"^VRAMPROFILE high=([0-9a-f]+) nz=([0-9a-f]+) nz_below8m=([0-9a-f]+) nz_above8m=([0-9a-f]+)", re.I)
+_VPROF = re.compile(r"^VRAMPROFILE high=([0-9a-f]+) nz=([0-9a-f]+) nz_below8m=([0-9a-f]+) nz_above8m=([0-9a-f]+)"
+                    r"(?: content_high=[0-9a-f]+ content_below8m=([0-9a-f]+) content_above8m=([0-9a-f]+)"
+                    r" fb_bytes=([0-9a-f]+) fb_masked_nz=[0-9a-f]+)?", re.I)
 _VREGS = re.compile(r"^VRAMREGS (.+)$")
 _MPROF = re.compile(r"^MAINPROFILE high=([0-9a-f]+) nz=([0-9a-f]+) nz_below16m=[0-9a-f]+ nz_above16m=([0-9a-f]+)", re.I)
 _PIOC = re.compile(r"^CARTPIOCNT bytes=([0-9a-f]+)", re.I)
@@ -32,7 +34,8 @@ def parse(text, timeline=None, handoff_window=120):
     handoff = {"seen": False, "t": None, "aram_zeroed": False, "vram_zeroed": False,
                "main_baselined": False, "trigger": None}
     wm = {}
-    vram = {"peak": 0, "nz_total": 0, "nz_above_cap": 0, "nz_below_max": 0, "regs_last": ""}
+    vram = {"peak": 0, "nz_total": 0, "nz_above_cap": 0, "nz_below_max": 0, "regs_last": "",
+            "content_total": None, "fb_bytes": None}
     aram = {"peak": 0, "nz_above_cap": 0, "content_total": None}
     main = {"peak": 0, "nz_total": 0, "nz_above_cap": 0}
     dmas = []           # (t, src, dest, length)
@@ -101,6 +104,12 @@ def parse(text, timeline=None, handoff_window=120):
                         vram["nz_total"] = max(vram["nz_total"], int(m.group(2), 16))
                         vram["nz_below_max"] = max(vram["nz_below_max"], int(m.group(3), 16))
                         vram["nz_above_cap"] = max(vram["nz_above_cap"], int(m.group(4), 16))
+                        if m.group(5) is not None:
+                            # §6 ruling 2: one coherent sample's below+above —
+                            # never max(below)+max(above) across samples
+                            total = int(m.group(5), 16) + int(m.group(6), 16)
+                            vram["content_total"] = max(vram["content_total"] or 0, total)
+                            vram["fb_bytes"] = max(vram["fb_bytes"] or 0, int(m.group(7), 16))
                     else:
                         m = _VREGS.match(s)
                         if m:
@@ -151,6 +160,7 @@ def parse(text, timeline=None, handoff_window=120):
                  "nz_above_cap": main["nz_above_cap"]},
         "vram": {"peak": vram["peak"], "nz_total": vram["nz_total"],
                  "nz_above_cap": vram["nz_above_cap"],
+                 "content_total": vram["content_total"], "fb_bytes": vram["fb_bytes"],
                  "watermark_max": wm.get("vram", 0), "regs_last": vram["regs_last"]},
         "aram": {"peak": aram["peak"], "nz_above_cap": aram["nz_above_cap"],
                  "content_total": aram["content_total"],

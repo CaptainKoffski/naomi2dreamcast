@@ -144,6 +144,42 @@ def test_aram_content_total_legacy_and_rebase():
     m = parse_capture.parse(log)
     assert m["aram"]["content_total"] == 0x150000, hex(m["aram"]["content_total"])
 
+def test_vram_content_total_per_sample_max_and_handoff_gate():
+    # §6 ruling 2 (spec 2026-08-07-vram-fb-masking-design.md): content_total is
+    # the max of PER-SAMPLE below+above totals. max(below)+max(above) across
+    # different samples (0x280000+0x200000=0x480000) is a volume that never
+    # existed at once and must NOT be the answer. The pre-VRAMHANDOFF sample
+    # (vs-null baseline, kb §9) must be ignored — new fields included.
+    log = (
+        "VRAMPROFILE high=f00000 nz=e00000 nz_below8m=100000 nz_above8m=d00000"
+        " content_high=f00000 content_below8m=100000 content_above8m=d00000"
+        " fb_bytes=96000 fb_masked_nz=0 size=1000000\n"
+        "CARTDMA src=00010000 dest=0c020000 len=100000\n"
+        "VRAMHANDOFF baselined size=1000000 trigger=dma\n"
+        "VRAMPROFILE high=c00000 nz=400000 nz_below8m=100000 nz_above8m=300000"
+        " content_high=7f0000 content_below8m=100000 content_above8m=200000"
+        " fb_bytes=96000 fb_masked_nz=100000 size=1000000\n"
+        "VRAMPROFILE high=c00000 nz=380000 nz_below8m=280000 nz_above8m=100000"
+        " content_high=280000 content_below8m=280000 content_above8m=0"
+        " fb_bytes=96000 fb_masked_nz=100000 size=1000000\n"
+    )
+    m = parse_capture.parse(log)
+    assert m["vram"]["content_total"] == 0x300000, hex(m["vram"]["content_total"])
+    assert m["vram"]["fb_bytes"] == 0x96000, m["vram"]["fb_bytes"]
+    # raw fields keep their independent-max semantics, post-handoff only
+    assert m["vram"]["peak"] == 0xc00000 and m["vram"]["nz_above_cap"] == 0x300000
+
+def test_vram_legacy_line_leaves_content_none():
+    # v7-format line (no content_* fields): keys stay None so the sidecar
+    # omits them (no zero-fill) and the scorer falls back to the address.
+    log = (
+        "VRAMHANDOFF baselined size=1000000 trigger=dma\n"
+        "VRAMPROFILE high=7b0000 nz=200000 nz_below8m=200000 nz_above8m=0 size=1000000\n"
+    )
+    m = parse_capture.parse(log)
+    assert m["vram"]["content_total"] is None and m["vram"]["fb_bytes"] is None
+    assert m["vram"]["peak"] == 0x7b0000
+
 if __name__ == "__main__":
     test_parse(); print("test_parse OK")
     test_pre_handoff_vram_noise(); print("test_pre_handoff_vram_noise OK")
@@ -152,4 +188,6 @@ if __name__ == "__main__":
     test_dma_trigger_and_main_above_cap(); print("test_dma_trigger_and_main_above_cap OK")
     test_aram_content_total_per_sample_max(); print("test_aram_content_total_per_sample_max OK")
     test_aram_content_total_legacy_and_rebase(); print("test_aram_content_total_legacy_and_rebase OK")
+    test_vram_content_total_per_sample_max_and_handoff_gate(); print("test_vram_content_total_per_sample_max_and_handoff_gate OK")
+    test_vram_legacy_line_leaves_content_none(); print("test_vram_legacy_line_leaves_content_none OK")
     print("ALL OK")
