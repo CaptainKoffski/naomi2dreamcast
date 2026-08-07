@@ -4,10 +4,10 @@
   "maker": "Takumi / Capcom",
   "year": "2000",
   "format": "cart",
-  "assessed": "2026-08-06",
+  "assessed": "2026-08-07",
   "versions": {
-    "flycast": "ebae3b513",
-    "battery": "5",
+    "flycast": "65f9f7857",
+    "battery": "6",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -26,9 +26,11 @@
   "capture": {
     "handoff": {
       "seen": true,
-      "t": 40.0,
+      "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/gwing2/shot-060s.png",
@@ -40,7 +42,7 @@
       "assessments/evidence/gwing2/shot-426s.png",
       "assessments/evidence/gwing2/shot-487s.png",
       "assessments/evidence/gwing2/shot-548s.png",
-      "assessments/evidence/gwing2/shot-600s.png"
+      "assessments/evidence/gwing2/shot-609s.png"
     ],
     "coverage": "title",
     "watermarks_info": {
@@ -51,26 +53,30 @@
   },
   "memory": {
     "main": {
+      "peak": 16433920,
+      "nz_total": 8050490,
+      "nz_above_cap": 0,
       "dma_high_water": 0
     },
     "vram": {
       "peak": 8066048,
-      "nz_total": 3580906,
+      "nz_total": 3444253,
       "nz_above_cap": 0,
-      "regs_last": "isp_base=400000 isp_limit=4f9060 ol_base=54c080 ol_limit=4f9160 fb_w_sof1=56a000 fb_w_sof2=c00000 fb_r_sof1=16a000"
+      "regs_last": "isp_base=0 isp_limit=f9060 ol_base=14c080 ol_limit=f9160 fb_w_sof1=16a000 fb_w_sof2=c00000 fb_r_sof1=56a000"
     },
     "aram": {
       "peak": 8372160,
-      "nz_above_cap": 48662
+      "nz_above_cap": 48674
     }
   },
   "streaming": {
-    "dma_events": 1344,
-    "total_bytes": 11010048,
+    "dma_events": 1366,
+    "total_bytes": 11190272,
     "unique_bytes": 3080192,
-    "reread_ratio": 0.7202,
-    "steady_mb_per_min": 1.155,
-    "short_window": false
+    "reread_ratio": 0.7247,
+    "steady_mb_per_min": 1.157,
+    "short_window": false,
+    "pio_bytes": 57520864
   },
   "guts": {
     "code_bytes": 1572864,
