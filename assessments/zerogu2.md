@@ -1,12 +1,12 @@
-# Zero Gunner 2 (`zerogu2`) — portability assessment (parked)
+# Zero Gunner 2 (`zerogu2`) — portability assessment
 
 ## 1. Verdict
 
 | | |
 |---|---|
-| **Final score** | **PARKED — `G3 memory: aram peak > 2x DC capacity`** |
-| Bottom line | Clean full-window run, but ARAM write-truth peaks at 7.87 MB with 2,130,349 B of genuine (non-fill) sound content above the DC's 2 MiB cap — 3.94× capacity, a real G3 like `azumanga`, not a fill artifact. The official 2001 DC port is shipped proof the audio *can* be re-authored to fit; the park ranks the arcade build as measured, and the DC port is the ready-made reference for what the rework looks like. |
-| Assessed | 2026-08-06 · battery v5 · flycast `ebae3b513` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final score** | **34.3 (C)** — un-parked 2026-08-07 (battery v7), right at the borderline; was `PARKED — G3 memory: aram peak > 2x DC capacity` under the old address-keyed rule |
+| Bottom line | Clean full-window run. The §6 checkpoint re-keys G3-ARAM on content volume: `content_total` = 4,115,639 B (u = 1.962), landing just under the u>2.0 gate — a genuine borderline result, not a comfortable clearance. That leaves ARAM's sub-score floor-adjacent (11.5) and still binding the memory axis. Main RAM is write-truth-measured for the first time here too (this title skipped v6): peak 15,859,776 B (u = 0.9453, sub-score 89.1, not binding), vs. the old DMA high-water of 12,582,912 B (u = 0.75). VRAM (10,217,733 B, u = 1.22) reproduces bit-identically to v5. Final **34.3 (C)** — un-parked, but only just, and only just above the floor. The official 2001 DC port is shipped proof the audio *can* be re-authored to fit further; it remains the ready-made reference for what the rework looks like. |
+| Assessed | 2026-08-06 · battery v5 · flycast `ebae3b513` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b`; aram-volume re-run 2026-08-07 · battery v7 · flycast `65f9f7857` |
 
 ## 2. Identity
 
@@ -30,28 +30,29 @@ Anomalies: none — no flake, no display blindness.
 
 ## Gate
 
-**G3 `aram peak > 2x DC capacity` — genuine sound-content overflow.**
+**No gate — un-parked 2026-08-07 (battery v7), right at the borderline: ARAM content volume u=1.962, just under the u>2.0 gate — memory axis floor-adjacent (11.5), final 34.3 (C).**
 
 | Region | Peak | DC cap | u | Note |
 |---|---|---|---|---|
-| Main RAM (DMA high-water) | 12,582,912 | 16,777,216 | 0.75 | fits |
-| VRAM (write-truth diff) | 10,217,733 | 8,388,608 | 1.22 | nz_total 3,108,110 · above cap 1,441,076 |
-| ARAM (content, fill-excluded) | 8,257,552 | 2,097,152 | **3.94** | content above cap 2,130,349 |
+| Main RAM (write-truth) | 15,859,776 | 16,777,216 | 0.9453 | sub-score 89.1, not binding; `dma_high_water` 12,582,912 (u=0.75, the old v5 scoring input) |
+| VRAM (write-truth diff) | 10,217,733 | 8,388,608 | 1.22 | nz_total 3,108,110 · above cap 1,441,076; sub-score ~45.7 (bit-identical to v5) |
+| ARAM (content volume, fill-excluded) | 4,115,639 | 2,097,152 | **1.962** | `content_total` (§6 volume-keyed, battery v7) — sub-score 11.5, floor-adjacent, the binding region, just under the u>2.0 gate; old content-high address peak 8,257,552 (u=3.94, pre-v7 keying, gated) unchanged, same 2,130,349 B above the 2 MB line either way |
 
 Streaming (informational): 283 DMA events · total 111.8 MB · unique 22.1 MB ·
-re-read 0.8021 · steady 10.586 MB/min. Watermarks (stale-data-prone): main
-15,859,776 / vram 10,217,733 / aram 8,388,608 (ARAM watermark pinned at the full
-8 MiB — the content counter, which excludes uniform fill runs, still finds 2.08 MiB
-of real data above the cap, so this is not the DMPD-fill artifact class).
+re-read 0.8021 · steady 10.586 MB/min (bit-identical to v5). The old doc's "Watermarks
+(stale-data-prone): main 15,859,776" figure is no longer merely informational — it is
+now the scored write-truth peak (main row above); vram/aram watermarks are unchanged.
 
-What would unblock: the `azumanga` playbook — ARAM bank-structure analysis
-(`tools/assess/parse_osb.py` on a `FLYCAST_ARAMDUMP`) to see whether the above-cap
-content is position-independent OSB banks (rebuild + base move) plus GD/cart-streamable
-BGM. Decisive shortcut available here that azumanga lacks: **diff against the official
-DC port's audio** — Psikyo already solved the 2 MiB fit in 2001; matching sample banks
-would turn the rework from research into transcription.
+Un-parked, but barely: ARAM's u=1.962 sits close enough to the u>2.0 gate that a small
+run-to-run delta could tip it either way — this is the borderline case the wave's
+expectations table flagged. What would still raise the score: the `azumanga` playbook —
+ARAM bank-structure analysis (`tools/assess/parse_osb.py` on a `FLYCAST_ARAMDUMP`) to see
+whether the above-cap content is position-independent OSB banks (rebuild + base move)
+plus GD/cart-streamable BGM. Decisive shortcut available here that azumanga lacks:
+**diff against the official DC port's audio** — Psikyo already solved the 2 MiB fit in
+2001; matching sample banks would turn the rework from research into transcription.
 
-## 7. Controls (research done, informational)
+## 7. Controls (axis: 100.0)
 
 Cabinet: standard Naomi 8-way stick + 3 used buttons (shot · rotate-marker · special),
 2 players. MAME input ports: `naomi`. Hold-rotate pivots the craft around a marker —

@@ -4,10 +4,10 @@
   "maker": "Psikyo",
   "year": "2001",
   "format": "cart",
-  "assessed": "2026-08-06",
+  "assessed": "2026-08-07",
   "versions": {
-    "flycast": "ebae3b513",
-    "battery": "5",
+    "flycast": "65f9f7857",
+    "battery": "7",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -28,7 +28,9 @@
       "seen": true,
       "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/zerogu2/shot-060s.png",
@@ -51,17 +53,21 @@
   },
   "memory": {
     "main": {
+      "peak": 15859776,
+      "nz_total": 7071568,
+      "nz_above_cap": 0,
       "dma_high_water": 12582912
     },
     "vram": {
       "peak": 10217733,
-      "nz_total": 3108110,
+      "nz_total": 3137828,
       "nz_above_cap": 1441076,
       "regs_last": "isp_base=0 isp_limit=1bc8a0 ol_base=250b80 ol_limit=1bc9a0 fb_w_sof1=26a000 fb_w_sof2=c00000 fb_r_sof1=66a000"
     },
     "aram": {
       "peak": 8257552,
-      "nz_above_cap": 2130349
+      "nz_above_cap": 2130349,
+      "content_total": 4115639
     }
   },
   "streaming": {
@@ -70,7 +76,8 @@
     "unique_bytes": 22118240,
     "reread_ratio": 0.8021,
     "steady_mb_per_min": 10.586,
-    "short_window": false
+    "short_window": false,
+    "pio_bytes": 4053408
   },
   "guts": {
     "code_bytes": 3036256,
@@ -635,6 +642,14 @@
     "sdk_overlap": "partial",
     "cart_loader_match": false
   },
-  "gate": "G3 memory: aram peak > 2x DC capacity",
-  "scores": null
+  "gate": null,
+  "scores": {
+    "memory": 11.5,
+    "streaming": 66.6,
+    "guts": 85.0,
+    "controls": 100.0,
+    "similarity": 40.0,
+    "final": 34.3,
+    "tier": "C"
+  }
 }
