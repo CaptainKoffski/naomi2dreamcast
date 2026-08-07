@@ -10,7 +10,7 @@ MAIN_LO, MAIN_HI = 0x0c000000, 0x0e000000    # Naomi main-RAM physical window
 _DMA = re.compile(r"^CARTDMA src=([0-9a-f]+) dest=([0-9a-f]+) len=([0-9a-f]+)", re.I)
 _WM = re.compile(r"^WATERMARK region=(\w+) used=([0-9a-f]+) size=([0-9a-f]+)", re.I)
 _APROF = re.compile(r"^ARAMPROFILE high=([0-9a-f]+) nz=[0-9a-f]+ nz_below2m=[0-9a-f]+ nz_above2m=([0-9a-f]+)"
-                    r"(?: content_high=([0-9a-f]+) content_below2m=[0-9a-f]+ content_above2m=([0-9a-f]+))?", re.I)
+                    r"(?: content_high=([0-9a-f]+) content_below2m=([0-9a-f]+) content_above2m=([0-9a-f]+))?", re.I)
 _VPROF = re.compile(r"^VRAMPROFILE high=([0-9a-f]+) nz=([0-9a-f]+) nz_below8m=([0-9a-f]+) nz_above8m=([0-9a-f]+)", re.I)
 _VREGS = re.compile(r"^VRAMREGS (.+)$")
 _MPROF = re.compile(r"^MAINPROFILE high=([0-9a-f]+) nz=([0-9a-f]+) nz_below16m=[0-9a-f]+ nz_above16m=([0-9a-f]+)", re.I)
@@ -33,7 +33,7 @@ def parse(text, timeline=None, handoff_window=120):
                "main_baselined": False, "trigger": None}
     wm = {}
     vram = {"peak": 0, "nz_total": 0, "nz_above_cap": 0, "nz_below_max": 0, "regs_last": ""}
-    aram = {"peak": 0, "nz_above_cap": 0}
+    aram = {"peak": 0, "nz_above_cap": 0, "content_total": None}
     main = {"peak": 0, "nz_total": 0, "nz_above_cap": 0}
     dmas = []           # (t, src, dest, length)
     serial = 0
@@ -68,7 +68,7 @@ def parse(text, timeline=None, handoff_window=120):
             # sound-driver upload). Samples before the LAST rebase measured BIOS
             # sound-RAM-test residue (the exact-0x600000 cohort, 2026-08-04) — the
             # running max restarts here so peaks reflect the final baseline window.
-            aram = {"peak": 0, "nz_above_cap": 0}
+            aram = {"peak": 0, "nz_above_cap": 0, "content_total": None}
         elif s.startswith("SERIALPOKE"):
             serial += 1
         else:
@@ -83,9 +83,14 @@ def parse(text, timeline=None, handoff_window=120):
                     # prefer them for the fit metric, fall back to raw diffs on
                     # older logs
                     peak_s = m.group(3) if m.group(3) is not None else m.group(1)
-                    above_s = m.group(4) if m.group(4) is not None else m.group(2)
+                    above_s = m.group(5) if m.group(5) is not None else m.group(2)
                     aram["peak"] = max(aram["peak"], int(peak_s, 16))
                     aram["nz_above_cap"] = max(aram["nz_above_cap"], int(above_s, 16))
+                    if m.group(4) is not None:
+                        # §6 volume keying: one coherent sample's below+above —
+                        # never max(below)+max(above) across samples
+                        total = int(m.group(4), 16) + int(m.group(5), 16)
+                        aram["content_total"] = max(aram["content_total"] or 0, total)
                 else:
                     m = _VPROF.match(s)
                     # pre-VRAMHANDOFF samples diff raw BIOS VRAM vs a null
@@ -148,6 +153,7 @@ def parse(text, timeline=None, handoff_window=120):
                  "nz_above_cap": vram["nz_above_cap"],
                  "watermark_max": wm.get("vram", 0), "regs_last": vram["regs_last"]},
         "aram": {"peak": aram["peak"], "nz_above_cap": aram["nz_above_cap"],
+                 "content_total": aram["content_total"],
                  "watermark_max": wm.get("aram", 0)},
         "streaming": {"dma_events": len(dmas), "total_bytes": total, "unique_bytes": unique,
                       "reread_ratio": round(reread, 4), "steady_mb_per_min": steady,

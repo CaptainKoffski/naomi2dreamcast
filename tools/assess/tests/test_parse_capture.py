@@ -108,10 +108,48 @@ def test_dma_trigger_and_main_above_cap():
     assert m["handoff"]["trigger"] == "dma"
     assert m["main"]["peak"] == 0x1100000 and m["main"]["nz_above_cap"] == 0x100000
 
+def test_aram_content_total_per_sample_max():
+    # §6 ruling (spec 2026-08-07-aram-gate-volume-design.md): content_total is
+    # the max of PER-SAMPLE below+above totals. max(below)+max(above) across
+    # different samples (here 0x1f0000+0x80000=0x270000) is a volume that never
+    # existed at once and must NOT be the answer.
+    log = (
+        "CARTDMA src=00010000 dest=0c020000 len=100000\n"
+        "ARAMHANDOFF baselined size=800000 trigger=dma\n"
+        "ARAMPROFILE high=400000 nz=200000 nz_below2m=1f0000 nz_above2m=10000"
+        " content_high=400000 content_below2m=1f0000 content_above2m=10000 size=800000\n"
+        "ARAMPROFILE high=400000 nz=180000 nz_below2m=100000 nz_above2m=80000"
+        " content_high=400000 content_below2m=100000 content_above2m=80000 size=800000\n"
+    )
+    m = parse_capture.parse(log)
+    assert m["aram"]["content_total"] == 0x200000, hex(m["aram"]["content_total"])
+    assert m["aram"]["peak"] == 0x400000 and m["aram"]["nz_above_cap"] == 0x80000
+
+def test_aram_content_total_legacy_and_rebase():
+    # Legacy line (no content_* fields): content_total must stay None, and
+    # peak/nz_above_cap keep their raw-diff fallback semantics.
+    m = parse_capture.parse(
+        "ARAMPROFILE high=200000 nz=1e0000 nz_below2m=1e0000 nz_above2m=0 size=800000\n")
+    assert m["aram"]["content_total"] is None
+    assert m["aram"]["peak"] == 0x200000
+    # ARAMREBASE restarts every running max — content_total included (samples
+    # before the last rebase measured BIOS sound-RAM-test residue).
+    log = (
+        "ARAMPROFILE high=700000 nz=600000 nz_below2m=200000 nz_above2m=400000"
+        " content_high=700000 content_below2m=200000 content_above2m=400000 size=800000\n"
+        "ARAMREBASE armrst size=800000\n"
+        "ARAMPROFILE high=180000 nz=150000 nz_below2m=150000 nz_above2m=0"
+        " content_high=180000 content_below2m=150000 content_above2m=0 size=800000\n"
+    )
+    m = parse_capture.parse(log)
+    assert m["aram"]["content_total"] == 0x150000, hex(m["aram"]["content_total"])
+
 if __name__ == "__main__":
     test_parse(); print("test_parse OK")
     test_pre_handoff_vram_noise(); print("test_pre_handoff_vram_noise OK")
     test_no_timeline_no_boot(); print("test_no_timeline_no_boot OK")
     test_pio_handoff_and_main_profile(); print("test_pio_handoff_and_main_profile OK")
     test_dma_trigger_and_main_above_cap(); print("test_dma_trigger_and_main_above_cap OK")
+    test_aram_content_total_per_sample_max(); print("test_aram_content_total_per_sample_max OK")
+    test_aram_content_total_legacy_and_rebase(); print("test_aram_content_total_legacy_and_rebase OK")
     print("ALL OK")
