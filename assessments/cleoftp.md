@@ -1,5 +1,22 @@
 # Cleopatra Fortune Plus (GDL-0012) (`cleoftp`) — portability assessment
 
+> **Battery v8 vram-fb-masking re-run (2026-08-07): 84.9 (S)** — anchor control run for
+> the fork change; reproduces cleanly, no park (spec `2026-08-07-vram-fb-masking-design.md`).
+> Sidecar: flycast `f014a410c`, battery 8. Reproduction check vs. the v7 run below: main
+> peak 16,252,992 B (bit-identical), ARAM `content_total` 1,963,360 B (v7: 1,963,361 B,
+> 1-byte run noise), VRAM peak 8,181,717 B (bit-identical) — all three well inside the
+> ~10% control-test bound (CLAUDE.md rule 2). New VRAM keying (ruling 1): fork emits
+> FB-masked `content_total` 4,793,768 B + `fb_bytes` 614,400 B (exactly 640×480×2 — both
+> anchors' expected FB size); `fit = content_total + 2×fb_bytes` = 6,022,568 B, u = 0.718
+> (≤ the spec's ~0.75 anchor bound) → VRAM sub-score 100.0 (u ≤ 0.80), up from v7's 86.8.
+> VRAM stops binding the memory axis; main's write-truth sub 87.3 now binds instead (u =
+> 0.969, unchanged since v6) — memory axis 86.8 → **87.3**. Streaming 68.0 (v7: 68.6, plain
+> run-to-run noise, no fork change touches this axis); guts/controls/similarity unchanged
+> at 85.0/100/100. Scores: memory 87.3, streaming 68.0, guts 85.0, controls 100, similarity
+> 100 → **final 84.9 (S)**, up from 84.8 — the anchor can only improve under this ruling, as
+> predicted (design doc "Expected outcomes"). Coverage re-annotated `demo` (unchanged from
+> v7 — the fresh run's screenshots reach the same attract "how to play" tutorial loop).
+
 > **Battery v7 aram-volume re-run (2026-08-07): 84.8 (S)** — anchor still validates; the
 > §6 checkpoint's ARAM volume-keying closes the last open scoring-semantics question.
 > Sidecar: flycast `65f9f7857`, battery 7. Main write-truth peak 16,252,992 B (u=0.969)
@@ -61,8 +78,8 @@
 | ARAM (content, fill-excluded) | 2,094,512 | 2,097,152 | 1.00 | content above cap 0 |
 
 Streaming: 894 DMA events · total 100.1 MB · unique 21.8 MB · re-read 0.7824 · steady 9.904 MB/min
-Axes: memory 85.0 · streaming 68.0 · guts 85.0 · controls 100.0 · similarity 100.0 → **final 84.0 (S)** (`scores.vram_bios_noise_excluded` in sidecar)
-Screenshots: `evidence/cleoftp/shot-060s.png` · `evidence/cleoftp/shot-243s.png` · `evidence/cleoftp/shot-609s.png`
+Axes: memory 85.0 · streaming 68.0 · guts 85.0 · controls 100.0 · similarity 100.0 → **final 84.0 (S)** (v4's BIOS-logo-signature exclusion lived in `scores.vram_bios_noise_excluded`; battery v8 retired that clamp to a `MetricRegression` refusal canary — spec `2026-08-07-vram-fb-masking-design.md` ruling 4 — the key no longer appears in current sidecars)
+Screenshots: `evidence/cleoftp/shot-060s.png` · `evidence/cleoftp/shot-243s.png` · `evidence/cleoftp/shot-426s.png` · `evidence/cleoftp/shot-609s.png` (curated set re-confirmed under the v8 re-run — all four still show the attract "how to play" demo loop, `shot-426s.png` added, coverage `demo`)
 
 ---
 
@@ -80,9 +97,9 @@ Screenshots: `evidence/cleoftp/shot-060s.png` · `evidence/cleoftp/shot-243s.png
 
 | | |
 |---|---|
-| **Final score** | **84.2** (S) |
+| **Final score** | **84.9** (S) |
 | Bottom line | Re-run under battery v2 (600 s capture, was 360 s under v1) for uniformity with Calibration B (`ikaruga`). All memory/handoff/guts invariants reproduce **bit-identically** to the v1 calibration; only the streaming axis moved (70.8 → 69.0, pure dilution from the longer steady-state window — expected, not an error), taking the final score from 84.7 → 84.2. Tier stays **S**. The battery remains trustworthy. |
-| Assessed | 2026-08-02 · battery v2 (600 s capture) · flycast `9e882cbd2` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Assessed | 2026-08-02 · battery v2 (600 s capture) · flycast `9e882cbd2` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b`; vram-fb-masking re-run 2026-08-07 · battery v8 · flycast `f014a410c` |
 
 ## 2. Identity
 
@@ -109,15 +126,31 @@ Screenshots:
 Anomalies: **v1 session** — of 4 launches (run 1 "keep-dat", run 2 determinism re-run, run 3 similarity-bake, and a retry of run 3), run 3 parked `G1 broken: no-handoff-120s` (Flycast booted to the stock Dreamcast BIOS home menu instead of loading the cart; the automatic `.zip`→`.chd` rom fallback also failed within that run). An immediate manual retry succeeded cleanly. Judged a one-off Flycast launch flake, not a battery defect (see §9).
 **v2 re-run session (this doc's numbers)** — battery v2's new built-in auto-retry-once (see `run_battery.py`) fired but the run **still parked** `G1 broken: no-handoff-120s` after exhausting both the `.zip` and `.chd` candidates (each with its automatic retry) — `rom_used` ended at `naomi/cleoftp/gdl-0012.chd`, still no handoff. A second, fully manual re-run (`python3 tools/assess/run_battery.py cleoftp`, no flags) then succeeded cleanly via `.zip` with every memory/guts/similarity figure matching the v1 calibration exactly. This is the same flake class as v1's, just needing one extra manual retry beyond the new automatic one this time — still judged operational flakiness, not a battery or measurement defect (see §9).
 
-## 4. Memory fit (axis: 85.0)
+## 4. Memory fit (axis: 87.3)
 
-| Region | Peak | DC capacity | Utilization | Sub-score | Evidence |
+Table refreshed 2026-08-07 (battery v8) to the region keying already narrated in the
+banners above but never landed here until now: main on write-truth peak (v6), ARAM on
+content volume (v7), VRAM on FB-masked content + 2×FB budget (v8, this task). This
+replaces the DMA-high-water Main row and the exactly-2-MiB ARAM row this table carried
+through v2/v4 — see the v6/v7 banners above for the transition reasoning; the old figures
+still stand as raw cross-check values against `../cleopatra`'s real-hardware measurements
+(prose paragraph below the table), just not as the scoring keying anymore.
+
+| Region | Peak / fit | DC capacity | Utilization | Sub-score | Evidence |
 |---|---|---|---|---|---|
-| Main RAM (DMA high-water) | 11,761,888 B (`0xb378e0`) | 16 MB | 70.1% | 100.0 | grep `CARTDMA` in raw log |
-| VRAM (write-truth) | 8,181,717 B (`0x7cd7d5`) | 8 MB | 97.5% | 86.8 | grep `VRAMPROFILE`/`VRAMHANDOFF` |
-| ARAM (write-truth) | 2,097,152 B (`0x200000`, exactly 2 MiB) | 2 MB | 100.0% | 85.0 | grep `ARAMPROFILE`/`ARAMHANDOFF` |
+| Main RAM (write-truth) | 16,252,992 B (`0xf80040`) | 16 MB | 96.9% | 87.3 | grep `MAINPROFILE`/`MAINHIST` |
+| VRAM (FB-masked content + 2×FB) | 6,022,568 B (`0x5be5a8`; content_total 4,793,768 + 2×fb_bytes 614,400) | 8 MB | 71.8% | 100.0 | grep `VRAMPROFILE` (content_* fields) |
+| ARAM (content, volume-keyed) | 1,963,360 B (`0x1df560`) | 2 MB | 93.6% | 89.8 | grep `ARAMPROFILE` (content_* fields) |
 
-Memory axis = min(region sub-scores) = 85.0 (regions aren't tradeable).
+Memory axis = min(region sub-scores) = 87.3 (regions aren't tradeable; main now binds,
+not VRAM — the v8 FB-masking ruling only ever raises VRAM's sub-score, per the design
+doc's "anchors are safe by construction" note).
+For continuity: VRAM's raw address high-water peak is still 8,181,717 B (`0x7cd7d5`,
+u = 97.5%, the pre-v8 keying), `fb_bytes` maxed at 614,400 B (exactly 640×480×2, the
+expected double-buffer size for this 640×480 anchor), and `fb_masked_nz` (evidence-only,
+not sidecar-persisted, from the raw cartlog) reached up to 609,261 B inside a single
+611,840 B-sized masked region — proof the masked interval is a genuinely FB-active
+buffer, not a phantom unwritten register.
 Watermarks (informational, content-scan — stale-data prone): main 16,252,992 B · vram 8,181,717 B · aram 2,097,152 B (unchanged from v1).
 Risk flag: main watermark (~15.5 MB) is well above the DMA high-water (~11.2 MB) — this is exactly the known stale/uninitialized-data effect documented in `../cleopatra/docs/kb/phase2-measurements.md` (the WATERMARK scan hit was confirmed stale, not a real high-address stack, by Phase 3 disassembly + dynamic SP logging). `nz_above_cap` is 0 for both VRAM and ARAM in this run, confirming no genuine game write lands above DC capacity in either region.
 
@@ -161,10 +194,14 @@ Sources:
 
 ## 8. Score computation
 
+final (current, battery v8, from `assessments/cleoftp.metrics.json` — quoted, not hand-computed):
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
+      = 87.3^.40 · 68.0^.20 · 85.0^.20 · 100.0^.10 · 100.0^.10 = **84.9**
+
+(v2-era formula below is retained as history; it no longer matches the current sidecar.)
       = 85.0^.40 · 69.0^.20 · 85.0^.20 · 100.0^.10 · 100.0^.10 = **84.2**
 
-(v1/battery-v1 was 85.0^.40 · 70.8^.20 · 85.0^.20 · 100.0^.10 · 100.0^.10 = 84.7 — the only changed input is streaming, 70.8 → 69.0, per §5.)
+(v1/battery-v1 was 85.0^.40 · 70.8^.20 · 85.0^.20 · 100.0^.10 · 100.0^.10 = 84.7 — the only changed input is streaming, 70.8 → 69.0, per §5. v2→v8: memory 85.0 → 87.3 is the §4 region-keying catch-up (main write-truth v6, ARAM content-volume v7, VRAM FB-masked content+2×FB v8); streaming 69.0 → 68.0 is ordinary run-to-run noise, not part of any of those changes.)
 
 Similarity inputs (checked against the existing `assessments/reference/similarity-reference.json` — **not rebuilt** for this re-run, per instruction): developer y (`Altron / Taito` ∈ reference makers), SDK overlap full (500/500 `sdk_strings` ⊆ reference), loader match y (`GD-ROM` == reference format, `dat_available: true`) → similarity axis 100.0, identical to v1 (expected: it's a self-match by construction, and the cart's guts scan is deterministic).
 
