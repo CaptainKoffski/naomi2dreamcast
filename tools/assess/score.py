@@ -21,9 +21,12 @@ class MetricRegression(SystemExit):
 # (peak, nz_above_cap) pair. Proof: dragntr3 never boots past the GD-ROM splash
 # yet reports values byte-identical to booted GD titles (cleoftp/moeru/ikaruga/
 # tetkiwam, 2026-08-04). This is REQUIREMENTS.md's "9.4 mb during the Naomi logo
-# show time" caveat: 0x943000 == 9,711,616 == 9.4 MB. When a sidecar matches, the
-# game's own VRAM content is proven <= cap (the entire above-cap diff IS the
-# logo), so the scored peak clamps to the cap (conservative: u=1.0 floor 85).
+# show time" caveat: 0x943000 == 9,711,616 == 9.4 MB.
+# v8 (spec 2026-08-07-vram-fb-masking-design.md ruling 4): the v5 handoff
+# gating removed the noise this table once clamped, so an exact match on a
+# booted title now means the gating regressed — refuse to score (canary,
+# same posture as ARAM_DMPD_ABOVE_CAP below). dragntr3's G1-parked sidecar
+# legitimately carries these values; the boot gate precedes this check.
 BIOS_VRAM_SIGNATURES = {
     (0x943000, 57048): "GD-ROM BIOS logo (control: dragntr3 splash-only run, identical values)",
 }
@@ -159,10 +162,13 @@ def score_sidecar(sc):
         _check_anchor(sc)
         return sc
     vram = sc["memory"]["vram"]
-    vram_peak = vram["peak"]
-    bios_noise = BIOS_VRAM_SIGNATURES.get((vram_peak, vram.get("nz_above_cap")))
+    bios_noise = BIOS_VRAM_SIGNATURES.get((vram["peak"], vram.get("nz_above_cap")))
     if bios_noise is not None:
-        vram_peak = min(vram_peak, CAPS["vram"])
+        raise MetricRegression(
+            f"METRIC REGRESSION: '{sc['set']}' vram (peak, nz_above_cap) match the "
+            f"BIOS-logo signature ({bios_noise}) on a booted title — post-v5 "
+            f"handoff gating this can only mean pre-VRAMHANDOFF samples leaked "
+            f"into the profile again (kb §8); refusing to score.")
     # §6 checkpoint ruling 2 (2026-08-07, spec 2026-08-07-vram-fb-masking-design.md):
     # VRAM keys on FB-masked content VOLUME plus a flat double-framebuffer
     # budget — texture placement is a porting artifact (the ARAM v7 argument)
@@ -173,7 +179,7 @@ def score_sidecar(sc):
     # the fallback under-scores in practice (spec, stated honestly).
     vram_ct, vram_fb = vram.get("content_total"), vram.get("fb_bytes")
     vram_fit = vram_ct + 2 * vram_fb if (vram_ct is not None and vram_fb is not None) \
-               else vram_peak
+               else vram["peak"]
     # v6: prefer the write-truth peak (MAINPROFILE snapshot+diff); legacy
     # pre-v6 sidecars fall back to the CARTDMA-dest high-water. A booted title
     # with NEITHER measured is a blind metric (PIO loader — gwing2, kb §4.v),
@@ -222,8 +228,6 @@ def score_sidecar(sc):
     sc["scores"]["tier"] = tier(f)
     if not main_peak:
         sc["scores"]["main_unmeasured"] = True
-    if bios_noise is not None:
-        sc["scores"]["vram_bios_noise_excluded"] = bios_noise
     return sc
 
 

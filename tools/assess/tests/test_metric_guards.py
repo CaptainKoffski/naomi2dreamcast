@@ -29,19 +29,33 @@ def base_sc(**over):
     return sc
 
 
-def test_gd_bios_logo_excluded():
-    """The 9.4 MB Naomi-logo VRAM peak (REQUIREMENTS.md caveat) must not score."""
+def test_gd_bios_logo_signature_refuses_to_score():
+    """v8 (spec 2026-08-07-vram-fb-masking-design.md ruling 4): post-v5
+    handoff gating, the exact 9.4 MB Naomi-logo signature on a BOOTED title
+    can only mean pre-VRAMHANDOFF samples leaked into the profile again —
+    refuse, same posture as the DMPD canary (was: clamp to cap and score)."""
     sc = base_sc()
     sc["memory"]["vram"] = {"peak": 0x943000, "nz_above_cap": 57048}
+    try:
+        score.score_sidecar(sc)
+    except score.MetricRegression:
+        return
+    raise AssertionError("BIOS-logo signature was scored instead of refused")
+
+
+def test_gd_bios_logo_values_on_g1_park_do_not_raise():
+    """dragntr3 shape: a G1-parked (never-booted) sidecar legitimately carries
+    the logo values — the boot gate precedes the canary, no raise."""
+    sc = base_sc()
+    sc["boot"] = {"ok": False, "failure_class": "no-render-after-handoff"}
+    sc["memory"]["vram"] = {"peak": 0x943000, "nz_above_cap": 57048}
     score.score_sidecar(sc)
-    assert sc["gate"] is None
-    # clamped to cap -> vram u=1.0 -> 85.0; without exclusion it would be 56.6
-    assert sc["scores"]["memory"] == 85.0, sc["scores"]
-    assert "GD-ROM BIOS logo" in sc["scores"]["vram_bios_noise_excluded"]
+    assert sc["gate"] == "G1 broken: no-render-after-handoff", sc["gate"]
 
 
 def test_signature_requires_exact_match():
-    """One byte off the signature = real game content -> normal (penalized) scoring."""
+    """One byte off the signature = real game content -> normal (penalized)
+    scoring through the address fallback, no refusal, no clamp key."""
     sc = base_sc()
     sc["memory"]["vram"] = {"peak": 0x943000, "nz_above_cap": 57049}
     score.score_sidecar(sc)
