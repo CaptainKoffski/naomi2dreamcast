@@ -141,6 +141,53 @@ def test_main_write_truth_preferred():
     assert "main_unmeasured" not in sc["scores"], sc["scores"]
     assert sc["scores"]["memory"] == 100.0, sc["scores"]  # all three regions fit
 
+def _volume_sc(aram):
+    # main/vram comfortably fit so the memory axis == the aram sub-score path
+    return {
+        "set": "synth-volume", "boot": {"ok": True},
+        "memory": {"main": {"peak": 5 * MB, "nz_total": 4 * MB, "nz_above_cap": 0,
+                            "dma_high_water": 0},
+                   "vram": {"peak": 6 * MB, "nz_above_cap": 0},
+                   "aram": aram},
+        "streaming": {"steady_mb_per_min": 2.0, "reread_ratio": 0.05},
+        "guts": {"dat_available": False},
+        "controls": {"device_class": "stick"},
+        "similarity": {"developer_match": False, "sdk_overlap": "none",
+                       "cart_loader_match": False},
+    }
+
+def test_aram_small_blob_high_address_scores():
+    # gwing2 shape (spec: the divergent case): 47.5 KB blob at the top of an
+    # 8 MiB bank — address-u 3.99 parked it; volume-u 1.023 must score ~80.8.
+    sc = _volume_sc({"peak": 8372160, "nz_above_cap": 48674,
+                     "content_total": 2097152 + 48674})
+    score.score_sidecar(sc)
+    assert sc["gate"] is None, sc["gate"]
+    assert sc["scores"]["memory"] == 80.8, sc["scores"]
+
+def test_aram_volume_overflow_parks_with_content_message():
+    # 4.4 MB of real compacted content (takoron class): u > 2 -> park, and the
+    # message says "content" because the gate keyed on measured volume.
+    sc = _volume_sc({"peak": 8257552, "nz_above_cap": 2302848,
+                     "content_total": 4400000})
+    score.score_sidecar(sc)
+    assert sc["gate"] == "G3 memory: aram content > 2x DC capacity", sc["gate"]
+
+def test_aram_no_content_total_falls_back_to_address():
+    # Pre-v7 sidecar: no content_total -> the address keeps gating (legacy
+    # message says "peak"). Volume <= address, so this only under-scores.
+    sc = _volume_sc({"peak": 8257552, "nz_above_cap": 1000})
+    score.score_sidecar(sc)
+    assert sc["gate"] == "G3 memory: aram peak > 2x DC capacity", sc["gate"]
+
+def test_aram_zero_volume_is_a_measurement_not_missing():
+    # content_total == 0 must key the axis (u=0 -> 100), NOT fall back to the
+    # 8 MiB address — the `is not None` check, not truthiness.
+    sc = _volume_sc({"peak": 8 * MB, "nz_above_cap": 0, "content_total": 0})
+    score.score_sidecar(sc)
+    assert sc["gate"] is None, sc["gate"]
+    assert sc["scores"]["memory"] == 100.0, sc["scores"]
+
 if __name__ == "__main__":
     for n, f in sorted(globals().items()):
         if n.startswith("test_") and callable(f):

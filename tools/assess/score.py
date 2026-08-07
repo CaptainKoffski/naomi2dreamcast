@@ -168,12 +168,20 @@ def score_sidecar(sc):
     # not a zero-footprint game: drop the region from the min() (spec §4.3
     # renormalize precedent) and flag it — u=0 must never fabricate a 100.
     main_peak = sc["memory"]["main"].get("peak") or sc["memory"]["main"]["dma_high_water"]
-    peaks = {"vram": vram_peak, "aram": sc["memory"]["aram"]["peak"]}
+    # §6 checkpoint ruling (2026-08-07, spec 2026-08-07-aram-gate-volume-design.md):
+    # ARAM keys on compacted content VOLUME — OSB banks are position-independent
+    # (azumanga live verification), so the high-water ADDRESS is a porting
+    # artifact. content_total <= content_high always, so the address fallback
+    # for pre-v7 sidecars can only under-score, never over-score.
+    aram_ct = sc["memory"]["aram"].get("content_total")
+    aram_fit = aram_ct if aram_ct is not None else sc["memory"]["aram"]["peak"]
+    peaks = {"vram": vram_peak, "aram": aram_fit}
     if main_peak:
         peaks["main"] = main_peak
     mem, gated = memory_axis(peaks)
     if mem is None:
-        sc["gate"] = f"G3 memory: {gated} peak > 2x DC capacity"
+        metric = "content" if (gated == "aram" and aram_ct is not None) else "peak"
+        sc["gate"] = f"G3 memory: {gated} {metric} > 2x DC capacity"
         _check_anchor(sc)
         return sc
     ctrl = controls_axis(sc["controls"]["device_class"])
