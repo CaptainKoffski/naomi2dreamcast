@@ -1,13 +1,43 @@
 # Azumanga Daioh Puzzle Bobble (GDL-0018) (`azumanga`) — portability assessment
 
-> **Battery v4 re-assessment (2026-08-04): **PARKED — `G3 memory: aram peak > 2x DC capacity`**.**
-> Park **confirmed** under the v4 content metric: 1.63 MiB of genuine (non-fill) sound content above the DC cap — with the below-cap driver/data this cannot fit 2 MiB. This is a real G3, unlike the fill-artifact cohort.
+> **Battery v7 aram-volume + main-write-truth re-run (2026-08-07): 35.8 (C)** —
+> un-parked. This title skipped v6 entirely (last real run was v4), so two independent
+> instrumentation changes land in the same run: (1) the §6 checkpoint re-keys G3-ARAM on
+> content **volume** — `content_total` = 3,475,221 B (u = 1.657, under the u>2.0 gate,
+> sub-score 23.71); (2) main RAM gets write-truth-measured for the first time (battery
+> v6's MAINPROFILE snapshot+diff) and reveals genuine near-double usage invisible to the
+> old DMA-high-water accounting — write-truth peak **33,353,836 B (u = 1.988)**, right at
+> the edge of the u>2.0 gate boundary, vs. the v4 doc's DMA high-water of only
+> 21,645,536 B (u = 1.29, reproduced bit-identically below as `dma_high_water`). VRAM
+> peak 15,450,112 B (u = 1.842) reproduces bit-identically to v4. Memory axis is now
+> floor-adjacent at **10.5** (bound by main, the new worst region, not VRAM as under v4)
+> — final **35.8 (C)**, un-parked but a real, low score: ARAM relief was necessary but
+> not sufficient, main RAM turned out to be the bigger problem all along.
 > Below the v4 section is the battery v2-era assessment: its *measured* figures
 > (boot evidence, memory, streaming, score) are **superseded**; the identity,
 > controls-research and similarity sections remain valid. Instrumentation
 > root-cause: `docs/kb/assessment-tooling.md` §7.
 
-## v4 verdict & measurements
+## v7 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **35.8 (C)** |
+| Coverage | demo (live VS gameplay board, `shot-304s.png`) |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b`; aram-volume re-run 2026-08-07 · battery v7 · flycast `65f9f7857` |
+| Boot | ok=True · handoff 30.0 s · run 600 s · rom `naomi/azumanga.zip` |
+
+| Region | v7 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (write-truth) | 33,353,836 | 16,777,216 | **1.988** | nz_total 17,201,730 · above cap 9,494,189 · `dma_high_water` 21,645,536 (u=1.29, the old v4 scoring input — reproduces bit-identically) — **new binding region, right at the gate edge** |
+| VRAM (write-truth diff) | 15,450,112 | 8,388,608 | 1.842 | nz_total 10,116,736 · above cap 6,674,248 (bit-identical to v4) |
+| ARAM (content volume, fill-excluded) | 3,475,221 | 2,097,152 | **1.657** | `content_total` (§6 volume-keyed, battery v7) — under the u>2.0 gate; old content-high address peak 6,053,632 (u=2.89, pre-v7 keying, gated) unchanged |
+
+Streaming: 446 DMA events · total 55.9 MB · unique 16.3 MB · re-read 0.7088 · steady 4.976 MB/min (bit-identical to v4)
+Axes: memory 10.5 · streaming 75.0 · guts 85.0 · controls 100.0 · similarity 70.0 → **final 35.8 (C)**
+Screenshots: `evidence/azumanga/shot-060s.png` · `evidence/azumanga/shot-304s.png` · `evidence/azumanga/shot-609s.png`
+
+## Historical: battery v4 measurements (superseded by v7 above)
 
 | | |
 |---|---|

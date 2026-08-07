@@ -4,10 +4,10 @@
   "maker": "MOSS (Taito license)",
   "year": "2002",
   "format": "GD-ROM",
-  "assessed": "2026-08-04",
+  "assessed": "2026-08-07",
   "versions": {
-    "flycast": "4b59eceff",
-    "battery": "4",
+    "flycast": "65f9f7857",
+    "battery": "7",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -28,7 +28,9 @@
       "seen": true,
       "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/azumanga/shot-060s.png",
@@ -51,17 +53,21 @@
   },
   "memory": {
     "main": {
+      "peak": 33353836,
+      "nz_total": 17201730,
+      "nz_above_cap": 9494189,
       "dma_high_water": 21645536
     },
     "vram": {
       "peak": 15450112,
-      "nz_total": 10105382,
+      "nz_total": 10116736,
       "nz_above_cap": 6674248,
       "regs_last": "isp_base=0 isp_limit=1000e0 ol_base=155680 ol_limit=1001e0 fb_w_sof1=56a000 fb_w_sof2=c00000 fb_r_sof1=16a000"
     },
     "aram": {
       "peak": 6053632,
-      "nz_above_cap": 1709398
+      "nz_above_cap": 1709398,
+      "content_total": 3475221
     }
   },
   "streaming": {
@@ -70,7 +76,8 @@
     "unique_bytes": 17082368,
     "reread_ratio": 0.7088,
     "steady_mb_per_min": 4.976,
-    "short_window": false
+    "short_window": false,
+    "pio_bytes": 1049920
   },
   "guts": {
     "code_bytes": 1048576,
@@ -569,6 +576,14 @@
     "sdk_overlap": "partial",
     "cart_loader_match": true
   },
-  "gate": "G3 memory: aram peak > 2x DC capacity",
-  "scores": null
+  "gate": null,
+  "scores": {
+    "memory": 10.5,
+    "streaming": 75.0,
+    "guts": 85.0,
+    "controls": 100.0,
+    "similarity": 70.0,
+    "final": 35.8,
+    "tier": "C"
+  }
 }
