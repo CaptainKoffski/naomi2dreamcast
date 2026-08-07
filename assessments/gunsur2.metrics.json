@@ -4,10 +4,10 @@
   "maker": "Capcom / Namco",
   "year": "2001",
   "format": "cart",
-  "assessed": "2026-08-04",
+  "assessed": "2026-08-07",
   "versions": {
-    "flycast": "4b59eceff",
-    "battery": "4",
+    "flycast": "f014a410c",
+    "battery": "8",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -28,7 +28,9 @@
       "seen": true,
       "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/gunsur2/shot-060s.png",
@@ -51,17 +53,23 @@
   },
   "memory": {
     "main": {
+      "peak": 33553964,
+      "nz_total": 15116665,
+      "nz_above_cap": 6232660,
       "dma_high_water": 31610624
     },
     "vram": {
       "peak": 16140288,
-      "nz_total": 5038850,
+      "nz_total": 5051952,
       "nz_above_cap": 4427374,
-      "regs_last": "isp_base=400000 isp_limit=68f700 ol_base=74c180 ol_limit=68f800 fb_w_sof1=c00000 fb_w_sof2=c00000 fb_r_sof1=800000"
+      "regs_last": "isp_base=400000 isp_limit=68f700 ol_base=74c180 ol_limit=68f800 fb_w_sof1=c00000 fb_w_sof2=c00000 fb_r_sof1=800000",
+      "content_total": 4731310,
+      "fb_bytes": 614400
     },
     "aram": {
       "peak": 2097136,
-      "nz_above_cap": 0
+      "nz_above_cap": 0,
+      "content_total": 1565884
     }
   },
   "streaming": {
@@ -69,8 +77,9 @@
     "total_bytes": 130347008,
     "unique_bytes": 40552448,
     "reread_ratio": 0.6889,
-    "steady_mb_per_min": 11.662,
-    "short_window": false
+    "steady_mb_per_min": 11.664,
+    "short_window": false,
+    "pio_bytes": 6329664
   },
   "guts": {
     "code_bytes": 6291456,
@@ -626,12 +635,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 13.0,
+    "memory": 10.0,
     "streaming": 67.9,
     "guts": 80.0,
     "controls": 50.0,
     "similarity": 40.0,
-    "final": 33.4,
+    "final": 30.0,
     "tier": "C"
   }
 }

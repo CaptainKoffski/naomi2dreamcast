@@ -1,11 +1,58 @@
 # Gun Survivor 2 Biohazard Code: Veronica (World, BHF2 Ver.E) (`gunsur2`) — portability assessment
 
+> **Battery v8 vram-fb-masking re-run (2026-08-07): 30.0 (C)** — spec
+> `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
+> park, boot ok, PIO handoff at 20.0 s. VRAM flips from address high-water (16,140,288 B,
+> u=1.924, sub 13.0) to FB-masked content: `content_total` 4,731,310 B + `2×fb_bytes`
+> 1,228,800 B (`fb_bytes` 614,400 B, exactly 640×480×2) = fit 5,960,110 B, u=0.711 → sub
+> **100.0** — a rise, as required. ARAM: `content_total` 1,565,884 B, u=0.747 → sub
+> **100.0** (v7-class keying, measured here for the first time since this doc's v4
+> baseline never ran v6/v7 individually). **MAIN, first write-truth measured (v6
+> instrumentation): peak 33,553,964 B — identical to this doc's old "informational"
+> watermark figure below, same real-writes-not-noise pattern as chocomk/sgtetris — but
+> u = 33,553,964 / 16,777,216 = 1.999972, just 468 bytes under the G3 2× park threshold.**
+> Sub-score floors at **10.0** (`AXIS_FLOOR`), now the binding region, well below the v4
+> DMA-only main sub of 14.6 and below the design doc's speculative "main 14.6" bound —
+> the DMA-high-water metric substantially understated main RAM pressure here (writes
+> exist ~1.94 MB above the DMA figure). Memory axis min(10.0, 100.0, 100.0) = **10.0**,
+> down from 13.0; final **33.4 → 30.0**, tier unchanged **C**. This is not a stop
+> condition (no park — u stayed under 2.0; VRAM's own sub-score rose, satisfying the
+> wave's rises-only rule for VRAM specifically) but it is a near-miss worth flagging: 468
+> more main-RAM bytes and this title parks G3. Coverage re-annotated `demo` (unchanged).
+
 > **Battery v4 re-assessment (2026-08-04): **33.4 (C)**.**
 > 33.4 C reproduced on v4 (was 33.4 C on v2) with researched `pad_adaptable` controls restored after the re-run reset them to the `stick` hint (fixed in run_battery).
-> Below the v4 section is the battery v2-era assessment: its *measured* figures
-> (boot evidence, memory, streaming, score) are **superseded**; the identity,
-> controls-research and similarity sections remain valid. Instrumentation
+> Below the v8 section is the battery v4-era assessment, itself superseding the v2-era
+> assessment below that; each section's *measured* figures (boot evidence, memory,
+> streaming, score) are **superseded** by the section above it — the identity,
+> controls-research and similarity sections remain valid throughout. Instrumentation
 > root-cause: `docs/kb/assessment-tooling.md` §7.
+
+## v8 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **30.0 (C)** |
+| Coverage | demo |
+| Assessed | 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/gunsur2.zip` |
+
+| Region | Peak / fit | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (write-truth) | 33,553,964 | 16,777,216 | 1.99997 | first write-truth measurement — 468 B under the G3 2× park threshold; `nz_above_cap` 6,232,660; sub-score floors at 10.0, now binding |
+| VRAM (FB-masked content + 2×FB) | 5,960,110 (content_total 4,731,310 + 2×fb_bytes 1,228,800) | 8,388,608 | 0.711 | battery v8 re-keying — sub 100.0, was 13.0 under address high-water (16,140,288, u=1.924) |
+| ARAM (content, volume-keyed) | 1,565,884 | 2,097,152 | 0.747 | sub 100.0, was 85.0 under the old near-exact address peak (2,097,136) |
+
+Streaming: 357 DMA events · total 124.3 MB · unique 38.7 MB · re-read 0.6787 · steady 11.305 MB/min (matches v4 within run-to-run noise)
+Axes: memory 10.0 · streaming 67.9 · guts 80.0 · controls 50.0 · similarity 40.0 → **final 30.0 (C)**
+Screenshots: `evidence/gunsur2/shot-060s.png` · `shot-121s.png` · `shot-243s.png` · `shot-365s.png` · `shot-426s.png` (re-curated this run — demo gameplay, DEMO PLAY marker, title, and a second gameplay frame)
+
+**Risk:** main RAM sits 468 bytes under the G3 park threshold (u=1.999972). Any small
+further growth in measured main-RAM writes — a different capture window, a later game
+state — would park this title. Not a metric artifact (§4/banner sanity: `content_total +
+fb_masked_nz` matches `nz_total` exactly in the raw log; `fb_bytes` is exactly 614,400).
+
+---
 
 ## v4 verdict & measurements
 
