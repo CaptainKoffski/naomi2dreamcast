@@ -7,7 +7,7 @@
   "assessed": "2026-08-07",
   "versions": {
     "flycast": "65f9f7857",
-    "battery": "6",
+    "battery": "7",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -66,15 +66,16 @@
     },
     "aram": {
       "peak": 8372160,
-      "nz_above_cap": 48674
+      "nz_above_cap": 48674,
+      "content_total": 2021207
     }
   },
   "streaming": {
-    "dma_events": 1366,
-    "total_bytes": 11190272,
+    "dma_events": 1370,
+    "total_bytes": 11223040,
     "unique_bytes": 3080192,
-    "reread_ratio": 0.7247,
-    "steady_mb_per_min": 1.157,
+    "reread_ratio": 0.7255,
+    "steady_mb_per_min": 1.159,
     "short_window": false,
     "pio_bytes": 57520864
   },
@@ -626,6 +627,14 @@
     "sdk_overlap": "partial",
     "cart_loader_match": false
   },
-  "gate": "G3 memory: aram peak > 2x DC capacity",
-  "scores": null
+  "gate": null,
+  "scores": {
+    "memory": 86.5,
+    "streaming": 74.6,
+    "guts": 85.0,
+    "controls": 100.0,
+    "similarity": 40.0,
+    "final": 78.6,
+    "tier": "A"
+  }
 }
