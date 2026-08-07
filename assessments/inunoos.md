@@ -1,5 +1,44 @@
 # Inu no Osanpo / Dog Walking (Japan, Export, Rev A) (840-0073) (`inunoos`) — portability assessment
 
+> **Battery v7 aram-volume re-run (2026-08-07): still PARKED — `G3 memory: aram content
+> > 2x DC capacity`, now on the volume-keyed message; display blindness also resolved.**
+> The §6 checkpoint re-keys G3-ARAM on content volume; inunoos's real above-cap sound
+> content is heavy enough that the re-keying doesn't change the outcome:
+> `content_total` = 6,597,975 B (u = 3.146, still well past the u>2.0 gate) vs. the v4
+> doc's content-high address figure (u=3.94). Main RAM write-truth peak is now measured
+> for the first time: 33,030,208 B (u = 1.969, independently close to its own u>2.0
+> boundary, though ARAM gates first) vs. the old DMA high-water 29,180,960 B (u=1.74,
+> reproduced bit-identically below). VRAM (12,845,578 B, u=1.53) reproduces
+> bit-identically to v4. **Display blindness closed:** the v2-era doc's identical-MD5
+> frozen-splash screenshots (kb §4.m class) do not recur here — this run's shots show
+> distinct "おさんぽランキング" (Walk Ranking) result screens with different scores/routes
+> across frames (500/KOR/route-C at `shot-365s.png`, 400/INU/route-B at `shot-609s.png`),
+> confirming genuine live attract-demo content; `capture.coverage = "demo"`. Sidecar:
+> flycast `65f9f7857`, battery 7.
+
+## v7 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **PARKED — `G3 memory: aram content > 2x DC capacity`** |
+| Coverage | demo (display blindness resolved — see callout above) |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b`; aram-volume re-run 2026-08-07 · battery v7 · flycast `65f9f7857` |
+| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/inunoos.zip` |
+
+| Region | v7 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (write-truth) | 33,030,208 | 16,777,216 | 1.969 | nz_total 9,675,761 · above cap 5,268,098 · `dma_high_water` 29,180,960 (u=1.74, the old v4 scoring input — bit-identical) — independently close to its own gate boundary, though ARAM gates first |
+| VRAM (write-truth diff) | 12,845,578 | 8,388,608 | 1.53 | nz_total 7,080,366 (bit-identical to v4) |
+| ARAM (content volume, fill-excluded) | 6,597,975 | 2,097,152 | **3.146** | `content_total` (§6 volume-keyed, battery v7) — still well past the u>2.0 gate; old content-high address peak 8,257,552 (u=3.94, pre-v7 keying) unchanged |
+
+Streaming: 2822 DMA events · total 126.5 MB · unique 27.2 MB · re-read 0.7848 · steady
+12.15 MB/min (matches v4 within run-to-run noise)
+Gate: `G3 memory: aram content > 2x DC capacity` — the volume-keyed message; axes not
+computed (`scores: null`).
+Screenshots: `evidence/inunoos/shot-060s.png` · `evidence/inunoos/shot-365s.png` · `evidence/inunoos/shot-609s.png`
+
+---
+
 > **Battery v4 re-assessment (2026-08-04): **PARKED — `G3 memory: aram peak > 2x DC capacity`**.**
 > Park **confirmed** under the v4 content metric: 4.41 MiB of genuine sound content above the DC cap — a real G3, not the fill artifact. Researched `awkward` controls restored.
 > Below the v4 section is the battery v2-era assessment: its *measured* figures
