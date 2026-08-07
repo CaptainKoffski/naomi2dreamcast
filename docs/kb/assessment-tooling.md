@@ -801,7 +801,7 @@ v6 on; `memory.main.peak` (write-truth) is what scores.
 timeline shows 74 `MAINPROFILE` samples over the 600 s capture, deltas
 10.0–11.1 s: the extra scan is invisible at the orchestrator level.
 
-**The PIO surprise.** Every title re-run under v6 — all 9, including every
+**The PIO surprise.** Every title re-run under v6 — all 8, including every
 GD-ROM title — triggered `trigger=pio`, never `trigger=dma`. The GD DIMM
 firmware PIO-loads a ~1 MB boot segment (`pio_bytes` 1,049,920, byte-
 identical on cleoftp and ikaruga) before any cart DMA fires, so the unified
@@ -810,7 +810,7 @@ handoff correctly fires on the PIO threshold even on DMA-capable titles.
 DMA path stays in the handoff logic as belt-and-braces, not dead code —
 cart-image (non-GD) titles that load purely via DMA remain a live case.
 
-**Wave results (9 titles, anchors → faces → cluster, per the design's
+**Wave results (8 titles, anchors → faces → cluster, per the design's
 validation ladder).** Anchors: cleoftp 84.0 S, unchanged, anchor validates —
 main write-truth 16,252,992 B (u = 0.969, `nz_above_cap` = 0) sits above the
 historical DMA floor (11,761,888 B) as expected (CPU writes now count);
@@ -847,6 +847,6 @@ stays; the anchor still must not park).
 **Deferred trap.** `run_battery.py` resets the hand-annotated
 `capture.coverage` field to `null` on every re-run (controls research
 carries forward per the v4 fix 4 precedent, §7; coverage does not) — hand-
-restored on all 6 re-run sidecars this wave. Candidate FIX for a future
+restored on all 8 re-run sidecars this wave. Candidate FIX for a future
 battery version; RUNBOOK's existing "set coverage" after-work step covers
 it procedurally in the meantime.
