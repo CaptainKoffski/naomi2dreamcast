@@ -7,7 +7,7 @@
   "assessed": "2026-08-07",
   "versions": {
     "flycast": "65f9f7857",
-    "battery": "6",
+    "battery": "7",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -66,7 +66,8 @@
     },
     "aram": {
       "peak": 8257552,
-      "nz_above_cap": 8
+      "nz_above_cap": 8,
+      "content_total": 1604876
     }
   },
   "streaming": {
@@ -501,6 +502,14 @@
     "sdk_overlap": "partial",
     "cart_loader_match": false
   },
-  "gate": "G3 memory: aram peak > 2x DC capacity",
-  "scores": null
+  "gate": null,
+  "scores": {
+    "memory": 12.4,
+    "streaming": 100.0,
+    "guts": 90.0,
+    "controls": 100.0,
+    "similarity": 40.0,
+    "final": 38.7,
+    "tier": "C"
+  }
 }

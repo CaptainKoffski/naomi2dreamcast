@@ -1,12 +1,12 @@
-# Sega Tetris (`sgtetris`) — portability assessment (parked)
+# Sega Tetris (`sgtetris`) — portability assessment
 
 ## 1. Verdict
 
 | | |
 |---|---|
-| **Final score** | **PARKED — `G3 memory: aram peak > 2x DC capacity`** |
-| Bottom line | First-ever end-to-end measurement of this title — battery v6's unified `dma\|pio` handoff fires at 20.0 s (trigger `pio`), closing kb §4.v's G1 blindness (`no-handoff-120s` with the game visibly running). The park is now real: ARAM content-high address reaches 3.94× the DC cap, but only **8 bytes** of content sit above the 2 MB line (`nz_above_cap = 8`) — the most extreme address-vs-volume divergence recorded, ahead of marstv's 81,598 B (kb §6 item 5). Main RAM (measured for the first time) and VRAM also read over-cap; the main write-truth peak (29,130,560 B) matches the stale v5 watermark almost exactly, confirming those writes were real cart content, not BIOS residue. Official 2000 DC port exists regardless. |
-| Assessed | 2026-08-07 · battery v6 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final score** | **38.7 (C)** — un-parked 2026-08-07 (battery v7); was `PARKED — G3 memory: aram peak > 2x DC capacity` under the old address-keyed rule |
+| Bottom line | The §6 checkpoint re-keying G3-ARAM on content volume closes this title's gate: `content_total` = 1,604,876 B (u = 0.765, well under the 2 MiB cap) vs. the old content-high address u = 3.94×. But the ARAM semantics were never the whole memory story here — main RAM (29,130,560 B, u = 1.736×) and VRAM (16,279,552 B, u = 1.941×) are both genuinely over the DC caps, so the memory axis is capped at 12.4 (bound by VRAM, the worst region) and the final lands at **38.7 (C)** — a real, low but scored, result. Main RAM and VRAM (measured for the first time in battery v6) reproduce bit-identically to that run; the main write-truth peak (29,130,560 B) still matches the stale v5 watermark almost exactly, confirming those writes were real cart content, not BIOS residue. Official 2000 DC port exists regardless. |
+| Assessed | 2026-08-07 · battery v6 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b`; aram-volume re-run 2026-08-07 · battery v7 · flycast `65f9f7857` |
 
 ## 2. Identity
 
@@ -36,13 +36,13 @@ Anomalies: kb §4.v's G1 blindness for this title is **CLOSED** — see § Gate.
 
 ## Gate
 
-**G3 `aram peak > 2x DC capacity` — a real park, with the most extreme address-vs-volume divergence recorded.**
+**No gate — un-parked 2026-08-07 (battery v7): ARAM re-keyed on content volume closes the last remaining region, but main and VRAM are both genuinely over cap, capping the memory axis at 12.4 (final 38.7, C).**
 
 | Region | Peak (write-truth) | DC cap | u | Note |
 |---|---|---|---|---|
 | Main RAM | 29,130,560 | 16,777,216 | 1.736 | nz_total 7,350,612 (3.87 MB changed below the cap, 3.14 MB above — `nz_above_cap = 3,289,898`; top nonzero 256 KB bucket at 27.75–28.0 MB); `dma_high_water = 0` (PIO-loaded, now measured via snapshot+diff instead); the write-truth peak matches the stale v5 CARTDMA-era watermark (29,130,560 B) almost exactly — those writes were real cart content, not BIOS residue |
-| VRAM (write-truth) | 16,279,552 | 8,388,608 | 1.941 | nz_total 9,283,220 · above cap 5,634,894 |
-| ARAM (content, fill-excluded) | 8,257,552 | 2,097,152 | **3.94** | content above cap **8 bytes only** (`nz_above_cap = 8`); raw nz_above2m is 32,768 B — the fill-exclusion is doing real work here. NOT the DMPD fill canary (that requires `nz_above_cap == 0x600000` exactly, kb §8/§4) |
+| VRAM (write-truth) | 16,279,552 | 8,388,608 | 1.941 | nz_total 9,283,220 · above cap 5,634,894 — the binding region (lowest sub-score, 12.4) |
+| ARAM (content volume, fill-excluded) | 1,604,876 | 2,097,152 | **0.765** | `content_total` (§6 volume-keyed, battery v7) — well under cap, sub-score 100.0, no longer the binding region; old content-high **address** was 8,257,552 (u=3.94, pre-v7 keying), same 8 B above the 2 MB line either way (`nz_above_cap = 8`; raw nz_above2m 32,768 B, the fill-exclusion doing real work). NOT the DMPD fill canary (that requires `nz_above_cap == 0x600000` exactly, kb §8/§4) |
 
 Streaming: `dma_events = 0` · `pio_bytes = 27,167,524` (~27 MB streamed via PIO over the
 600 s window — a lower bound; the counter (`CARTPIOCNT`) is cumulative from the first PIO
@@ -50,25 +50,27 @@ read, not gated by the handoff threshold — only the main-RAM handoff *baseline
 is taken at the 32 KB crossing) · 1,078 `CARTPIO offset=` pokes logged total. The entire cart loads and streams
 by PIO — zero cart-DMA traffic the whole run.
 
-**§6 checkpoint data point:** sgtetris is now the most extreme G3-aram address-vs-volume
-divergence on record — 8 B of content above the 2 MB cap at content-high address u=3.94,
-vs. marstv's previous record of 81,598 B (kb §6 item 5). Under a volume-keyed gate this
-title would pass through with an effectively DC-fitting sound bank; under the current
-address-keyed rule (kept for the whole v6 wave per the 2026-08-07 user ruling — checkpoint
-decision deferred until all planned games are processed) it parks. Main RAM and VRAM are
-both also measured over-cap here (1.74× and 1.94×), so even a softened ARAM rule would not
-by itself unpark this title without also revisiting those two axes.
+**§6 checkpoint, RESOLVED 2026-08-07 (battery v7):** sgtetris was the most extreme G3-aram
+address-vs-volume divergence on record — 8 B of content above the 2 MB cap at content-high
+address u=3.94, vs. marstv's previous record of 81,598 B (kb §6 item 5). The checkpoint
+re-keyed the gate on content volume exactly as this divergence argued: `content_total` =
+1,604,876 B (u=0.765) passes through with an effectively DC-fitting sound bank. As
+predicted here, that alone does not unpark the title on its own — main RAM and VRAM are
+both still measured over-cap (1.736× and 1.941×), so the memory axis lands at 12.4
+(bound by VRAM) and the final score is a real but low **38.7 (C)**, not a park.
 
 **What changed:** kb §4.v's G1 blindness (`no-handoff-120s` with the game visibly running,
 zero `ARAMHANDOFF`/`CARTDMA` tags) is now **RESOLVED** — the unified `dma|pio` handoff
 (fork commit `65f9f7857`, battery v6) baselines all three regions the instant cumulative
 PIO `ROM_DATA` reads cross 32 KB, closing the blind spot without any cart-DMA dependency.
-This title is measured end-to-end for the first time and parks on a real, evidenced gate
-instead of an instrumentation false-negative. A regression golden
+This title is measured end-to-end for the first time; under battery v6's address-keyed
+ARAM rule it parked on a real, evidenced gate (not an instrumentation false-negative) —
+battery v7's volume-keyed rule (§6 checkpoint) now un-parks it, landing at a real but low
+score instead (§ Verdict). A regression golden
 (`tools/assess/tests/test_metric_guards.py::test_sgtetris_pio_face_stays_measured`) now
 guards this shape.
 
-## 7. Controls (research done, for when unblocked)
+## 7. Controls (axis: 100.0)
 
 Cabinet: standard Naomi 8-way stick + 2 rotate buttons (L/R) + start, 2 players.
 MAME input ports: `naomi`. A stock DC pad maps 1:1 (d-pad + A/B rotate) — decisively,
