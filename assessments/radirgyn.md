@@ -1,6 +1,6 @@
 # Radirgy Noa (Japan) (841-0062C) (`radirgyn`) — portability assessment
 
-> **Battery v8 vram-fb-masking re-run (2026-08-07): 52.1 (B)** — spec
+> **Battery v8 vram-fb-masking re-run (2026-08-08): 52.1 (B)** — spec
 > `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
 > park, boot ok, PIO handoff at 20.0 s. Streaming reproduces essentially identically
 > (304 DMA events, re-read 0.6887, steady 4.164 MB/min — bit-identical to v4). Main peak
@@ -31,7 +31,7 @@
 |---|---|
 | **Final** | **52.1 (B)** |
 | Coverage | demo |
-| Assessed | 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Assessed | 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 | Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/radirgyn.zip` |
 
 | Region | Peak / fit | DC cap | u | Note |

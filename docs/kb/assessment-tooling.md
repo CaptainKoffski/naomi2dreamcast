@@ -16,7 +16,7 @@ and every troubleshooting lesson from Tasks 1–10 that cost real time. Method/f
 | Ghidra | `12.1.2_PUBLIC` (build `20260605`) | Installed per `../cleopatra/docs/kb/tooling.md` — no Homebrew cask exists; direct download: `curl -L https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_12.1.2_build/ghidra_12.1.2_PUBLIC_20260605.zip`, extracted to `../cleopatra/tools/ghidra_12.1.2_PUBLIC/` (gitignored) |
 | Java | OpenJDK, Ghidra requires 21+ | `brew install openjdk` (formula, no sudo); actual installed version this session: **26.0.1** (`java -version` → `openjdk version "26.0.1"`). `tools/assess/ghidra/run_guts.sh` prepends `/opt/homebrew/opt/openjdk/bin` to `PATH` before invoking `analyzeHeadless` |
 | MAME source (naomi.cpp reference) | `59e7c0b` at `../cleopatra/tools/mame` | Pinned checkout; `controls_extract.py` and every sidecar's `controls.sources` cite this exact commit — never a live/floating MAME checkout |
-| Battery | **v2** | `tools/assess/run_battery.py` — 600 s default capture, `BATTERY_VERSION = "2"` in every sidecar's `versions.battery` |
+| Battery | **v8** | `tools/assess/run_battery.py` — 600 s default capture, `BATTERY_VERSION = "8"` in every sidecar's `versions.battery`; version history: campaign-version line at top of this file |
 | macOS | `sw_vers -productVersion` → `26.5.2` (this session) | Record per-session; capture timing (`no-handoff-120s` abort, retry logic) is wall-clock-based and OS-version-sensitive in principle |
 | Python | `python3 --version` → `Python 3.14.3` (this session) | No third-party packages — every `tools/assess/*.py` is stdlib-only (`json`, `re`, `glob`, `subprocess`, `time`) |
 
@@ -714,8 +714,10 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
    content 6,535,347 B + fb **917,760** B ⇒ fit-u 0.998 (raw peak-u 1.635) → final 47.8
    B, up from 46.6 B; `fb_bytes` is not the 614,400 (640×480×2) constant every other
    wave title carries — traced in the raw cartlog to a genuine, stable game-programmed
-   mode change (ROT270 free-scrolling shmup, consistent with a taller scroll buffer)
-   partway through the capture, not register garbage; main becomes binding (sub 26.1)
+   mode change (ROT270 free-scrolling shmup; 917,760 B = 1,920-byte stride × 478
+   lines = 640×478 at 24bpp — a depth change, not extra height, not the taller-
+   scroll-buffer speculation this note originally offered) partway through the
+   capture, not register garbage; main becomes binding (sub 26.1)
    · `radirgyn` content 5,123,604 B + fb 614,400 B ⇒ fit-u 0.757 (raw peak-u 1.335) →
    final 52.1 B, down from 55.9 B; main becomes binding (sub 30.8, first write-truth
    measurement) · `moeru` content 4,517,500 B + fb 614,400 B ⇒ fit-u 0.685 (raw peak-u
@@ -804,6 +806,8 @@ Corrections and the **strict prohibition** now in tooling:
   proves the game's own content ≤ cap → scored peak clamps to the cap.
   Recorded in the sidecar as `scores.vram_bios_noise_excluded`. cleoftp → 84.0 S,
   moeru → 80.5 S.
+  **Superseded (2026-08-08):** battery v8 retired this clamp to a
+  `MetricRegression` refusal canary — see §6 item 7.
 - `score.py MetricRegression`: scoring **raises instead of writing a verdict**
   when (a) the ARAM DMPD signature (`nz_above_cap == 0x600000` exactly)
   reappears, or (b) an anchor title parks. `DC_SHIPPED_ANCHORS = {cleoftp,

@@ -1,6 +1,6 @@
 # Illvelo (Illmatic Envelope) (Japan) (841-0059C) (`illvelo`) — portability assessment
 
-> **Battery v8 vram-fb-masking re-run (2026-08-07): 34.7 (C)** — spec
+> **Battery v8 vram-fb-masking re-run (2026-08-08): 34.7 (C)** — spec
 > `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
 > park, boot ok, PIO handoff at 20.0 s (v4 had 20.0 s too). **VRAM flips from address
 > high-water (14,172,160 B, u=1.69, sub 22.4) to FB-masked content: `content_total`
@@ -19,7 +19,9 @@
 > the standing address-keyed-main-scoring ruling (kb ~line 918: not decided per-title
 > mid-wave)** — sub-score **12.5**, now binding. Memory axis **22.4 → 12.5**, final **43.9 → 34.7**, tier **B → C**. Sanity
 > clean: `content_total + fb_masked_nz` matches `nz_total` exactly in the raw log
-> (4,390,214 + 334,112 = 4,724,326). Coverage re-annotated `demo` (unchanged — live
+> (4,390,214 + 334,112 = 4,724,326) — the identity holds within each sample; the
+> sidecar's `nz_total` (4,753,553) is the independent run-max across all samples, not
+> this particular sample's total. Coverage re-annotated `demo` (unchanged — live
 > gameplay, ranking-window desktop, and title/logo frames all still present; curated set
 > re-picked at this run's own shot timestamps).
 
@@ -37,7 +39,7 @@
 |---|---|
 | **Final** | **34.7 (C)** |
 | Coverage | demo |
-| Assessed | 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Assessed | 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 | Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/illvelo.zip` |
 
 | Region | Peak / fit | DC cap | u | Note |

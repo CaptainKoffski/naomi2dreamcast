@@ -1,6 +1,6 @@
 # Moeru Casinyo (Japan) (GDL-0013) (`moeru`) — portability assessment
 
-> **Battery v8 vram-fb-masking re-run (2026-08-07): 82.2 (S)** — spec
+> **Battery v8 vram-fb-masking re-run (2026-08-08): 82.2 (S)** — spec
 > `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
 > park, boot ok, PIO handoff at 20.0 s. Leg 1 hit an `emulator-exited` flake (the same
 > known operational-flake class already documented below in §9 — a launch-time issue,
@@ -17,7 +17,9 @@
 > binding region, just under VRAM/ARAM's 100.0. Memory axis **87.9 → 89.7**, final
 > **81.6 → 82.2**, tier unchanged **S**, still #2 overall (behind cleoftp). Sanity
 > clean: `fb_bytes` == 614,400, `content_total` alone equals `nz_total` exactly in the
-> raw log (no bytes fell inside the masked FB region this run — `fb_masked_nz` = 0).
+> raw log (no bytes fell inside the masked FB region this run — `fb_masked_nz` = 0) —
+> the identity holds within each sample; the sidecar's `nz_total` (4,533,046) is the
+> independent run-max across all samples, not this particular sample's total.
 > Coverage re-annotated `demo` (unchanged — same blackjack-demo/slot-attract loop).
 
 > **Battery v5 re-run (2026-08-06): **81.6 (S)** — up from 80.5; still #2 overall.**
@@ -33,7 +35,7 @@
 |---|---|
 | **Final score** | **82.2** (S) — #2 overall |
 | Bottom line | A Katana/Ninja2-SDK casino minigame collection from the reference maker (Altron) that fits every DC region comfortably once measured correctly; the previous "G1 broken: emulator-exited" park was an instrumentation/harness artifact stack, not the game. **(battery v8 update, see banner above:** VRAM now scores on FB-masked content + 2×FB (sub 100.0, was 87.9); write-truth main RAM, measured for the first time, becomes the mild binding region instead (sub 89.7) — final rises to 82.2.) |
-| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b`; vram-fb-masking re-run 2026-08-07 · battery v8 · flycast `f014a410c` |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b`; vram-fb-masking re-run 2026-08-08 · battery v8 · flycast `f014a410c` |
 
 ## 2. Identity
 

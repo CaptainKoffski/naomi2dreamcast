@@ -1,6 +1,6 @@
 # Mamoru-kun wa Norowarete Shimatta! (Japan) (841-0060C) (`mamonoro`) — portability assessment
 
-> **Battery v8 vram-fb-masking re-run (2026-08-07): 47.8 (B)** — spec
+> **Battery v8 vram-fb-masking re-run (2026-08-08): 47.8 (B)** — spec
 > `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
 > park, boot ok, PIO handoff at 20.0 s. Leg 1 hit an `emulator-exited` flake (Flycast
 > process died mid-run, a known operational flake class, kb §7); the battery's automatic
@@ -15,13 +15,15 @@
 > read the BIOS-default 614,400 B (`0x96000`, matching the anchors exactly), then flip to
 > a stable 917,760 B (`0xE0100`) from early gameplay onward and stay there for the rest of
 > the 600 s window: a genuine, stable, game-programmed mode change, not register garbage
-> (consistent with a scroll buffer taller than the visible 480×640 crop, an ordinary
-> technique for a free-scrolling shmup). `content_total` 6,535,347 B + `2×fb_bytes`
-> 1,835,520 B = fit 8,370,867 B, u=0.998 → sub **85.2** — still a rise (was 24.6 under
+> — the arithmetic: 917,760 B = 1,920-byte stride × 478 lines = 640×478 at 24bpp, i.e. a
+> depth change, not the extra scroll height originally speculated. `content_total`
+> 6,535,347 B + `2×fb_bytes` 1,835,520 B = fit 8,370,867 B, u=0.998 → sub **85.2** — still a rise (was 24.6 under
 > address high-water, u=1.64). Main RAM's write-truth sub (26.1, u=1.598) is the binding
 > region regardless. Memory axis **24.6 → 26.1**, final **46.6 → 47.8**, tier unchanged
 > **B**. Sanity: `content_total + fb_masked_nz` matches `nz_total` exactly in the raw log
-> (6,535,347 + 700,924 = 7,236,271). Coverage re-annotated `demo` (unchanged).
+> (6,535,347 + 700,924 = 7,236,271) — the identity holds within each sample; the
+> sidecar's `nz_total` (7,434,215) is the independent run-max across all samples, not
+> this particular sample's total. Coverage re-annotated `demo` (unchanged).
 
 > **Battery v4 re-assessment (2026-08-04): **46.6 (B)**.**
 > v2 parked it G3-aram via the DMPD fill artifact. v4 content metric: scored; attract demo renders (logo-overlay gameplay, shot-182s).
@@ -37,7 +39,7 @@
 |---|---|
 | **Final** | **47.8 (B)** |
 | Coverage | demo |
-| Assessed | 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Assessed | 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 | Boot | ok=True · handoff 20.0 s · run 600 s (leg 2 of 2 — leg 1 `emulator-exited` flake, auto-retried) · rom `naomi/mamonoro.zip` |
 
 | Region | Peak / fit | DC cap | u | Note |

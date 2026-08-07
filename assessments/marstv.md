@@ -2,8 +2,10 @@
 
 > **Battery v8 vram-fb-masking re-run (2026-08-07): 47.6 (B)** — spec
 > `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
-> park, boot ok, PIO handoff at 20.0 s. Main RAM reproduces bit-identically to v4
-> (25,984,736 B). ARAM `content_total` 2,053,563 B (u=0.979, sub 86.6) is measured by
+> park, boot ok, PIO handoff at 20.0 s — earlier than v4's 30.0 s (handoff-detection
+> timing moved, not the game; the main/aram raw figures below are unaffected). Main RAM
+> reproduces bit-identically to v4 (25,984,736 B). ARAM `content_total` 2,053,563 B
+> (u=0.979, sub 86.6) is measured by
 > volume for the first time (v7-class keying — this doc never ran v6/v7 individually).
 > **VRAM flips from address high-water (14,350,336 B, u=1.71, sub 21.6) to FB-masked
 > content: `content_total` 5,047,259 B + `2×fb_bytes` 1,228,800 B (`fb_bytes` 614,400 B,
