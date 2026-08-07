@@ -4,10 +4,10 @@
   "maker": "Ecole Software",
   "year": "2002",
   "format": "GD-ROM",
-  "assessed": "2026-08-06",
+  "assessed": "2026-08-07",
   "versions": {
-    "flycast": "ebae3b513",
-    "battery": "5",
+    "flycast": "f014a410c",
+    "battery": "8",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -28,7 +28,9 @@
       "seen": true,
       "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/chocomk/shot-060s.png",
@@ -51,17 +53,23 @@
   },
   "memory": {
     "main": {
+      "peak": 18533794,
+      "nz_total": 9254982,
+      "nz_above_cap": 1420913,
       "dma_high_water": 16777216
     },
     "vram": {
       "peak": 13496860,
-      "nz_total": 3169579,
+      "nz_total": 3182681,
       "nz_above_cap": 3156395,
-      "regs_last": "isp_base=0 isp_limit=2fff00 ol_base=3eb780 ol_limit=300000 fb_w_sof1=800000 fb_w_sof2=c00000 fb_r_sof1=c00000"
+      "regs_last": "isp_base=0 isp_limit=2fff00 ol_base=3eb780 ol_limit=300000 fb_w_sof1=800000 fb_w_sof2=c00000 fb_r_sof1=c00000",
+      "content_total": 2631542,
+      "fb_bytes": 614400
     },
     "aram": {
       "peak": 2097136,
-      "nz_above_cap": 0
+      "nz_above_cap": 0,
+      "content_total": 1332513
     }
   },
   "streaming": {
@@ -69,8 +77,9 @@
     "total_bytes": 46534656,
     "unique_bytes": 16476160,
     "reread_ratio": 0.6459,
-    "steady_mb_per_min": 3.7,
-    "short_window": false
+    "steady_mb_per_min": 3.705,
+    "short_window": false,
+    "pio_bytes": 1574212
   },
   "guts": {
     "code_bytes": 1572864,
@@ -543,12 +552,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 25.6,
+    "memory": 66.2,
     "streaming": 76.5,
     "guts": 95.0,
     "controls": 100.0,
     "similarity": 70.0,
-    "final": 52.5,
-    "tier": "B"
+    "final": 76.7,
+    "tier": "A"
   }
 }
