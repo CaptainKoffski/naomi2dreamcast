@@ -1,5 +1,41 @@
 # Noukone Puzzle Takoron (Japan) (GDL-0042) (`takoron`) — portability assessment
 
+> **Battery v7 aram-volume re-run (2026-08-07): still PARKED — `G3 memory: aram content
+> > 2x DC capacity`, now on the volume-keyed message.** The §6 checkpoint re-keys
+> G3-ARAM on content volume; takoron's real above-cap sound content is heavy enough that
+> the re-keying doesn't change the outcome: `content_total` = 6,333,113 B (u = 3.02,
+> still well past the u>2.0 gate) vs. the v6 doc's content-high address figure (u=3.94).
+> Main RAM (`dma_high_water` 29,360,128) and VRAM (write-truth peak 15,222,784) reproduce
+> bit-identically to v6. Sidecar: flycast `65f9f7857`, battery 7,
+> `handoff.trigger = "pio"`. This is the clearest reconfirmation in the wave: heavy
+> content stays heavy under either keying — the address-vs-volume distinction only
+> mattered for the tiny-above-cap cohort (`gwing2`, `sgtetris`), not for a genuinely
+> large sound bank like this one.
+
+## v7 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **PARKED — `G3 memory: aram content > 2x DC capacity`** |
+| Coverage | demo |
+| Assessed | 2026-08-07 · battery v6 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b`; aram-volume re-run 2026-08-07 · battery v7 · flycast `65f9f7857` |
+| Boot | ok=True · handoff 20.0 s (trigger=pio) · run 600 s · rom `naomi/takoron.zip` |
+
+| Region | v7 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (write-truth) | 30,425,060 | 16,777,216 | 1.81 | nz_total 17,119,948 · nz_above_cap 8,609,276 · `dma_high_water` 29,360,128 (1.75×) = exactly `0x1C00000` (bit-identical to v6) |
+| VRAM (write-truth) | 15,222,784 | 8,388,608 | 1.81 | nz_total 5,995,967 (bit-identical to v6) |
+| ARAM (content volume, fill-excluded) | 6,333,113 | 2,097,152 | **3.02** | `content_total` (§6 volume-keyed, battery v7) — still well past the u>2.0 gate; old content-high address peak 8,257,552 (u=3.94, pre-v7 keying) unchanged |
+
+Streaming: 75 DMA events · total 62.2 MB · unique 39.1 MB · re-read 0.3708 · steady
+4.853 MB/min (bit-identical to v6 within rounding)
+Gate: `G3 memory: aram content > 2x DC capacity` — the volume-keyed message (`score.py`
+reports `metric="content"` whenever `content_total` is present); axes not computed
+(`scores: null`).
+Screenshots: `evidence/takoron/shot-060s.png` · `evidence/takoron/shot-365s.png` · `evidence/takoron/shot-609s.png`
+
+---
+
 > **Battery v6 cluster re-run (2026-08-07): still PARKED — `G3 memory: aram peak > 2x DC
 > capacity`, reconfirmed with real ARAM volume, not a fill artifact.** v6's content
 > metric puts `nz_above_cap` at 4,347,346 B (4.15 MiB, within run-to-run jitter of v4's
