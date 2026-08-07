@@ -15,7 +15,7 @@ BIN = os.environ.get("FLYCAST_BIN", os.path.join(
     CLEO, "tools/flycast-src/build/Flycast.app/Contents/MacOS/Flycast"))
 ASSESS = os.path.join(REPO, "assessments")
 OUT = os.path.join(HERE, "out")
-BATTERY_VERSION = "6"  # v6: main-RAM write-truth snapshot+diff (fork MAINPROFILE/MAINHIST; spec docs/superpowers/specs/2026-08-06-main-ram-snapshot-diff-design.md). Unified dma|pio bulk-transfer handoff un-blinds PIO-loading carts (sgtetris kb §4.v): first CARTDMA OR 32 KB cumulative PIO ROM_DATA reads baselines ARAM+VRAM+MAIN. memory.main scored from write-truth peak (dma_high_water demoted to informational); blind-main shapes renormalize+flag, never 100. CARTPIOCNT = PIO streaming lower bound. Prior sidecars' main figures stale per the re-assessment rule; v5 VRAM/ARAM figures unaffected.
+BATTERY_VERSION = "7"  # v7: G3-ARAM keyed on content VOLUME (spec docs/superpowers/specs/2026-08-07-aram-gate-volume-design.md). Parser captures the fork's already-logged content_below2m; sidecar gains memory.aram.content_total = max over per-sample (below+above); score.py gates+scores aram on volume with address fallback for pre-v7 sidecars (volume <= address, so fallback only under-scores). No fork change; capture format identical to v6 — the bump marks the schema+semantics change for RANKING provenance (user ruling at spec review).
 HANDOFF_TAGS = (b"ARAMHANDOFF", b"CARTDMA")
 # Sets whose disc/feature set is network-bound (netpic/WCCF/satellite — GAME_FORMATS.md
 # Completeness section). Drives the guts 'network' penalty (spec §4.3).
@@ -315,7 +315,9 @@ def main():
                    "vram": {"peak": cap["vram"]["peak"], "nz_total": cap["vram"].get("nz_total"),
                             "nz_above_cap": cap["vram"]["nz_above_cap"],
                             "regs_last": cap["vram"]["regs_last"]},
-                   "aram": {"peak": cap["aram"]["peak"], "nz_above_cap": cap["aram"]["nz_above_cap"]}},
+                   "aram": {"peak": cap["aram"]["peak"], "nz_above_cap": cap["aram"]["nz_above_cap"],
+                            **({"content_total": cap["aram"]["content_total"]}
+                               if cap["aram"]["content_total"] is not None else {})}},
         "streaming": dict(cap["streaming"]),
         "guts": {**{k: v for k, v in guts.items() if k != "sdk_strings"},
                  "flags": flags, "extra_bios_classes": extra,
