@@ -1,5 +1,45 @@
 # Noukone Puzzle Takoron (Japan) (GDL-0042) (`takoron`) — portability assessment
 
+> **Battery v6 cluster re-run (2026-08-07): still PARKED — `G3 memory: aram peak > 2x DC
+> capacity`, reconfirmed with real ARAM volume, not a fill artifact.** v6's content
+> metric puts `nz_above_cap` at 4,347,346 B (4.15 MiB, within run-to-run jitter of v4's
+> 4,336,179 B) — heavy under any keying, address or content: this is not a marginal park
+> that a softer G3 rule (kb §6 item 1 checkpoint) would clear. Main RAM `dma_high_water`
+> is 29,360,128 B = **exactly `0x1C00000`** (a suspiciously round 28 MiB) — one more data
+> point for stream-cache placement rather than a per-title working set (kb §6 item 3).
+> Unlike `kurucham`/`ss2005`/`tetkiwam`, `takoron`'s write-truth main peak (30,425,060 B)
+> falls short of the shared `0x1F00000` structure seen on the other GD titles — no
+> signature match here. Findings: `docs/kb/assessment-tooling.md` §6 item 3
+> (2026-08-07). Sidecar: flycast `65f9f7857`, battery 6, `handoff.trigger = "pio"` (GD
+> DIMM ~1 MB bootstrap).
+
+## v6 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **PARKED — `G3 memory: aram peak > 2x DC capacity`** |
+| Coverage | demo |
+| Assessed | 2026-08-07 · battery v6 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s (trigger=pio) · run 600 s · rom `naomi/takoron.zip` |
+
+| Region | v6 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (write-truth) | 30,425,060 | 16,777,216 | 1.81 | nz_total 17,017,505 · nz_above_cap 8,609,276 · dma_high_water 29,360,128 (1.75×) = exactly `0x1C00000` |
+| VRAM (write-truth) | 15,222,784 | 8,388,608 | 1.81 | nz_total 5,992,148 |
+| ARAM (content, fill-excluded) | 8,257,552 | 2,097,152 | 3.94 | content above cap 4,347,346 |
+
+Streaming: 75 DMA events · total 62.2 MB · unique 40.2 MB · re-read 0.3539 · steady 4.852 MB/min
+Gate: `G3 memory: aram peak > 2x DC capacity` — see the note above; axes not computed (`scores: null`).
+Screenshots: `evidence/takoron/shot-060s.png` · `evidence/takoron/shot-365s.png` · `evidence/takoron/shot-609s.png`
+
+Note: this is a reconfirmation, not a new finding — v4 already established the park as
+content-real (4.14 MiB above cap, not the v2 fill artifact); v6 measures the same thing
+again and gets the same answer (4.15 MiB). The only new datum is `dma_high_water`'s exact
+28 MiB round number, which strengthens the stream-cache-placement reading of the GD-title
+main-RAM clustering (kb §6 item 3).
+
+---
+
 > **Battery v4 re-assessment (2026-08-04): **PARKED — `G3 memory: aram peak > 2x DC capacity`**.**
 > Park **confirmed** under the v4 content metric: 4.14 MiB of genuine sound content above the DC cap — a real G3, not the fill artifact. Tutorial demo renders (shot-609s).
 > Below the v4 section is the battery v2-era assessment: its *measured* figures

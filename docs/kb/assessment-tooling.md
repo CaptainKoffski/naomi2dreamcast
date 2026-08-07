@@ -520,6 +520,44 @@ the v1 main-RAM limitation).
    high-water with GD streaming volume across the campaign. Candidate fix: subtract (or
    separately report) DMA regions that are re-read-streamed rather than resident.
 
+   **Update, battery v6 cluster re-runs (2026-08-07, data only — no scoring-rule
+   change):** the four flagged families (kurucham, ss2005, takoron, tetkiwam) were
+   re-run under v6's main write-truth snapshot+diff (`MAINPROFILE`, all `handoff.trigger
+   = "pio"`, GD DIMM ~1 MB bootstrap). Findings:
+   1. The old 27–30 MB `dma_high_water` clustering **reproduces per-title** — it was
+      never run noise. tetkiwam's v6 `dma_high_water` (30,495,872) is byte-identical to
+      its v5 value; kurucham 27,449,344 and ss2005 27,511,008 likewise reproduce their
+      pre-v6 figures.
+   2. **A shared 64-byte structure at `0x1F00000`–`0x1F0003F`** (write-truth main peak
+      exactly 32,505,920 = `0x1F00040`) appears on three GD titles — ikaruga (Task 6),
+      kurucham, ss2005 — and tetkiwam's own writes reach just past it (32,508,220).
+      Signature-candidate per §8 discipline: an exclusion requires a control-run proof
+      first (dragntr3 splash-only is the natural control) — explicitly **not done** in
+      this wave.
+   3. **Address-keyed `u` compresses very different realities into the same score.** All
+      three unparked GD titles land memory axis 12.5 (`u≈1.94`, main peak keyed to the
+      shared-structure watermark) while their true above-cap changed content
+      (`nz_above_cap`) spans 1.35 MB (kurucham) to 7.27 MB (tetkiwam) to 8.6 MB (parked
+      takoron, for reference). Consequence: GD finals bunch at 38.1–38.6 C — under
+      address keying the main axis has no discriminating power across GD titles; the
+      differences live in `nz_total`/`nz_above_cap`/MAINHIST, all now recorded in every
+      v6 sidecar. Per-title v6 results: kurucham 38.3 C (was 45.8 B) — nz_total
+      2,703,775, nz_above_cap 1,352,471; ss2005 38.5 C, still un-parked (v2's G3-aram was
+      the stale DMPD-fill-era metric; the v4 content-metric correction holds under v6:
+      aram peak 3,666,896, `u`=1.75, above_cap 1,435,800) — nz_total 6,815,290,
+      nz_above_cap 5,512,235; tetkiwam 38.1 C (was 43.5 B / 43.3 B v5) — nz_total
+      8,643,391, nz_above_cap 7,268,643 (the DC-bootable-`TETRIS.BIN` tension from item 3
+      above is now quantified: 7.27 MB of changed main content sits above the DC's 16 MB
+      cap even though a real DC build of this exact game ships on the disc). takoron
+      stays PARKED (`G3 memory: aram peak > 2x DC capacity`) — this wave's aram
+      `nz_above_cap` is 4,347,346 B (4.15 MiB), reconfirming the v4 real-content park
+      (not the v2 fill artifact): heavy under any keying, address or content.
+   4. takoron's `dma_high_water` 29,360,128 = `0x1C00000` exactly — a suspiciously round
+      28 MB, one more data point for stream-cache-placement (not per-title working set).
+
+   Sidecars: `assessments/{kurucham,ss2005,takoron,tetkiwam}.metrics.json`
+   (`versions.battery = "6"`, `versions.flycast = "65f9f7857"`).
+
 4. **ARAM-exact-fit as a DC-authoring signal; controls 50 may over-penalize proven pad
    ports (gunsur2, 2026-08-03).** `gunsur2` is the second ARAM-exact-fit data point after
    `tetkiwam` (peak exactly 2,097,152 B, `nz_above_cap = 0`) — both are titles with direct

@@ -4,10 +4,10 @@
   "maker": "Able",
   "year": "2006",
   "format": "GD-ROM",
-  "assessed": "2026-08-04",
+  "assessed": "2026-08-07",
   "versions": {
-    "flycast": "4b59eceff",
-    "battery": "4",
+    "flycast": "65f9f7857",
+    "battery": "6",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -28,7 +28,9 @@
       "seen": true,
       "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/kurucham/shot-060s.png",
@@ -51,12 +53,15 @@
   },
   "memory": {
     "main": {
+      "peak": 32505920,
+      "nz_total": 2703775,
+      "nz_above_cap": 1352471,
       "dma_high_water": 27449344
     },
     "vram": {
       "peak": 14770864,
-      "nz_total": 5612977,
-      "nz_above_cap": 5612060,
+      "nz_total": 5623486,
+      "nz_above_cap": 5612252,
       "regs_last": "isp_base=400000 isp_limit=67c8a0 ol_base=750b80 ol_limit=67c9a0 fb_w_sof1=76a000 fb_w_sof2=c00000 fb_r_sof1=36a000"
     },
     "aram": {
@@ -70,7 +75,8 @@
     "unique_bytes": 28819456,
     "reread_ratio": 0.6758,
     "steady_mb_per_min": 7.226,
-    "short_window": false
+    "short_window": false,
+    "pio_bytes": 1049920
   },
   "guts": {
     "code_bytes": 1048576,
@@ -620,12 +626,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 19.6,
+    "memory": 12.5,
     "streaming": 74.1,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 70.0,
-    "final": 45.8,
-    "tier": "B"
+    "final": 38.3,
+    "tier": "C"
   }
 }

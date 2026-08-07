@@ -56,7 +56,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Ikaruga (GDL-0010) | `ikaruga` | **GD-ROM** | parent | 40.5 MB | Shmup ★ | Yes (2002) | **38.6** C · [assessment](assessments/ikaruga.md) |
 | Jingi Storm - The Arcade (Japan) (GDL-0037) | `jingystm` | **GD-ROM** | parent | 141.4 MB | Rhythm | No | not assessed |
 | Karous (Japan) (GDL-0040) | `karous` | **GD-ROM** | parent | 126.5 MB | Shmup ★ | Yes (2007) | not assessed |
-| Kurukuru Chameleon (Japan) (GDL-0034) | `kurucham` | **GD-ROM** | parent | 41.6 MB | Puzzle ★ | No | **45.8** B · [assessment](assessments/kurucham.md) |
+| Kurukuru Chameleon (Japan) (GDL-0034) | `kurucham` | **GD-ROM** | parent | 41.6 MB | Puzzle ★ | No | **38.3** C · [assessment](assessments/kurucham.md) |
 | La Keyboard (GDS-0017) | `keyboard` | **GD-ROM** | parent | 33.6 MB | Typing ⚠ | No | not assessed |
 | Lupin The Third - The Shooting (GDS-0018) | `lupinshoo` | **GD-ROM** | clone of `lupinsho` | 199.7 MB | Light-gun | No | not assessed |
 | Lupin The Third - The Shooting (Rev A) (GDS-0018A) | `lupinsho` | **GD-ROM** | parent | 190.2 MB | Light-gun | No | not assessed |
@@ -87,8 +87,8 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Sports Jam (GDS-0003) | `sprtjam` | **GD-ROM** | parent | 124.4 MB | Sports | Yes (2001) | not assessed |
 | Street Fighter Zero 3 Upper (Japan) (GDL-0002) | `sfz3ugd` | **GD-ROM** | parent | 112.1 MB | Fighting | No | not assessed |
 | Super Shanghai 2005 (Japan) (GDL-0031) | `ss2005o` | **GD-ROM** | clone of `ss2005` | 54.2 MB | Puzzle ★ | No | see [`ss2005`](assessments/ss2005.md) |
-| Super Shanghai 2005 (Japan, Rev A) (GDL-0031A) | `ss2005` | **GD-ROM** | parent | 63.1 MB | Puzzle ★ | No | **46.5** B · [assessment](assessments/ss2005.md) |
-| Tetris Kiwamemichi (Japan) (GDL-0020) | `tetkiwam` | **GD-ROM** | parent | 62.3 MB | Puzzle ★ | No | **43.3** B · [assessment](assessments/tetkiwam.md) |
+| Super Shanghai 2005 (Japan, Rev A) (GDL-0031A) | `ss2005` | **GD-ROM** | parent | 63.1 MB | Puzzle ★ | No | **38.5** C · [assessment](assessments/ss2005.md) |
+| Tetris Kiwamemichi (Japan) (GDL-0020) | `tetkiwam` | **GD-ROM** | parent | 62.3 MB | Puzzle ★ | No | **38.1** C · [assessment](assessments/tetkiwam.md) |
 | The Maze of the Kings (GDS-0022) | `mok` | **GD-ROM** | parent | 140.0 MB | Light-gun | No | not assessed |
 | Trigger Heart Exelica (Japan) (GDL-0036) | `trghearto` | **GD-ROM** | clone of `trgheart` | 80.1 MB | Shmup ★ | Yes (2007) | not assessed |
 | Trigger Heart Exelica Ver.A (Japan) (GDL-0036A) | `trgheart` | **GD-ROM** | parent | 91.6 MB | Shmup ★ | Yes (2007) | not assessed |

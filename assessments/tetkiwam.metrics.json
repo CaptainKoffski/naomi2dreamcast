@@ -4,10 +4,10 @@
   "maker": "Success",
   "year": "2004",
   "format": "GD-ROM",
-  "assessed": "2026-08-06",
+  "assessed": "2026-08-07",
   "versions": {
-    "flycast": "ebae3b513",
-    "battery": "5",
+    "flycast": "65f9f7857",
+    "battery": "6",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -28,7 +28,9 @@
       "seen": true,
       "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/tetkiwam/shot-060s.png",
@@ -51,11 +53,14 @@
   },
   "memory": {
     "main": {
+      "peak": 32508220,
+      "nz_total": 8643391,
+      "nz_above_cap": 7268643,
       "dma_high_water": 30495872
     },
     "vram": {
       "peak": 7763712,
-      "nz_total": 2388788,
+      "nz_total": 2408482,
       "nz_above_cap": 0,
       "regs_last": "isp_base=0 isp_limit=12c8a0 ol_base=190b80 ol_limit=12c9a0 fb_w_sof1=1aa000 fb_w_sof2=c00000 fb_r_sof1=5aa000"
     },
@@ -65,12 +70,13 @@
     }
   },
   "streaming": {
-    "dma_events": 1446,
-    "total_bytes": 107792384,
+    "dma_events": 1410,
+    "total_bytes": 105492480,
     "unique_bytes": 35442688,
-    "reread_ratio": 0.6712,
-    "steady_mb_per_min": 9.1,
-    "short_window": false
+    "reread_ratio": 0.664,
+    "steady_mb_per_min": 8.824,
+    "short_window": false,
+    "pio_bytes": 1115456
   },
   "guts": {
     "code_bytes": 1114112,
@@ -624,12 +630,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 17.3,
-    "streaming": 71.8,
+    "memory": 12.5,
+    "streaming": 72.3,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 70.0,
-    "final": 43.3,
-    "tier": "B"
+    "final": 38.1,
+    "tier": "C"
   }
 }

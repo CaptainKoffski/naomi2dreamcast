@@ -1,5 +1,42 @@
 # Kurukuru Chameleon (Japan) (GDL-0034) (`kurucham`) — portability assessment
 
+> **Battery v6 cluster re-run (2026-08-07): **38.3 (C)** — tier drop is a scoring-axis
+> change, not new content.** v6 scores main RAM on the write-truth `peak`
+> (`MAINPROFILE` snapshot+diff) instead of `dma_high_water`; the old v4 figure
+> (`dma_high_water` 27,449,344 B, 1.64×) reproduces byte-for-byte — the 27–30 MB GD-title
+> clustering flagged at kb §6 item 3 is real, not run noise. The new scored peak,
+> 32,505,920 B (u=1.94×), is a **shared 64-byte structure at `0x1F00000`–`0x1F0003F`**
+> also seen on `ss2005` and `ikaruga` — a signature candidate, not yet excluded (needs a
+> `dragntr3` control run, §8 discipline). Findings: `docs/kb/assessment-tooling.md` §6
+> item 3 (2026-08-07). Sidecar: flycast `65f9f7857`, battery 6, `handoff.trigger = "pio"`
+> (GD DIMM ~1 MB bootstrap).
+
+## v6 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **38.3 (C)** |
+| Coverage | demo |
+| Assessed | 2026-08-07 · battery v6 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s (trigger=pio) · run 600 s · rom `naomi/kurucham.zip` |
+
+| Region | v6 peak (scored) | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (write-truth) | 32,505,920 | 16,777,216 | 1.94 | nz_total 2,703,775 · nz_above_cap 1,352,471 · dma_high_water 27,449,344 (1.64×, byte-identical to v4) |
+| VRAM (write-truth) | 14,770,864 | 8,388,608 | 1.76 | nz_total 5,623,486 |
+| ARAM (content, fill-excluded) | 2,395,328 | 2,097,152 | 1.14 | content above cap 282,380 |
+
+Streaming: 2621 DMA events · total 88.9 MB · unique 28.82 MB · re-read 0.6758 · steady 7.226 MB/min
+Axes: memory 12.5 · streaming 74.1 · guts 85.0 · controls 100.0 · similarity 70.0 → **final 38.3 (C)**
+Screenshots: `evidence/kurucham/shot-060s.png` · `evidence/kurucham/shot-365s.png` · `evidence/kurucham/shot-609s.png`
+
+Note: switching the scored main region from `dma_high_water` to the write-truth `peak`
+is the entire cause of the B→C move — memory axis 19.6 (v4, u=1.64 keyed to
+`dma_high_water`) → 12.5 (v6, u=1.94 keyed to `peak`); VRAM/ARAM are unchanged from v4.
+No new game content, no re-scored risk beyond the axis definition (kb §6 item 3).
+
+---
+
 > **Battery v4 re-assessment (2026-08-04): **45.8 (B)**.**
 > 45.8 B stands (same final as v2), but now measured on a rendering build with demo coverage — the v2 run was headless (zeroing-era) and its title-⚠ was an artifact.
 > Below the v4 section is the battery v2-era assessment: its *measured* figures

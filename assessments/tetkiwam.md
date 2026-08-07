@@ -1,5 +1,47 @@
 # Tetris Kiwamemichi (Japan) (GDL-0020) (`tetkiwam`) — portability assessment
 
+> **Battery v6 cluster re-run (2026-08-07): **38.1 (C)** — this doc's own §9 clustering
+> flag is now ANSWERED.** v6 scores main RAM on the write-truth `peak` (`MAINPROFILE`
+> snapshot+diff) instead of `dma_high_water`; the old `dma_high_water` figure
+> (30,495,872 B) reproduces **byte-identical to v5** — the suspicious kurucham/ss2005/
+> takoron/tetkiwam clustering §9 flagged is confirmed real per-title, not run noise (kb
+> §6 item 3). The DC-bootable-`TETRIS.BIN` tension §9 raised is now quantified rather
+> than qualitative: the write-truth main peak is 32,508,220 B, with **7,268,643 B
+> (7.27 MiB) of changed content sitting above the DC's 16 MB cap** — yet the disc ships
+> an actual DC build of this exact game (TCRF, §2). ARAM/VRAM are unchanged and still fit
+> (ARAM `nz_above_cap` 0, VRAM `nz_above_cap` 0). Tier drop B→C is the main-axis
+> definition change (same story as `kurucham`/`ss2005`), not new content or a retraction
+> of the TETRIS.BIN evidence. Findings: `docs/kb/assessment-tooling.md` §6 item 3
+> (2026-08-07). Sidecar: flycast `65f9f7857`, battery 6, `handoff.trigger = "pio"` (GD
+> DIMM ~1 MB bootstrap).
+
+## v6 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **38.1 (C)** |
+| Coverage | demo |
+| Assessed | 2026-08-07 · battery v6 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| Boot | ok=True · handoff 20.0 s (trigger=pio) · run 600 s · rom `naomi/tetkiwam.zip` |
+
+| Region | v6 peak (scored) | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (write-truth) | 32,508,220 | 16,777,216 | 1.94 | nz_total 8,643,391 · nz_above_cap 7,268,643 · dma_high_water 30,495,872 (1.82×, byte-identical to v5) |
+| VRAM (write-truth) | 7,763,712 | 8,388,608 | 0.93 | nz_total 2,408,482 · nz_above_cap 0 |
+| ARAM (content, fill-excluded) | 2,031,344 | 2,097,152 | 0.97 | content above cap 0 |
+
+Streaming: 1410 DMA events · total 105.5 MB · unique 35.44 MB · re-read 0.664 · steady 8.824 MB/min
+Axes: memory 12.5 · streaming 72.3 · guts 85.0 · controls 100.0 · similarity 70.0 → **final 38.1 (C)**
+Screenshots: `evidence/tetkiwam/shot-060s.png` · `evidence/tetkiwam/shot-365s.png` · `evidence/tetkiwam/shot-609s.png`
+
+Note: the shared `0x1F00000` 64-byte structure seen on `kurucham`/`ss2005`/`ikaruga`
+does not exactly match here — tetkiwam's own writes reach 2,300 B past it
+(32,508,220 vs 32,505,920), still worth flagging as the same structural family (kb §6
+item 3, §8 discipline — no exclusion without a control-run proof). See §9 below for the
+full DC-bootable-build discussion, now updated with the v6 numbers.
+
+---
+
 > **Battery v5 re-run (2026-08-06): **43.3 (B)** — confirmed; VRAM artifact gone.**
 > v5's pre-`VRAMHANDOFF` sample drop (kb §9) removes the BIOS boot-frame block from the
 > VRAM peak: now 7,763,712 B (0.93×, fits under 8 MB — vindicating the v2-era §4
@@ -149,6 +191,19 @@ the sidecar's `partial` is another checkpoint-worthy calibration observation.
   comparability); the tension is recorded for the scoring checkpoint (kb §6 item 3),
   where the suspicious clustering of main high-waters across GD titles (kurucham 27.4 /
   ss2005 27.5 / takoron 29.4 / tetkiwam 30.5 MB) is also noted.
+  **ANSWERED by the battery v6 cluster re-run (2026-08-07):** the clustering reproduces
+  per-title — this title's own `dma_high_water` is byte-identical between v5 and v6
+  (30,495,872 B) — so it was never run noise; see
+  `docs/kb/assessment-tooling.md` §6 item 3 for the full four-title comparison. v6 also
+  adds a write-truth content number the v1 metric couldn't give: **7,268,643 B
+  (7.27 MiB) of changed main-RAM content sits above the DC's 16 MB cap**
+  (`memory.main.nz_above_cap`, v6 sidecar) even though the disc's own `TETRIS.BIN` proves
+  the game runs in 16 MB — quantifying, not resolving, the tension above. The v6 main
+  peak (32,508,220 B) is close to but not identical with a 64-byte structure
+  (`0x1F00000`–`0x1F0003F`, peak 32,505,920) shared by `kurucham`/`ss2005`/`ikaruga` —
+  tetkiwam's own writes reach 2,300 B past it, so it is a related-but-not-identical
+  signature candidate (kb §6 item 3, §8 discipline: no exclusion without a control-run
+  proof).
 - **Real-hardware verification flag:** upstream Flycast has an open, undiagnosed,
   hardware-independent freeze in the Naomi version's 2P versus mode after ~1–2 min
   ([flyinghead/flycast#1500](https://github.com/flyinghead/flycast/issues/1500), reported
