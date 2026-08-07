@@ -38,7 +38,7 @@
 | VRAM (FB-masked content + 2×FB) | 6,276,059 (content_total 5,047,259 + 2×fb_bytes 1,228,800) | 8,388,608 | 0.748 | battery v8 re-keying — sub 100.0, was 21.6 under address high-water (14,350,336, u=1.71) |
 | ARAM (content, volume-keyed) | 2,053,563 | 2,097,152 | 0.979 | sub 86.6, first content-volume measurement (v7-class keying); was 1.02× / content above cap 47,694 under the old address peak |
 
-Streaming: 164 DMA events · total 199.8 MB · unique 52.4 MB · re-read 0.7376 · steady 21.076 MB/min (reproduces v4 within noise)
+Streaming: 164 DMA events · total 199.8 MB · unique 52.4 MB · re-read 0.7376 · steady 20.991 MB/min (matches v4's 21.076 within run-to-run noise)
 Axes: memory 28.0 · streaming 54.3 · guts 90.0 · controls 100.0 · similarity 40.0 → **final 47.6 (B)**
 Screenshots: `evidence/marstv/shot-060s.png` · `shot-365s.png` · `shot-609s.png` (same 3-shot curation as v4 — title/eerie-face screen ×2, attract camera-minigame instructions)
 

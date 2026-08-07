@@ -9,13 +9,15 @@
 > byte count as 640×480×2, so the sanity check passes unchanged) = fit 5,619,014 B,
 > u=0.670 → sub 100.0** — a rise, as required. ARAM `content_total` 762,858 B (u=0.364)
 > → sub 100.0, first content-volume measurement (v7-class keying). **MAIN, first
-> write-truth measured (v6 instrumentation): peak 32,505,920 B (`0x1F00040`) — this is
-> the same byte-identical shared-structure signature already documented on ikaruga
-> (Task 6), kurucham, and ss2005 (kb `assessment-tooling.md` §6 item 3 / §8: "a shared
-> 64-byte structure at 0x1F00000–0x1F0003F" on GD-ROM titles, address-keyed main scoring
-> deliberately kept per the standing 2026-08-07 ruling — not a new finding, not an
-> instrumentation bug, not per-title-decided mid-wave)** — sub-score **12.5**, now
-> binding. Memory axis **22.4 → 12.5**, final **43.9 → 34.7**, tier **B → C**. Sanity
+> write-truth measured (v6 instrumentation): peak 32,505,920 B (`0x1F00040`) —
+> byte-identical to ikaruga's main peak (Task 6), also seen on kurucham and ss2005 (kb
+> `assessment-tooling.md` §6 item 3 / §8: "a shared 64-byte structure at
+> 0x1F00000–0x1F0003F"). illvelo is a cart title (`naomim4`, sidecar `format: "cart"`),
+> not GD-ROM like the other three — the FIRST cart instance of this signature, a
+> materially new data point: the kb's stream-cache-placement hypothesis rests on GD
+> streaming, and a cart title carrying the identical peak weakens it. Score stands under
+> the standing address-keyed-main-scoring ruling (kb ~line 918: not decided per-title
+> mid-wave)** — sub-score **12.5**, now binding. Memory axis **22.4 → 12.5**, final **43.9 → 34.7**, tier **B → C**. Sanity
 > clean: `content_total + fb_masked_nz` matches `nz_total` exactly in the raw log
 > (4,390,214 + 334,112 = 4,724,326). Coverage re-annotated `demo` (unchanged — live
 > gameplay, ranking-window desktop, and title/logo frames all still present; curated set
@@ -40,7 +42,7 @@
 
 | Region | Peak / fit | DC cap | u | Note |
 |---|---|---|---|---|
-| Main RAM (write-truth) | 32,505,920 (`0x1F00040`) | 16,777,216 | 1.938 | shared GD-ROM structure signature (kb §6 item 3 / §8, same value as ikaruga/kurucham/ss2005); sub 12.5, now binding |
+| Main RAM (write-truth) | 32,505,920 (`0x1F00040`) | 16,777,216 | 1.938 | first CART instance of kb §6 item 3 signature (byte-identical to ikaruga/kurucham/ss2005, all GD-ROM); materially new against the kb's stream-cache-placement hypothesis; sub 12.5, now binding |
 | VRAM (FB-masked content + 2×FB) | 5,619,014 (content_total 4,390,214 + 2×fb_bytes 1,228,800) | 8,388,608 | 0.670 | battery v8 re-keying — sub 100.0, was 22.4 under address high-water (14,172,160, u=1.69) |
 | ARAM (content, volume-keyed) | 762,858 | 2,097,152 | 0.364 | sub 100.0, first content-volume measurement (v7-class keying); was 1.00× / content above cap 0 under the old address peak |
 

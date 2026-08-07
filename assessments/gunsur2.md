@@ -43,7 +43,7 @@
 | VRAM (FB-masked content + 2×FB) | 5,960,110 (content_total 4,731,310 + 2×fb_bytes 1,228,800) | 8,388,608 | 0.711 | battery v8 re-keying — sub 100.0, was 13.0 under address high-water (16,140,288, u=1.924) |
 | ARAM (content, volume-keyed) | 1,565,884 | 2,097,152 | 0.747 | sub 100.0, was 85.0 under the old near-exact address peak (2,097,136) |
 
-Streaming: 357 DMA events · total 124.3 MB · unique 38.7 MB · re-read 0.6787 · steady 11.305 MB/min (matches v4 within run-to-run noise)
+Streaming: 357 DMA events · total 124.3 MB · unique 38.7 MB · re-read 0.6889 · steady 11.664 MB/min (matches v4's re-read 0.6889 / steady 11.662 within run-to-run noise)
 Axes: memory 10.0 · streaming 67.9 · guts 80.0 · controls 50.0 · similarity 40.0 → **final 30.0 (C)**
 Screenshots: `evidence/gunsur2/shot-060s.png` · `shot-121s.png` · `shot-243s.png` · `shot-365s.png` · `shot-426s.png` (re-curated this run — demo gameplay, DEMO PLAY marker, title, and a second gameplay frame)
 

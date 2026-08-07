@@ -536,6 +536,13 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
       Signature-candidate per §8 discipline: an exclusion requires a control-run proof
       first (dragntr3 splash-only is the natural control) — explicitly **not done** in
       this wave.
+
+      **Update, battery v8 (2026-08-08): fourth instance, first on a cart title.**
+      `illvelo` (sidecar `illvelo.metrics.json`) reproduces the exact same peak
+      (32,505,920 = `0x1F00040`) on a `naomim4` cart, not GD-ROM like the other three —
+      materially new, since the stream-cache-placement hypothesis above rests on GD
+      streaming and a cart title carrying the identical peak weakens it. The planned
+      dragntr3 control run must NOT be scoped to GD titles only as a result.
    3. **Address-keyed `u` compresses very different realities into the same score.** All
       three unparked GD titles land memory axis 12.5 (`u≈1.94`, main peak keyed to the
       shared-structure watermark) while their true above-cap changed content

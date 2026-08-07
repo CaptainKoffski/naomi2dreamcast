@@ -46,7 +46,7 @@
 | VRAM (FB-masked content + 2×FB) | 8,370,867 (content_total 6,535,347 + 2×fb_bytes 1,835,520) | 8,388,608 | 0.998 | `fb_bytes` 917,760 B (not the standard 614,400 — verified genuine, see banner) — sub 85.2, was 24.6 under address high-water (13,718,016, u=1.64) |
 | ARAM (content, volume-keyed) | 1,265,219 | 2,097,152 | 0.603 | sub 100.0, first content-volume measurement (v7-class keying); was 0.98× under the old address peak |
 
-Streaming: 617 DMA events · total 136.5 MB · unique 53.3 MB · re-read 0.6095 · steady 13.057 MB/min (reproduces v4 within noise)
+Streaming: 617 DMA events · total 136.5 MB · unique 53.3 MB · re-read 0.6095 · steady 13.088 MB/min (matches v4's 13.057 within run-to-run noise)
 Axes: memory 26.1 · streaming 67.9 · guts 85.0 · controls 100.0 · similarity 40.0 → **final 47.8 (B)**
 Screenshots: `evidence/mamonoro/shot-121s.png` · `shot-182s.png` · `shot-243s.png` · `shot-426s.png` · `shot-548s.png` (re-curated this run — manga story card, title over shrine island, Beniko ranking table, night-stage gameplay with HUD, character panel)
 
