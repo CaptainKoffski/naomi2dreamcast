@@ -1,12 +1,27 @@
 # Sega Tetris (`sgtetris`) — portability assessment
 
+> **Battery v8 vram-fb-masking re-run (2026-08-07): 47.4 (B)** — spec
+> `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
+> park, boot ok, same PIO handoff. Main (29,130,560 B) and ARAM `content_total`
+> (1,604,876 B) reproduce **bit-identically** to the v7 run — the reproduction check this
+> wave requires for non-VRAM regions. VRAM flips from address high-water (16,279,552 B,
+> u=1.941, sub 12.4) to FB-masked content: `content_total` 8,800,955 B + `2×fb_bytes`
+> 1,228,800 B (`fb_bytes` 614,400 B, exactly 640×480×2) = fit 10,029,755 B, u=1.196 → sub
+> **49.8** — a rise, as required (was 12.4). This does not change which region binds:
+> main RAM's write-truth peak (u=1.736, sub 20.5) is now the lowest of the three,
+> exactly the design doc's "main 20.5 becomes binding" prediction — memory axis
+> **12.4 → 20.5**, final **38.7 → 47.4**, tier **C → B**. VRAM is still genuinely over
+> cap (not fully resolved, just no longer the worst region) — 8,800,955 B of real
+> non-FB content plus two framebuffers still doesn't fit in 8 MB. Coverage re-annotated
+> `demo` (unchanged — same title/how-to-play/ranking/attract-gameplay loop).
+
 ## 1. Verdict
 
 | | |
 |---|---|
-| **Final score** | **38.7 (C)** — un-parked 2026-08-07 (battery v7); was `PARKED — G3 memory: aram peak > 2x DC capacity` under the old address-keyed rule |
-| Bottom line | The §6 checkpoint re-keying G3-ARAM on content volume closes this title's gate: `content_total` = 1,604,876 B (u = 0.765, well under the 2 MiB cap) vs. the old content-high address u = 3.94×. But the ARAM semantics were never the whole memory story here — main RAM (29,130,560 B, u = 1.736×) and VRAM (16,279,552 B, u = 1.941×) are both genuinely over the DC caps, so the memory axis is capped at 12.4 (bound by VRAM, the worst region) and the final lands at **38.7 (C)** — a real, low but scored, result. Main RAM and VRAM (measured for the first time in battery v6) reproduce bit-identically to that run; the main write-truth peak (29,130,560 B) still matches the stale v5 watermark almost exactly, confirming those writes were real cart content, not BIOS residue. Official 2000 DC port exists regardless. |
-| Assessed | 2026-08-07 · battery v6 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b`; aram-volume re-run 2026-08-07 · battery v7 · flycast `65f9f7857` |
+| **Final score** | **47.4 (B)** — battery v8 vram-fb-masking re-run; was 38.7 (C) under v7's address-keyed VRAM |
+| Bottom line | The §6 checkpoint re-keying G3-ARAM on content volume closes this title's gate: `content_total` = 1,604,876 B (u = 0.765, well under the 2 MiB cap) vs. the old content-high address u = 3.94×. But the ARAM semantics were never the whole memory story here — main RAM (29,130,560 B, u = 1.736×) and VRAM (16,279,552 B, u = 1.941×) are both genuinely over the DC caps, so the memory axis is capped at 12.4 (bound by VRAM, the worst region) and the final lands at **38.7 (C)** — a real, low but scored, result. Main RAM and VRAM (measured for the first time in battery v6) reproduce bit-identically to that run; the main write-truth peak (29,130,560 B) still matches the stale v5 watermark almost exactly, confirming those writes were real cart content, not BIOS residue. Official 2000 DC port exists regardless. **(battery v8 update, see banner above:** VRAM re-keyed on FB-masked content + 2×FB now scores 49.8 (was 12.4) — main RAM (sub 20.5) becomes the binding region instead, final rises to 47.4 (B).) |
+| Assessed | 2026-08-07 · battery v6 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b`; aram-volume re-run 2026-08-07 · battery v7 · flycast `65f9f7857`; vram-fb-masking re-run 2026-08-07 · battery v8 · flycast `f014a410c` |
 
 ## 2. Identity
 
@@ -31,18 +46,20 @@ window. `capture.coverage` was `null` in the raw sidecar; set to `"demo"` by thi
 the curated shots show live gameplay boards and a ranking screen, not just an idle title
 loop.
 Screenshots (curated from 10): `assessments/evidence/sgtetris/shot-060s.png`,
-`shot-121s.png`, `shot-365s.png`, `shot-487s.png`, `shot-609s.png`.
+`shot-121s.png`, `shot-365s.png`, `shot-487s.png`, `shot-609s.png`. (v8 re-run:
+same 5-shot curation — title/how-to-play/ranking/attract-gameplay, coverage `demo`
+unchanged.)
 Anomalies: kb §4.v's G1 blindness for this title is **CLOSED** — see § Gate.
 
 ## Gate
 
-**No gate — un-parked 2026-08-07 (battery v7): ARAM re-keyed on content volume closes the last remaining region, but main and VRAM are both genuinely over cap, capping the memory axis at 12.4 (final 38.7, C).**
+**No gate — un-parked 2026-08-07 (battery v7): ARAM re-keyed on content volume closes the last remaining region; battery v8 re-keys VRAM on FB-masked content + 2×FB, which raises VRAM's sub-score but main RAM (still genuinely over cap) becomes the new binding region — memory axis 12.4 → 20.5, final 38.7 → 47.4 (B).**
 
-| Region | Peak (write-truth) | DC cap | u | Note |
+| Region | Peak / fit (write-truth) | DC cap | u | Note |
 |---|---|---|---|---|
-| Main RAM | 29,130,560 | 16,777,216 | 1.736 | nz_total 7,350,612 (3.87 MB changed below the cap, 3.14 MB above — `nz_above_cap = 3,289,898`; top nonzero 256 KB bucket at 27.75–28.0 MB); `dma_high_water = 0` (PIO-loaded, now measured via snapshot+diff instead); the write-truth peak matches the stale v5 CARTDMA-era watermark (29,130,560 B) almost exactly — those writes were real cart content, not BIOS residue |
-| VRAM (write-truth) | 16,279,552 | 8,388,608 | 1.941 | nz_total 9,283,220 · above cap 5,634,894 — the binding region (lowest sub-score, 12.4) |
-| ARAM (content volume, fill-excluded) | 1,604,876 | 2,097,152 | **0.765** | `content_total` (§6 volume-keyed, battery v7) — well under cap, sub-score 100.0, no longer the binding region; old content-high **address** was 8,257,552 (u=3.94, pre-v7 keying), same 8 B above the 2 MB line either way (`nz_above_cap = 8`; raw nz_above2m 32,768 B, the fill-exclusion doing real work). NOT the DMPD fill canary (that requires `nz_above_cap == 0x600000` exactly, kb §8/§4) |
+| Main RAM | 29,130,560 | 16,777,216 | 1.736 | nz_total 7,350,605 (v8 re-run, matches v7's 7,350,612 within run-to-run noise; 3,289,898 B above cap); `dma_high_water = 0` (PIO-loaded, measured via snapshot+diff); write-truth peak reproduces **bit-identically** to v7 — now the binding region (sub-score 20.5, lowest of the three) |
+| VRAM (FB-masked content + 2×FB) | 10,029,755 (content_total 8,800,955 + 2×fb_bytes 1,228,800) | 8,388,608 | **1.196** | battery v8 re-keying (this task, spec `2026-08-07-vram-fb-masking-design.md`): `fb_bytes` 614,400 B (exactly 640×480×2) — sub-score rises to 49.8 (was 12.4 under the old address high-water, 16,279,552 B, u=1.941, still genuinely over cap so not a full resolution, just no longer the worst region) |
+| ARAM (content volume, fill-excluded) | 1,604,876 | 2,097,152 | **0.765** | `content_total` (§6 volume-keyed, battery v7) — reproduces bit-identically in the v8 re-run; well under cap, sub-score 100.0, not the binding region; old content-high **address** was 8,257,552 (u=3.94, pre-v7 keying), same 8 B above the 2 MB line either way (`nz_above_cap = 8`; raw nz_above2m 32,768 B, the fill-exclusion doing real work). NOT the DMPD fill canary (that requires `nz_above_cap == 0x600000` exactly, kb §8/§4) |
 
 Streaming: `dma_events = 0` · `pio_bytes = 27,167,524` (~27 MB streamed via PIO over the
 600 s window — a lower bound; the counter (`CARTPIOCNT`) is cumulative from the first PIO
