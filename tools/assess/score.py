@@ -158,10 +158,22 @@ def score_sidecar(sc):
         sc["gate"] = "G1 broken: " + (sc["boot"].get("failure_class") or "no boot")
         _check_anchor(sc)
         return sc
-    vram_peak = sc["memory"]["vram"]["peak"]
-    bios_noise = BIOS_VRAM_SIGNATURES.get((vram_peak, sc["memory"]["vram"].get("nz_above_cap")))
+    vram = sc["memory"]["vram"]
+    vram_peak = vram["peak"]
+    bios_noise = BIOS_VRAM_SIGNATURES.get((vram_peak, vram.get("nz_above_cap")))
     if bios_noise is not None:
         vram_peak = min(vram_peak, CAPS["vram"])
+    # §6 checkpoint ruling 2 (2026-08-07, spec 2026-08-07-vram-fb-masking-design.md):
+    # VRAM keys on FB-masked content VOLUME plus a flat double-framebuffer
+    # budget — texture placement is a porting artifact (the ARAM v7 argument)
+    # and FB placement doubly so (chocomk parked its flip pair at/above the
+    # 8 MB line). Pre-v8 sidecars fall back to the raw address high-water;
+    # no volume<=address theorem exists here (unlike ARAM), but every
+    # measured sidecar satisfies content+2*fb < peak by a wide margin, so
+    # the fallback under-scores in practice (spec, stated honestly).
+    vram_ct, vram_fb = vram.get("content_total"), vram.get("fb_bytes")
+    vram_fit = vram_ct + 2 * vram_fb if (vram_ct is not None and vram_fb is not None) \
+               else vram_peak
     # v6: prefer the write-truth peak (MAINPROFILE snapshot+diff); legacy
     # pre-v6 sidecars fall back to the CARTDMA-dest high-water. A booted title
     # with NEITHER measured is a blind metric (PIO loader — gwing2, kb §4.v),
@@ -175,12 +187,14 @@ def score_sidecar(sc):
     # for pre-v7 sidecars can only under-score, never over-score.
     aram_ct = sc["memory"]["aram"].get("content_total")
     aram_fit = aram_ct if aram_ct is not None else sc["memory"]["aram"]["peak"]
-    peaks = {"vram": vram_peak, "aram": aram_fit}
+    peaks = {"vram": vram_fit, "aram": aram_fit}
     if main_peak:
         peaks["main"] = main_peak
     mem, gated = memory_axis(peaks)
     if mem is None:
-        metric = "content" if (gated == "aram" and aram_ct is not None) else "peak"
+        volume_keyed = {"aram": aram_ct is not None,
+                        "vram": vram_ct is not None and vram_fb is not None}
+        metric = "content" if volume_keyed.get(gated) else "peak"
         sc["gate"] = f"G3 memory: {gated} {metric} > 2x DC capacity"
         _check_anchor(sc)
         return sc

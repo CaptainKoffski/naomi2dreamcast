@@ -188,6 +188,56 @@ def test_aram_zero_volume_is_a_measurement_not_missing():
     assert sc["gate"] is None, sc["gate"]
     assert sc["scores"]["memory"] == 100.0, sc["scores"]
 
+def _vram_sc(vram):
+    # aram comfortably fits so the memory axis == the vram sub-score path
+    sc = _volume_sc({"peak": 1 * MB, "nz_above_cap": 0})
+    sc["set"] = "synth-vram"
+    sc["memory"]["vram"] = vram
+    return sc
+
+def test_vram_fb_masked_volume_scores():
+    # chocomk shape (spec motivating case): raw peak 13.5 MB (address-u 1.61,
+    # sub 25.6) but only ~2 MB of non-FB content. Volume keying: fit =
+    # 2,000,000 + 2*614,400 = 3,228,800 -> u 0.38 -> sub 100.
+    sc = _vram_sc({"peak": 13496860, "nz_above_cap": 3156395,
+                   "content_total": 2000000, "fb_bytes": 614400})
+    score.score_sidecar(sc)
+    assert sc["gate"] is None, sc["gate"]
+    assert sc["scores"]["memory"] == 100.0, sc["scores"]
+
+def test_vram_fb_budget_is_double():
+    # Pins the flat 2x multiplier (§6 ruling 2): content 5,800,000 + 2*614,400
+    # = 7,028,800 -> u 0.8379 -> 97.2. A 1x budget would give u 0.7647 -> 100.
+    sc = _vram_sc({"peak": 8 * MB, "nz_above_cap": 0,
+                   "content_total": 5800000, "fb_bytes": 614400})
+    score.score_sidecar(sc)
+    assert sc["scores"]["memory"] == 97.2, sc["scores"]
+
+def test_vram_volume_overflow_parks_with_content_message():
+    # Genuinely unfittable texture volume: 16 MiB + 1.2 MB FB budget -> u 2.07
+    # -> park, and the message says "content" (the gate keyed on volume).
+    sc = _vram_sc({"peak": 16 * MB, "nz_above_cap": 8 * MB,
+                   "content_total": 16 * MB, "fb_bytes": 614400})
+    score.score_sidecar(sc)
+    assert sc["gate"] == "G3 memory: vram content > 2x DC capacity", sc["gate"]
+
+def test_vram_no_content_falls_back_to_address():
+    # Pre-v8 sidecar (chocomk's committed shape): no content keys -> raw peak
+    # keys the axis exactly as today (sub 25.6). Fallback under-scores.
+    sc = _vram_sc({"peak": 13496860, "nz_above_cap": 3156395})
+    score.score_sidecar(sc)
+    assert sc["gate"] is None, sc["gate"]
+    assert sc["scores"]["memory"] == 25.6, sc["scores"]
+
+def test_vram_zero_volume_is_a_measurement_not_missing():
+    # content_total == 0 with fb_bytes == 0 must key the axis (u=0 -> 100),
+    # NOT fall back to the 13.5 MB address — `is not None`, not truthiness.
+    sc = _vram_sc({"peak": 13496860, "nz_above_cap": 3156395,
+                   "content_total": 0, "fb_bytes": 0})
+    score.score_sidecar(sc)
+    assert sc["gate"] is None, sc["gate"]
+    assert sc["scores"]["memory"] == 100.0, sc["scores"]
+
 if __name__ == "__main__":
     for n, f in sorted(globals().items()):
         if n.startswith("test_") and callable(f):
