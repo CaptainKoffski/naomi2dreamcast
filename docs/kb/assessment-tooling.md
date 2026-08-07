@@ -675,7 +675,7 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
    Evidence pair that forced the change: `chocomk`'s flip pair sits at/above the DC's
    8 MB line (`regs_last`: `fb_w_sof1=800000 fb_w_sof2=c00000 fb_r_sof1=c00000` —
    `assessments/chocomk.metrics.json`, discussed in `assessments/chocomk.md` §4/§9)
-   with 3,156,395 of 3,169,579 nonzero VRAM bytes landing above cap; masked for FBs,
+   with 3,156,395 of 3,182,681 nonzero VRAM bytes landing above cap; masked for FBs,
    its real content volume is 2,631,542 B (fit-u 0.460) against a raw peak-u of 1.609 —
    the old metric was charging arcade FB placement, not game content. The
    phantom-`fb_w_sof2=0xc00000` finding: every one of the 26 pre-wave sidecars carries
