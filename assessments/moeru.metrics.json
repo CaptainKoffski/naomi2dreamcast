@@ -4,10 +4,10 @@
   "maker": "Altron",
   "year": "2002",
   "format": "GD-ROM",
-  "assessed": "2026-08-06",
+  "assessed": "2026-08-08",
   "versions": {
-    "flycast": "ebae3b513",
-    "battery": "5",
+    "flycast": "f014a410c",
+    "battery": "8",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -28,7 +28,9 @@
       "seen": true,
       "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/moeru/shot-060s.png",
@@ -51,17 +53,23 @@
   },
   "memory": {
     "main": {
+      "peak": 15728704,
+      "nz_total": 4868604,
+      "nz_above_cap": 0,
       "dma_high_water": 11237600
     },
     "vram": {
       "peak": 8066096,
-      "nz_total": 4523535,
+      "nz_total": 4533046,
       "nz_above_cap": 0,
-      "regs_last": "isp_base=400000 isp_limit=4968a0 ol_base=4c8b80 ol_limit=4969a0 fb_w_sof1=4e2000 fb_w_sof2=c00000 fb_r_sof1=e2000"
+      "regs_last": "isp_base=400000 isp_limit=4968a0 ol_base=4c8b80 ol_limit=4969a0 fb_w_sof1=4e2000 fb_w_sof2=c00000 fb_r_sof1=e2000",
+      "content_total": 4517500,
+      "fb_bytes": 614400
     },
     "aram": {
       "peak": 1509920,
-      "nz_above_cap": 0
+      "nz_above_cap": 0,
+      "content_total": 1413091
     }
   },
   "streaming": {
@@ -69,8 +77,9 @@
     "total_bytes": 208265216,
     "unique_bytes": 48766976,
     "reread_ratio": 0.7658,
-    "steady_mb_per_min": 19.926,
-    "short_window": false
+    "steady_mb_per_min": 19.93,
+    "short_window": false,
+    "pio_bytes": 1443136
   },
   "guts": {
     "code_bytes": 1441792,
@@ -620,12 +629,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 87.9,
-    "streaming": 55.1,
+    "memory": 89.7,
+    "streaming": 55.0,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 100.0,
-    "final": 81.6,
+    "final": 82.2,
     "tier": "S"
   }
 }
