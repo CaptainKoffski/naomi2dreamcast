@@ -4,10 +4,10 @@
   "maker": "Subtle Style",
   "year": "2008",
   "format": "cart",
-  "assessed": "2026-08-06",
+  "assessed": "2026-08-07",
   "versions": {
-    "flycast": "ebae3b513",
-    "battery": "5",
+    "flycast": "65f9f7857",
+    "battery": "7",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -28,7 +28,9 @@
       "seen": true,
       "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/ausfache/shot-060s.png",
@@ -51,26 +53,31 @@
   },
   "memory": {
     "main": {
+      "peak": 16349952,
+      "nz_total": 8000910,
+      "nz_above_cap": 0,
       "dma_high_water": 5065888
     },
     "vram": {
       "peak": 7892608,
-      "nz_total": 3691629,
+      "nz_total": 3699405,
       "nz_above_cap": 0,
       "regs_last": "isp_base=400000 isp_limit=481060 ol_base=4ac080 ol_limit=481160 fb_w_sof1=4ca000 fb_w_sof2=c00000 fb_r_sof1=ca000"
     },
     "aram": {
       "peak": 2097136,
-      "nz_above_cap": 0
+      "nz_above_cap": 0,
+      "content_total": 1561912
     }
   },
   "streaming": {
-    "dma_events": 459,
-    "total_bytes": 50223104,
-    "unique_bytes": 24778752,
-    "reread_ratio": 0.5066,
-    "steady_mb_per_min": 5.062,
-    "short_window": false
+    "dma_events": 458,
+    "total_bytes": 50184192,
+    "unique_bytes": 24739840,
+    "reread_ratio": 0.507,
+    "steady_mb_per_min": 5.055,
+    "short_window": false,
+    "pio_bytes": 1051200
   },
   "guts": {
     "code_bytes": 1048576,
@@ -623,12 +630,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 85.0,
+    "memory": 86.9,
     "streaming": 79.8,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 40.0,
-    "final": 79.1,
+    "final": 79.8,
     "tier": "A"
   }
 }

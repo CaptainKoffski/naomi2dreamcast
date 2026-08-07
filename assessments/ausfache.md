@@ -1,5 +1,42 @@
 # Akatsuki Blitzkampf Ausf. Achse (Japan) (841-0058C) (`ausfache`) — portability assessment
 
+> **Battery v7 aram-volume + main-write-truth re-run (2026-08-07): 79.8 (A)** — up from
+> v5's 79.1, tier unchanged. This title skipped v6 entirely (last real run was v5), so
+> two independent instrumentation changes land in the same run: (1) the §6 checkpoint
+> re-keys G3-ARAM on content **volume** — `content_total` = 1,561,912 B (u = 0.745, well
+> under the 2 MiB cap, sub-score 100.0 — ARAM is no longer close to binding); (2) main
+> RAM gets write-truth-measured for the first time (battery v6's MAINPROFILE
+> snapshot+diff, landed between v5 and v7) and reveals genuine near-cap usage invisible
+> to the old DMA-high-water accounting — write-truth peak **16,349,952 B (u = 0.9745,
+> sub-score 86.9)**, now the *binding* region, vs. the v5 doc's DMA high-water of only
+> 5,065,888 B (u = 0.30, still reproduced below as an informational floor). VRAM
+> (7,892,608 B, u = 0.9409) reproduces bit-identically to v5. Net effect: memory axis
+> rises 85.0 → 86.9, final 79.1 → **79.8 (A)**. The v5/v2 sections' "everything fits but
+> sound" framing is now dated for main RAM specifically: that was a DMA-high-water blind
+> spot (kb §4.v family), not evidence main was lightly used — the write-truth figure
+> sits at 97.45% of the DC cap, the tightest fit in this doc.
+
+## v7 verdict & measurements
+
+| | |
+|---|---|
+| **Final** | **79.8 (A)** |
+| Coverage | demo (live attract gameplay in `shot-609s.png`, same evidence frame as v5) |
+| Assessed | 2026-08-06 · battery v5 · flycast `ebae3b513` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b`; aram-volume re-run 2026-08-07 · battery v7 · flycast `65f9f7857` |
+| Boot | ok=True · handoff 20.0 s (`trigger = "pio"`) · run 600 s · rom `naomi/ausfache.zip` |
+
+| Region | v7 peak | DC cap | u | Note |
+|---|---|---|---|---|
+| Main RAM (write-truth) | 16,349,952 | 16,777,216 | **0.9745** | nz_total 8,000,910 · above cap 0 · `dma_high_water` 5,065,888 (u=0.30, the old v5 scoring input — informational floor now the DMA counter never saw the rest) — **new binding region** |
+| VRAM (write-truth diff, post-handoff) | 7,892,608 | 8,388,608 | 0.9409 | nz_total 3,699,405 · 0 above cap (bit-identical to v5) |
+| ARAM (content volume, fill-excluded) | 1,561,912 | 2,097,152 | **0.745** | `content_total` (§6 volume-keyed, battery v7) — sub-score 100.0, no longer close to binding; old write-truth address peak 2,097,136 (u≈1.00, pre-v7 keying) unchanged |
+
+Streaming: 458 DMA events · total 50.2 MB · unique 24.7 MB · re-read 0.507 · steady 5.055 MB/min (matches v5 within run-to-run noise)
+Axes: memory 86.9 · streaming 79.8 · guts 85.0 · controls 100.0 · similarity 40.0 → **final 79.8 (A)**
+Screenshots: `evidence/ausfache/shot-060s.png` · `evidence/ausfache/shot-365s.png` · `evidence/ausfache/shot-609s.png`
+
+## Historical: battery v5 measurements (superseded by v7 above)
+
 > **Battery v5 re-assessment (2026-08-06): **79.1 (A)**.**
 > v4's 58.4 (B) charged the game for 40,664 B of VRAM above the DC cap at
 > `0x93e738` — proven to be the Naomi BIOS boot-screen texture sheet (fonts +
