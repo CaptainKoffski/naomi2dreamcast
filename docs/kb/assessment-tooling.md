@@ -1,6 +1,6 @@
 # Assessment battery — tooling & reproducibility record
 
-Campaign version: **battery v6** (`BATTERY_VERSION = "6"` in `tools/assess/run_battery.py`; v3 §7, v4 §7, v5 §9, v6 §11).
+Campaign version: **battery v8** (`BATTERY_VERSION = "8"` in `tools/assess/run_battery.py`; v3 §7, v4 §7, v5 §9, v6 §11, v7 §6 item 6, v8 §6 item 7).
 This doc is the reproducibility record required before the campaign runs the 84-family
 queue in `assessments/QUEUE.md` — exact tool versions, invocation, env knobs, what each run
 produces/discards, the two calibration results that establish the battery is trustworthy,
@@ -12,7 +12,7 @@ and every troubleshooting lesson from Tasks 1–10 that cost real time. Method/f
 
 | Tool | Version / commit | Source |
 |---|---|---|
-| Instrumented Flycast fork | `9e882cbd2` at `../cleopatra/tools/flycast-src` | Cleopatra project's build, reused **as-is** — zero C++ changes made for this battery (see §2 GD-path finding below for why no `gdcartridge.cpp` patch was needed) |
+| Instrumented Flycast fork | `f014a410c` at `../cleopatra/tools/flycast-src` | v8 FB-masked VRAM content counters (spec `2026-08-07-vram-fb-masking-design.md`); v6 base `65f9f7857` |
 | Ghidra | `12.1.2_PUBLIC` (build `20260605`) | Installed per `../cleopatra/docs/kb/tooling.md` — no Homebrew cask exists; direct download: `curl -L https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_12.1.2_build/ghidra_12.1.2_PUBLIC_20260605.zip`, extracted to `../cleopatra/tools/ghidra_12.1.2_PUBLIC/` (gitignored) |
 | Java | OpenJDK, Ghidra requires 21+ | `brew install openjdk` (formula, no sudo); actual installed version this session: **26.0.1** (`java -version` → `openjdk version "26.0.1"`). `tools/assess/ghidra/run_guts.sh` prepends `/opt/homebrew/opt/openjdk/bin` to `PATH` before invoking `analyzeHeadless` |
 | MAME source (naomi.cpp reference) | `59e7c0b` at `../cleopatra/tools/mame` | Pinned checkout; `controls_extract.py` and every sidecar's `controls.sources` cite this exact commit — never a live/floating MAME checkout |
@@ -470,7 +470,8 @@ Backlog briefs queued for this checkpoint (2026-08-06, full context in each):
 gwing2/zerogu2 divergent pair) (the ruling's forcing pair became gwing2/takoron —
 item 6) — **landed 2026-08-07 as battery v7, §6 item 6.** Also
 queued: `docs/superpowers/specs/backlog-vram-fb-masking.md` (FB placement charged as
-VRAM usage — chocomk). Checkpoint-independent instrumentation work:
+VRAM usage — chocomk) — **landed 2026-08-07 as battery v8, §6 item 7.**
+Checkpoint-independent instrumentation work:
 `docs/superpowers/specs/backlog-main-ram-snapshot-diff.md` (PIO blindness §4.v +
 the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
 
@@ -655,6 +656,89 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
    DC port (a real, released 4× sound-data trim) raised — is now decidable against
    this measured volume distribution instead of the old address figures. Explicitly
    left **open**: this is the next §6 ruling, not part of this change.
+
+7. **VRAM gate + axis re-keyed on FB-masked content volume — ruling landed (2026-08-07,
+   battery v8).** Design: `docs/superpowers/specs/2026-08-07-vram-fb-masking-design.md`.
+   Ruling (user, 2026-08-07 brainstorm): the VRAM `u > 2.0` G3 park *and* the
+   memory-axis sub-score are now keyed on `fit = content_total + 2 × fb_bytes` —
+   FB-masked content volume plus a flat double-framebuffer budget — instead of the raw
+   address high-water; pre-v8 sidecars lacking `content_total`/`fb_bytes` fall back to
+   `peak` (fallback can only under-score, never over-score, so none of the other
+   already-assessed families needed a re-run — same posture as the ARAM v7 fallback,
+   item 6). `BIOS_VRAM_SIGNATURES`'s exact-match clamp is retired; an exact
+   `(peak, nz_above_cap)` match on a booted title now raises `MetricRegression`
+   instead (`tools/assess/score.py` — the `BIOS_VRAM_SIGNATURES` comment block and
+   the check beside it), same refusal posture as the ARAM DMPD canary (§7).
+   `BATTERY_VERSION` bumped "7" → "8". Second §6 semantics change under the checkpoint
+   opened 2026-08-07 (item 6).
+
+   Evidence pair that forced the change: `chocomk`'s flip pair sits at/above the DC's
+   8 MB line (`regs_last`: `fb_w_sof1=800000 fb_w_sof2=c00000 fb_r_sof1=c00000` —
+   `assessments/chocomk.metrics.json`, discussed in `assessments/chocomk.md` §4/§9)
+   with 3,156,395 of 3,169,579 nonzero VRAM bytes landing above cap; masked for FBs,
+   its real content volume is 2,631,542 B (fit-u 0.460) against a raw peak-u of 1.609 —
+   the old metric was charging arcade FB placement, not game content. The
+   phantom-`fb_w_sof2=0xc00000` finding: every one of the 26 pre-wave sidecars carries
+   this exact value in `regs_last`, including titles that never write there —
+   `ausfache`/`cleoftp`/`moeru` all carry it with `nz_above_cap = 0`
+   (`assessments/{ausfache,cleoftp,moeru}.metrics.json`) — a universal BIOS default
+   register value, not game-authored content, which is why masking is by extent
+   (`{FB_W_SOF1, FB_W_SOF2, FB_R_SOF1} & VRAM_MASK`, each spanning `[sof, sof +
+   fb_size)`) rather than a per-register budget that would overcharge every title on a
+   phantom buffer. Nine scored titles bind on VRAM, not the motivating brief's four
+   (design doc "Findings that reshaped the brief" §2): `chocomk`, `sgtetris`,
+   `gunsur2`, `marstv`, `illvelo`, `mamonoro`, `radirgyn`, `cleoftp`, `moeru`.
+
+   Measured fit-u distribution across all 10 wave sets (battery v8,
+   `assessments/*.metrics.json` → `memory.vram.{content_total,fb_bytes}`, `fit =
+   content_total + 2 × fb_bytes`, `u = fit / 8 MiB`): `ikaruga` content 498,525 B + fb
+   614,400 B ⇒ fit-u 0.206 (raw peak-u 0.898) → final 38.6 C, unchanged (anchor control
+   — main axis binds, not VRAM, exactly as predicted) · `chocomk` content 2,631,542 B +
+   fb 614,400 B ⇒ fit-u 0.460 (raw peak-u 1.609) → final 76.7 A, up from 52.5 B — the
+   motivating case, rank #6 → #5 (`assessments/RANKING.md`); new binding region is MAIN
+   (first write-truth measurement, sub 66.2), not VRAM · `sgtetris` content 8,800,955 B
+   + fb 614,400 B ⇒ fit-u 1.196 (raw peak-u 1.941) → final 47.4 B, up from 38.7 C; VRAM
+   still genuinely over cap, main becomes binding (sub 20.5) · `gunsur2` content
+   4,731,310 B + fb 614,400 B ⇒ fit-u 0.711 (raw peak-u 1.924) → final 30.0 C, down
+   from 33.4 C even though the VRAM sub rose (13.0→100): first-measurement main
+   write-truth peak 33,553,964 B lands 468 B under the `u > 2.0` park line (`u =
+   1.999972`), floors the axis at `AXIS_FLOOR` 10.0, and now binds — a v6 write-truth
+   first-measurement effect, not a v8 regression, flagged as a near-miss risk (main
+   peak 33,554,432 B = `0x2000000` would park) · `marstv` content 5,047,259 B + fb
+   614,400 B ⇒ fit-u 0.748 (raw peak-u 1.696) → final 47.6 B, up from 42.8 B; main
+   becomes binding (sub 28.0) · `illvelo` content 4,390,214 B + fb 614,400 B ⇒ fit-u
+   0.670 (raw peak-u 1.689) → final 34.7 C, down from 43.9 B (tier dropped) even though
+   VRAM rose (22.4→100); main write-truth peak lands on the exact `0x1F00040` shared
+   structure (sub 12.5, now binding) — item 3's fourth instance and first on a cart
+   title, see the "Update, battery v8" paragraph above, not repeated here · `mamonoro`
+   content 6,535,347 B + fb **917,760** B ⇒ fit-u 0.998 (raw peak-u 1.635) → final 47.8
+   B, up from 46.6 B; `fb_bytes` is not the 614,400 (640×480×2) constant every other
+   wave title carries — traced in the raw cartlog to a genuine, stable game-programmed
+   mode change (ROT270 free-scrolling shmup, consistent with a taller scroll buffer)
+   partway through the capture, not register garbage; main becomes binding (sub 26.1)
+   · `radirgyn` content 5,123,604 B + fb 614,400 B ⇒ fit-u 0.757 (raw peak-u 1.335) →
+   final 52.1 B, down from 55.9 B; main becomes binding (sub 30.8, first write-truth
+   measurement) · `moeru` content 4,517,500 B + fb 614,400 B ⇒ fit-u 0.685 (raw peak-u
+   0.962) → final 82.2 S, up from 81.6 S · `cleoftp` content 4,793,768 B + fb 614,400 B
+   ⇒ fit-u 0.718 (raw peak-u 0.975) → final 84.9 S, up from 84.8 S — anchor; raw VRAM
+   peak 8,181,717 B reproduced byte-identical to the pre-v8 (fork `65f9f7857`)
+   capture. Both anchors reproduce without park, validating the new fork build before
+   the wave (design doc ruling 3). Four of the ten wave sidecars (`illvelo`,
+   `mamonoro`, `radirgyn`, `moeru`) carry `assessed: "2026-08-08"` — the wave's serial
+   runs crossed midnight; no effect on scoring, and neither `RANKING.md` nor
+   `GAME_FORMATS.md` surfaces per-set assessed dates.
+
+   **Deferred:** the TA/ISP-OL structure budget stays out of the metric — a host-side
+   blind spot the fork's own sampler comment has documented since the earliest VRAM
+   write-truth profile, unchanged by this change: "in Flycast the TA parses display
+   lists into host-side structures and rendering happens on the host GPU, so ISP/OL
+   buffers and framebuffers never appear as vram-array content ... the real footprint
+   is `max(content high-water, TA_*_LIMIT, FB_W/R_SOF extents)`"
+   (`../cleopatra/tools/flycast-src/core/hw/naomi/naomi.cpp`,
+   `cartlog_vram_profile()`). The remaining §6 items stay open: item 1 (ARAM 2×
+   multiple), item 2 (streaming re-read penalty), item 3 (main high-water address vs.
+   content keying — advanced, not closed, by this same wave's fourth `0x1F00040`
+   instance above), and item 4 (controls-band question for proven pad ports).
 
 Rankings stay internally fair meanwhile — every game is measured by the same rules — but
 absolute scores near tier boundaries should be read with these two caveats in mind.

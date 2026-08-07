@@ -1,7 +1,8 @@
 # Backlog: mask framebuffer regions out of the VRAM write-truth peak
 
-**Status:** proposed 2026-08-06 (batch: DC-ported ★ assessments). Not started —
-checkpoint-adjacent (§6): collect more families first; chocomk is the motivating case.
+**Status:** LANDED 2026-08-07 as battery v8 — design
+`2026-08-07-vram-fb-masking-design.md`, kb §6 checkpoint entry records the
+ruling and wave results. Kept as the motivating brief.
 
 ## Goal
 
