@@ -7,7 +7,7 @@
   "assessed": "2026-08-07",
   "versions": {
     "flycast": "65f9f7857",
-    "battery": "6",
+    "battery": "7",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -54,7 +54,7 @@
   "memory": {
     "main": {
       "peak": 16252992,
-      "nz_total": 10537833,
+      "nz_total": 10537784,
       "nz_above_cap": 0,
       "dma_high_water": 11761888
     },
@@ -66,15 +66,16 @@
     },
     "aram": {
       "peak": 2094512,
-      "nz_above_cap": 0
+      "nz_above_cap": 0,
+      "content_total": 1963361
     }
   },
   "streaming": {
-    "dma_events": 894,
-    "total_bytes": 104912896,
+    "dma_events": 865,
+    "total_bytes": 102297600,
     "unique_bytes": 22827008,
-    "reread_ratio": 0.7824,
-    "steady_mb_per_min": 9.904,
+    "reread_ratio": 0.7769,
+    "steady_mb_per_min": 9.586,
     "short_window": false,
     "pio_bytes": 1049920
   },
@@ -626,12 +627,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 85.1,
-    "streaming": 68.0,
+    "memory": 86.8,
+    "streaming": 68.6,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 100.0,
-    "final": 84.0,
+    "final": 84.8,
     "tier": "S"
   }
 }

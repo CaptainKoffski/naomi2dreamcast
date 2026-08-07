@@ -1,5 +1,17 @@
 # Cleopatra Fortune Plus (GDL-0012) (`cleoftp`) — portability assessment
 
+> **Battery v7 aram-volume re-run (2026-08-07): 84.8 (S)** — anchor still validates; the
+> §6 checkpoint's ARAM volume-keying closes the last open scoring-semantics question.
+> Sidecar: flycast `65f9f7857`, battery 7. Main write-truth peak 16,252,992 B (u=0.969)
+> and VRAM peak 8,181,717 B (u=0.975) reproduce bit-identically to the v6 run below.
+> ARAM: `content_total` = 1,963,361 B (u = 0.936, §6 volume-keyed) vs. v6's content-high
+> address peak 2,094,512 B (u ≈ 0.999, pre-v7 keying) — same real sound bank, now scored
+> on bytes actually used rather than the highest touched address; sub-score rises from
+> ~85.0 to ~89.8, so VRAM becomes the binding region (86.8) instead of ARAM. Scores:
+> memory 86.8, streaming 68.6, guts 85.0, controls 100, similarity 100 → **final 84.8
+> (S), no park** — the control test (CLAUDE.md rule 2) holds; the anchor never gates,
+> exactly as required.
+
 > **Battery v6 re-run (2026-08-07): 84.0 (S)** — anchor validates; main RAM is write-truth measured for the first time.
 > Sidecar: flycast `65f9f7857`, battery 6. Main write-truth peak **16,252,992 B** (u = 0.969,
 > `nz_above_cap` = 0) from the fork's new MAINPROFILE/MAINHIST snapshot+diff pass, sitting
