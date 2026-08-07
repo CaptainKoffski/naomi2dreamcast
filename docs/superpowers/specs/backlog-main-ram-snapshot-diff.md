@@ -1,6 +1,6 @@
 # Backlog: main-RAM write-truth via snapshot+diff
 
-**Status:** proposed 2026-08-06 (batch: DC-ported ★ assessments). Not started.
+**Status:** IMPLEMENTED 2026-08-07 — design docs/superpowers/specs/2026-08-06-main-ram-snapshot-diff-design.md, kb §11; sgtetris goldened, wave recorded.
 
 ## Goal
 

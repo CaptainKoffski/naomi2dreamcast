@@ -1,6 +1,6 @@
 # Assessment battery — tooling & reproducibility record
 
-Campaign version: **battery v5** (`BATTERY_VERSION = "5"` in `tools/assess/run_battery.py`; v3 §7, v4 §7, v5 §9).
+Campaign version: **battery v6** (`BATTERY_VERSION = "6"` in `tools/assess/run_battery.py`; v3 §7, v4 §7, v5 §9, v6 §11).
 This doc is the reproducibility record required before the campaign runs the 84-family
 queue in `assessments/QUEUE.md` — exact tool versions, invocation, env knobs, what each run
 produces/discards, the two calibration results that establish the battery is trustworthy,
@@ -470,7 +470,7 @@ Backlog briefs queued for this checkpoint (2026-08-06, full context in each):
 gwing2/zerogu2 divergent pair) and `docs/superpowers/specs/backlog-vram-fb-masking.md`
 (FB placement charged as VRAM usage — chocomk). Checkpoint-independent instrumentation
 work: `docs/superpowers/specs/backlog-main-ram-snapshot-diff.md` (PIO blindness §4.v +
-the v1 main-RAM limitation).
+the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
 
 1. **G3-ARAM threshold (2× cap) may be too aggressive.** Ikaruga's Naomi image loads a full
    8 MiB ARAM bank (4× DC's 2 MiB) at boot — yet its official 2002 DC port shipped inside
@@ -760,3 +760,93 @@ committed `tools/assess/calibration-goldens.json`.
   `python3 tools/assess/calibration.py --bless`, then review the JSON diff
   (every changed hash must be explained by the change) and commit.
 - Design + decisions: `docs/superpowers/specs/2026-08-06-calibration-guard-design.md`.
+
+## 11. Battery v6 (2026-08-07): main-RAM write-truth — the PIO blind spot closes
+
+§4.v recorded two faces of one instrumentation gap: sgtetris parked G1
+despite visibly running (zero `ARAMHANDOFF`/`CARTDMA` tags — a PIO-loading
+cart is invisible to a DMA-only handoff detector), and gwing2 fired a real
+`ARAMHANDOFF` but measured `main.dma_high_water = 0` with 1,344 DMA events —
+the main-RAM axis blind and one gate away from scoring 100 from nothing.
+Battery v6 (fork `65f9f7857`, `BATTERY_VERSION = "6"`) closes both. Design:
+`docs/superpowers/specs/2026-08-06-main-ram-snapshot-diff-design.md`; plan:
+`docs/superpowers/plans/2026-08-06-main-ram-snapshot-diff.md`. §4.v's
+RESOLVED paragraph already covers the sgtetris shape and golden test in
+detail — not repeated here.
+
+**The fix — unified bulk-transfer handoff.** The one-shot ARAM/VRAM/(new)
+MAIN baseline now latches at whichever fires first: the first `CARTDMA`, or
+cumulative PIO `ROM_DATA` reads crossing **32 KB**. Threshold evidence from
+chocomk's cartlog: BIOS-era `CARTPIO offset=00000000` header pokes are
+bytes-to-KB and fire thousands of lines before handoff, while a real PIO
+image load is MBs — any threshold in that gap works; 32 KB is the documented
+choice. Marker lines gained `trigger=dma|pio`; `parse_capture.py` latches
+`handoff` (and gates `MAINPROFILE` samples, mirroring the v5 pre-handoff
+fix, §9) off the marker itself rather than a DMA-specific tag, which is what
+makes PIO-only titles like sgtetris parseable at all — without the
+marker-latch, `boot_ok` stays False on PIO titles even with the fork fix in
+place. Two anchors considered and rejected: **PC-leaves-BIOS** (the Naomi
+BIOS relocates itself into low main RAM and runs from there —
+`pc=0c03184c` at chocomk cartlog line 1 — so "PC in RAM" fires long before
+game handoff) and **first-`CARTPIO`** (fires in the BIOS era on every title;
+only the cumulative threshold separates header pokes from a load).
+`score.py`'s guard (landed Task 1, before any fork work): an effective main
+peak of 0 on a booted title drops main from `memory_axis`'s min() and flags
+`scores["main_unmeasured"] = true` — renormalize-and-flag, never a
+fabricated u=0 → 100. `dma_high_water` is now **informational-only** from
+v6 on; `memory.main.peak` (write-truth) is what scores.
+
+**Scan cost.** The +32 MB diff rides the existing `cartlog_sample()` cadence
+(600 vblanks, ~10 s) unchanged — no new tick was added. cleoftp's v6
+timeline shows 74 `MAINPROFILE` samples over the 600 s capture, deltas
+10.0–11.1 s: the extra scan is invisible at the orchestrator level.
+
+**The PIO surprise.** Every title re-run under v6 — all 9, including every
+GD-ROM title — triggered `trigger=pio`, never `trigger=dma`. The GD DIMM
+firmware PIO-loads a ~1 MB boot segment (`pio_bytes` 1,049,920, byte-
+identical on cleoftp and ikaruga) before any cart DMA fires, so the unified
+handoff correctly fires on the PIO threshold even on DMA-capable titles.
+`trigger=dma` may never occur in practice on this campaign's title mix; the
+DMA path stays in the handoff logic as belt-and-braces, not dead code —
+cart-image (non-GD) titles that load purely via DMA remain a live case.
+
+**Wave results (9 titles, anchors → faces → cluster, per the design's
+validation ladder).** Anchors: cleoftp 84.0 S, unchanged, anchor validates —
+main write-truth 16,252,992 B (u = 0.969, `nz_above_cap` = 0) sits above the
+historical DMA floor (11,761,888 B) as expected (CPU writes now count);
+ARAM reproduced 2,094,512 B vs. the historical exact 2,097,152 B (−2,640 B,
+0.13%) — a baseline-race-at-last-ARM-reset run-variance caveat, not a
+regression (`nz_above_cap` still 0, ARAM code untouched by the fork diff,
+stable across 70/70 samples; documented rather than chased). ikaruga 38.6 C,
+un-parked (anchor rule holds) — main peak 32,505,920 B (u = 1.938,
+address-keyed) but `nz_above_cap` only 1,558,254 B, the wave's first
+address-vs-volume divergence on a DC-shipped anchor (mirrors §6 item 5).
+Faces: sgtetris is measured end-to-end for the first time and now parks on
+a real `G3 memory: aram` gate (see §4.v RESOLVED for the 8-byte-above-cap
+detail); gwing2's main axis is measured (u = 0.980, `nz_above_cap` = 0,
+watermark == write-truth byte-identical), resolving its doc's tension 2 —
+its ARAM G3 park stands, unrelated to this fix. Cluster (kurucham/ss2005/
+takoron/tetkiwam, re-running the four §6-item-3 GD titles): findings
+recorded in §6 item 3's own update, not repeated here — headline is that
+three titles (ikaruga, kurucham, ss2005) share a byte-identical main
+write-truth peak of 32,505,920 B (`0x1F00040`), a shared-structure signature
+candidate at `0x1F00000`–`0x1F0003F` that per §8 discipline needs a control
+run to prove (dragntr3 splash-only is the natural control — not done this
+wave) before it can be excluded like the ARAM DMPD fill (§7) or the BIOS
+VRAM logo (§8).
+
+**Standing decisions (user ruling, 2026-08-07).** Address-keyed main
+scoring stays for the entire v6 wave; the address-vs-volume re-keying
+question (mirrors the ARAM §6 item 1 debate) is deferred to the §6
+checkpoint once full-campaign data exists, not decided per-title mid-wave.
+The `DC_SHIPPED_ANCHORS` guard floor for ikaruga was recalibrated
+20.0 → 12.5 (commit `f530854`) to the legitimate v6 write-truth baseline —
+a guard-floor correction, not a weakening (§8's refuse-to-score posture
+stays; the anchor still must not park).
+
+**Deferred trap.** `run_battery.py` resets the hand-annotated
+`capture.coverage` field to `null` on every re-run (controls research
+carries forward per the v4 fix 4 precedent, §7; coverage does not) — hand-
+restored on all 6 re-run sidecars this wave. Candidate FIX for a future
+battery version; RUNBOOK's existing "set coverage" after-work step covers
+it procedurally in the meantime.
