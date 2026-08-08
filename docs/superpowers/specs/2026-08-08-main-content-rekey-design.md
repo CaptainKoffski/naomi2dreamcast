@@ -112,6 +112,24 @@ re-score makes `RANKING.md` uniformly one scorer version.
 - kb §6 gains the item-8 entry (this ruling); item 3 closes with a pointer
   here.
 
+## Addendum (2026-08-09): control-run prerequisite resolved by bound
+
+The ruling-3 control runs proved impossible in this library — the `dragntr`
+and `wccf` families were excluded by user ruling (net-medal / card-terminal
+platforms, not port targets; `wccf1dup`, tried as a pure-firmware GD control,
+is `emulator-exited` in Flycast), and the `zunou` v9 re-run showed the game
+boots to a static attract card, so it is not firmware-only (it also
+reproduced the §4.p `boot_ok` false-positive — scored 85.8 S before the
+screenshot check; override re-applied, freeze md5-identical to 2026-08-04).
+Replacement bound from committed sidecars (kb §6 item 8, "Prerequisite
+resolution"): firmware writes **zero** persistent above-cap main content on
+both media paths (six titles with `nz_above_cap = 0`: cleoftp/moeru GD,
+puyoda/zerogu2/ausfache/gwing2 cart — so `0x1F00040` is title-conditional,
+not universal firmware), and the sub-cap baseline is ≤ 2.70 MB (GD) /
+≤ 4.64 MB (cart) by per-path minimum `nz_total` — worst-case content-u
+inflation ≤ 0.16, conservative direction. Prerequisite satisfied; the adopt
+decision remains the user's.
+
 ## Done means (experiment scope)
 
 - `score.py` keys main on `nz_total` with the fallback chain; park message

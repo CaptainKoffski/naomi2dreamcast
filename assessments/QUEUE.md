@@ -27,9 +27,9 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `karous` — Karous (Japan) (GDL-0040) | `karous` | Shmup ★ (DC 2007) | 126.5 MB | done |
 | `trizeal` — Trizeal (Japan) (GDL-0026) | `trizeal` | Shmup ★ (DC 2005) | 129.4 MB | done |
 | `ausfache` — Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | ? | 75.4 MB | done |
-| `dragntr` — Dragon Treasure (Rev B) (GDS-0030B) | `dragntr`, `dragntra` | Medal | 142.3 MB | parked |
-| `dragntr2` — Dragon Treasure 2 (Rev A) (GDS-0037A) | `dragntr2` | Medal | 231.6 MB | parked |
-| `dragntr3` — Dragon Treasure 3 (Rev A) (GDS-0041A) | `dragntr3` | Medal | 290.1 MB | parked |
+| `dragntr` — Dragon Treasure (Rev B) (GDS-0030B) | `dragntr`, `dragntra` | Medal | 142.3 MB | parked; excluded (user 2026-08-09: net-medal family, not a port target) |
+| `dragntr2` — Dragon Treasure 2 (Rev A) (GDS-0037A) | `dragntr2` | Medal | 231.6 MB | parked; excluded (user 2026-08-09: net-medal family, not a port target) |
+| `dragntr3` — Dragon Treasure 3 (Rev A) (GDS-0041A) | `dragntr3` | Medal | 290.1 MB | parked; excluded (user 2026-08-09: net-medal family, not a port target) |
 | `gunsur2` — Gun Survivor 2 Biohazard Code: Veronica (World, BHF2 Ver.E) | `gunsur2` | Gun (3-axis) | 175.7 MB | done |
 | `inunoos` — Inu no Osanpo / Dog Walking (Japan, Export, Rev A) | `inunoos` | Simulation | 79.7 MB | parked |
 | `mamonoro` — Mamoru-kun wa Norowarete Shimatta! (Japan) | `mamonoro` | Shmup ★ | 146.1 MB | done |
@@ -77,16 +77,16 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `wldkicks` — World Kicks (World, WK2 Ver.A) | `wldkicks` | Sports | 74.3 MB | pending |
 | `wsbbgd` — World Series Baseball / Super Major League (GDS-0010) | `wsbbgd` | Sports | 157.8 MB | pending |
 | `mushik2e` — Mushiking The King Of Beetles - Mushiking II / III / III+ (Ver. 2.001) (World) | `mushik2e` | Card battle ⚠ | 72.8 MB | pending |
-| `wccf116` — World Club Champion Football Serie A 2001-2002 Ver.2 (Japan) (CDP-10001C) | `wccf116` | Football-card ⚠ | 349.9 MB | pending |
-| `wccf1dup` — World Club Champion Football Serie A 2001-2002 DIMM FIRM Ver.3.03 (CDP-10003) | `wccf1dup` | Football-card ⚠ | 1.0 MB | pending |
-| `wccf212e` — World Club Champion Football Serie A 2002-2003 Ver.2.12 (Italy) (CDV-10002) | `wccf212e` | Football-card ⚠ | 490.9 MB | pending |
-| `wccf234j` — World Club Champion Football Serie A 2002-2003 Ver.2.34 (Japan) (CDV-10008) | `wccf234j` | Football-card ⚠ | 521.5 MB | pending |
-| `wccf2chk` — World Club Champion Football Serie A 2002-2003 Drive Checker (CDV-10007) | `wccf2chk` | Football-card ⚠ | 103 KB | pending |
-| `wccf310j` — World Club Champion Football European Clubs 2004-2005 (Asia) (CDV-10013) | `wccf310j` | Football-card ⚠ | 662.8 MB | pending |
-| `wccf322e` — World Club Champion Football European Clubs 2004-2005 Ver.3.22 (Export) (CDV-10015P) | `wccf322e`, `wccf331e` | Football-card ⚠ | 638.4 MB | pending |
-| `wccf341j` — World Club Champion Football European Clubs 2004-2005 Ver.1.2 (Japan) (CDV-10021) | `wccf331j`, `wccf341j` | Football-card ⚠ | 704.3 MB | pending |
-| `wccf400j` — World Club Champion Football European Clubs 2005-2006 (Japan) (CDV-10025) | `wccf400j` | Football-card ⚠ | 784.3 MB | pending |
-| `wccf420e` — World Club Champion Football European Clubs 2005-2006 (Export) (CDV-10027) | `wccf420e` | Football-card ⚠ | 657.6 MB | pending |
+| `wccf116` — World Club Champion Football Serie A 2001-2002 Ver.2 (Japan) (CDP-10001C) | `wccf116` | Football-card ⚠ | 349.9 MB | excluded (user 2026-08-09: card-terminal family, not a port target) |
+| `wccf1dup` — World Club Champion Football Serie A 2001-2002 DIMM FIRM Ver.3.03 (CDP-10003) | `wccf1dup` | Football-card ⚠ | 1.0 MB | excluded (user 2026-08-09: card-terminal family, not a port target) |
+| `wccf212e` — World Club Champion Football Serie A 2002-2003 Ver.2.12 (Italy) (CDV-10002) | `wccf212e` | Football-card ⚠ | 490.9 MB | excluded (user 2026-08-09: card-terminal family, not a port target) |
+| `wccf234j` — World Club Champion Football Serie A 2002-2003 Ver.2.34 (Japan) (CDV-10008) | `wccf234j` | Football-card ⚠ | 521.5 MB | excluded (user 2026-08-09: card-terminal family, not a port target) |
+| `wccf2chk` — World Club Champion Football Serie A 2002-2003 Drive Checker (CDV-10007) | `wccf2chk` | Football-card ⚠ | 103 KB | excluded (user 2026-08-09: card-terminal family, not a port target) |
+| `wccf310j` — World Club Champion Football European Clubs 2004-2005 (Asia) (CDV-10013) | `wccf310j` | Football-card ⚠ | 662.8 MB | excluded (user 2026-08-09: card-terminal family, not a port target) |
+| `wccf322e` — World Club Champion Football European Clubs 2004-2005 Ver.3.22 (Export) (CDV-10015P) | `wccf322e`, `wccf331e` | Football-card ⚠ | 638.4 MB | excluded (user 2026-08-09: card-terminal family, not a port target) |
+| `wccf341j` — World Club Champion Football European Clubs 2004-2005 Ver.1.2 (Japan) (CDV-10021) | `wccf331j`, `wccf341j` | Football-card ⚠ | 704.3 MB | excluded (user 2026-08-09: card-terminal family, not a port target) |
+| `wccf400j` — World Club Champion Football European Clubs 2005-2006 (Japan) (CDV-10025) | `wccf400j` | Football-card ⚠ | 784.3 MB | excluded (user 2026-08-09: card-terminal family, not a port target) |
+| `wccf420e` — World Club Champion Football European Clubs 2005-2006 (Export) (CDV-10027) | `wccf420e` | Football-card ⚠ | 657.6 MB | excluded (user 2026-08-09: card-terminal family, not a port target) |
 | `kick4csh` — Kick '4' Cash (Export) | `kick4csh` | Gambling/medal ⚠ | 42.6 MB | pending |
 | `oinori` — Oinori-daimyoujin Matsuri | `oinori` | Gambling/medal ⚠ | 36.4 MB | pending |
 | `derbyo2k` — Derby Owners Club 2000 Ver.2 (Japan, Rev A) | `derbyo2k` | Horse-race sim ⚠ | 60.7 MB | pending |

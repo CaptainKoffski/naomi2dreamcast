@@ -814,6 +814,37 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
    work, not experiment work; per-title `assessments/*.md` prose still cites
    v≤8 verdicts until merge.
 
+   **Prerequisite resolution (2026-08-09): the control runs are replaced by a
+   sidecar-derived bound — no firmware-only control title exists in this
+   library.** All three candidates fell: the `dragntr` family was excluded by
+   user ruling (net-based medal platform, not a port target; dragntr/dragntr2
+   were never emulator-clean anyway — both park `emulator-exited`); the `wccf`
+   family likewise (card-terminal platform), and its non-game DIMM FIRM disc
+   `wccf1dup` — attempted as the purest GD-side control since its 1 MB payload
+   *is* firmware — parked `emulator-exited` on both legs, so no capture is
+   possible in Flycast (sidecar discarded, both families marked excluded in
+   `QUEUE.md`); and the `zunou` v9 re-run showed it is not firmware-only after
+   all — the game boots into a static attract card (§8 addendum update), so
+   its main figures contain game content. The replacement bound, from
+   committed sidecars alone:
+
+   - **Above-cap: firmware writes zero persistent above-cap main content on
+     both media paths.** Any unconditional firmware write above 16 MB would
+     appear in every title's post-handoff snapshot diff; `cleoftp` and `moeru`
+     (GD) and `puyoda`/`zerogu2`/`ausfache`/`gwing2` (cart) all carry
+     `nz_above_cap = 0`. Corollary: the `0x1F00040` structure is
+     title-conditional, not universal firmware behavior (absent on
+     cleoftp/moeru) — and costs ~64 B under v9 regardless.
+   - **Sub-cap: the shared firmware baseline is bounded by the per-path
+     minimum `nz_total`** — GD ≤ 2,703,775 B (kurucham), cart ≤ 4,637,168 B
+     (puyoda); loose bounds, since each includes that title's own game writes.
+     Worst-case content-u inflation ≤ 0.16, in the conservative direction
+     (inflates content, deflates scores), and no title sits within 0.16 of
+     the `u > 2` park line on main content (max: azumanga 1.025).
+   - Caveat: DIMM/BIOS firmware versions vary per title, so this bounds the
+     common floor, not each title's exact firmware share — but any per-title
+     excess is charged against that title, again the safe direction.
+
 Rankings stay internally fair meanwhile — every game is measured by the same rules — but
 absolute scores near tier boundaries should be read with these two caveats in mind.
 
@@ -914,6 +945,21 @@ add — never a number to hand-wave past.
 - zunou also shows the ARAM address-vs-content divergence (peak address 8 MB,
   content above cap 32,712 B) — more campaign-checkpoint evidence that the G3
   gate should weigh content, not high-address (§6).
+
+**v9 re-run (2026-08-09, §6 item 8 prerequisite work):** the cart-splash
+control was re-run under battery v9 for write-truth main data. Two findings.
+(1) **The §4.p false-positive reproduced**: automated `boot_ok` passed and
+the battery scored zunou **85.8 S** before the screenshot check; shots
+121–609 s are byte-identical md5 `79dd7b8c` — the *same md5 as 2026-08-04*,
+a fully deterministic freeze — and the G1 agent override was re-applied
+(sidecar now `versions.battery = "9"`). (2) **The frozen screen is the
+game's own static attract card** ("探求力" touch-prompt panel with FREE PLAY
+banners), not the NAOMI splash — zunou boots its game code and stalls, so it
+is NOT a firmware-only control: its `nz_total` 11,422,679 B / `nz_above_cap`
+9,082,662 B include game content. Consequence recorded in §6 item 8's
+prerequisite resolution; side lesson: a broken-boot title can out-write real
+games (11.4 MB on a static screen), so the G1-before-scoring discipline
+matters under v9 content keying exactly as it did under address keying.
 
 ## 9. Battery v5 (2026-08-06): the pre-handoff sampling hole — ausfache's 40,664 B was the BIOS boot-screen texture
 
