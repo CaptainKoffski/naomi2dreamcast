@@ -1,5 +1,11 @@
 # Mamoru-kun wa Norowarete Shimatta! (Japan) (841-0060C) (`mamonoro`) — portability assessment
 
+> **Battery v9 main-content re-score (2026-08-08): 76.7 (A), was 47.8 (B)** — scoring-only blanket re-score, no re-capture: every measurement
+> below is still the battery v8 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
+> EXPERIMENT branch `experiment/v9-main-content`): main now keys on write-truth content VOLUME instead of
+> the address peak — `nz_total` 12,939,092 B (content-u 0.771) replaces peak 26,807,247 B (u 1.598).
+> Memory axis 85.2, binding region now **vram** (was memory 26.1). Verdict section below is the capture-time (v≤8) record.
+
 > **Battery v8 vram-fb-masking re-run (2026-08-08): 47.8 (B)** — spec
 > `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
 > park, boot ok, PIO handoff at 20.0 s. Leg 1 hit an `emulator-exited` flake (Flycast

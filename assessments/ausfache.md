@@ -1,5 +1,11 @@
 # Akatsuki Blitzkampf Ausf. Achse (Japan) (841-0058C) (`ausfache`) — portability assessment
 
+> **Battery v9 main-content re-score (2026-08-08): 80.7 (S), was 79.8 (A)** — scoring-only blanket re-score, no re-capture: every measurement
+> below is still the battery v7 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
+> EXPERIMENT branch `experiment/v9-main-content`): main now keys on write-truth content VOLUME instead of
+> the address peak — `nz_total` 8,000,910 B (content-u 0.477) replaces peak 16,349,952 B (u 0.975).
+> Memory axis 89.4, binding region now **vram** (was memory 86.9). Verdict section below is the capture-time (v≤8) record.
+
 > **Battery v7 aram-volume + main-write-truth re-run (2026-08-07): 79.8 (A)** — up from
 > v5's 79.1, tier unchanged. This title skipped v6 entirely (last real run was v5), so
 > two independent instrumentation changes land in the same run: (1) the §6 checkpoint

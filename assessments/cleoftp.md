@@ -1,5 +1,11 @@
 # Cleopatra Fortune Plus (GDL-0012) (`cleoftp`) — portability assessment
 
+> **Battery v9 main-content re-score (2026-08-08): 85.8 (S), was 84.9 (S)** — scoring-only blanket re-score, no re-capture: every measurement
+> below is still the battery v8 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
+> EXPERIMENT branch `experiment/v9-main-content`): main now keys on write-truth content VOLUME instead of
+> the address peak — `nz_total` 10,537,734 B (content-u 0.628) replaces peak 16,252,992 B (u 0.969).
+> Memory axis 89.8, binding region now **aram** (was memory 87.3). Verdict section below is the capture-time (v≤8) record.
+
 > **Battery v8 vram-fb-masking re-run (2026-08-07): 84.9 (S)** — anchor control run for
 > the fork change; reproduces cleanly, no park (spec `2026-08-07-vram-fb-masking-design.md`).
 > Sidecar: flycast `f014a410c`, battery 8. Reproduction check vs. the v7 run below: main

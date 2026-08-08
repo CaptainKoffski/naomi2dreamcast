@@ -1,5 +1,11 @@
 # Illvelo (Illmatic Envelope) (Japan) (841-0059C) (`illvelo`) — portability assessment
 
+> **Battery v9 main-content re-score (2026-08-08): 79.8 (A), was 34.7 (C)** — scoring-only blanket re-score, no re-capture: every measurement
+> below is still the battery v8 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
+> EXPERIMENT branch `experiment/v9-main-content`): main now keys on write-truth content VOLUME instead of
+> the address peak — `nz_total` 8,294,066 B (content-u 0.494) replaces peak 32,505,920 B (u 1.938).
+> Memory axis 100.0, binding region now **vram** (was memory 12.5). Verdict section below is the capture-time (v≤8) record.
+
 > **Battery v8 vram-fb-masking re-run (2026-08-08): 34.7 (C)** — spec
 > `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
 > park, boot ok, PIO handoff at 20.0 s (v4 had 20.0 s too). **VRAM flips from address

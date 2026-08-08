@@ -1,5 +1,11 @@
 # Azumanga Daioh Puzzle Bobble (GDL-0018) (`azumanga`) — portability assessment
 
+> **Battery v9 main-content re-score (2026-08-08): 42.7 (B), was 35.8 (C)** — scoring-only blanket re-score, no re-capture: every measurement
+> below is still the battery v7 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
+> EXPERIMENT branch `experiment/v9-main-content`): main now keys on write-truth content VOLUME instead of
+> the address peak — `nz_total` 17,201,730 B (content-u 1.025) replaces peak 33,353,836 B (u 1.988).
+> Memory axis 16.3, binding region now **vram** (was memory 10.5). Verdict section below is the capture-time (v≤8) record.
+
 > **Battery v7 aram-volume + main-write-truth re-run (2026-08-07): 35.8 (C)** —
 > un-parked. This title skipped v6 entirely (last real run was v4), so two independent
 > instrumentation changes land in the same run: (1) the §6 checkpoint re-keys G3-ARAM on

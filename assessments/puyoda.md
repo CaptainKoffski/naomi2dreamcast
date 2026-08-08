@@ -1,5 +1,11 @@
 # Puyo Puyo Da! (Japan) (841-0006C) (`puyoda`) — portability assessment
 
+> **Battery v9 main-content re-score (2026-08-08): 81.9 (S), was 77.1 (A)** — scoring-only blanket re-score, no re-capture: every measurement
+> below is still the battery v8 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
+> EXPERIMENT branch `experiment/v9-main-content`): main now keys on write-truth content VOLUME instead of
+> the address peak — `nz_total` 4,637,168 B (content-u 0.276) replaces peak 16,515,012 B (u 0.984).
+> Memory axis 100.0, binding region now **vram** (was memory 86.2). Verdict section below is the capture-time (v≤8) record.
+
 ## 1. Verdict
 
 | | |

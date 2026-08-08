@@ -1,5 +1,18 @@
 # Touch De Zunou (Japan, Rev A) (840-0166C) (`zunou`) — portability assessment
 
+> **Battery v9 control re-run (2026-08-09): still parked — same gate, override re-applied.**
+> Re-run as the §6 item 8 cart-side firmware control (spec
+> `2026-08-08-main-content-rekey-design.md`, EXPERIMENT branch `experiment/v9-main-content`).
+> Three findings (kb §8 addendum): (1) the §4.p `boot_ok` false-positive REPRODUCED — the
+> battery scored zunou 85.8 S before the screenshot check; shots 121–609 s byte-identical
+> md5 `79dd7b8c`, the *same md5 as 2026-08-04* (fully deterministic freeze), G1 override
+> re-applied. (2) The frozen screen is the game's own static attract card ("探求力"
+> touch-prompt panel), not the NAOMI splash — zunou boots game code, so it is NOT a
+> firmware-only control; the §6 item 8 firmware question was answered by a sidecar-derived
+> bound instead. (3) First write-truth main data: `nz_total` 11,422,679 B / `nz_above_cap`
+> 9,082,662 B on a static screen — a broken-boot title can out-write real games, so the
+> G1-before-scoring discipline matters under v9 content keying too. Sidecar now battery "9".
+
 > **Battery v4 control run (2026-08-04): still parked — `G1 broken: frozen-splash-bad-dump`.**
 > Run deliberately as the cart-splash control for the BIOS-VRAM-signature work
 > (kb §8). Two findings: (1) it did NOT reproduce ausfache's small above-cap VRAM

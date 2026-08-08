@@ -1,5 +1,11 @@
 # Tetris Kiwamemichi (Japan) (GDL-0020) (`tetkiwam`) — portability assessment
 
+> **Battery v9 main-content re-score (2026-08-08): 82.9 (S), was 38.1 (C)** — scoring-only blanket re-score, no re-capture: every measurement
+> below is still the battery v6 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
+> EXPERIMENT branch `experiment/v9-main-content`): main now keys on write-truth content VOLUME instead of
+> the address peak — `nz_total` 8,643,391 B (content-u 0.515) replaces peak 32,508,220 B (u 1.938).
+> Memory axis 87.4, binding region now **aram** (was memory 12.5). Verdict section below is the capture-time (v≤8) record.
+
 > **Battery v6 cluster re-run (2026-08-07): **38.1 (C)** — this doc's own §9 clustering
 > flag is now ANSWERED.** v6 scores main RAM on the write-truth `peak` (`MAINPROFILE`
 > snapshot+diff) instead of `dma_high_water`; the old `dma_high_water` figure

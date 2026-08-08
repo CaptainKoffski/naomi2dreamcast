@@ -1,5 +1,11 @@
 # Senko no Ronde Special (Export, Japan) (GDL-0038) (`senkosp`) — portability assessment
 
+> **Battery v9 main-content re-score (2026-08-08): 36.6 (C), unchanged** — scoring-only blanket re-score, no re-capture: every measurement
+> below is still the battery v4 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
+> EXPERIMENT branch `experiment/v9-main-content`): main now keys on write-truth content VOLUME instead of
+> the address peak — but this v4 sidecar has no `nz_total`, so main falls back to the CARTDMA high-water 33,453,344 B (u 1.994); provably conservative (`nz_total <= peak+1`), re-run queued as adopt work.
+> Memory axis 10.2, binding region now **main** (was memory 10.2). Verdict section below is the capture-time (v≤8) record.
+
 > **Battery v4 re-assessment (2026-08-04): **36.6 (C)**.**
 > v2 parked it G3-aram via the DMPD fill artifact. v4: scored, demo coverage (arena gameplay in shot-609s).
 > Below the v4 section is the battery v2-era assessment: its *measured* figures

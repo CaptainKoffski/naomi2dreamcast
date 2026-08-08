@@ -1,5 +1,11 @@
 # Musapey's Choco Marker (Rev A) (GDL-0014A) (`chocomk`) — portability assessment
 
+> **Battery v9 main-content re-score (2026-08-08): 90.5 (S), was 76.7 (A)** — scoring-only blanket re-score, no re-capture: every measurement
+> below is still the battery v8 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
+> EXPERIMENT branch `experiment/v9-main-content`): main now keys on write-truth content VOLUME instead of
+> the address peak — `nz_total` 9,254,982 B (content-u 0.552) replaces peak 18,533,794 B (u 1.105).
+> Memory axis 100.0, binding region now **vram** (was memory 66.2). Verdict section below is the capture-time (v≤8) record.
+
 > **Battery v8 vram-fb-masking re-run (2026-08-07): 76.7 (A)** — first re-run since the
 > v5 baseline (fb8644d), so this catches up three §6 region-keying rulings at once: main
 > write-truth (v6), ARAM content-volume (v7), and VRAM FB-masked content + 2×FB (v8, this

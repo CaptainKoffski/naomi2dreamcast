@@ -1,5 +1,11 @@
 # Karous (Japan) (GDL-0040) (`karous`) — portability assessment
 
+> **Battery v9 main-content re-score (2026-08-08): 85.0 (S), was 37.0 (C)** — scoring-only blanket re-score, no re-capture: every measurement
+> below is still the battery v8 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
+> EXPERIMENT branch `experiment/v9-main-content`): main now keys on write-truth content VOLUME instead of
+> the address peak — `nz_total` 6,738,574 B (content-u 0.402) replaces peak 32,505,920 B (u 1.938).
+> Memory axis 100.0, binding region now **vram** (was memory 12.5). Verdict section below is the capture-time (v≤8) record.
+
 ## 1. Verdict
 
 | | |

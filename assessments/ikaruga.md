@@ -1,5 +1,11 @@
 # Ikaruga (GDL-0010) (`ikaruga`) — portability assessment
 
+> **Battery v9 main-content re-score (2026-08-08): 88.7 (S), was 38.6 (C)** — scoring-only blanket re-score, no re-capture: every measurement
+> below is still the battery v8 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
+> EXPERIMENT branch `experiment/v9-main-content`): main now keys on write-truth content VOLUME instead of
+> the address peak — `nz_total` 2,959,601 B (content-u 0.176) replaces peak 32,505,920 B (u 1.938).
+> Memory axis 100.0, binding region now **vram** (was memory 12.5). Verdict section below is the capture-time (v≤8) record.
+
 > **Battery v8 vram-fb-masking re-run (2026-08-07): 38.6 (C)** — anchor control run for
 > the fork change; reproduces cleanly, no park, final unchanged exactly as the design doc
 > predicted ("main 12.5 still binds") — spec `2026-08-07-vram-fb-masking-design.md`.
