@@ -95,15 +95,34 @@ def battery_of(sc):
     return "v" + sc.get("versions", {}).get("battery", "?")
 
 
-def main_above_cap(sc):
-    # Informational only (v9, §6 item 8): the score keys on total content volume;
-    # this column shows how much of it sits above the DC's 16 MB — bytes a port
-    # must trim or relocate (absolute pointers), the "portable with trim work"
-    # signal the final alone hides (karous 5.1 MB vs shikgam2 0.2 MB, both S).
-    b = sc["memory"]["main"].get("nz_above_cap")
-    if b is None:
-        return "?"
+def _mb(b):
     return "0" if b == 0 else f"{b / (1 << 20):.1f} MB"
+
+
+def region_work(sc, region):
+    """Informational 'work bytes' per region — what a port must fix to fit.
+    Semantics differ deliberately (the point of the v7/v8/v9 re-keys):
+      main: content ABOVE the 16 MB line (absolute pointers pin position ->
+            these bytes need relocation or trimming) = nz_above_cap.
+      aram: content VOLUME beyond 2 MB (banks relocate freely, v7 proof ->
+            only excess volume is work: downsample/ADPCM/stream).
+      vram: FB-masked fit beyond 8 MB (textures are TA-relative, v8 ->
+            excess volume is work: VQ-compress/mip-drop/page).
+    '?' = keying fields absent (pre-v6/v7/v8 sidecar) and the address peak
+    can't prove 0; a sub-cap peak does prove 0 (volume <= address)."""
+    m = sc["memory"][region]
+    if region == "main":
+        b = m.get("nz_above_cap")
+        return "?" if b is None else _mb(b)
+    cap = 2 << 20 if region == "aram" else 8 << 20
+    if region == "aram":
+        fit = m.get("content_total")
+    else:
+        ct, fb = m.get("content_total"), m.get("fb_bytes")
+        fit = ct + 2 * fb if ct is not None and fb is not None else None
+    if fit is not None:
+        return _mb(max(0, fit - cap))
+    return "0" if m["peak"] <= cap else "?"
 
 
 def ranking():
@@ -118,16 +137,19 @@ def ranking():
              "(title/calibration idle) — memory/streaming figures are lower bounds. "
              "Battery = the measuring battery version (`versions.battery`); scores are only "
              "comparable within a version — pre-v6 main figures are stale per the "
-             "re-assessment rule (kb §11). Main>16MB = write-truth main content above the "
-             "DC cap (`memory.main.nz_above_cap`) — informational, not scored: it bounds "
-             "the trim/relocation work a port needs even when the volume-keyed score is "
-             "high (? = pre-v6 sidecar, not measured).", "",
-             "| # | Game | Set | Final | Tier | Battery | Coverage | Mem | Main>16MB | Stream | Guts | Ctrl | Sim |",
-             "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+             "re-assessment rule (kb §11). Main>16MB / VRAM>8MB / ARAM>2MB = informational "
+             "'work bytes', not scored: what a port must fix per region — main is content "
+             "above the cap line (absolute pointers: relocate/trim), vram is FB-masked fit "
+             "beyond budget (VQ-compress/page), aram is content volume beyond budget "
+             "(downsample/stream); positions don't matter for vram/aram (v7/v8 rulings). "
+             "? = not measured by that sidecar's battery version.", "",
+             "| # | Game | Set | Final | Tier | Battery | Coverage | Mem | Main>16MB | VRAM>8MB | ARAM>2MB | Stream | Guts | Ctrl | Sim |",
+             "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for i, s in enumerate(scored, 1):
         sc = s["scores"]
         lines.append(f"| {i} | {s['title']} | [`{s['set']}`]({s['set']}.md) | **{sc['final']}** "
-                     f"| {sc['tier']} | {battery_of(s)} | {coverage_flag(s)} | {sc['memory']} | {main_above_cap(s)} "
+                     f"| {sc['tier']} | {battery_of(s)} | {coverage_flag(s)} | {sc['memory']} | {region_work(s, 'main')} "
+                     f"| {region_work(s, 'vram')} | {region_work(s, 'aram')} "
                      f"| {sc['streaming']} | {sc['guts']} | {sc['controls']} | {sc['similarity']} |")
     if parked:
         lines += ["", "## Parked", ""] + [
