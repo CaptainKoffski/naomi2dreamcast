@@ -95,6 +95,17 @@ def battery_of(sc):
     return "v" + sc.get("versions", {}).get("battery", "?")
 
 
+def main_above_cap(sc):
+    # Informational only (v9, §6 item 8): the score keys on total content volume;
+    # this column shows how much of it sits above the DC's 16 MB — bytes a port
+    # must trim or relocate (absolute pointers), the "portable with trim work"
+    # signal the final alone hides (karous 5.1 MB vs shikgam2 0.2 MB, both S).
+    b = sc["memory"]["main"].get("nz_above_cap")
+    if b is None:
+        return "?"
+    return "0" if b == 0 else f"{b / (1 << 20):.1f} MB"
+
+
 def ranking():
     scs = load_sidecars()
     scored = [s for s in scs.values() if s.get("scores")]
@@ -107,14 +118,17 @@ def ranking():
              "(title/calibration idle) — memory/streaming figures are lower bounds. "
              "Battery = the measuring battery version (`versions.battery`); scores are only "
              "comparable within a version — pre-v6 main figures are stale per the "
-             "re-assessment rule (kb §11).", "",
-             "| # | Game | Set | Final | Tier | Battery | Coverage | Mem | Stream | Guts | Ctrl | Sim |",
-             "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+             "re-assessment rule (kb §11). Main>16MB = write-truth main content above the "
+             "DC cap (`memory.main.nz_above_cap`) — informational, not scored: it bounds "
+             "the trim/relocation work a port needs even when the volume-keyed score is "
+             "high (? = pre-v6 sidecar, not measured).", "",
+             "| # | Game | Set | Final | Tier | Battery | Coverage | Mem | Main>16MB | Stream | Guts | Ctrl | Sim |",
+             "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for i, s in enumerate(scored, 1):
         sc = s["scores"]
         lines.append(f"| {i} | {s['title']} | [`{s['set']}`]({s['set']}.md) | **{sc['final']}** "
-                     f"| {sc['tier']} | {battery_of(s)} | {coverage_flag(s)} | {sc['memory']} | {sc['streaming']} "
-                     f"| {sc['guts']} | {sc['controls']} | {sc['similarity']} |")
+                     f"| {sc['tier']} | {battery_of(s)} | {coverage_flag(s)} | {sc['memory']} | {main_above_cap(s)} "
+                     f"| {sc['streaming']} | {sc['guts']} | {sc['controls']} | {sc['similarity']} |")
     if parked:
         lines += ["", "## Parked", ""] + [
             f"- [`{s['set']}`]({s['set']}.md) — {s['gate']} · {battery_of(s)} · coverage: {coverage_flag(s)}"
