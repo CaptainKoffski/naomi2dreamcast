@@ -81,7 +81,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Senko no Ronde (Japan, Rev A) (GDL-0030A) | `senko` | **GD-ROM** | parent | 241.0 MB | Shmup ★ | No | **36.1** C · [assessment](assessments/senko.md) |
 | Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | **GD-ROM** | parent | 237.7 MB | Shmup ★ | No | **36.6** C · [assessment](assessments/senkosp.md) |
 | Shakatto Tambourine Cho Powerup Chu (2K1 AUT) (GDS-0016) | `shaktamb` | **GD-ROM** | parent | 180.2 MB | Rhythm | No | not assessed |
-| Shikigami no Shiro II / The Castle of Shikigami II (GDL-0021) | `shikgam2` | **GD-ROM** | parent | 111.1 MB | Shmup ★ | Yes (2004) | not assessed |
+| Shikigami no Shiro II / The Castle of Shikigami II (GDL-0021) | `shikgam2` | **GD-ROM** | parent | 111.1 MB | Shmup ★ | Yes (2004) | **35.4** C · [assessment](assessments/shikgam2.md) |
 | Slashout (GDS-0004) | `slashout` | **GD-ROM** | parent | 137.4 MB | Beat-em-up | No | not assessed |
 | Spikers Battle (GDS-0005) | `spkrbtl` | **GD-ROM** | parent | 147.3 MB | Sports | No | not assessed |
 | Sports Jam (GDS-0003) | `sprtjam` | **GD-ROM** | parent | 124.4 MB | Sports | Yes (2001) | not assessed |

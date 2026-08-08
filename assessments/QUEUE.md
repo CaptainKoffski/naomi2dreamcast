@@ -23,7 +23,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `chocomk` — Musapey's Choco Marker (Rev A) (GDL-0014A) | `chocomk` | Puzzle ★ (DC 2002) | 68.5 MB | done |
 | `trgheart` — Trigger Heart Exelica Ver.A (Japan) (GDL-0036A) | `trgheart`, `trghearto` | Shmup ★ (DC 2007) | 91.6 MB | done |
 | `puyoda` — Puyo Puyo Da! (Japan) | `puyoda` | Puzzle ★ (DC 1999) | 111.0 MB | done |
-| `shikgam2` — Shikigami no Shiro II / The Castle of Shikigami II (GDL-0021) | `shikgam2` | Shmup ★ (DC 2004) | 111.1 MB | pending |
+| `shikgam2` — Shikigami no Shiro II / The Castle of Shikigami II (GDL-0021) | `shikgam2` | Shmup ★ (DC 2004) | 111.1 MB | done |
 | `karous` — Karous (Japan) (GDL-0040) | `karous` | Shmup ★ (DC 2007) | 126.5 MB | pending |
 | `trizeal` — Trizeal (Japan) (GDL-0026) | `trizeal` | Shmup ★ (DC 2005) | 129.4 MB | pending |
 | `ausfache` — Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | ? | 75.4 MB | done |
