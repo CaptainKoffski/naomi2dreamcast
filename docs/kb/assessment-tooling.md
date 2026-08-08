@@ -582,6 +582,9 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
    Sidecars: `assessments/{kurucham,ss2005,takoron,tetkiwam}.metrics.json`
    (`versions.battery = "6"`, `versions.flycast = "65f9f7857"`).
 
+   **Closing note (2026-08-08):** the content keying this item accumulated evidence
+   for is now the shipped rule (experiment branch) — see item 8.
+
 4. **ARAM-exact-fit as a DC-authoring signal; controls 50 may over-penalize proven pad
    ports (gunsur2, 2026-08-03).** `gunsur2` is the second ARAM-exact-fit data point after
    `tetkiwam` (peak exactly 2,097,152 B, `nz_above_cap = 0`) — both are titles with direct
@@ -751,6 +754,65 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
    multiple), item 2 (streaming re-read penalty), item 3 (main high-water address vs.
    content keying — advanced, not closed, by this same wave's fourth `0x1F00040`
    instance above), and item 4 (controls-band question for proven pad ports).
+
+8. **Main-RAM gate + axis re-keyed on write-truth content volume — ruled at the
+   30-family checkpoint (2026-08-08, battery v9, EXPERIMENT — branch
+   `experiment/v9-main-content`, not yet on main).** Design:
+   `docs/superpowers/specs/2026-08-08-main-content-rekey-design.md`. Ruling (user,
+   2026-08-08 checkpoint session): the main `u > 2.0` G3 park *and* the memory-axis
+   sub-score are now keyed on `memory.main.nz_total` (per-sample max of the full
+   snapshot-diff byte count — captured since v6, same per-sample-max discipline as
+   ARAM's `content_total`) instead of the write high-water *address* `peak`;
+   fallbacks `peak` → `dma_high_water`. Content bytes live in `[0, peak]` so
+   `nz_total ≤ peak + 1` — every fallback can only under-score (same theorem shape
+   as v7). Third §6 semantics change; **closes item 3** (evidence at close: five
+   exact `0x1F00040` instances incl. one cart; shikgam2 address-u 1.999 vs
+   213,556 B above-cap content; main binding 23/25 scored titles, 12 floored).
+   `BATTERY_VERSION` "8" → "9" (scoring-only: no fork change, no capture-format
+   change, sidecar schema unchanged).
+
+   Also ruled at the same checkpoint, from the full 30-family distributions:
+   **item 1 (ARAM 2× multiple) left intact** — the measured volume-u distribution
+   has an empty band 1.962 (zerogu2) … 3.02 (takoron); no threshold in the gap
+   changes any title's fate. **Item 2 (streaming re-read penalty) left intact** —
+   re-read ratios sit uniformly at 0.6–0.84 with no working-set-size correlation
+   (gwing2 2.9 MB unique: 0.73; mamonoro 53.3 MB: 0.61); a near-constant ~1-point
+   final offset, no distortion. **Item 4 (controls band for proven pad ports)
+   deferred** — only gunsur2 affected, no tier flip under either keying; the
+   fighter/light-gun cohort ahead will populate the bands with real data.
+   **`backlog-aram-p16-discount.md` stays parked** — evidence bar (≥3 titles)
+   unmet, still one (azumanga).
+
+   Results (blanket re-score of all 33 sidecars, no re-captures needed): 21/25
+   scored finals move, **no park flips in either direction**, both anchors
+   validate — cleoftp 84.9 → 85.8 S; ikaruga 38.6 C → 88.7 S with memory axis
+   100.0 (the old 12.5 was the `0x1F00040` placement artifact; guard-test floor
+   recalibrated 12.5 → 80.0). The DC-shipped ground-truth cohort decompresses out
+   of C exactly as porting reality says it should: karous 37.0 C → 85.0 S,
+   tetkiwam 38.1 C → 82.9 S, trgheart 40.0 B → 86.5 S, shikgam2 35.4 C → 87.7 S,
+   trizeal 37.7 C → 72.5 A, sgtetris 47.4 B → 67.6 A, chocomk 76.7 A → 90.5 S.
+   The 11-title C-band (34.7–38.6) spreads to 42.7–88.7; gunsur2's 468-byte
+   near-park (item 7 note) evaporates (content-u 0.901, 30.0 C → 73.0 A). VRAM
+   binds again where genuinely heavy (sgtetris 49.8, trizeal 63.6); v6/v7
+   sidecars without v8 VRAM fields now bind on the conservative VRAM address
+   fallback (ss2005 46.5 B, kurucham 45.8 B, azumanga 42.7 B — lower bounds until
+   re-run); senko/senkosp (v4, no main write-truth) fall back to `dma_high_water`
+   unchanged at 36.1/36.6 C. ARAM-bound cspike/zerogu2 unchanged by construction.
+
+   **Adopt-to-main prerequisites (§8 discipline, ruled with the experiment):**
+   splash-only control runs quantifying firmware-written main content —
+   `dragntr3` (GD natural control) **and a cart-side control** (`zunou`), since
+   the illvelo instance proves the structure is not GD-only. Firmware bytes
+   inflate `nz_total`, a conservative bias — the controls bound false precision,
+   not false unparks. Honest caveats recorded in the design doc: no
+   position-independence proof for main (absolute pointers; karous's shipped
+   port did a real ~5 MB trim — v9 is generous where a trim is real work);
+   `nz_total` has no uniform-fill exclusion (unlike ARAM's content counters);
+   tetkiwam's 7.27 MB above-cap content despite a DC build on its own disc says
+   stream-cache bytes count as content too. Stale-sidecar follow-up
+   (senko/senkosp v4 main; azumanga/kurucham/ss2005 v8 VRAM fields) is adopt
+   work, not experiment work; per-title `assessments/*.md` prose still cites
+   v≤8 verdicts until merge.
 
 Rankings stay internally fair meanwhile — every game is measured by the same rules — but
 absolute scores near tier boundaries should be read with these two caveats in mind.

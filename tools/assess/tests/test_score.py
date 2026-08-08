@@ -120,14 +120,15 @@ def test_main_unmeasured_never_100():
     assert sc["scores"]["main_unmeasured"] is True
     assert sc["scores"]["memory"] == 85.0, sc["scores"]   # min(vram, aram)
 
-def test_main_write_truth_preferred():
-    # v6 sidecar: memory.main.peak (write-truth) is the scored figure even
-    # when dma_high_water is 0 (PIO loader, now measured) — no flag.
+def test_main_content_preferred_over_address():
+    # v9 (spec 2026-08-08-main-content-rekey-design.md): shikgam2 shape — a
+    # write high-water ADDRESS that would park (u 2.06) but only 4 MB of
+    # write-truth content. Content keys the axis: u 0.25 -> 100, no flag.
     sc = {
-        "set": "synth-v6",
+        "set": "synth-v9",
         "boot": {"ok": True},
-        "memory": {"main": {"peak": 5 * MB, "nz_total": 4 * MB,
-                            "nz_above_cap": 0, "dma_high_water": 0},
+        "memory": {"main": {"peak": 34 * MB, "nz_total": 4 * MB,
+                            "nz_above_cap": 213556, "dma_high_water": 0},
                    "vram": {"peak": 6 * MB, "nz_above_cap": 0},
                    "aram": {"peak": 1 * MB, "nz_above_cap": 0}},
         "streaming": {"steady_mb_per_min": 2.0, "reread_ratio": 0.05},
@@ -137,9 +138,49 @@ def test_main_write_truth_preferred():
                        "cart_loader_match": False},
     }
     score.score_sidecar(sc)
-    assert sc["gate"] is None
+    assert sc["gate"] is None, sc["gate"]
     assert "main_unmeasured" not in sc["scores"], sc["scores"]
-    assert sc["scores"]["memory"] == 100.0, sc["scores"]  # all three regions fit
+    assert sc["scores"]["memory"] == 100.0, sc["scores"]
+
+def test_main_no_nz_total_falls_back_to_address():
+    # Pre-v6 shape: no nz_total -> write-truth peak keys the axis (legacy
+    # park message says "peak"). nz_total <= peak + 1, so this only
+    # under-scores.
+    sc = {
+        "set": "synth-legacy-main",
+        "boot": {"ok": True},
+        "memory": {"main": {"peak": 34 * MB, "nz_above_cap": 213556,
+                            "dma_high_water": 0},
+                   "vram": {"peak": 6 * MB, "nz_above_cap": 0},
+                   "aram": {"peak": 1 * MB, "nz_above_cap": 0}},
+        "streaming": {"steady_mb_per_min": 2.0, "reread_ratio": 0.05},
+        "guts": {"dat_available": False},
+        "controls": {"device_class": "stick"},
+        "similarity": {"developer_match": False, "sdk_overlap": "none",
+                       "cart_loader_match": False},
+    }
+    score.score_sidecar(sc)
+    assert sc["gate"] == "G3 memory: main peak > 2x DC capacity", sc["gate"]
+
+def test_main_volume_overflow_parks_with_content_message():
+    # 34 MB of real content: parks, and the message says "content" because
+    # the gate keyed on measured volume. (No real sidecar is close — max
+    # measured content-u is 1.025 — this pins the message wiring.)
+    sc = {
+        "set": "synth-main-overflow",
+        "boot": {"ok": True},
+        "memory": {"main": {"peak": 34 * MB, "nz_total": 34 * MB,
+                            "nz_above_cap": 17 * MB, "dma_high_water": 0},
+                   "vram": {"peak": 6 * MB, "nz_above_cap": 0},
+                   "aram": {"peak": 1 * MB, "nz_above_cap": 0}},
+        "streaming": {"steady_mb_per_min": 2.0, "reread_ratio": 0.05},
+        "guts": {"dat_available": False},
+        "controls": {"device_class": "stick"},
+        "similarity": {"developer_match": False, "sdk_overlap": "none",
+                       "cart_loader_match": False},
+    }
+    score.score_sidecar(sc)
+    assert sc["gate"] == "G3 memory: main content > 2x DC capacity", sc["gate"]
 
 def _volume_sc(aram):
     # main/vram comfortably fit so the memory axis == the aram sub-score path

@@ -15,7 +15,7 @@ BIN = os.environ.get("FLYCAST_BIN", os.path.join(
     CLEO, "tools/flycast-src/build/Flycast.app/Contents/MacOS/Flycast"))
 ASSESS = os.path.join(REPO, "assessments")
 OUT = os.path.join(HERE, "out")
-BATTERY_VERSION = "8"  # v8: VRAM keyed on FB-masked content VOLUME + flat 2x framebuffer budget (spec docs/superpowers/specs/2026-08-07-vram-fb-masking-design.md, second §6 ruling). Fork cartlog_vram_profile masks the sample-time FB regions ({FB_W_SOF1/2, FB_R_SOF1} x fb_size) out of new content_* counters and logs fb_bytes; sidecar gains memory.vram.content_total (max of per-sample below+above) + fb_bytes; score.py keys vram on content_total + 2*fb_bytes with raw-peak address fallback for pre-v8 sidecars; BIOS_VRAM_SIGNATURES clamp promoted to MetricRegression canary. Capture format changes (fork commit recorded in versions.flycast).
+BATTERY_VERSION = "9"  # v9: main keyed on write-truth content VOLUME (spec docs/superpowers/specs/2026-08-08-main-content-rekey-design.md, third §6 ruling — EXPERIMENT branch). Scoring-only: score.py keys main on memory.main.nz_total (captured since v6) with peak -> dma_high_water fallbacks; nz_total <= peak+1 so fallbacks only under-score. No fork change, no capture-format change, sidecar schema unchanged. v8 was: VRAM keyed on FB-masked content VOLUME + flat 2x framebuffer budget (spec 2026-08-07-vram-fb-masking-design.md).
 HANDOFF_TAGS = (b"ARAMHANDOFF", b"CARTDMA")
 # Sets whose disc/feature set is network-bound (netpic/WCCF/satellite — GAME_FORMATS.md
 # Completeness section). Drives the guts 'network' penalty (spec §4.3).

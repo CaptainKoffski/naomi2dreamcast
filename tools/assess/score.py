@@ -180,12 +180,21 @@ def score_sidecar(sc):
     vram_ct, vram_fb = vram.get("content_total"), vram.get("fb_bytes")
     vram_fit = vram_ct + 2 * vram_fb if (vram_ct is not None and vram_fb is not None) \
                else vram["peak"]
-    # v6: prefer the write-truth peak (MAINPROFILE snapshot+diff); legacy
-    # pre-v6 sidecars fall back to the CARTDMA-dest high-water. A booted title
-    # with NEITHER measured is a blind metric (PIO loader — gwing2, kb §4.v),
-    # not a zero-footprint game: drop the region from the min() (spec §4.3
-    # renormalize precedent) and flag it — u=0 must never fabricate a 100.
-    main_peak = sc["memory"]["main"].get("peak") or sc["memory"]["main"]["dma_high_water"]
+    # §6 item 8 / battery v9 (2026-08-08, spec
+    # 2026-08-08-main-content-rekey-design.md): main keys on write-truth
+    # content VOLUME (nz_total, per-sample max of the full snapshot-diff byte
+    # count) — the write high-water ADDRESS is a placement artifact (five
+    # exact 0x1F00040 instances incl. one cart; shikgam2: address-u 1.999 vs
+    # 213,556 B of above-cap content). Fallbacks: peak (v6 write-truth
+    # address), then dma_high_water (pre-v6). Content bytes live in
+    # [0, peak] so nz_total <= peak + 1 — every fallback can only
+    # under-score. `or` chain is safe: peak > 0 => nz_total >= 1, so a falsy
+    # value all the way down is the blind-metric case (PIO loader — gwing2,
+    # kb §4.v): drop the region from the min() (spec §4.3 renormalize
+    # precedent) and flag it — u=0 must never fabricate a 100.
+    main = sc["memory"]["main"]
+    main_ct = main.get("nz_total")
+    main_fit = main_ct or main.get("peak") or main["dma_high_water"]
     # §6 checkpoint ruling (2026-08-07, spec 2026-08-07-aram-gate-volume-design.md):
     # ARAM keys on compacted content VOLUME — OSB banks are position-independent
     # (azumanga live verification), so the high-water ADDRESS is a porting
@@ -194,12 +203,13 @@ def score_sidecar(sc):
     aram_ct = sc["memory"]["aram"].get("content_total")
     aram_fit = aram_ct if aram_ct is not None else sc["memory"]["aram"]["peak"]
     peaks = {"vram": vram_fit, "aram": aram_fit}
-    if main_peak:
-        peaks["main"] = main_peak
+    if main_fit:
+        peaks["main"] = main_fit
     mem, gated = memory_axis(peaks)
     if mem is None:
         volume_keyed = {"aram": aram_ct is not None,
-                        "vram": vram_ct is not None and vram_fb is not None}
+                        "vram": vram_ct is not None and vram_fb is not None,
+                        "main": main_ct is not None}
         metric = "content" if volume_keyed.get(gated) else "peak"
         sc["gate"] = f"G3 memory: {gated} {metric} > 2x DC capacity"
         _check_anchor(sc)
@@ -226,7 +236,7 @@ def score_sidecar(sc):
     sc["scores"] = {k: (round(v, 1) if v is not None else None) for k, v in axes.items()}
     sc["scores"]["final"] = f
     sc["scores"]["tier"] = tier(f)
-    if not main_peak:
+    if not main_fit:
         sc["scores"]["main_unmeasured"] = True
     return sc
 
