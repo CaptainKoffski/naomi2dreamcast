@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Final score** | **35.4** (C) |
-| Bottom line | Boots and demos cleanly; ARAM fits the DC cap even address-keyed and VRAM fits under v8 masking — but the memory axis floors at 10.0 on the main-RAM address peak: u=1.99903, **16,320 bytes under the G3 park line** (`0x1FFC040` vs `0x2000000`), the gunsur2 near-miss class, charged against only 213 KB of real above-cap content. Alfa System's own 2004 DC port (TATE, Extreme mode) is shipped proof the game fits 16 MB after a real downport. |
+| Bottom line | Boots and demos cleanly; ARAM fits the DC cap even address-keyed and VRAM fits under v8 masking — but the memory axis bottoms out at 10.0 on the main-RAM address peak: u=1.99903, **16,320 bytes under the G3 park line** (`0x1FFC040` vs `0x2000000`), the gunsur2 near-miss class, charged against only 213 KB of real above-cap content. Alfa System's own 2004 DC port (TATE, Extreme mode) is shipped proof the game fits 16 MB after a real downport. |
 | Assessed | 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
@@ -37,9 +37,9 @@ Anomalies: none.
 
 | Region | Peak / fit | DC capacity | Utilization | Sub-score | Evidence |
 |---|---|---|---|---|---|
-| Main RAM (write-truth) | 33,538,112 (`0x1FFC040`) | 16,777,216 | 1.99903 | 10.0 (floor, binding) | `MAINPROFILE`; 16,320 B under the `u > 2.0` park line |
+| Main RAM (write-truth) | 33,538,112 (`0x1FFC040`) | 16,777,216 | 1.99903 | 10.0 (binding) | `MAINPROFILE`; 16,320 B under the `u > 2.0` park line — the band value at this u, coinciding with `AXIS_FLOOR` |
 | VRAM (FB-masked content + 2×FB) | 4,556,188 (content_total 2,720,668 + 2×fb_bytes 917,760) | 8,388,608 | 0.543 | 100.0 | `VRAMPROFILE`; raw address peak 12,463,830 (u 1.486) is extent — 2,709,576 of 2,720,668 nonzero bytes sit above the 8 MB line (asset store parked high, the kurucham pattern) |
-| ARAM (content, volume-keyed) | 1,754,237 | 2,097,152 | 0.837 | 100.0 | `ARAMPROFILE`; address peak 2,046,288 — **fits even address-keyed** (0.976×) |
+| ARAM (content, volume-keyed) | 1,754,237 | 2,097,152 | 0.837 | 97.3 | `ARAMPROFILE`; address peak 2,046,288 — **fits even address-keyed** (0.976×) |
 
 **§6 checkpoint evidence, twice over:**
 1. **Main near-park (gunsur2 class):** address peak `0x1FFC040` lands u=1.99903 — the
