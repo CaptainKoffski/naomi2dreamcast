@@ -21,6 +21,11 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `gwing2` — Giga Wing 2 | `gwing2` | Shmup ★ (DC 2001) | 57.6 MB | done |
 | `cspike` — Cannon Spike / Gun Spike | `cspike` | Shmup ★ (DC 2000) | 63.6 MB | done |
 | `chocomk` — Musapey's Choco Marker (Rev A) (GDL-0014A) | `chocomk` | Puzzle ★ (DC 2002) | 68.5 MB | done |
+| `trgheart` — Trigger Heart Exelica Ver.A (Japan) (GDL-0036A) | `trgheart`, `trghearto` | Shmup ★ (DC 2007) | 91.6 MB | done |
+| `puyoda` — Puyo Puyo Da! (Japan) | `puyoda` | Puzzle ★ (DC 1999) | 111.0 MB | pending |
+| `shikgam2` — Shikigami no Shiro II / The Castle of Shikigami II (GDL-0021) | `shikgam2` | Shmup ★ (DC 2004) | 111.1 MB | pending |
+| `karous` — Karous (Japan) (GDL-0040) | `karous` | Shmup ★ (DC 2007) | 126.5 MB | pending |
+| `trizeal` — Trizeal (Japan) (GDL-0026) | `trizeal` | Shmup ★ (DC 2005) | 129.4 MB | pending |
 | `ausfache` — Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | ? | 75.4 MB | done |
 | `dragntr` — Dragon Treasure (Rev B) (GDS-0030B) | `dragntr`, `dragntra` | Medal | 142.3 MB | parked |
 | `dragntr2` — Dragon Treasure 2 (Rev A) (GDS-0037A) | `dragntr2` | Medal | 231.6 MB | parked |
@@ -98,3 +103,4 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 
 Excluded beyond official DC ports: `cleoftp` (reference — already fan-ported (`../cleopatra`)).
 Exception (2026-08-06, user request): the five smallest DC-ported ★ families (`sgtetris`, `zerogu2`, `gwing2`, `cspike`, `chocomk`) were pulled into the queue as reference/validation assessments — every never-on-DC ★ family was already done or parked, and GAME_FORMATS.md marks a `Yes` DC port as "not a reason to skip".
+Extension (2026-08-08, user request "next starred families to 30"): the next five smallest unassessed ★ families (`trgheart`, `puyoda`, `shikgam2`, `karous`, `trizeal` — all DC-ported, same rationale as the 2026-08-06 exception) pulled in to bring assessed families from 25 to the ~30 the kb §6 scoring-semantics checkpoint requires.
