@@ -2,7 +2,7 @@
 
 > **Battery v9 main-content re-score (2026-08-08): 67.6 (A), was 47.4 (B)** — scoring-only blanket re-score, no re-capture: every measurement
 > below is still the battery v8 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
-> EXPERIMENT branch `experiment/v9-main-content`): main now keys on write-truth content VOLUME instead of
+> adopted to main 2026-08-09): main now keys on write-truth content VOLUME instead of
 > the address peak — `nz_total` 7,350,605 B (content-u 0.438) replaces peak 29,130,560 B (u 1.736).
 > Memory axis 49.8, binding region now **vram** (was memory 20.5). Verdict section below is the capture-time (v≤8) record.
 

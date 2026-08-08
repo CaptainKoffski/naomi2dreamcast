@@ -756,8 +756,8 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
    instance above), and item 4 (controls-band question for proven pad ports).
 
 8. **Main-RAM gate + axis re-keyed on write-truth content volume — ruled at the
-   30-family checkpoint (2026-08-08, battery v9, EXPERIMENT — branch
-   `experiment/v9-main-content`, not yet on main).** Design:
+   30-family checkpoint (2026-08-08, battery v9; developed on branch
+   `experiment/v9-main-content`, ADOPTED — merged to main 2026-08-09).** Design:
    `docs/superpowers/specs/2026-08-08-main-content-rekey-design.md`. Ruling (user,
    2026-08-08 checkpoint session): the main `u > 2.0` G3 park *and* the memory-axis
    sub-score are now keyed on `memory.main.nz_total` (per-sample max of the full

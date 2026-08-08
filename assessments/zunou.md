@@ -2,7 +2,7 @@
 
 > **Battery v9 control re-run (2026-08-09): still parked — same gate, override re-applied.**
 > Re-run as the §6 item 8 cart-side firmware control (spec
-> `2026-08-08-main-content-rekey-design.md`, EXPERIMENT branch `experiment/v9-main-content`).
+> `2026-08-08-main-content-rekey-design.md`, adopted to main 2026-08-09).
 > Three findings (kb §8 addendum): (1) the §4.p `boot_ok` false-positive REPRODUCED — the
 > battery scored zunou 85.8 S before the screenshot check; shots 121–609 s byte-identical
 > md5 `79dd7b8c`, the *same md5 as 2026-08-04* (fully deterministic freeze), G1 override

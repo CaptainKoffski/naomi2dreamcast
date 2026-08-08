@@ -1,9 +1,10 @@
 # Design: main-RAM axis re-keyed on content volume (§6 item 3, battery v9)
 
-**Date:** 2026-08-08. **Status:** EXPERIMENT — ruled at the 30-family §6
-scoring-semantics checkpoint (user ruling, this session), implemented on
-branch `experiment/v9-main-content`, **not merged to main** until the user
-reviews the re-scored table and the adopt prerequisites below are met.
+**Date:** 2026-08-08. **Status:** ADOPTED — ruled at the 30-family §6
+scoring-semantics checkpoint (user ruling), developed on branch
+`experiment/v9-main-content`, **merged to main 2026-08-09** after user
+review of the re-scored table, the control-question resolution (see
+Addendum), and the RANKING work-columns/provenance additions.
 
 ## Goal
 
