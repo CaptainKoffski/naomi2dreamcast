@@ -544,6 +544,16 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
       materially new, since the stream-cache-placement hypothesis above rests on GD
       streaming and a cart title carrying the identical peak weakens it. The planned
       dragntr3 control run must NOT be scoped to GD titles only as a result.
+
+      **Fifth instance (2026-08-08, 30-family wave):** `karous` (GD-ROM,
+      `karous.metrics.json`) — same `0x1F00040` peak, and a DC-shipped title (the
+      last licensed DC release), so the compressed-score problem is now
+      ground-truth-visible: an officially ported game scores 37.0 C with the main
+      axis floored on the signature. Unlike illvelo, karous carries 5,092,992 B of
+      real content above the 16 MB cap, so content keying alone would not score it
+      as fitting — its shipped port proves a ~5 MB downport trim was the real work.
+      Same-engine determinism: karous's `dma_high_water` (27,289,280) and ARAM
+      address peak (2,097,136) are byte-identical to illvelo's v4 figures.
    3. **Address-keyed `u` compresses very different realities into the same score.** All
       three unparked GD titles land memory axis 12.5 (`u≈1.94`, main peak keyed to the
       shared-structure watermark) while their true above-cap changed content
