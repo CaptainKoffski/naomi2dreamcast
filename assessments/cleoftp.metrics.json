@@ -629,12 +629,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 87.3,
+    "memory": 89.8,
     "streaming": 68.0,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 100.0,
-    "final": 84.9,
+    "final": 85.8,
     "tier": "S"
   }
 }

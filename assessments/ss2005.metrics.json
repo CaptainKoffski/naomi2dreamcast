@@ -577,12 +577,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 12.5,
+    "memory": 20.1,
     "streaming": 76.1,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 70.0,
-    "final": 38.5,
-    "tier": "C"
+    "final": 46.5,
+    "tier": "B"
   }
 }

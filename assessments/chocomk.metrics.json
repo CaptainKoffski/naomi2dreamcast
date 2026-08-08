@@ -552,12 +552,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 66.2,
+    "memory": 100.0,
     "streaming": 76.5,
     "guts": 95.0,
     "controls": 100.0,
     "similarity": 70.0,
-    "final": 76.7,
-    "tier": "A"
+    "final": 90.5,
+    "tier": "S"
   }
 }
