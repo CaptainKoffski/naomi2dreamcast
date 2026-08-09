@@ -47,7 +47,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `alpilot` — Airline Pilots (World, Rev B) | `alpilot` | Driving | 41.3 MB | pending |
 | `f355twn2` — Ferrari F355 Challenge 2 - International Course Edition (twin/deluxe) | `f355twn2` | Driving | 104.7 MB | pending |
 | `wrungp` — Wave Runner GP | `wrungp` | Driving | 48.1 MB | pending |
-| `ggxx` — Guilty Gear XX (GDL-0011) | `ggxx` | Fighting | 250.2 MB | pending |
+| `ggxx` — Guilty Gear XX (GDL-0011) | `ggxx` | Fighting | 250.2 MB | done |
 | `ggxxac` — Guilty Gear XX Accent Core (Japan) (GDL-0041) | `ggxxac` | Fighting | 255.1 MB | pending |
 | `ggxxrl` — Guilty Gear XX #Reload (Japan, Rev A) (GDL-0019A) | `ggxxrl`, `ggxxrlo` | Fighting | 254.8 MB | pending |
 | `ggxxsla` — Guilty Gear XX Slash (Japan, Rev A) (GDL-0033A) | `ggxxsla` | Fighting | 249.6 MB | pending |
