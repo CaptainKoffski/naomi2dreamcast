@@ -4,10 +4,10 @@
   "maker": "G.Rev",
   "year": "2006",
   "format": "GD-ROM",
-  "assessed": "2026-08-04",
+  "assessed": "2026-08-09",
   "versions": {
-    "flycast": "4b59eceff",
-    "battery": "4",
+    "flycast": "f014a410c",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -28,7 +28,9 @@
       "seen": true,
       "t": 20.0,
       "aram_zeroed": true,
-      "vram_zeroed": true
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
     },
     "screenshots": [
       "assessments/evidence/senkosp/shot-060s.png",
@@ -51,26 +53,33 @@
   },
   "memory": {
     "main": {
+      "peak": 33554341,
+      "nz_total": 5850229,
+      "nz_above_cap": 4266292,
       "dma_high_water": 33453344
     },
     "vram": {
       "peak": 11897553,
-      "nz_total": 4055692,
+      "nz_total": 4067058,
       "nz_above_cap": 3017926,
-      "regs_last": "isp_base=400000 isp_limit=6200e0 ol_base=6d5680 ol_limit=6201e0 fb_w_sof1=6ea000 fb_w_sof2=c00000 fb_r_sof1=2ea000"
+      "regs_last": "isp_base=400000 isp_limit=6200e0 ol_base=6d5680 ol_limit=6201e0 fb_w_sof1=6ea000 fb_w_sof2=c00000 fb_r_sof1=2ea000",
+      "content_total": 3557968,
+      "fb_bytes": 614400
     },
     "aram": {
       "peak": 2097136,
-      "nz_above_cap": 0
+      "nz_above_cap": 0,
+      "content_total": 1348105
     }
   },
   "streaming": {
-    "dma_events": 178,
-    "total_bytes": 27908096,
+    "dma_events": 177,
+    "total_bytes": 27869184,
     "unique_bytes": 18317312,
-    "reread_ratio": 0.3437,
-    "steady_mb_per_min": 2.349,
-    "short_window": false
+    "reread_ratio": 0.3427,
+    "steady_mb_per_min": 2.344,
+    "short_window": false,
+    "pio_bytes": 1516856
   },
   "guts": {
     "code_bytes": 1515512,
@@ -577,12 +586,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 10.2,
-    "streaming": 87.8,
+    "memory": 100.0,
+    "streaming": 87.9,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 70.0,
-    "final": 36.6,
-    "tier": "C"
+    "final": 91.0,
+    "tier": "S"
   }
 }

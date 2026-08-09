@@ -4,9 +4,9 @@
 
 | | |
 |---|---|
-| **Final score** | **36.6 (C)** |
-| Bottom line | The 2006 arcade back-port of the X360 Rev.X set on the same engine as `senko`: ARAM no longer gates (fill-excluded content-high sits 16 B under the 2 MiB cap) but main RAM binds the memory axis at 10.2 through the conservative CARTDMA high-water fallback (1.99×, byte-identical to senko) — the v4 sidecar predates content-volume capture, so the fallback is provably conservative and a re-capture is queued; G.Rev's own Under Defeat DC port is the in-house precedent, and SP is the version the competitive scene actually plays. |
-| Assessed | capture 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| **Final score** | **91.0 (S)** |
+| Bottom line | The 2006 arcade back-port of the X360 Rev.X set on the same engine as `senko`: the fresh v9 capture replaces every v4 fallback with a measured content volume, and all three memory regions now clear the 0.80u full-score plateau — main write-truth content (0.349×), VRAM FB-masked content + double-framebuffer (0.571×), ARAM compacted content (0.643×) — pushing the memory axis from 10.2 to 100.0 and the final from 36.6 (C) to 91.0 (S), the largest single move of the ranking-groom campaign; G.Rev's own Under Defeat DC port is the in-house precedent, and SP is the version the competitive scene actually plays. |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -21,32 +21,34 @@
 
 ## 3. Boot & run evidence
 
-Boots: yes · handoff at 20.0 s · run 600 s · rom: `naomi/senkosp.zip` (single clean zip leg)
-Attract/demo reached: **demo** — arena gameplay in `shot-609s.png` (sidecar `capture.coverage = "demo"`).
-The v2 capture observed the full attract cycle (story text cards → 3D Rounder model
-showcase → three "DEMONSTRATION" fights drawing the SP control-panel diagram on screen,
-stick + five colored buttons M/S/C/A/OD with per-button tutorial popups → HISCORE
-RANKING → SP title screen → G.rev logo) — on-screen proof of the SP 5-button layout and
-the OverDrive system, cited by the controls research.
-Screenshots: `evidence/senkosp/shot-060s.png` · `evidence/senkosp/shot-304s.png` · `evidence/senkosp/shot-609s.png`
+Boots: yes · handoff at 20.0 s (`trigger = "pio"`) · run 600 s · rom: `naomi/senkosp.zip` (single clean zip leg)
+Attract/demo reached: **demo** — the v9 capture observed the full attract cycle again:
+story text card (`shot-060s.png`) → SP title logo (`shot-121s.png`) → in-game
+"DEMONSTRATION" fight drawing the SP control-panel diagram (stick + five colored buttons
+M/S/C/A/OD, sub-weapon tutorial popup — `shot-182s.png`) → credits cards → a second
+DEMONSTRATION fight with the OverDrive tutorial popup (`shot-487s.png`) → HISCORE RANKING
+(`shot-548s.png`) → loop restart. Sidecar `capture.coverage = "demo"`.
+Screenshots: `evidence/senkosp/shot-060s.png` · `evidence/senkosp/shot-121s.png` ·
+`evidence/senkosp/shot-182s.png` · `evidence/senkosp/shot-487s.png` ·
+`evidence/senkosp/shot-548s.png` (curated from 10)
 Anomalies: none — full rendering under the fork.
 
-## 4. Memory fit (axis: 10.2)
+## 4. Memory fit (axis: 100.0)
 
 | Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (CARTDMA high-water fallback — v4 sidecar has no `nz_total`) | 33,453,344 | 16,777,216 | 1.994 | 10.2 | **binding region** — byte-identical to `senko`'s campaign-heaviest figure; provably conservative under v9 keying (`nz_total <= peak+1`), content-volume re-capture queued as adopt work · watermark 33,554,341 is 1.003× the high-water, so the load is real content, not a scan artifact |
-| VRAM (write-truth address peak — pre-v8 sidecar, no `content_total`/`fb_bytes`) | 11,897,553 | 8,388,608 | 1.418 | 33.3 | nz_total 4,055,692 with 3,017,926 above the 8 MB line — address-extent pattern, relocation helps |
-| ARAM (fill-excluded content-high address, `peak` — pre-v7 sidecar, no `content_total`) | 2,097,136 | 2,097,152 | 1.000 | 85.0 | 16 B under the cap · `nz_above_cap` 0 — no longer the gate it was under v2's full-bank fill |
+| Main RAM (write-truth content volume, `nz_total`) | 5,850,229 | 16,777,216 | 0.3487 | 100.0 | address peak 33,554,341 (u 2.00, informational) · 4,266,292 nonzero above the 16 MB line · `dma_high_water` 33,453,344 is the pre-v6 fallback (u 1.994, sub-score 10.2 under v4) — now superseded, content <= peak+1 confirms it was provably conservative |
+| VRAM (FB-masked content volume + 2×framebuffer, `content_total` + 2×`fb_bytes`) | 4,786,768 | 8,388,608 | 0.5706 | 100.0 | content_total 3,557,968 · fb_bytes 614,400 (double-buffered → 1,228,800) — replaces the v4 address-peak fallback (peak 11,897,553, u 1.418, sub-score 33.3); raw write-truth peak still 11,897,553 (nz_total 4,067,058 · 3,017,926 above cap, informational) |
+| ARAM (compacted content volume, fill-excluded, `content_total`) | 1,348,105 | 2,097,152 | 0.6428 | 100.0 | address peak 2,097,136 (u 1.000, the v4 gated keying — 16 B under the cap) · `nz_above_cap` 0 — content volume shows comfortable headroom, not a near-miss |
 
 Watermarks (informational, content-scan — stale-data prone): main 33,554,341 ·
 vram 11,897,553 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
-## 5. Cart streaming (axis: 87.8)
+## 5. Cart streaming (axis: 87.9)
 
-DMA events 178 · total 27,908,096 B (26.6 MiB) · unique 18,317,312 B (17.5 MiB) ·
-re-read ratio 0.3437 · steady-state 2.349 MB/min (`short_window: false`) — roughly half
-of `senko`'s attract-mode volume.
+DMA events 177 · total 27,869,184 B (26.6 MiB) · unique 18,317,312 B (17.5 MiB) ·
+re-read ratio 0.3427 · steady-state 2.344 MB/min (`short_window: false`) · PIO 1,516,856 B —
+roughly half of `senko`'s attract-mode volume.
 
 ## 6. Guts (axis: 85.0)
 
@@ -69,28 +71,50 @@ Sources: MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS `naomi` (GAME line 11
 [LaunchBox GDB (added Overdrive + Barrage buttons)](https://gamesdb.launchbox-app.com/games/details/102475-senko-no-ronde-special);
 [arcadeitalia](http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=senkosp);
 our own v2 capture `shot-246s.png` (on-screen panel diagram M/S/C/A/OD — shot since
-superseded by the v4 curation, described in §3).
+superseded by the v9 curation; the same panel diagram is visible again in
+`shot-182s.png`/`shot-487s.png`, described in §3).
 
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 10.2^.40 · 87.8^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **36.6 (C)**
+      = 100.0^.40 · 87.9^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **91.0 (S)**
 Similarity inputs: developer no, SDK overlap partial, loader match yes. The developer
 false is the known reference-list artifact (the reference's `makers` list is
 Altron/Taito only) — same checkpoint note as `senko`/`illvelo`.
 
 ## 9. Risks & notes
 
-- **Main RAM 1.99× is the headline risk** — byte-identical to `senko` (see its Risks
-  section); the main watermark (1.003× the high-water) says the figure is real content.
-  The v4 sidecar has no write-truth `nz_total`, so v9 content keying cannot apply until
-  a re-capture — the current 10.2 is a conservative fallback, not a content verdict.
+- **All three memory regions now clear the 0.80u full-score plateau** — the fresh v9
+  capture replaces every v4 fallback with a measured content volume: main write-truth
+  `nz_total` 5,850,229 B (u 0.349) replaces the `dma_high_water` fallback (33,453,344 B,
+  u 1.994, sub-score 10.2 under v4); VRAM's FB-masked fit (`content_total` 3,557,968 +
+  2×`fb_bytes` 614,400 = 4,786,768 B, u 0.571) replaces the address-peak fallback
+  (11,897,553 B, u 1.418, sub-score 33.3); ARAM's `content_total` 1,348,105 B (u 0.643)
+  replaces the address-peak keying that had it sitting 16 B under the cap. Memory axis
+  10.2 → 100.0 is entirely fallback-replacement, not a capture change — see the
+  reproduction check below.
+- **Reproduction check (v4 → v9, a fresh capture, not a rescore)**: every raw counter
+  genuinely shared between the two sidecars reproduced either byte-identically or within
+  small, non-gating noise. Byte-identical: `dma_high_water` (33,453,344), VRAM `peak`
+  (11,897,553) and `nz_above_cap` (3,017,926), ARAM `peak` (2,097,136) and `nz_above_cap`
+  (0), the boot/handoff fields, all `guts` fields (code_bytes, functions, mmio_refs,
+  `carve_meta`, `flags`, all 500 `sdk_strings`), and `controls`/`similarity`. Moved within
+  noise: VRAM `nz_total` +11,366 B (+0.28%, the above-cap portion unchanged — extra
+  nonzero content landed below the 8 MB line), DMA events 178→177 (−1), streaming
+  `total_bytes` −0.14%, `reread_ratio` −0.29%, `steady_mb_per_min` −0.21% — all consistent
+  with attract/demo-loop phase drift between two independent 600 s captures five days
+  apart, not instrumentation regression; none of it moves any region across a scoring
+  breakpoint (all three sit at u ≤ 0.643, far under the 0.80 plateau edge).
 - **Whatever unparks `senko` unparks SP** — same engine build (SDK stack identical down
   to build dates), and SP is the set the competitive scene plays. G.Rev developed and
-  published its own Naomi→DC port (*Under Defeat*, DC 2006), so the heavy Naomi-side
-  footprint measures luxury, not intrinsic unportability — but the main-RAM load is real.
-- **VRAM is milder than the peak implies**: 4,055,692 B of nonzero content against an
-  11.9 MB address extent — the familiar high-parked asset store; a port would relocate.
+  published its own Naomi→DC port (*Under Defeat*, DC 2006); the content-volume keying
+  now shows the Naomi-side footprint fits the DC's memory map with headroom to spare on
+  every region, reinforcing that this is a luxury/placement question, not an intrinsic
+  unportability one.
+- **VRAM's address extent (11.9 MB, u 1.418 raw) is milder than it looks**: only
+  4,067,058 B of it is nonzero content, and the FB-masked keying (§4) already scores it
+  at u 0.571 — the raw peak is the familiar high-parked asset store; a port would
+  relocate it, but doesn't need to for the score.
 - **Versus play under Flycast is routine for this exact set**: Fightcade ships `senkosp`
   via Flycast Dojo (v0.4.13 release notes, links in §2) — netplay-grade emulation
   compatibility is community-proven, not inferred.
@@ -110,3 +134,4 @@ Altron/Taito only) — same checkpoint note as `senko`/`illvelo`.
 | v2 | 2026-08-03 | PARKED G3-ARAM | Full 8 MiB ARAM bank at boot read as 4.00× cap — the eighth boot-time full-bank park in the campaign tally; DIMM "DMPD" fill root-cause kb §7 |
 | v4 | 2026-08-04 | 36.6 (C) | Un-parked: the v4 content metric excludes the DIMM fill (content-high 16 B under cap); scored with demo coverage — kb §7 |
 | v9 | 2026-08-08 | 36.6 (C) | Scoring-only re-key (no re-capture): main keys on content volume, but this v4 sidecar has no `nz_total`, so main falls back to the CARTDMA high-water — provably conservative, re-run queued; spec `2026-08-08-main-content-rekey-design.md` |
+| v9 | 2026-08-09 | 91.0 (S) | ranking-groom chunk 5: fresh v9 capture (was v4) — all three v4 fallbacks replaced by measured content volume (main `nz_total` u 0.349, VRAM content+2×fb u 0.571, ARAM content_total u 0.643), memory axis 10.2→100.0, final 36.6 (C)→91.0 (S), new rank 1 |
