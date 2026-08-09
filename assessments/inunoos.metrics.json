@@ -4,10 +4,10 @@
   "maker": "Wow Entertainment / Sega",
   "year": "2001",
   "format": "cart",
-  "assessed": "2026-08-07",
+  "assessed": "2026-08-10",
   "versions": {
-    "flycast": "65f9f7857",
-    "battery": "7",
+    "flycast": "f014a410c",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -54,30 +54,32 @@
   "memory": {
     "main": {
       "peak": 33030208,
-      "nz_total": 9675761,
-      "nz_above_cap": 5268098,
+      "nz_total": 9680725,
+      "nz_above_cap": 5254903,
       "dma_high_water": 29180960
     },
     "vram": {
       "peak": 12845578,
-      "nz_total": 7080366,
-      "nz_above_cap": 4264328,
-      "regs_last": "isp_base=400000 isp_limit=4fc8a0 ol_base=550b80 ol_limit=4fc9a0 fb_w_sof1=56a000 fb_w_sof2=c00000 fb_r_sof1=16a000"
+      "nz_total": 7078984,
+      "nz_above_cap": 4262946,
+      "regs_last": "isp_base=400000 isp_limit=4fc8a0 ol_base=550b80 ol_limit=4fc9a0 fb_w_sof1=56a000 fb_w_sof2=c00000 fb_r_sof1=16a000",
+      "content_total": 6874244,
+      "fb_bytes": 614400
     },
     "aram": {
       "peak": 8257552,
-      "nz_above_cap": 4610037,
-      "content_total": 6597975
+      "nz_above_cap": 4734702,
+      "content_total": 6722778
     }
   },
   "streaming": {
     "dma_events": 2822,
-    "total_bytes": 132646272,
-    "unique_bytes": 28552064,
-    "reread_ratio": 0.7848,
-    "steady_mb_per_min": 12.15,
+    "total_bytes": 133334016,
+    "unique_bytes": 28994944,
+    "reread_ratio": 0.7825,
+    "steady_mb_per_min": 12.237,
     "short_window": false,
-    "pio_bytes": 101287928
+    "pio_bytes": 101422154
   },
   "guts": {
     "code_bytes": 2097152,
