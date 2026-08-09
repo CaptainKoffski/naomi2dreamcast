@@ -48,7 +48,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `f355twn2` — Ferrari F355 Challenge 2 - International Course Edition (twin/deluxe) | `f355twn2` | Driving | 104.7 MB | pending |
 | `wrungp` — Wave Runner GP | `wrungp` | Driving | 48.1 MB | pending |
 | `ggxx` — Guilty Gear XX (GDL-0011) | `ggxx` | Fighting | 250.2 MB | done |
-| `ggxxac` — Guilty Gear XX Accent Core (Japan) (GDL-0041) | `ggxxac` | Fighting | 255.1 MB | pending |
+| `ggxxac` — Guilty Gear XX Accent Core (Japan) (GDL-0041) | `ggxxac` | Fighting | 255.1 MB | done |
 | `ggxxrl` — Guilty Gear XX #Reload (Japan, Rev A) (GDL-0019A) | `ggxxrl`, `ggxxrlo` | Fighting | 254.8 MB | pending |
 | `ggxxsla` — Guilty Gear XX Slash (Japan, Rev A) (GDL-0033A) | `ggxxsla` | Fighting | 249.6 MB | pending |
 | `mbaa` — Melty Blood Actress Again Version A (Japan, Rev A) | `mbaa` | Fighting | 233.9 MB | pending |
