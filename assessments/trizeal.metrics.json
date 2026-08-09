@@ -4,10 +4,10 @@
   "maker": "Triangle Service",
   "year": "2004",
   "format": "GD-ROM",
-  "assessed": "2026-08-08",
+  "assessed": "2026-08-09",
   "versions": {
     "flycast": "f014a410c",
-    "battery": "8",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -54,7 +54,7 @@
   "memory": {
     "main": {
       "peak": 32548960,
-      "nz_total": 5725402,
+      "nz_total": 5725400,
       "nz_above_cap": 4102336,
       "dma_high_water": 27750592
     },
@@ -77,7 +77,7 @@
     "total_bytes": 129357824,
     "unique_bytes": 42684416,
     "reread_ratio": 0.67,
-    "steady_mb_per_min": 10.63,
+    "steady_mb_per_min": 10.623,
     "short_window": false,
     "pio_bytes": 1115456
   },
@@ -632,7 +632,7 @@
   "gate": null,
   "scores": {
     "memory": 63.6,
-    "streaming": 69.7,
+    "streaming": 69.8,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 70.0,

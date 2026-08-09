@@ -6,7 +6,7 @@
 |---|---|
 | **Final score** | **72.5 (A)** |
 | Bottom line | The wave's only title with genuine VRAM content pressure: FB-masked content + double framebuffer is 9.39 MB (u 1.119, sub-score 63.6) — the binding region even under content keying — while main (0.34×) and ARAM (0.30×) fit outright; Triangle Service's own 2005 DC port ships the game and proves the texture trim possible. |
-| Assessed | capture 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` (see History) |
 
 ## 2. Identity
 
@@ -30,23 +30,27 @@ Screenshots (5 kept of 10):
 - `evidence/trizeal/shot-426s.png` — attract gameplay: large explosion, twin beam lasers, GAME OVER
 - `evidence/trizeal/shot-548s.png` — RANK/SCORE/STAGE/NAME 20-row ranking table
 
-Anomalies: none.
+Anomalies: VRAM, ARAM, guts, controls, and screenshots reproduced byte-identical
+across the v8→v9 re-capture. Two counters moved by capture-timing noise only:
+main `nz_total` 5,725,402 → 5,725,400 B (−2 B) and streaming `steady_mb_per_min`
+10.630 → 10.623 MB/min (streaming sub-score 69.7 → 69.8). Neither moves the
+memory sub-score (still 63.6, VRAM-bound) or the final score (still 72.5 A).
 
 ## 4. Memory fit (axis: 63.6)
 
 | Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth content volume, `nz_total`) | 5,725,402 | 16,777,216 | 0.3413 | 100.0 | address peak 32,548,960 (u 1.940, informational — 43,040 B *past* the `0x1F00040` signature, near it but not equal, so NOT counted as an instance, kb §6 item 3) · `nz_above_cap` 4,102,336 · `dma_high_water` 27,750,592 (the §6 item 3 27–30 MB GD cluster band, informational-only from v6 on) |
+| Main RAM (write-truth content volume, `nz_total`) | 5,725,400 | 16,777,216 | 0.3413 | 100.0 | address peak 32,548,960 (u 1.940, informational — 43,040 B *past* the `0x1F00040` signature, near it but not equal, so NOT counted as an instance, kb §6 item 3) · `nz_above_cap` 4,102,336 · `dma_high_water` 27,750,592 (the §6 item 3 27–30 MB GD cluster band, informational-only from v6 on) |
 | VRAM (FB-masked content + 2×FB) | 9,386,488 (content_total 8,157,688 + 2×fb_bytes 614,400) | 8,388,608 | 1.119 | 63.6 | **binding region — genuine content pressure**: 8.16 MB of masked content, nz_total 8,666,757; the wave's only title over cap on content, not extent (raw address peak 16,478,358, u 1.964) |
 | ARAM (content volume, fill-excluded, `content_total`) | 632,368 | 2,097,152 | 0.3015 | 100.0 | address peak 2,097,136 — the exact illvelo/karous 16-under-2-MiB value, third instance, **second developer**: reads as a GD-era SDK/sound-driver allocation constant, not an engine quirk (kb §6 item 1) |
 
 Watermarks (informational, content-scan — stale-data prone): main 32,548,960 ·
 vram 16,478,358 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
-## 5. Cart streaming (axis: 69.7)
+## 5. Cart streaming (axis: 69.8)
 
 DMA events 1,704 · total 129,357,824 B (123.4 MB) · unique 42,684,416 B (40.7 MB) ·
-re-read ratio 0.6700 · steady-state 10.630 MB/min (`short_window: false`) ·
+re-read ratio 0.6700 · steady-state 10.623 MB/min (`short_window: false`) ·
 PIO bootstrap `pio_bytes` 1,115,456 B (the ~1 MB GD DIMM bootstrap; the wave's other GD
 titles carried ~2.1 MB).
 
@@ -70,7 +74,7 @@ Sources: MAME naomi.cpp @59e7c0b INPUT_PORTS `naomi`;
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 63.6^.40 · 69.7^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **72.5 (A)**
+      = 63.6^.40 · 69.8^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **72.5 (A)**
 Similarity inputs: developer match no, SDK overlap **partial**, cart loader match **yes** → 70.0.
 
 ## 9. Risks & notes
@@ -94,3 +98,4 @@ Similarity inputs: developer match no, SDK overlap **partial**, cart loader matc
 |---|---|---|---|
 | v8 | 2026-08-08 | 37.7 (C) | First assessment (FB-masked VRAM keying); main address-keyed peak 32.5 MB bound at u 1.940; genuine VRAM content pressure (fit-u 1.119) identified — kb §6 item 3 |
 | v9 | 2026-08-08 | 72.5 (A) | Scoring-only re-key (no re-capture): main keyed on content volume `nz_total` 5,725,402 B; binding region moved to VRAM — spec `2026-08-08-main-content-rekey-design.md` |
+| v9 | 2026-08-09 | 72.5 (A) | ranking-groom chunk 4: fresh v9 capture, provenance v8→v9 (scoring keys unchanged); main `nz_total` −2 B and streaming `steady_mb_per_min` 10.630→10.623 MB/min (streaming sub-score 69.7→69.8) — capture-timing noise only, final unchanged |
