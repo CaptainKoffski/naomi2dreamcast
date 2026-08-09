@@ -6,7 +6,7 @@
 |---|---|
 | **Final score** | **79.0 (A)** |
 | Bottom line | The final third-party Naomi cart (2009) fits main RAM and VRAM outright under content keying; ARAM content at 0.974× cap is the binding region — with the most direct precedent possible, the original Radirgy's official 2006 DC port proving this exact franchise's sound fits in 2 MiB. |
-| Assessed | capture 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Assessed | capture 2026-08-09 · battery v9 (fresh re-capture) · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — provenance v8→v9, scoring keys unchanged (see History) |
 
 ## 2. Identity
 
@@ -25,11 +25,20 @@ Boots: yes · handoff at 20.0 s (`trigger = "pio"`) · run 600 s · rom: `naomi/
 Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"`; the full attract
 cycle was observed across the battery shots: story cards (MAYUMI character art with
 dialogue boxes) → live gameplay demo across two stages (forest, city) with the
-vertizontal side-panel layout and the ABSnet visibly deployed → ranking table → title
-screen → loop wrap.
-Screenshots: `evidence/radirgyn/shot-060s.png` · `evidence/radirgyn/shot-365s.png` ·
-`evidence/radirgyn/shot-609s.png` (story-panel "INSERT COIN(S)" ×2, attract gameplay)
-Anomalies: none — renders fully under the fork.
+vertizontal side-panel layout and the ABSnet visibly deployed → ranking table →
+rank/credits card (RADIRGY NOA wordmark) → MILESTONE INC. logo → loop wrap.
+Screenshots: `evidence/radirgyn/shot-060s.png` (story card, "INSERT COIN(S)") ·
+`evidence/radirgyn/shot-304s.png` (live gameplay, forest stage) ·
+`evidence/radirgyn/shot-426s.png` (ranking table) ·
+`evidence/radirgyn/shot-487s.png` (rank/credits card, RADIRGY NOA wordmark) ·
+`evidence/radirgyn/shot-609s.png` (live gameplay, city stage)
+Anomalies: **fresh v9 capture reproduces v8 bit-exactly** — provenance v8→v9. Every
+scored field in the sidecar (memory: main `nz_total` 10,831,427, main peak
+24,850,767, VRAM `content_total` 5,123,604, ARAM `content_total` 2,041,920; streaming:
+`dma_events` 304, `total_bytes` 45,332,480, `unique_bytes` 14,110,720, `reread_ratio`
+0.6887, `steady_mb_per_min` 4.164, `pio_bytes` 2,099,776; guts: functions 2,361) is
+byte-identical to the v8 capture — a cleaner reproduction than illvelo's chunk-3
+re-run, which drifted by one boundary DMA transfer.
 
 ## 4. Memory fit (axis: 87.0)
 
@@ -45,7 +54,7 @@ vram 11,195,744 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 ## 5. Cart streaming (axis: 75.5)
 
 DMA events 304 · total 43.2 MB · unique 13.5 MB · re-read ratio 0.6887 ·
-steady-state 4.164 MB/min (`short_window: false`, bit-identical to v4) · PIO 2,099,776 B
+steady-state 4.164 MB/min (`short_window: false`, bit-identical to v4 and v9) · PIO 2,099,776 B
 
 ## 6. Guts (axis: 85.0)
 
@@ -103,3 +112,4 @@ contains only Altron / Taito) despite Milestone's in-franchise DC porting pedigr
 | v4 | 2026-08-04 | 55.9 (B) | Unparked by the v4 ARAM content metric; M4 guts gap closed 2026-08-06 via the `carve_boot.py` bit-30 fix + `rescore_static.py` (guts 85.0, similarity 40.0; kb §4.q) |
 | v8 | 2026-08-08 | 52.1 (B) | Re-capture. VRAM re-keyed on FB-masked content (sub 100.0) and ARAM measured by content volume for the first time; write-truth main 1.481× became binding (spec `2026-08-07-vram-fb-masking-design.md`) |
 | v9 | 2026-08-08 | 79.0 (A) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`); binding region moved to ARAM |
+| v9 | 2026-08-09 | 79.0 A | ranking-groom chunk 3: fresh v9 capture, provenance v8→v9 (scoring keys unchanged); full bit-exact reproduction — memory, streaming, and guts counters all unchanged from v8 |
