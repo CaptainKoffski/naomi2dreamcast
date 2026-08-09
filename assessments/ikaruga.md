@@ -6,7 +6,7 @@
 |---|---|
 | **Final score** | **88.7 (S)** |
 | Bottom line | The GD-ROM calibration control with an official 2002 DC port — under content keying every region fits with headroom (memory axis 100.0; the informational VRAM address peak at 0.898× cap is the closest approach), so the S rank chiefly confirms what the shipped DC port already proved; coverage is title-only because FREE PLAY suppresses the attract loop. |
-| Assessed | capture 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -32,8 +32,11 @@ attract content plays at any run length tried (360 s and 600 s, v2 finding).
 `capture.coverage = "title"`.
 Screenshots: `evidence/ikaruga/shot-060s.png` · `shot-304s.png` (calibration countdown,
 256 → 13) · `shot-365s.png` · `shot-609s.png` (title screen, the two blink states).
-Anomalies: none — reproduction across runs is bit-exact (v8 vs v6: main/VRAM/ARAM peaks
-identical to the byte, only the blink-state screenshot alternates).
+Anomalies: none — reproduction across runs is bit-exact (v9 vs v8: main/VRAM/ARAM peaks
+identical to the byte — `main.peak` 32,505,920, `vram.peak` 7,535,232, `aram.peak`
+1,897,200 unchanged; only the blink-state screenshot alternates, this time actually
+toggling: `shot-609s.png` now differs from `shot-365s.png`, where the v8 pair happened
+to land on the same blink state).
 
 ## 4. Memory fit (axis: 100.0)
 
@@ -111,3 +114,4 @@ Similarity inputs: developer no, SDK overlap partial, loader match yes.
 | v6 | 2026-08-07 | 38.6 (C) | Main write-truth measured for the first time: address peak 32,505,920 (u 1.938) → sub 12.5 binds; B→C is the axis entering on a real measurement, not a regression; MAINHIST address-vs-volume finding logged for the §6 checkpoint (kb §6) |
 | v8 | 2026-08-07 | 38.6 (C) | Anchor control run for VRAM FB-masking: bit-identical reproduction; VRAM sub 92.6 → 100.0, ARAM 92.2 → 100.0, main 12.5 still binds — final unchanged, exactly as the design doc predicted (spec `2026-08-07-vram-fb-masking-design.md`) |
 | v9 | 2026-08-08 | 88.7 (S) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` 2,959,601 (u 0.176) — memory axis 100.0 (spec `2026-08-08-main-content-rekey-design.md`) |
+| v9 | 2026-08-09 | 88.7 S | ranking-groom chunk 1: fresh v9 capture, provenance v8→v9 (scoring keys unchanged) |
