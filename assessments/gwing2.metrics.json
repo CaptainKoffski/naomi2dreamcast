@@ -4,10 +4,10 @@
   "maker": "Takumi / Capcom",
   "year": "2000",
   "format": "cart",
-  "assessed": "2026-08-07",
+  "assessed": "2026-08-09",
   "versions": {
-    "flycast": "65f9f7857",
-    "battery": "7",
+    "flycast": "f014a410c",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -44,7 +44,7 @@
       "assessments/evidence/gwing2/shot-548s.png",
       "assessments/evidence/gwing2/shot-609s.png"
     ],
-    "coverage": "title",
+    "coverage": "demo",
     "watermarks_info": {
       "main": 16433920,
       "vram": 9692984,
@@ -62,7 +62,9 @@
       "peak": 8066048,
       "nz_total": 3444253,
       "nz_above_cap": 0,
-      "regs_last": "isp_base=0 isp_limit=f9060 ol_base=14c080 ol_limit=f9160 fb_w_sof1=16a000 fb_w_sof2=c00000 fb_r_sof1=56a000"
+      "regs_last": "isp_base=0 isp_limit=f9060 ol_base=14c080 ol_limit=f9160 fb_w_sof1=16a000 fb_w_sof2=c00000 fb_r_sof1=56a000",
+      "content_total": 2882036,
+      "fb_bytes": 614400
     },
     "aram": {
       "peak": 8372160,
@@ -71,11 +73,11 @@
     }
   },
   "streaming": {
-    "dma_events": 1370,
-    "total_bytes": 11223040,
+    "dma_events": 1369,
+    "total_bytes": 11214848,
     "unique_bytes": 3080192,
-    "reread_ratio": 0.7255,
-    "steady_mb_per_min": 1.159,
+    "reread_ratio": 0.7253,
+    "steady_mb_per_min": 1.158,
     "short_window": false,
     "pio_bytes": 57520864
   },
