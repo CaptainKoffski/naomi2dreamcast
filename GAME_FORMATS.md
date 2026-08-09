@@ -87,7 +87,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Sports Jam (GDS-0003) | `sprtjam` | **GD-ROM** | parent | 124.4 MB | Sports | Yes (2001) | not assessed |
 | Street Fighter Zero 3 Upper (Japan) (GDL-0002) | `sfz3ugd` | **GD-ROM** | parent | 112.1 MB | Fighting | No | not assessed |
 | Super Shanghai 2005 (Japan) (GDL-0031) | `ss2005o` | **GD-ROM** | clone of `ss2005` | 54.2 MB | Puzzle ★ | No | see [`ss2005`](assessments/ss2005.md) |
-| Super Shanghai 2005 (Japan, Rev A) (GDL-0031A) | `ss2005` | **GD-ROM** | parent | 63.1 MB | Puzzle ★ | No | **46.5** B · [assessment](assessments/ss2005.md) |
+| Super Shanghai 2005 (Japan, Rev A) (GDL-0031A) | `ss2005` | **GD-ROM** | parent | 63.1 MB | Puzzle ★ | No | **54.8** B · [assessment](assessments/ss2005.md) |
 | Tetris Kiwamemichi (Japan) (GDL-0020) | `tetkiwam` | **GD-ROM** | parent | 62.3 MB | Puzzle ★ | No | **87.5** S · [assessment](assessments/tetkiwam.md) |
 | The Maze of the Kings (GDS-0022) | `mok` | **GD-ROM** | parent | 140.0 MB | Light-gun | No | not assessed |
 | Trigger Heart Exelica (Japan) (GDL-0036) | `trghearto` | **GD-ROM** | clone of `trgheart` | 80.1 MB | Shmup ★ | Yes (2007) | see [`trgheart`](assessments/trgheart.md) |
