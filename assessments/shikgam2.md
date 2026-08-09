@@ -6,7 +6,7 @@
 |---|---|
 | **Final score** | **87.7 (S)** |
 | Bottom line | Under content keying everything fits: main RAM is 0.450× cap, VRAM 0.543× FB-masked, and ARAM — the binding region at 0.837× (sub-score 97.3) — fits even address-keyed; Alfa System's own 2004 DC port (TATE, Extreme mode) is shipped proof the game lives in DC budgets, and the old 35.4 was an address-peak floor artifact (16,320 B under the park line, charged against 213 KB of above-cap content). |
-| Assessed | capture 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -30,13 +30,17 @@ Screenshots (curated 5 of 10):
 - `assessments/evidence/shikgam2/shot-548s.png` — title: 式神の城 II logo, ©2001,2003 AlfaSystem, settings footer (GAME RANK NORMAL · C-BUTTON RAPID-OFF)
 - `assessments/evidence/shikgam2/shot-609s.png` — attract gameplay: boss fight, coin medals, bomb bubbles
 
-Anomalies: none.
+Anomalies: fresh v9 capture reproduces the v8 sidecar's memory *peaks* byte-identically
+(main 33,538,112 · vram 12,463,830 · aram 2,046,288) and streaming/controls/similarity
+blocks identically; main `nz_total` content volume drifted by 9 B (7,549,942 → 7,549,933,
+same u 0.4500) and `guts.functions`/`mmio_refs.g2ext` drifted by 1 (4,623→4,624 /
+144→143) — sub-threshold instrumentation noise, no axis sub-score changed.
 
 ## 4. Memory fit (axis: 97.3)
 
 | Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth content volume, `nz_total`) | 7,549,942 | 16,777,216 | 0.4500 | 100.0 | address peak 33,538,112 = `0x1FFC040` (u 1.99903, informational — 16,320 B under the `u > 2.0` park line, the gunsur2 near-miss class, kb §6 item 3) · nz_above_cap 213,556 · `dma_high_water` 11,754,048 (informational-only from v6 on) |
+| Main RAM (write-truth content volume, `nz_total`) | 7,549,933 | 16,777,216 | 0.4500 | 100.0 | address peak 33,538,112 = `0x1FFC040` (u 1.99903, informational — 16,320 B under the `u > 2.0` park line, the gunsur2 near-miss class, kb §6 item 3) · nz_above_cap 213,556 · `dma_high_water` 11,754,048 (informational-only from v6 on) |
 | VRAM (FB-masked content + 2×FB: 2,720,668 + 2×917,760) | 4,556,188 | 8,388,608 | 0.5432 | 100.0 | raw address peak 12,463,830 (u 1.486) is extent — 2,709,576 of 2,720,668 nonzero bytes sit above the 8 MB line (asset store parked high, the kurucham pattern) · `fb_bytes` 917,760 = 640×478 at 24bpp, 1,920-byte stride (the mamonoro value exactly, second 24bpp FB instance — not register garbage) |
 | ARAM (content volume, fill-excluded, `content_total`) | 1,754,237 | 2,097,152 | 0.8365 | 97.3 | **binding region** — address peak 2,046,288 **fits even address-keyed** (0.976×) |
 
@@ -53,8 +57,8 @@ front-loads its working set and barely touches the disc afterward.
 ## 6. Guts (axis: 85.0)
 
 Code 2,097,152 B (carve `base 0x8c020000`, entry `0x8c021000`, load entry at file offset
-8,388,608, header title "SHIKIGAMI NO SHIRO 2") · functions 4,623 · MMIO refs: scif 25,
-rtc 3, g2ext 144 · BIOS vector refs: {} · penalties: `eeprom_bios`+`serial`+`rtc` → −15.
+8,388,608, header title "SHIKIGAMI NO SHIRO 2") · functions 4,624 · MMIO refs: scif 25,
+rtc 3, g2ext 143 · BIOS vector refs: {} · penalties: `eeprom_bios`+`serial`+`rtc` → −15.
 
 ## 7. Controls (axis: 100.0)
 
@@ -94,3 +98,4 @@ Similarity inputs: developer no, SDK overlap partial, loader match yes.
 |---|---|---|---|
 | v8 | 2026-08-08 | 35.4 (C) | First assessment: main address peak `0x1FFC040` (u 1.99903, 16,320 B under the park line — gunsur2 near-miss class) floored the memory axis at 10.0 despite only 213,556 B of above-cap content — kb §6 item 3 |
 | v9 | 2026-08-08 | 87.7 (S) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` 7,549,942 (u 0.450) instead of the address peak; ARAM became binding (97.3) — spec `2026-08-08-main-content-rekey-design.md` |
+| v9 | 2026-08-09 | 87.7 S | ranking-groom chunk 1: fresh v9 capture, provenance v8→v9 (scoring keys unchanged) |

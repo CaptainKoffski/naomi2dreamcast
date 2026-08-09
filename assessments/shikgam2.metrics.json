@@ -4,10 +4,10 @@
   "maker": "Alfa System",
   "year": "2003",
   "format": "GD-ROM",
-  "assessed": "2026-08-08",
+  "assessed": "2026-08-09",
   "versions": {
     "flycast": "f014a410c",
-    "battery": "8",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -54,7 +54,7 @@
   "memory": {
     "main": {
       "peak": 33538112,
-      "nz_total": 7549942,
+      "nz_total": 7549933,
       "nz_above_cap": 213556,
       "dma_high_water": 11754048
     },
@@ -83,10 +83,10 @@
   },
   "guts": {
     "code_bytes": 2097152,
-    "functions": 4623,
+    "functions": 4624,
     "mmio_refs": {
       "rtc": 3,
-      "g2ext": 144,
+      "g2ext": 143,
       "scif": 25
     },
     "bios_refs": {},
