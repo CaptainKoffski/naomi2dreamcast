@@ -4,9 +4,9 @@
 
 | | |
 |---|---|
-| **Final score** | **81.9 (S)** |
+| **Final score** | **81.8 (S)** |
 | Bottom line | Everything fits with room to spare (content-u: main 0.276, VRAM 0.450, ARAM 0.727) — but porting is redundant: the DC retail build is the original, shipped ten days *before* the Naomi cart; the assessment's value is as a pipeline calibration point. |
-| Assessed | capture 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — fresh re-capture (provenance v8→v9, scoring keys unchanged; see History) |
 
 ## 2. Identity
 
@@ -22,23 +22,37 @@
 ## 3. Boot & run evidence
 
 Boots: yes · handoff at 20.0 s (`trigger=pio`) · run 600 s · rom: `naomi/puyoda.zip` (single clean zip leg)
-Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"`; attract cycle across the 10 shots: ranking screens (per-difficulty 甘口/中辛 variants) → title/mode select → live demo gameplay (STAGE 3, "7 CHAINS!", running score) → 3D dance-off scenes → 2D pixel-art ELLENA intro.
+Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"`; attract cycle across the 10 shots: copyright/press-start fade-in → title logo (ぷよぷよDA! featuring ELLENA System) → character vs-select cards → RANKING table (中辛 difficulty) → live demo gameplay (STAGE S, RULUE VS SATAN, running score) → 2P tutorial card → live demo gameplay (STAGE 2, TARA VS TARA, dance-off) → D's Station DS Vol.4 magazine ad (Compile promo).
 Screenshots kept (5 of 10):
-- `assessments/evidence/puyoda/shot-060s.png` — RANKING table (甘口 difficulty), character portraits
-- `assessments/evidence/puyoda/shot-304s.png` — attract gameplay: STAGE 3, MINO VS ELLENA, 7 CHAINS!, live score
-- `assessments/evidence/puyoda/shot-426s.png` — title: mode select (DANCE CHALLENGE / DANCE BATTLE), ©COMPILE 1994,1999
-- `assessments/evidence/puyoda/shot-548s.png` — 3D dance-off: ELLENA VS ARLE, STAGE 1, direction-prompt columns
-- `assessments/evidence/puyoda/shot-609s.png` — 2D pixel-art dance-lesson attract scene (Compile's ELLENA intro)
+- `assessments/evidence/puyoda/shot-060s.png` — copyright/press-start fade-in ("1994")
+- `assessments/evidence/puyoda/shot-121s.png` — title logo: ぷよぷよDA! featuring ELLENA System, press start
+- `assessments/evidence/puyoda/shot-243s.png` — RANKING table (中辛 difficulty), top-5 scores/stages
+- `assessments/evidence/puyoda/shot-304s.png` — attract gameplay: STAGE S, RULUE VS SATAN, live score 5,402,880
+- `assessments/evidence/puyoda/shot-609s.png` — D's Station DS Vol.4 magazine ad (Compile attract promo)
 
-Anomalies: none.
+Anomalies: −0.1 final (81.9→81.8) vs the prior (v8-provenance) sidecar is fresh-capture
+noise, not a memory-region change. Diffing the two committed sidecars, the only axis that
+moved is **streaming** (68.4→68.1): `dma_events` 1,708→1,689, `reread_ratio`
+0.6302→0.6484, `steady_mb_per_min` 12.358→12.24, `unique_bytes` 47,327,232→45,092,864
+(`total_bytes` roughly flat: 127,965,184→128,260,096). This is steady-state-window
+dilution — wall-clock capture timing lands the 480 s steady-state sampling window
+(t=120s→600s) at a slightly different phase of the game's cyclic attract/demo loop each
+run, shifting the first-seen-vs-repeat DMA mix without changing what data the title
+actually uses. The **memory** axis is exactly unchanged (100.0→100.0): VRAM
+`nz_above_cap` (2,945,767) and `content_total` (2,549,404) are byte-for-byte identical
+between the two sidecars; only the informational VRAM watermark shifted
+(13,140,656→13,045,760, ~95 KB — a different frame's write extent at the handoff instant)
+with no scoring effect. ARAM `content_total` moved 1,524,273→1,524,369 (+96 B, noise
+floor). `guts` (85.0), `controls` (100.0), and `similarity` (40.0) are byte-identical to
+the prior sidecar.
 
 ## 4. Memory fit (axis: 100.0)
 
 | Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth content volume, `nz_total`) | 4,637,168 | 16,777,216 | 0.276 | 100.0 | address peak 16,515,012 (u 0.984, informational) · nz_above_cap 0 — content fits outright · `dma_high_water` 16,187,360 |
-| VRAM (FB-masked content + 2×FB, `content_total + 2×fb_bytes`) | 3,778,204 (content 2,549,404 + 2×614,400) | 8,388,608 | 0.450 | 100.0 | address peak 13,140,656 (u 1.566) is extent, not content — FB pair sits at/above the 8 MB line (`fb_w_sof1=c00000 fb_r_sof1=800000`, the chocomk pattern) · nz_above_cap 2,945,767 |
-| ARAM (content volume, fill-excluded, `content_total`) | 1,524,273 | 2,097,152 | 0.727 | 100.0 | address peak 4,670,845 (u 2.227) vs `nz_above_cap = 4 B` — see below |
+| Main RAM (write-truth content volume, `nz_total`) | 4,636,679 | 16,777,216 | 0.276 | 100.0 | address peak 16,515,012 (u 0.984, informational) · nz_above_cap 0 — content fits outright · `dma_high_water` 16,187,360 |
+| VRAM (FB-masked content + 2×FB, `content_total + 2×fb_bytes`) | 3,778,204 (content 2,549,404 + 2×614,400) | 8,388,608 | 0.450 | 100.0 | address peak 13,045,760 (u 1.555) is extent, not content — FB pair sits at/above the 8 MB line (`fb_w_sof1=800000 fb_r_sof1=c00000`, the chocomk pattern) · nz_above_cap 2,945,767 |
+| ARAM (content volume, fill-excluded, `content_total`) | 1,524,369 | 2,097,152 | 0.727 | 100.0 | address peak 4,670,845 (u 2.227) vs `nz_above_cap = 4 B` — see below |
 
 No region binds — all three sub-scores are 100.0.
 **§6 checkpoint evidence — second sgtetris-class ARAM divergence:** the address peak
@@ -47,15 +61,16 @@ G3-parked this title on **4 bytes** of real content above the 2 MiB cap (sgtetri
 u=3.94). Volume keying (v7, kb §6 item 6) scores it correctly instead — this run was the
 first *fresh* assessment (not a re-run) where the v7 re-key visibly prevented a false park.
 Watermarks (informational, content-scan — stale-data prone): main 16,515,012 ·
-vram 13,140,656 · aram 8,388,608.
+vram 13,045,760 · aram 8,388,608.
 
-## 5. Cart streaming (axis: 68.4)
+## 5. Cart streaming (axis: 68.1)
 
-DMA events 1,708 · total 122.0 MB · unique 45.1 MB · re-read ratio 0.6302 ·
-steady-state 12.358 MB/min (`short_window: false`) · PIO 2,098,528 B.
-The 45.1 MB unique working set is the largest of its wave — music/voice streaming for
-a rhythm game; a DC port streams the same data from GD-ROM (and the DC original
-demonstrably did).
+DMA events 1,689 · total 122.3 MB · unique 43.0 MB · re-read ratio 0.6484 ·
+steady-state 12.24 MB/min (`short_window: false`) · PIO 2,098,528 B.
+The unique working set (43.0 MB this run) is the largest of its wave — music/voice
+streaming for a rhythm game; a DC port streams the same data from GD-ROM (and the DC
+original demonstrably did). Run-to-run swing on this axis (68.4→68.1) is steady-state
+window dilution — see §3 Anomalies.
 
 ## 6. Guts (axis: 85.0)
 
@@ -79,7 +94,7 @@ Sources: MAME naomi.cpp @59e7c0b INPUT_PORTS `naomi`;
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 100.0^.40 · 68.4^.20 · 85.0^.20 · 100.0^.10 · 40.0^.10 = **81.9 (S)**
+      = 100.0^.40 · 68.1^.20 · 85.0^.20 · 100.0^.10 · 40.0^.10 = **81.8 (S)**
 Similarity inputs: developer no, SDK overlap partial, loader match no.
 
 ## 9. Risks & notes
@@ -103,3 +118,4 @@ Similarity inputs: developer no, SDK overlap partial, loader match no.
 |---|---|---|---|
 | v8 | 2026-08-08 | 77.1 (A) | First assessment (fresh capture). ARAM address peak 2.23× would have G3-parked under pre-v7 address keying vs 4 B of above-cap content — first fresh title where the v7 volume re-key prevented a false park (kb §6 item 6); main write-truth address 0.984× binding |
 | v9 | 2026-08-08 | 81.9 (S) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`); memory axis 100.0, no region binding |
+| v9 | 2026-08-09 | 81.8 S | ranking-groom chunk 2: fresh v9 capture, provenance v8→v9 (scoring keys unchanged); −0.1 streaming noise |
