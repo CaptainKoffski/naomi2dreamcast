@@ -35,7 +35,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 
 | Title (MAME) | Shortname | Format | Set | Size | Genre | DC port | Status |
 |---|---|---|---|---|---|---|---|
-| Azumanga Daioh Puzzle Bobble (GDL-0018) | `azumanga` | **GD-ROM** | parent | 86.7 MB | Puzzle ★ | No | **42.7** B · [assessment](assessments/azumanga.md) |
+| Azumanga Daioh Puzzle Bobble (GDL-0018) | `azumanga` | **GD-ROM** | parent | 86.7 MB | Puzzle ★ | No | **49.6** B · [assessment](assessments/azumanga.md) |
 | Border Down (Rev A) (GDL-0023A) | `bdrdown` | **GD-ROM** | parent | 203.3 MB | Shmup ★ | Yes (2003) | not assessed |
 | Capcom Vs. SNK 2: Mark Of The Millennium 2001 (USA) (GDL-0008) | `cvs2` | **GD-ROM** | parent | 157.4 MB | Fighting | Yes (2001) | not assessed |
 | Capcom Vs. SNK 2: Millionaire Fighting 2001 (Japan, Rev A) (GDL-0007A) | `cvs2mf` | **GD-ROM** | clone of `cvs2` | 149.5 MB | Fighting | Yes (2001) | not assessed |
