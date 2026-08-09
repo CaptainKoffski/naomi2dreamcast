@@ -4,9 +4,9 @@
 
 | | |
 |---|---|
-| **Final score** | **45.8 (B)** |
-| Bottom line | Content is genuinely DC-sized (main content 0.16× cap, 5.6 MB of actual VRAM assets, ARAM 1.14× near-fit) but the VRAM sub-score binds at 19.6 on the 14.77 MB write-truth address peak — the v6 sidecar predates FB-masked VRAM keying, and nearly all of that peak is a relocatable high-parked asset store, so the real pressure is milder than the score implies. |
-| Assessed | capture 2026-08-07 · battery v6 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| **Final score** | **85.2 (S)** |
+| Bottom line | With the v7 ARAM-content and v8 VRAM FB-mask fields actually populated (the prior v6 sidecar predated both and scored through conservative peak-keyed fallbacks), all three regions land under or near their DC caps — main content 0.16×, VRAM FB-masked fit 0.76×, ARAM content 0.90× (now the binding region, near-fit not overflow) — a very different memory picture from the old address-peak read, which had VRAM's 14.77 MB write-truth peak (1.76×) binding the axis at 19.6. |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -22,29 +22,43 @@
 ## 3. Boot & run evidence
 
 Boots: yes · handoff at 20.0 s (`trigger = "pio"` — GD DIMM ~1 MB bootstrap) · run 600 s · rom: `naomi/kurucham.zip`
-Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"` (the v2 run's
-`title`-only label was a headless zeroing-era artifact, see History).
-Screenshots: `evidence/kurucham/shot-060s.png` · `shot-365s.png` · `shot-609s.png`.
+Attract/demo reached: **demo** — full attract-mode gameplay confirmed across the
+capture: `shot-243s.png`/`shot-426s.png`/`shot-548s.png` show live two-player hex-match
+demo rounds (turn counters, %-fill bars, cycling AI opponent portraits) well past the
+title card seen at `shot-060s.png`, ending on a demo win screen at `shot-609s.png`;
+sidecar `capture.coverage = "demo"` (battery writes `null` — set explicitly in this
+pass after reviewing the shots).
+Screenshots: `evidence/kurucham/shot-060s.png` · `shot-243s.png` · `shot-426s.png` ·
+`shot-548s.png` · `shot-609s.png`.
 Also in evidence (v2-era raw-VRAM decodes, durable): `vram-assets-c00000.png` — the
 above-8-MB region decoded as dense structured asset data — and
 `vram-fb-76a000-black.png`.
-Anomalies: none at v6.
+Anomalies: none.
 
-## 4. Memory fit (axis: 19.6)
+## 4. Memory fit (axis: 92.2)
 
 | Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth content volume, `nz_total`) | 2,703,775 | 16,777,216 | 0.161 | 100.0 | address peak 32,505,920 (`0x1F00040`, u 1.94, informational — kb §6 item 3 shared-structure signature) · nz_above_cap 1,352,471 · `dma_high_water` 27,449,344 (byte-identical to v4) |
-| VRAM (write-truth address peak — v6 sidecar has no FB-masked `content_total`/`fb_bytes`) | 14,770,864 | 8,388,608 | 1.761 | 19.6 | **binding** — nz_total 5,623,486 with 5,612,252 above the 8 MB line: address extent of a high-parked asset store (decoded at `0xc00000`, `vram-assets-c00000.png`), relocatable in a port |
-| ARAM (write-truth address peak — v6 sidecar has no `content_total`) | 2,395,328 | 2,097,152 | 1.142 | 59.4 | nz_above_cap 282,380 — near-fit |
+| Main RAM (write-truth content volume, `nz_total`) | 2,703,775 | 16,777,216 | 0.161 | 100.0 | unchanged byte-for-byte from v6 · address peak 32,505,920 (`0x1F00040`, u 1.94, informational — kb §6 item 3 shared-structure signature) · `nz_above_cap` 1,352,471 · `dma_high_water` 27,449,344 — all byte-identical v6→v9 |
+| VRAM (v8 FB-masked content: `content_total` + 2×`fb_bytes`) | 5,116,323 + 2×614,400 = 6,345,123 | 8,388,608 | 0.756 | 100.0 | **first real v8 measurement** — v6 had no `content_total`/`fb_bytes` and fell back to raw peak (14,770,864, u 1.761, sub-score 19.6, the old axis-binding region); `nz_total` 5,623,486 and `nz_above_cap` 5,612,252 byte-identical v6→v9 (address extent of the high-parked asset store, `vram-assets-c00000.png`, now known relocatable rather than binding) |
+| ARAM (v7 content volume, `content_total`) | 1,896,338 | 2,097,152 | 0.904 | 92.2 | **first real v7 measurement, now binding** — v6 had no `content_total` and fell back to raw peak (2,395,328, u 1.142, sub-score 59.4); `peak` 2,395,328 and `nz_above_cap` 282,380 byte-identical v6→v9 — near-fit, not overflow |
+
+Memory axis = min(100.0, 100.0, 92.2) = **92.2** — binding region moved from VRAM
+(peak-keyed 1.76× overflow fallback) to ARAM (content-keyed 0.90× near-fit
+measurement); VRAM's fallback→measured move alone would have cleared the axis to
+100.0, same pattern as tetkiwam.
 
 Watermarks (informational, content-scan — stale-data prone): main 32,505,920 ·
 vram 14,770,864 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
-## 5. Cart streaming (axis: 74.1)
+## 5. Cart streaming (axis: 74.3)
 
-DMA events 2,621 · total 88.9 MB · unique 28.8 MB · re-read ratio 0.6758 ·
-steady-state 7.226 MB/min (`short_window: false`) · PIO 1,049,920 B
+DMA events 2,615 · total 88,363,008 B (84.3 MB) · unique 28,819,456 B (27.5 MB) ·
+re-read ratio 0.6739 · steady-state 7.162 MB/min (`short_window: false`) ·
+PIO 1,049,920 B
+(v6: 2,621 events, 88,897,536 B total, reread 0.6758, 7.226 MB/min — a fresh
+capture's normal run-to-run noise, not a fallback effect; `unique_bytes` and
+`pio_bytes` byte-identical v6→v9; axis moves 74.1→74.3, immaterial)
 
 ## 6. Guts (axis: 85.0)
 
@@ -73,26 +87,27 @@ competitive colour-matching puzzle); in-binary INPUT TEST strings
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 19.6^.40 · 74.1^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **45.8 (B)**
+      = 92.2^.40 · 74.3^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **85.2 (S)**
 Similarity inputs: developer no (Starfish SD/Able ≠ reference), SDK overlap partial
 (Kunoichi2/Ninja2/CRI — see §6), loader match yes.
 
 ## 9. Risks & notes
 
-- **VRAM binds on pre-v8 keying.** The v6 sidecar predates FB-masked VRAM keying (no
-  `content_total`/`fb_bytes` fields), so the sub-score keys on the 14.77 MB address
-  peak; actual nonzero content is 5.6 MB, nearly all of it parked above the 8 MB line
-  (`vram-assets-c00000.png`) — relocatable extent, so the real VRAM pressure is far
-  milder than sub 19.6 implies.
+- **Port-planning takeaway: ARAM is now the binding region, and it's a near-fit, not
+  overflow.** Content volume is 1,896,338 B against the 2,097,152 B cap (u 0.904) —
+  204,814 B of headroom. A port needs modest compaction/streaming discipline on
+  audio data, not a redesign.
 - **Main RAM is address-sparse:** content volume is only 2.7 MB (0.16×) but the
   touched address peak is the 32,505,920 B `0x1F00040` shared-structure signature
   (1.94×, kb §6 item 3) with 1.35 MB of nonzero bytes above the 16 MB line — layout/
-  relocation attention needed.
-- **ARAM is address-keyed** (no `content_total` in the v6 sidecar): 1.14× near-fit
-  with 282,380 B above cap.
+  relocation attention needed, though it no longer binds the axis.
+- **VRAM's old address-peak overflow (1.76×) was a fallback artifact, not real
+  pressure.** FB-masked content fit is 6,345,123 B (u 0.756) — the 14.77 MB peak was
+  mostly the same high-parked, relocatable asset store noted at v6
+  (`vram-assets-c00000.png`); the v8 measurement confirms that read.
 - **Rendering must be verified on real DC hardware** (working-style rule). The v2
   display-blind run was a tooling artifact (kb §4.l/§4.m); v4+ builds render the
-  attract demo.
+  attract demo, confirmed again in this capture (§3).
 
 ## 10. History
 
@@ -102,3 +117,4 @@ Similarity inputs: developer no (Starfish SD/Able ≠ reference), SDK overlap pa
 | v4 | 2026-08-04 | 45.8 (B) | Re-captured on a rendering build with demo coverage; same final (kb §7) |
 | v6 | 2026-08-07 | 38.3 (C) | Main re-keyed to the write-truth address peak — 32,505,920 B `0x1F00040` shared-structure signature (kb §6 item 3); `dma_high_water` reproduced byte-for-byte |
 | v9 | 2026-08-08 | 45.8 (B) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`); memory 19.6, binding region moved to VRAM |
+| v9 | 2026-08-09 | 85.2 S | ranking-groom chunk 4: fresh v9 capture, provenance v6→v9 — first real v7 ARAM-content + v8 VRAM FB-mask measurements replace conservative fallbacks (memory 19.6→92.2, binding region VRAM→ARAM; streaming 74.1→74.3 noise-level; final 45.8 B→85.2 S); every shared raw counter (main peak/nz_total/nz_above_cap/dma_high_water, vram peak/nz_total/nz_above_cap/regs_last, aram peak/nz_above_cap, streaming unique_bytes/pio_bytes, guts code_bytes/functions/mmio_refs/carve_meta/flags) reproduced byte-identically v6→v9 — the move is pure fallback-replacement, not re-capture drift |
