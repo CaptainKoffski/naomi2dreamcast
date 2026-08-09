@@ -1,0 +1,116 @@
+{
+  "set": "meltyb",
+  "title": "Melty Blood Act Cadenza Version B2 (Japan) (GDL-0039A)",
+  "maker": "Ecole Software",
+  "year": "2006",
+  "format": "GD-ROM",
+  "assessed": "2026-08-10",
+  "versions": {
+    "flycast": "f014a410c",
+    "battery": "9",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/meltyb.zip"
+  },
+  "boot": {
+    "ok": true,
+    "failure_class": null,
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 20.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
+    },
+    "screenshots": [
+      "assessments/evidence/meltyb/shot-060s.png",
+      "assessments/evidence/meltyb/shot-121s.png",
+      "assessments/evidence/meltyb/shot-182s.png",
+      "assessments/evidence/meltyb/shot-243s.png",
+      "assessments/evidence/meltyb/shot-304s.png",
+      "assessments/evidence/meltyb/shot-365s.png",
+      "assessments/evidence/meltyb/shot-426s.png",
+      "assessments/evidence/meltyb/shot-487s.png",
+      "assessments/evidence/meltyb/shot-548s.png",
+      "assessments/evidence/meltyb/shot-609s.png"
+    ],
+    "coverage": "demo",
+    "watermarks_info": {
+      "main": 33514496,
+      "vram": 16760448,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "peak": 33514496,
+      "nz_total": 15439831,
+      "nz_above_cap": 10855533,
+      "dma_high_water": 33312544
+    },
+    "vram": {
+      "peak": 16760448,
+      "nz_total": 9672898,
+      "nz_above_cap": 5712282,
+      "regs_last": "isp_base=0 isp_limit=248a0 ol_base=30b80 ol_limit=249a0 fb_w_sof1=44a000 fb_w_sof2=c00000 fb_r_sof1=4a000",
+      "content_total": 8749234,
+      "fb_bytes": 614400
+    },
+    "aram": {
+      "peak": 3535472,
+      "nz_above_cap": 943203,
+      "content_total": 2149151
+    }
+  },
+  "streaming": {
+    "dma_events": 2906,
+    "total_bytes": 168390656,
+    "unique_bytes": 74180608,
+    "reread_ratio": 0.5595,
+    "steady_mb_per_min": 15.974,
+    "short_window": false,
+    "pio_bytes": 1574208
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "static scan: entrypoint 0x8c021000 outside carved image 0xc020000..0xc1a0000",
+    "flags": [
+      "eeprom_bios"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "stick",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'naomi'"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": null,
+  "scores": {
+    "memory": 50.9,
+    "streaming": 65.3,
+    "guts": null,
+    "controls": 100.0,
+    "similarity": 20.0,
+    "final": 52.4,
+    "tier": "B"
+  }
+}

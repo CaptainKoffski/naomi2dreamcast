@@ -63,8 +63,8 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Lupin The Third - The Typing (Rev A) (GDS-0021A) | `luptype` | **GD-ROM** | parent | 153.9 MB | Typing ⚠ | No | not assessed |
 | Melty Blood Act Cadenza (Japan) (GDL-0028) | `meltyblo` | **GD-ROM** | clone of `meltybld` | 207.1 MB | Fighting | No | not assessed |
 | Melty Blood Act Cadenza Ver. A (Japan) (GDL-0028C) | `meltybld` | **GD-ROM** | parent | 214.9 MB | Fighting | No | not assessed |
-| Melty Blood Act Cadenza Version B (Japan) (GDL-0039) | `meltybo` | **GD-ROM** | clone of `meltyb` | 189.5 MB | Fighting | No | not assessed |
-| Melty Blood Act Cadenza Version B2 (Japan) (GDL-0039A) | `meltyb` | **GD-ROM** | parent | 202.9 MB | Fighting | No | not assessed |
+| Melty Blood Act Cadenza Version B (Japan) (GDL-0039) | `meltybo` | **GD-ROM** | clone of `meltyb` | 189.5 MB | Fighting | No | see [`meltyb`](assessments/meltyb.md) |
+| Melty Blood Act Cadenza Version B2 (Japan) (GDL-0039A) | `meltyb` | **GD-ROM** | parent | 202.9 MB | Fighting | No | **52.4** B · [assessment](assessments/meltyb.md) |
 | Mobile Suit Gundam: Federation Vs. Zeon (GDL-0001) | `gundmgd` | **GD-ROM** | parent | 142.3 MB | Fighting | Yes (2002) | not assessed |
 | Mobile Suit Gundam: Federation Vs. Zeon DX (USA, Japan) (GDL-0006) | `gundmxgd` | **GD-ROM** | parent | 172.9 MB | Fighting | Yes (2002) | not assessed |
 | Moeru Casinyo (Japan) (GDL-0013) | `moeru` | **GD-ROM** | parent | 98.0 MB | ? | No | **85.9** S · [assessment](assessments/moeru.md) |
