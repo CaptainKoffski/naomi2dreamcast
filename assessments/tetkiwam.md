@@ -4,9 +4,9 @@
 
 | | |
 |---|---|
-| **Final score** | **82.9 (S)** |
-| Bottom line | The GD-ROM ships a DC-bootable build of this exact game (`TETRIS.BIN` in the disc root — TCRF, §2) and under content keying the measurements now agree with that shipped proof: main content volume is half the DC's 16 MB, VRAM fits at 0.93×, and the binding region is ARAM at 0.97× cap with nothing above it. |
-| Assessed | capture 2026-08-07 · battery v6 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| **Final score** | **87.5 (S)** |
+| Bottom line | The GD-ROM ships a DC-bootable build of this exact game (`TETRIS.BIN` in the disc root — TCRF, §2), and this is the first capture to measure it: with the v7 ARAM-content and v8 VRAM FB-mask fields actually populated (the prior v6 sidecar predated both and scored those regions through conservative peak-keyed fallbacks), all three regions land well under their DC caps — main content 0.52×, VRAM FB-masked fit 0.38×, ARAM content 0.55× — none binding, matching the shipped-build proof even more directly than the v6 fallback numbers did. |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -22,26 +22,33 @@
 ## 3. Boot & run evidence
 
 Boots: yes · handoff at 20.0 s (`trigger = "pio"`, GD DIMM ~1 MB bootstrap) · run 600 s · rom: `naomi/tetkiwam.zip`
-Attract/demo reached: **demo** — two-board Tetris attract gameplay (`shot-365s.png`); sidecar `capture.coverage = "demo"`
-Screenshots: `evidence/tetkiwam/shot-060s.png` · `evidence/tetkiwam/shot-365s.png` · `evidence/tetkiwam/shot-609s.png`
-Anomalies: none — single clean leg (the v2-era display blindness, kb §4.m, was a capture artifact resolved from v4 on).
+Attract/demo reached: **demo** — two-board Tetris attract gameplay confirmed across the capture: `shot-121s.png` ("TARGET" mode round start), `shot-365s.png` ("LINE BREAK" mode, active boards), `shot-548s.png` ("START GAME" round transition); sidecar `capture.coverage = "demo"` (battery writes `null` — set explicitly in this pass after reviewing the shots)
+Screenshots: `evidence/tetkiwam/shot-060s.png` · `evidence/tetkiwam/shot-121s.png` · `evidence/tetkiwam/shot-365s.png` · `evidence/tetkiwam/shot-548s.png` · `evidence/tetkiwam/shot-609s.png`
+Anomalies: none — single clean leg (`tetkiwam-battery.log`: "leg 1: tetkiwam.zip attempt 1 -> ran full window").
 
-## 4. Memory fit (axis: 87.4)
+## 4. Memory fit (axis: 100.0)
 
 | Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth content volume, `nz_total`) | 8,643,391 | 16,777,216 | 0.5152 | 100.0 | address peak 32,508,220 (u 1.938, informational) · `nz_above_cap` 7,268,643 of content above the 16 MB line by address · `dma_high_water` 30,495,872 (byte-identical v5→v6 — the GD-cluster value, kb §6 item 3) |
-| VRAM (write-truth peak, post-handoff) | 7,763,712 | 8,388,608 | 0.9255 | 90.6 | nz_total 2,408,482 · **0 above cap** |
-| ARAM (fill-excluded content peak — pre-v7 sidecar, no `content_total`) | 2,031,344 | 2,097,152 | 0.9686 | 87.4 | **binding region** · `nz_above_cap` 0 · keyed on `peak` (the scorer's documented fallback, which can only under-score vs a volume re-capture) |
+| Main RAM (write-truth content volume, `nz_total`) | 8,643,391 | 16,777,216 | 0.5152 | 100.0 | unchanged byte-for-byte from v6 (main was already volume-keyed) · address peak 32,508,220 (u 1.938, informational) · `nz_above_cap` 7,268,643 of content above the 16 MB line by address is placement, not volume · `dma_high_water` 30,495,872 unchanged |
+| VRAM (v8 FB-masked content: `content_total` + 2×`fb_bytes`) | 1,986,720 + 2×614,400 = 3,215,520 | 8,388,608 | 0.3833 | 100.0 | **first real v8 measurement** — v6 had no `content_total`/`fb_bytes` and fell back to raw peak (7,763,712, u 0.9255, sub-score 90.6); nz_total 2,408,482 · `nz_above_cap` 0 |
+| ARAM (v7 content volume, `content_total`) | 1,160,242 | 2,097,152 | 0.5533 | 100.0 | **first real v7 measurement** — v6 had no `content_total` and fell back to raw peak (2,031,344, u 0.9686, sub-score 87.4, then the axis-binding region); `nz_above_cap` 0 |
+
+Memory axis = min(100.0, 100.0, 100.0) = **100.0** — no region binds anymore; v6's binding region
+(ARAM) moved from a peak-keyed 0.97× near-cap fallback to a content-keyed 0.55× measurement,
+same for VRAM's fallback→measured move. Main was unaffected (already volume-keyed pre-v9 for
+this title) — its identical numbers are a control on the re-capture itself.
 
 Watermarks (informational, content-scan — stale-data prone): main 32,508,220 ·
 vram 9,711,616 (includes the pre-handoff BIOS boot-screen sheet, kb §9) ·
 aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
-## 5. Cart streaming (axis: 72.3)
+## 5. Cart streaming (axis: 72.0)
 
-DMA events 1,410 · total 105.5 MB · unique 35.44 MB · re-read ratio 0.664 ·
-steady-state 8.824 MB/min (`short_window: false`) · PIO 1,115,456 B
+DMA events 1,431 · total 106,876,928 B (101.9 MB) · unique 35,442,688 B (33.8 MB) · re-read ratio
+0.6684 · steady-state 8.986 MB/min (`short_window: false`) · PIO 1,115,456 B
+(v6: 1,410 events, 105,492,480 B total, reread 0.664, 8.824 MB/min — a fresh capture's normal
+run-to-run noise, not a fallback effect; axis moves 72.3→72.0, immaterial)
 
 ## 6. Guts (axis: 85.0)
 
@@ -72,7 +79,7 @@ No in-binary INPUT TEST name strings surfaced in `guts.sdk_strings`.
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 87.4^.40 · 72.3^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **82.9 (S)**
+      = 100.0^.40 · 72.0^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **87.5 (S)**
 Similarity inputs: developer no, SDK overlap partial, loader match yes.
 Prose note: the shipped Katana build implies the SDK overlap is **full** in reality —
 the sidecar's `partial` remains a checkpoint-worthy calibration observation.
@@ -107,3 +114,4 @@ the sidecar's `partial` remains a checkpoint-worthy calibration observation.
 | v5 | 2026-08-06 | 43.3 (B) | Pre-`VRAMHANDOFF` sample drop removed the BIOS boot-frame: VRAM 7,763,712 B fits under 8 MB; main high-water unchanged, still binding — kb §9 |
 | v6 | 2026-08-07 | 38.1 (C) | Cluster re-run: main re-keyed on write-truth address peak 32,508,220 B (u 1.94); `dma_high_water` byte-identical v5→v6, confirming the GD-title clustering is real per-title — kb §6 item 3 |
 | v9 | 2026-08-08 | 82.9 (S) | Scoring-only re-key (no re-capture): main keyed on content volume `nz_total`; binding region moved to ARAM — spec `2026-08-08-main-content-rekey-design.md` |
+| v9 | 2026-08-09 | 87.5 S | ranking-groom chunk 2: fresh v9 capture (was v6) — first real measurement of v7 ARAM-content + v8 VRAM FB-mask fields replaces conservative fallbacks; 82.9→87.5 |

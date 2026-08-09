@@ -4,10 +4,10 @@
   "maker": "Success",
   "year": "2004",
   "format": "GD-ROM",
-  "assessed": "2026-08-07",
+  "assessed": "2026-08-09",
   "versions": {
-    "flycast": "65f9f7857",
-    "battery": "6",
+    "flycast": "f014a410c",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -62,19 +62,22 @@
       "peak": 7763712,
       "nz_total": 2408482,
       "nz_above_cap": 0,
-      "regs_last": "isp_base=0 isp_limit=12c8a0 ol_base=190b80 ol_limit=12c9a0 fb_w_sof1=1aa000 fb_w_sof2=c00000 fb_r_sof1=5aa000"
+      "regs_last": "isp_base=0 isp_limit=12c8a0 ol_base=190b80 ol_limit=12c9a0 fb_w_sof1=1aa000 fb_w_sof2=c00000 fb_r_sof1=5aa000",
+      "content_total": 1986720,
+      "fb_bytes": 614400
     },
     "aram": {
       "peak": 2031344,
-      "nz_above_cap": 0
+      "nz_above_cap": 0,
+      "content_total": 1160242
     }
   },
   "streaming": {
-    "dma_events": 1410,
-    "total_bytes": 105492480,
+    "dma_events": 1431,
+    "total_bytes": 106876928,
     "unique_bytes": 35442688,
-    "reread_ratio": 0.664,
-    "steady_mb_per_min": 8.824,
+    "reread_ratio": 0.6684,
+    "steady_mb_per_min": 8.986,
     "short_window": false,
     "pio_bytes": 1115456
   },
@@ -630,12 +633,12 @@
   },
   "gate": null,
   "scores": {
-    "memory": 87.4,
-    "streaming": 72.3,
+    "memory": 100.0,
+    "streaming": 72.0,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 70.0,
-    "final": 82.9,
+    "final": 87.5,
     "tier": "S"
   }
 }
