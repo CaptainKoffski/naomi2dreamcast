@@ -4,10 +4,10 @@
   "maker": "Warashi",
   "year": "2006",
   "format": "GD-ROM",
-  "assessed": "2026-08-08",
+  "assessed": "2026-08-09",
   "versions": {
     "flycast": "f014a410c",
-    "battery": "8",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -54,7 +54,7 @@
   "memory": {
     "main": {
       "peak": 31643808,
-      "nz_total": 3897601,
+      "nz_total": 3897629,
       "nz_above_cap": 2296697,
       "dma_high_water": 30078176
     },
@@ -77,7 +77,7 @@
     "total_bytes": 94140416,
     "unique_bytes": 14888960,
     "reread_ratio": 0.8418,
-    "steady_mb_per_min": 8.724,
+    "steady_mb_per_min": 8.719,
     "short_window": false,
     "pio_bytes": 2098496
   },

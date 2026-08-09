@@ -6,7 +6,7 @@
 |---|---|
 | **Final score** | **86.5 (S)** |
 | Bottom line | Everything fits under content keying — memory axis 100.0 (main content 3.9 MB, FB-masked VRAM 4.7 MB, ARAM 1.3 MB; the first assessed title whose ARAM *address* peak already fits the DC cap) — leaving re-read-heavy GD streaming (0.84 on a 14 MB working set) as the lowest axis; Warashi shipped this exact game on DC in 2007, so the title is reference/validation material, not a porting target. |
-| Assessed | capture 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -30,13 +30,22 @@ Screenshots (5 kept of 10):
 - `evidence/trgheart/shot-548s.png` — SCORE RANKING table (EXELICA/CRUELTEAR entries)
 - `evidence/trgheart/shot-609s.png` — attract gameplay, DEMONSTRATION overlay, boss structure
 
-Anomalies: none.
+Anomalies: v9 is a fresh re-capture (not a scoring-only re-key). Memory-axis
+inputs reproduced byte-identically vs the prior (v8) sidecar: main `peak`
+31,643,808, `nz_above_cap` 2,296,697, `dma_high_water` 30,078,176; VRAM `peak`
+13,277,695, `nz_total` 4,118,519, `nz_above_cap` 4,106,593, `content_total`
+3,507,559, `fb_bytes` 614,400; ARAM `peak` 1,635,440, `content_total`
+1,346,112, `nz_above_cap` 0 — all identical. Two content-scan values drifted
+negligibly and do not change any scored axis: main `nz_total` 3,897,601 →
+3,897,629 (+28 B, same 0.2323 keying ratio) and `streaming.steady_mb_per_min`
+8.724 → 8.719. All five scores axis values (100.0/68.2/85.0/100.0/70.0) and
+the 86.5 (S) final are unchanged.
 
 ## 4. Memory fit (axis: 100.0)
 
 | Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth content volume, `nz_total`) | 3,897,601 | 16,777,216 | 0.2323 | 100.0 | address peak 31,643,808 (u 1.886, informational — NOT the `0x1F00040` shared-structure signature, it lands 862,112 B below it, kb §6 item 3) · `nz_above_cap` 2,296,697 · `dma_high_water` 30,078,176 (informational-only from v6 on) |
+| Main RAM (write-truth content volume, `nz_total`) | 3,897,629 | 16,777,216 | 0.2323 | 100.0 | address peak 31,643,808 (u 1.886, informational — NOT the `0x1F00040` shared-structure signature, it lands 862,112 B below it, kb §6 item 3) · `nz_above_cap` 2,296,697 · `dma_high_water` 30,078,176 (informational-only from v6 on) |
 | VRAM (FB-masked content + 2×FB) | 4,736,359 (content_total 3,507,559 + 2×fb_bytes 614,400) | 8,388,608 | 0.5646 | 100.0 | raw address peak 13,277,695 (u 1.583) is the extent artifact, not content · nz_total 4,118,519 |
 | ARAM (content volume, fill-excluded, `content_total`) | 1,346,112 | 2,097,152 | 0.6419 | 100.0 | address peak 1,635,440 — **first assessed title whose ARAM address peak already fits the cap** (no 8 MiB full-bank load; `nz_above_cap` 0) — kb §6 item 1 |
 
@@ -46,7 +55,7 @@ vram 13,277,695 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 ## 5. Cart streaming (axis: 68.2)
 
 DMA events 3,984 · total 94,140,416 B (89.8 MB) · unique 14,888,960 B (14.2 MB) ·
-re-read ratio 0.8418 · steady-state 8.724 MB/min (`short_window: false`) ·
+re-read ratio 0.8418 · steady-state 8.719 MB/min (`short_window: false`) ·
 PIO bootstrap `pio_bytes` 2,098,496 B (GD DIMM PIO boot-load, handoff `trigger=pio`).
 High re-read on a small (14.2 MB) unique working set — the cache-friendly loop pattern kb
 §6 item 2 already flags as over-penalized.
@@ -100,3 +109,4 @@ Similarity inputs: developer match no, SDK overlap **partial**, cart loader matc
 |---|---|---|---|
 | v8 | 2026-08-08 | 40.0 (B) | First assessment (FB-masked VRAM keying); main address-keyed peak 31.6 MB bound at u 1.886 while changed content was only 3.9 MB — the address-vs-content divergence logged for the checkpoint — kb §6 item 3 |
 | v9 | 2026-08-08 | 86.5 (S) | Scoring-only re-key (no re-capture): main keyed on content volume `nz_total` 3,897,601 B; memory axis 100.0 — spec `2026-08-08-main-content-rekey-design.md` |
+| v9 | 2026-08-09 | 86.5 S | ranking-groom chunk 1: fresh v9 capture, provenance v8→v9 (scoring keys unchanged) |
