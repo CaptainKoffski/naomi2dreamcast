@@ -1,0 +1,117 @@
+{
+  "set": "meltybld",
+  "title": "Melty Blood Act Cadenza Ver. A (Japan) (GDL-0028C)",
+  "maker": "Ecole Software",
+  "year": "2005",
+  "format": "GD-ROM",
+  "assessed": "2026-08-10",
+  "versions": {
+    "flycast": "f014a410c",
+    "battery": "9",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/meltybld.zip"
+  },
+  "boot": {
+    "ok": true,
+    "failure_class": null,
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 20.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
+    },
+    "screenshots": [
+      "assessments/evidence/meltybld/shot-060s.png",
+      "assessments/evidence/meltybld/shot-121s.png",
+      "assessments/evidence/meltybld/shot-182s.png",
+      "assessments/evidence/meltybld/shot-243s.png",
+      "assessments/evidence/meltybld/shot-304s.png",
+      "assessments/evidence/meltybld/shot-365s.png",
+      "assessments/evidence/meltybld/shot-426s.png",
+      "assessments/evidence/meltybld/shot-487s.png",
+      "assessments/evidence/meltybld/shot-548s.png",
+      "assessments/evidence/meltybld/shot-609s.png"
+    ],
+    "coverage": "demo",
+    "watermarks_info": {
+      "main": 33554412,
+      "vram": 15669772,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "peak": 33554412,
+      "nz_total": 15540720,
+      "nz_above_cap": 11355499,
+      "dma_high_water": 33554432
+    },
+    "vram": {
+      "peak": 15669772,
+      "nz_total": 7073574,
+      "nz_above_cap": 3548795,
+      "regs_last": "isp_base=400000 isp_limit=46d700 ol_base=478c80 ol_limit=46d800 fb_w_sof1=c00000 fb_w_sof2=c00000 fb_r_sof1=800000",
+      "content_total": 6645693,
+      "fb_bytes": 614400
+    },
+    "aram": {
+      "peak": 3662624,
+      "nz_above_cap": 1226866,
+      "content_total": 2758787
+    }
+  },
+  "streaming": {
+    "dma_events": 1398,
+    "total_bytes": 145588224,
+    "unique_bytes": 58339328,
+    "reread_ratio": 0.5993,
+    "steady_mb_per_min": 13.616,
+    "short_window": false,
+    "pio_bytes": 1574208
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "static scan: entrypoint 0x8c021000 outside carved image 0xc020000..0xc1a0000",
+    "flags": [
+      "eeprom_bios"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "stick",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'naomi'",
+      "http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=meltybld"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": null,
+  "scores": {
+    "memory": 37.4,
+    "streaming": 67.5,
+    "guts": null,
+    "controls": 100.0,
+    "similarity": 20.0,
+    "final": 45.3,
+    "tier": "B"
+  }
+}

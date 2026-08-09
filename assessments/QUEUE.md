@@ -53,7 +53,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `ggxxsla` — Guilty Gear XX Slash (Japan, Rev A) (GDL-0033A) | `ggxxsla` | Fighting | 249.6 MB | done |
 | `mbaa` — Melty Blood Actress Again Version A (Japan, Rev A) | `mbaa` | Fighting | 233.9 MB | done |
 | `meltyb` — Melty Blood Act Cadenza Version B2 (Japan) (GDL-0039A) | `meltyb`, `meltybo` | Fighting | 202.9 MB | done |
-| `meltybld` — Melty Blood Act Cadenza Ver. A (Japan) (GDL-0028C) | `meltybld`, `meltyblo` | Fighting | 214.9 MB | pending |
+| `meltybld` — Melty Blood Act Cadenza Ver. A (Japan) (GDL-0028C) | `meltybld`, `meltyblo` | Fighting | 214.9 MB | done |
 | `sfz3ugd` — Street Fighter Zero 3 Upper (Japan) (GDL-0002) | `sfz3ugd` | Fighting | 112.1 MB | pending |
 | `sstrkfgt` — Sega Strike Fighter (Rev A) | `sstrkfgt` | Fighting | 75.9 MB | pending |
 | `toyfight` — Toy Fighter | `toyfight` | Fighting | 46.0 MB | pending |
