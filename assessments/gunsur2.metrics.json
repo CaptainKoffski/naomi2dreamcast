@@ -4,10 +4,10 @@
   "maker": "Capcom / Namco",
   "year": "2001",
   "format": "cart",
-  "assessed": "2026-08-07",
+  "assessed": "2026-08-09",
   "versions": {
     "flycast": "f014a410c",
-    "battery": "8",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -54,7 +54,7 @@
   "memory": {
     "main": {
       "peak": 33553964,
-      "nz_total": 15116665,
+      "nz_total": 15116666,
       "nz_above_cap": 6232660,
       "dma_high_water": 31610624
     },
@@ -73,11 +73,11 @@
     }
   },
   "streaming": {
-    "dma_events": 357,
-    "total_bytes": 130347008,
+    "dma_events": 354,
+    "total_bytes": 129718272,
     "unique_bytes": 40552448,
-    "reread_ratio": 0.6889,
-    "steady_mb_per_min": 11.664,
+    "reread_ratio": 0.6874,
+    "steady_mb_per_min": 11.593,
     "short_window": false,
     "pio_bytes": 6329664
   },
@@ -636,7 +636,7 @@
   "gate": null,
   "scores": {
     "memory": 92.4,
-    "streaming": 67.9,
+    "streaming": 68.0,
     "guts": 80.0,
     "controls": 50.0,
     "similarity": 40.0,

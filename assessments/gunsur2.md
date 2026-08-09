@@ -6,7 +6,7 @@
 |---|---|
 | **Final score** | **73.0 (A)** |
 | Bottom line | Nextech's Naomi adaptation of the studio's own Dreamcast Code: Veronica — the binary still carries the DC original's VMU save paths and RDT room format, and under content-volume keying every region fits (main is the binding region at 0.901× cap) — with the real drag now the 3-axis cabinet gun that needs a designed pad adaptation (`pad_adaptable`, 50), not memory. |
-| Assessed | capture 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -27,9 +27,15 @@ Boots: yes · handoff at 20.0 s (`trigger = "pio"`) · run 600 s · rom: `naomi/
 Attract/demo reached: **demo** — "DEMO PLAY" rendered on-screen; the attract loop cycles
 demo gameplay → title → cutscene (sidecar `capture.coverage = "demo"`)
 Screenshots: `evidence/gunsur2/shot-060s.png` · `shot-121s.png` · `shot-243s.png` ·
-`shot-365s.png` · `shot-426s.png` (re-curated in the v8 run — demo gameplay, DEMO PLAY
+`shot-365s.png` · `shot-426s.png` (same curation as v8 — demo gameplay, DEMO PLAY
 marker, title, and a second gameplay frame)
-Anomalies: none in the current run. Historical (v2): the first run parked `no-eeprom-180s`
+Anomalies: none. Reproduces the v8 capture closely: `shot-060s.png`/`shot-121s.png`/
+`shot-365s.png` are byte-identical to the prior capture; `shot-243s.png`/`shot-426s.png`
+differ by demo-loop frame timing only (same scenes — DEMO PLAY gameplay, hallway HUD).
+Streaming counters moved within noise (DMA events 357→354, total 130.3→129.7 MB,
+re-read 0.6889→0.6874, steady-state 11.664→11.593 MB/min — streaming sub-score 67.9→68.0,
+no tier effect); main `nz_total` moved +1 B (15,116,665→15,116,666, u still 0.901). Memory,
+guts, controls axes and the final score reproduced exactly. Historical (v2): the first run parked `no-eeprom-180s`
 because gunsur2's Namco-built ROM header is nonstandard (`region ff players 0 vertical 0`)
 so Flycast's "monitor orientation" log never fires — the battery's boot marker now accepts
 either `naomi_flashrom.cpp` line (fix `2cc46ce`, kb §4.n second gap); future Namco-header
@@ -39,17 +45,17 @@ titles (ninjaslt, mazan, wldkicks) would have hit it too.
 
 | Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth content volume, `nz_total`) | 15,116,665 | 16,777,216 | 0.901 | 92.4 | **binding region** · address peak 33,553,964 (u 2.000 — was 468 B under the G3 2× address threshold, informational since v9) · `nz_above_cap` 6,232,660 · `dma_high_water` 31,610,624 |
+| Main RAM (write-truth content volume, `nz_total`) | 15,116,666 | 16,777,216 | 0.901 | 92.4 | **binding region** · address peak 33,553,964 (u 2.000 — was 468 B under the G3 2× address threshold, informational since v9) · `nz_above_cap` 6,232,660 · `dma_high_water` 31,610,624 |
 | VRAM (FB-masked content + 2×FB) | 5,960,110 | 8,388,608 | 0.7105 | 100.0 | `content_total` 4,731,310 + 2×`fb_bytes` 614,400 (exactly 640×480×2; `content_total + fb_masked_nz` matches `nz_total` exactly in the raw log) · address peak 16,140,288 (u 1.924, informational) · nz_total 5,051,952 · nz_above_cap 4,427,374 |
 | ARAM (content volume, fill-excluded, `content_total`) | 1,565,884 | 2,097,152 | 0.7467 | 100.0 | address peak 2,097,136 (16 B under cap — sound authored to a DC budget, exactly what the Nextech DC lineage §2 predicts) |
 
 Watermarks (informational, content-scan — stale-data prone): main 33,553,964 ·
 vram 16,140,288 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
-## 5. Cart streaming (axis: 67.9)
+## 5. Cart streaming (axis: 68.0)
 
-DMA events 357 · total 124.3 MB · unique 38.7 MB · re-read ratio 0.6889 ·
-steady-state 11.664 MB/min (`short_window: false`) · PIO 6,329,664 B
+DMA events 354 · total 123.7 MB · unique 38.7 MB · re-read ratio 0.6874 ·
+steady-state 11.593 MB/min (`short_window: false`) · PIO 6,329,664 B
 
 ## 6. Guts (axis: 80.0)
 
@@ -72,7 +78,7 @@ Sources: [Namco Gun Survivor 2 operator's manual](https://www.manualslib.com/man
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 92.4^.40 · 67.9^.20 · 80.0^.20 · 50.0^.10 · 40.0^.10 = **73.0 (A)**
+      = 92.4^.40 · 68.0^.20 · 80.0^.20 · 50.0^.10 · 40.0^.10 = **73.0 (A)**
 Similarity inputs: developer no, SDK overlap partial, loader match no → 40.
 Note: `developer_match = false` is a reference-list artifact — Nextech built both this and the DC Code: Veronica (§2), a stronger real-world match than the flag captures; recorded as a checkpoint data point (kb §6 item 4).
 
@@ -97,3 +103,4 @@ Note: `developer_match = false` is a reference-list artifact — Nextech built b
 | v4 | 2026-08-04 | 33.4 (C) | Reproduced on v4; researched `pad_adaptable` controls restored after the re-run reset them to the `stick` hint (fixed in run_battery; kb §7) |
 | v8 | 2026-08-07 | 30.0 (C) | Re-capture. VRAM re-keyed FB-masked content (sub 13.0 → 100.0); main write-truth measured for the first time — address peak 33,553,964 B, 468 B under the G3 2× park, sub floors at 10.0 and binds (spec `2026-08-07-vram-fb-masking-design.md`) |
 | v9 | 2026-08-08 | 73.0 (A) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` 15,116,665 (u 0.901) — memory axis 92.4, main still binding (spec `2026-08-08-main-content-rekey-design.md`) |
+| v9 | 2026-08-09 | 73.0 A | ranking-groom chunk 4: fresh v9 capture, provenance v8→v9 (scoring keys unchanged); streaming shifted within noise (DMA 357→354, 130.3→129.7 MB, sub 67.9→68.0), main nz_total +1 B — no axis crossed a scoring boundary |
