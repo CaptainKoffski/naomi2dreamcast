@@ -1,38 +1,12 @@
 # Touch De Zunou (Japan, Rev A) (840-0166C) (`zunou`) — portability assessment
 
-> **Battery v9 control re-run (2026-08-09): still parked — same gate, override re-applied.**
-> Re-run as the §6 item 8 cart-side firmware control (spec
-> `2026-08-08-main-content-rekey-design.md`, adopted to main 2026-08-09).
-> Three findings (kb §8 addendum): (1) the §4.p `boot_ok` false-positive REPRODUCED — the
-> battery scored zunou 85.8 S before the screenshot check; shots 121–609 s byte-identical
-> md5 `79dd7b8c`, the *same md5 as 2026-08-04* (fully deterministic freeze), G1 override
-> re-applied. (2) The frozen screen is the game's own static attract card ("探求力"
-> touch-prompt panel), not the NAOMI splash — zunou boots game code, so it is NOT a
-> firmware-only control; the §6 item 8 firmware question was answered by a sidecar-derived
-> bound instead. (3) First write-truth main data: `nz_total` 11,422,679 B / `nz_above_cap`
-> 9,082,662 B on a static screen — a broken-boot title can out-write real games, so the
-> G1-before-scoring discipline matters under v9 content keying too. Sidecar now battery "9".
-
-> **Battery v4 control run (2026-08-04): still parked — `G1 broken: frozen-splash-bad-dump`.**
-> Run deliberately as the cart-splash control for the BIOS-VRAM-signature work
-> (kb §8). Two findings: (1) it did NOT reproduce ausfache's small above-cap VRAM
-> remainder, so no cart-logo exclusion exists — ausfache's score stands on its own
-> bytes. (2) The frozen splash writes 1.07 MB of VRAM (more than ikaruga's real
-> title screen), so the automatic `boot_ok` threshold passed it and mis-parked it
-> G3-ARAM; reclassified by the RUNBOOK representativeness check with evidence:
-> shots 304s–609s are byte-identical (`md5 79dd7b8c…`, `evidence/zunou/shot-304s.png`
-> = `shot-609s.png`) and the 317-0435-JPN key PIC is a BAD_DUMP — the game cannot
-> decrypt and freezes. Lesson recorded in kb §8: `vram nz_total` cannot separate a
-> frozen splash from a static title; the screenshot-based representativeness check
-> is the real gate.
-
 ## 1. Verdict
 
 | | |
 |---|---|
-| **Final score** | **PARKED — `G1 broken: no-render-after-handoff`** (not a numeric tier) |
-| Bottom line | The game's own code never executes under our fork: all 10 battery screenshots are the frozen NAOMI cart splash (first/last MD5-identical), ARAM peak is 49,402 B of dead silence across 600 s, and VRAM nonzero content (242,798 B) is exactly the splash's own footprint. Prime suspect: the M4 cart's decryption key `317-0435-JPN` is a **BAD_DUMP** in both MAME and Flycast — a wrong key decrypts the game code to garbage and the BIOS never leaves the splash. The touchscreen path is verified innocent (§Gate). Cabinet-controls research (the family's critical question) is recorded below for when a good key lands: the cabinet is a **touchscreen** (837-14672 SH4 sensor board), honest class `dc_peripheral`. |
-| Assessed | 2026-08-03 · battery v2 · flycast `9e882cbd2` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final score** | **PARKED — `G1 broken: frozen-splash-bad-dump`** (agent override; not a numeric tier) |
+| Bottom line | The game boots its own code as far as a static attract card (the "探求力" touch-prompt panel — not the NAOMI splash) and freezes there deterministically: shots 121–609 s are byte-identical (md5 `79dd7b8c`), reproducing the 2026-08-04 run exactly. Prime suspect: the M4 cart's decryption key `317-0435-JPN` is a **BAD_DUMP** in both MAME and Flycast. The touchscreen path is verified innocent (§Gate). Cabinet-controls research (the family's critical question) is recorded below for when a good key lands: the cabinet is a **touchscreen** (837-14672 SH4 sensor board), honest class `dc_peripheral`. |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -47,29 +21,27 @@
 
 ## 3. Boot & run evidence
 
-Boots: **no** — sidecar `boot.ok = false`, `failure_class = "no-render-after-handoff"` ·
-BIOS handoff seen at 40.0 s · run 600 s · rom: `naomi/zunou.zip` (single zip leg, full window)
-Attract/demo reached: the `calibration | title | demo` taxonomy **does not apply** — the
-game never executed; sidecar `capture.coverage = null` stands.
-Evidence the game code never ran:
-- All 10 screenshots are the same frozen NAOMI cart splash — first and last are
-  MD5-identical (`ebaaf1ee5ee46dc98eba39d863749c87`, verified on
-  `shot-060s.png` / `shot-606s.png`).
-- `memory.aram.peak = 49,402 B` — audio dead silence for 600 s.
-- `memory.vram.nz_total = 242,798 B` — exactly the splash's own footprint.
-- `streaming.dma_events = 316` (9,425,568 B, zero re-read) — the cart upload, then nothing.
-- No game strings anywhere in the capture.
-Screenshots kept: `assessments/evidence/zunou/shot-060s.png`,
-`assessments/evidence/zunou/shot-606s.png` (identical splash at t=60 s and t=606 s).
-Anomalies: an initial battery run **falsely scored this title 37.7 C** — the splash's
-~237 KiB of VRAM content passed the old 64 KiB render-threshold in the boot heuristic.
-Fixed same day (threshold now 1 MiB, commit `fd5863b`, kb §4.p); the false score was
-never committed to any table, so no retraction entry is needed.
+Boots: **no** — sidecar `boot.ok = false`, gate `G1 broken: frozen-splash-bad-dump`
+(agent override, re-applied after the battery's `boot_ok` heuristic passed it) ·
+BIOS handoff at 20.0 s (`trigger=pio`) · run 600 s · rom: `naomi/zunou.zip`
+Attract/demo reached: the `calibration | title | demo` taxonomy **does not apply** —
+sidecar `capture.coverage = null`. The game executes its own code as far as a static
+attract card, then freezes: shots 121–609 s are byte-identical (md5 `79dd7b8c`), the
+*same md5 as the 2026-08-04 run* — a fully deterministic freeze.
+Screenshots: `evidence/zunou/shot-060s.png` · `evidence/zunou/shot-121s.png` ·
+`evidence/zunou/shot-609s.png` (the latter two identical frozen attract card).
+Anomalies: the v9 battery scored the title **85.8 S before the screenshot check** — the
+kb §4.p `boot_ok` false-positive reproduced; the G1 override was re-applied per the
+RUNBOOK representativeness check (kb §8 addendum).
 
 ## Gate
 
-**G1 broken: no-render-after-handoff.** Sidecar `assessments/zunou.metrics.json` →
-`boot.ok = false`, `gate = "G1 broken: no-render-after-handoff"`; evidence in §3.
+**G1 broken: frozen-splash-bad-dump.** Sidecar `assessments/zunou.metrics.json` →
+`boot.ok = false`; gate re-applied by agent override on the v9 control re-run
+(2026-08-09): the frozen screen is the game's own static attract card ("探求力"
+touch-prompt panel), not the NAOMI splash — zunou boots game code and then freezes
+deterministically (shots 121–609 s byte-identical, md5 `79dd7b8c`, reproducing the
+2026-08-04 run exactly).
 
 **Not the touchscreen's fault.** The fork logs `NAOMI GAME ID [TOUCH DE ZUNO (JAPAN)]`,
 which exactly matches the `touchscreen::init()` trigger in Flycast
@@ -80,15 +52,11 @@ the 837-14672 board emulation initializes correctly.
 `b553d900`) is marked **BAD_DUMP** in both MAME (`src/mame/sega/naomi.cpp:6672`
 @59e7c0b) and Flycast (`core/hw/naomi/naomi_roms.cpp:4939`, entry comment
 "Touch De Zunou (Rev A) *** BAD DUMP ***"). A wrong M4 key decrypts the game code to
-garbage, so the BIOS hands off into nothing and the splash stays up — matching every
-observation in §3. Corroboration that the game logic itself is fine: a
+garbage — consistent with booting to a static card and freezing. Corroboration that the
+game logic itself is fine: a
 [Demul WIP video](https://www.youtube.com/watch?v=OPh_X0JUGC4) shows the game playing —
 Demul's key tables/handling differ — which strengthens "bad key in our MAME/Flycast
 emulator family" over "undumped or broken game logic".
-
-Also informational (kb §4.q, commit `fd5863b`): the M4 cart broke the cart2dat static
-scan (`load entry out of file: rom=0x40000000 len=0x380000`) → `guts.dat_available =
-false`. For a parked title this is informational only.
 
 **What would unblock it:** a good `317-0435-JPN` dump reaching MAME/Flycast, then re-run
 the battery.
@@ -127,9 +95,14 @@ on-ladder.
 
 ## Risks & notes
 
-- **Every measured number in the sidecar is a BIOS/splash artifact, not a game
-  measurement** — main DMA high-water 26,723,680 B, VRAM peak 14,423,814 B, etc. must
-  not be quoted as game figures; the game code never ran (§3).
+- **Every measured number in the sidecar is a splash/static-attract artifact, not a game
+  measurement** — the v9 run wrote `nz_total` 11,422,679 B / `nz_above_cap` 9,082,662 B
+  of main content **on a static screen**: a broken-boot title can out-write real games,
+  so the G1-before-scoring discipline matters under v9 content keying too (kb §8
+  addendum). None of the sidecar figures may be quoted as game figures.
+- **The §6 item 8 firmware question was answered by a sidecar-derived bound instead**:
+  zunou boots its own game code (static attract card, not the NAOMI splash), so it is
+  NOT a firmware-only control (v9 control re-run finding, kb §8 addendum).
 - **SCIF will be load-bearing on the re-run.** The touch board talks over the SH4 SCIF
   serial port, so `score.py`'s `serial` guts penalty will fire on input code that is the
   game's core input path, not netboot/debug residue — a scoring-semantics data point for
@@ -138,3 +111,11 @@ on-ladder.
   share the same 837-14672 board and Flycast touchscreen path.
 - Rev A is the only dumped revision; there is no original-rev dump to control-test
   against, and the family is a single set.
+
+## 10. History
+
+| Battery | Date | Final | What changed |
+|---|---|---|---|
+| v2 | 2026-08-03 | PARKED G1 no-render-after-handoff | First park: all shots read as a frozen splash, BAD_DUMP `317-0435-JPN` key identified as prime suspect; same-day fix of the 64 KiB render-threshold false score (37.7 C, never committed to a table; commit `fd5863b`) — kb §4.p |
+| v4 | 2026-08-04 | PARKED G1 frozen-splash-bad-dump | Deliberate cart-splash control run for the BIOS-VRAM-signature work: no ausfache cart-logo exclusion exists; the `boot_ok` threshold mis-parked it G3-ARAM, reclassified by the representativeness check (shots 304–609 s md5-identical `79dd7b8c`) — kb §8 |
+| v9 | 2026-08-09 | PARKED G1 frozen-splash-bad-dump | §6 item 8 control re-run: `boot_ok` false-positive reproduced (battery scored 85.8 S pre-screenshot-check, same md5 as v4 — deterministic); frozen screen identified as the game's own static attract card, so the firmware bound was derived from sidecars instead; first write-truth main data on a static screen — kb §8 addendum, spec `2026-08-08-main-content-rekey-design.md` |

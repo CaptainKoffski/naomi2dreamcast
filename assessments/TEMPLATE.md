@@ -64,3 +64,13 @@ Similarity inputs: developer {{y/n}}, SDK overlap {{full/partial/none}}, loader 
 
 - {{main-RAM v1 limitation: CPU-written data above DMA assets not captured}}
 - {{anything odd; what a port project should verify first}}
+
+## 10. History
+
+One row per battery version that produced or changed this title's result.
+The doc body above always shows the CURRENT result only; old prose lives in
+git history, forensic root-causes live in `docs/kb/assessment-tooling.md`.
+
+| Battery | Date | Final | What changed |
+|---|---|---|---|
+| v{{n}} | {{date}} | {{final (tier) or PARKED gate}} | {{one line + kb §/spec link}} |

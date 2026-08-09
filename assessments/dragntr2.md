@@ -1,42 +1,12 @@
 # Dragon Treasure 2 (Rev A) (GDS-0037A) (`dragntr2`) — portability assessment
 
-> **Battery v4 re-assessment (2026-08-04): **PARKED — `G1 broken: emulator-exited`**.**
-> Reclassified: same as `dragntr` — no bootable payload ("Could not find the file to decrypt.", `gdcartridge.cpp:611`); NetDIMM satellite medal cabinet, `medal_hopper` → G2 regardless.
-> Below the v4 section is the battery v2-era assessment: its *measured* figures
-> (boot evidence, memory, streaming, score) are **superseded**; the identity,
-> controls-research and similarity sections remain valid. Instrumentation
-> root-cause: `docs/kb/assessment-tooling.md` §7.
-
-## v4 verdict & measurements
-
-| | |
-|---|---|
-| **Final** | **PARKED — `G1 broken: emulator-exited`** |
-| Coverage | ? (never booted) |
-| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
-| Boot | ok=False · handoff None s · run 600 s · rom `naomi/dragntr2.zip` |
-
-| Region | v4 peak | DC cap | u | Note |
-|---|---|---|---|---|
-| Main RAM (DMA high-water) | 0 | 16,777,216 | 0.00 |  |
-| VRAM (write-truth diff) | 0 | 8,388,608 | 0.00 | nz_total 0 |
-| ARAM (content, fill-excluded) | 0 | 2,097,152 | 0.00 | content above cap 0 |
-
-Streaming: 0 DMA events · total 0.0 MB · unique 0.0 MB · re-read 0.0 · steady None MB/min
-Gate: `G1 broken: emulator-exited` — see the note above; axes not computed (`scores: null`).
-Screenshots: none (no boot)
-
----
-
-# Historical: battery v2 assessment (measurements superseded)
-
 ## 1. Verdict
 
 | | |
 |---|---|
-| **Final score** | **PARKED — G2 controls: `medal_hopper` (satellite medal machine)** (not a numeric tier) |
-| Bottom line | Same permanent park as [`dragntr`](dragntr.md), with an even stronger dependency: the dumped board is a **satellite terminal** (`837-14457 SATL BD NAOMI DGS`) of a networked Sega medal machine — medal/hopper mechanics + SAXA HW210 IC card reader + mandatory NetDIMM link to a main unit — **and a lone satellite literally lacks the game**: only the first 16 MB of the binary is locally encrypted; everything from 0x1000000 is uploaded via network from the main unit and decrypted with the satellite PIC (317-0390-COM). The sidecar's formal gate reads `G1 broken: no-handoff-120s` (boot check runs first; the zip leg dies on the same gdcartridge netpic quirk as `dragntr`, doubly moot given the missing network payload), but even a booting build would park G2. |
-| Assessed | 2026-08-03 · battery v2 · flycast `9e882cbd2` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final** | **PARKED — `G1 broken: emulator-exited`** (G2 `medal_hopper` latent, permanent) |
+| Bottom line | Satellite terminal (`837-14457 SATL BD NAOMI DGS`) of a networked Sega medal machine: no build boots under the fork (netpic decrypt failure), a lone satellite literally lacks the game — only the first 16 MB of the binary is locally encrypted, everything from 0x1000000 is uploaded via network from the main unit — and the `medal_hopper` control class parks G2 the moment anything boots. |
+| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -51,8 +21,16 @@ Screenshots: none (no boot)
 
 ## 3. Boot & run evidence
 
-Boots: **no** — sidecar `boot.ok = false`, `failure_class = "no-handoff-120s"`, all 4 legs failed
-(`assessments/dragntr2.metrics.json`; rom recorded: `naomi/dragntr2/gds-0037a.chd`, the final leg).
+Boots: **no** — v4 sidecar `boot.ok = false`, `failure_class = "emulator-exited"` ·
+handoff never seen · run 600 s · rom `naomi/dragntr2.zip`. Same signature as `dragntr`:
+`Naomi GDROM: Could not find the file to decrypt.` (`gdcartridge.cpp:611`) — no bootable
+payload.
+Attract/demo reached: taxonomy does not apply — the game never executed
+(`capture.coverage = null`). All sidecar measurement fields are zeros/non-measurements;
+guts skipped.
+Screenshots: none (no boot; `evidence/dragntr2/` is empty).
+
+The battery v2 4-leg evidence (durable diagnosis):
 
 - **Zip leg 2:** `emulator-exited` with the `dragntr` signature —
   `ui/gui.cpp:1358 E[BOOT]: Naomi GDROM: Could not find the file to decrypt.`
@@ -65,24 +43,19 @@ Boots: **no** — sidecar `boot.ok = false`, `failure_class = "no-handoff-120s"`
   Leg 2's deterministic signature plus dragntr's 2/2 identical zip legs carry the diagnosis.
 - **Chd-direct legs 3–4:** `no-handoff-120s` ×2 — known dead-end path for GD sets (kb §4);
   logs show only DC BIOS activity (`CLEO-SPG write SPG_LOAD` from BIOS pc `8c00b87c`), and
-  the kept screenshot is the DC BIOS main menu.
-
-Attract/demo reached: taxonomy does not apply — the game never executed; sidecar
-`capture.coverage = null` stands.
-Screenshot kept: `assessments/evidence/dragntr2/shot-060s.png` (DC BIOS menu; the second
-shot was the same menu a minute later — deleted).
-All sidecar measurement fields are zeros/non-measurements; guts skipped.
+  the kept screenshot was the DC BIOS main menu.
 
 ## Gate
 
-Score run after setting `controls.device_class = "medal_hopper"`:
+Current score run:
 
 ```
-dragntr2 PARKED G1 broken: no-handoff-120s
+dragntr2 PARKED G1 broken: emulator-exited
 ```
 
-Boot check precedence keeps the formal gate at G1; the off-ladder `medal_hopper` value means
-G2 fires the moment any build boots. Both gates:
+Boot check precedence keeps the formal gate at G1 (v4 class `emulator-exited`; the v2 run
+classed as `no-handoff-120s`); the off-ladder `medal_hopper` value means G2 fires the
+moment any build boots. Both gates:
 
 **G2 controls: `medal_hopper` — physically unmappable, permanent.** All three off-ladder
 categories at once, same analysis as [`dragntr`](dragntr.md) §Gate:
@@ -97,10 +70,10 @@ unit security PIC. data starting from 0x1000000 uploaded via network to satellit
 later decrypted using keys from satellite security PICs." **The satellite does not hold the
 game; the main unit serves it over the network.**
 
-**G1 broken: no-handoff-120s (sidecar formal gate).** The netpic decrypt failure (leg 2) is
-**doubly moot** here: even with the netpic byte fixed, the local image only contains the
-first 16 MB of playable binary — the rest arrives from an emulated main unit that does not
-exist. (`boot.mame_not_working` carries no per-title signal for Naomi sets, kb §4.r.)
+**G1 broken (formal gate).** The netpic decrypt failure is **doubly moot** here: even with
+the netpic byte fixed, the local image only contains the first 16 MB of playable binary —
+the rest arrives from an emulated main unit that does not exist.
+(`boot.mame_not_working` carries no per-title signal for Naomi sets, kb §4.r.)
 
 **What would unblock:** nothing realistic. G2 is permanent; G1 would additionally require
 emulating the main-unit-to-satellite network upload, only to surface the G2 park.
@@ -118,3 +91,10 @@ emulating the main-unit-to-satellite network upload, only to surface the G2 park
 - Boot-ID quirk as siblings: boots with SDK placeholder `SAMPLE GAME MAX LONG NAME-`;
   Flycast renames by set (`naomi_cart.cpp:653–662`).
 - Every numeric sidecar field is a non-measurement (no boot); quote none of them.
+
+## 10. History
+
+| Battery | Date | Final | What changed |
+|---|---|---|---|
+| v2 | 2026-08-03 | PARKED `G1 broken: no-handoff-120s` | All 4 legs failed (zip: netpic decrypt error + one dynarec-init flake; chd-direct: known dead-end, kb §4); `medal_hopper` researched and set — G2 latent behind boot-check precedence (kb §4.s) |
+| v4 | 2026-08-04 | PARKED `G1 broken: emulator-exited` | Re-run reclassified the same netpic failure ("Could not find the file to decrypt.", `gdcartridge.cpp:611`) — no bootable payload, same as `dragntr` (kb §4.s; instrumentation root-causes kb §7) |

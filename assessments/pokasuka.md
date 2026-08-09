@@ -57,3 +57,10 @@ Secondary blocker (does not currently gate — G3 fires first): the cabinet is a
 G2). Sources: MAME INPUT_PORTS cite in sidecar; the attract demo itself instructs
 画面をタッチしてね ("touch the screen") — `evidence/pokasuka/shot-609s.png`. A DC
 mouse/light-gun mapping is conceivable but is redesign territory.
+
+## 10. History
+
+| Battery | Date | Final | What changed |
+|---|---|---|---|
+| v4 | 2026-08-04 | PARKED G3-ARAM | First assessment: ARAM over 2× cap on the address-keyed rule, `nz_above_cap` 5,068,309 B of real content |
+| v7 | 2026-08-07 | PARKED G3-ARAM | Reconfirmed on the §6 volume keying — `content_total` 7,064,300 B (u 3.369), re-keying changes nothing (spec `2026-08-07-aram-gate-volume-design.md`) |

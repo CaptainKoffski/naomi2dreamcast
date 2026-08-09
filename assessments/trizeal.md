@@ -1,18 +1,12 @@
 # Trizeal (Japan) (GDL-0026) (`trizeal`) — portability assessment
 
-> **Battery v9 main-content re-score (2026-08-08): 72.5 (A), was 37.7 (C)** — scoring-only blanket re-score, no re-capture: every measurement
-> below is still the battery v8 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
-> adopted to main 2026-08-09): main now keys on write-truth content VOLUME instead of
-> the address peak — `nz_total` 5,725,402 B (content-u 0.341) replaces peak 32,548,960 B (u 1.940).
-> Memory axis 63.6, binding region now **vram** (was memory 12.4). Verdict section below is the capture-time (v≤8) record.
-
 ## 1. Verdict
 
 | | |
 |---|---|
-| **Final score** | **37.7** (C) |
-| Bottom line | Boots and demos cleanly; the binding axis is main RAM at u=1.940 (address-keyed peak 32.5 MB, 43 KB past — but not equal to — the `0x1F00040` shared-structure value, with 4.1 MB of real above-cap content). Distinctive in this wave: **the first title with genuine VRAM content pressure** — 8.16 MB of FB-masked content gives fit-u 1.119 (sub 63.6) even after v8 masking — and its ARAM address peak is the exact 16-under-2-MiB value (2,097,136 B) illvelo/karous carry, now seen across two unrelated developers. Triangle Service's own 2005 DC port ships the game regardless. |
-| Assessed | 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final score** | **72.5 (A)** |
+| Bottom line | The wave's only title with genuine VRAM content pressure: FB-masked content + double framebuffer is 9.39 MB (u 1.119, sub-score 63.6) — the binding region even under content keying — while main (0.34×) and ARAM (0.30×) fit outright; Triangle Service's own 2005 DC port ships the game and proves the texture trim possible. |
+| Assessed | capture 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
 
 ## 2. Identity
 
@@ -29,38 +23,25 @@
 
 Boots: yes · handoff at 20.0 s (`trigger=pio`) · run 600 s · rom: `naomi/trizeal.zip` (single clean zip leg)
 Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"`; attract cycle across the 10 shots: title (rotating 3D ship display, multiple angles) → live demo gameplay (enemy formations, item gem, GAME OVER frames) → 20-row score ranking.
-Screenshots kept (5 of 10):
-- `assessments/evidence/trizeal/shot-060s.png` — title: TRIZEAL logo over 3D ship, EXTEND table, ©2004 TRIANGLE SERVICE
-- `assessments/evidence/trizeal/shot-182s.png` — attract gameplay: enemy formation, GAME OVER overlay, missile trails
-- `assessments/evidence/trizeal/shot-365s.png` — attract gameplay: enemy waves, rainbow item gem, player ship firing
-- `assessments/evidence/trizeal/shot-426s.png` — attract gameplay: large explosion, twin beam lasers, GAME OVER
-- `assessments/evidence/trizeal/shot-548s.png` — RANK/SCORE/STAGE/NAME 20-row ranking table
+Screenshots (5 kept of 10):
+- `evidence/trizeal/shot-060s.png` — title: TRIZEAL logo over 3D ship, EXTEND table, ©2004 TRIANGLE SERVICE
+- `evidence/trizeal/shot-182s.png` — attract gameplay: enemy formation, GAME OVER overlay, missile trails
+- `evidence/trizeal/shot-365s.png` — attract gameplay: enemy waves, rainbow item gem, player ship firing
+- `evidence/trizeal/shot-426s.png` — attract gameplay: large explosion, twin beam lasers, GAME OVER
+- `evidence/trizeal/shot-548s.png` — RANK/SCORE/STAGE/NAME 20-row ranking table
 
-Deleted surplus (5): three additional title-screen angles of the rotating ship, one near-duplicate gameplay frame, one transition frame.
 Anomalies: none.
 
-## 4. Memory fit (axis: 12.4)
+## 4. Memory fit (axis: 63.6)
 
-| Region | Peak / fit | DC capacity | Utilization | Sub-score | Evidence |
+| Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth) | 32,548,960 (`0x1F0A860`) | 16,777,216 | 1.940 | 12.4 (binding) | `MAINPROFILE`; 43,040 B *past* the `0x1F00040` signature — near it, not equal, so NOT counted as an instance |
-| VRAM (FB-masked content + 2×FB) | 9,386,488 (content_total 8,157,688 + 2×fb_bytes 614,400) | 8,388,608 | 1.119 | 63.6 | `VRAMPROFILE`; **genuine content pressure**: 8.16 MB of masked content, nz_total 8,666,757 — the wave's only title over cap on content, not extent (raw peak 16,478,358, u 1.964) |
-| ARAM (content, volume-keyed) | 632,368 | 2,097,152 | 0.302 | 100.0 | `ARAMPROFILE`; address peak 2,097,136 — the exact illvelo/karous 16-under-2-MiB value, third instance, **second developer** |
+| Main RAM (write-truth content volume, `nz_total`) | 5,725,402 | 16,777,216 | 0.3413 | 100.0 | address peak 32,548,960 (u 1.940, informational — 43,040 B *past* the `0x1F00040` signature, near it but not equal, so NOT counted as an instance, kb §6 item 3) · `nz_above_cap` 4,102,336 · `dma_high_water` 27,750,592 (the §6 item 3 27–30 MB GD cluster band, informational-only from v6 on) |
+| VRAM (FB-masked content + 2×FB) | 9,386,488 (content_total 8,157,688 + 2×fb_bytes 614,400) | 8,388,608 | 1.119 | 63.6 | **binding region — genuine content pressure**: 8.16 MB of masked content, nz_total 8,666,757; the wave's only title over cap on content, not extent (raw address peak 16,478,358, u 1.964) |
+| ARAM (content volume, fill-excluded, `content_total`) | 632,368 | 2,097,152 | 0.3015 | 100.0 | address peak 2,097,136 — the exact illvelo/karous 16-under-2-MiB value, third instance, **second developer**: reads as a GD-era SDK/sound-driver allocation constant, not an engine quirk (kb §6 item 1) |
 
-**Checkpoint notes:**
-1. Main: `nz_total` 5,725,402 B with `nz_above_cap` 4,102,336 B of real above-cap
-   content — substantial, like karous (not an illvelo/sgtetris-style near-empty
-   divergence). `dma_high_water` 27,750,592 B sits in the §6 item 3 27–30 MB GD cluster
-   band (informational-only from v6 on).
-2. VRAM is the wave's counter-example: after FB masking the content alone is 8.16 MB —
-   fit-u 1.119 is real texture pressure a DC port must trim, unlike every other wave
-   title where the raw peak was pure extent artifact. The official DC port evidently
-   did that trim.
-3. ARAM address peak 2,097,136 B (16 B under the DC cap) now appears on **two unrelated
-   developers** (Milestone: illvelo/karous; Triangle Service: trizeal) — it reads as a
-   GD-era SDK/sound-driver allocation constant, not an engine quirk; content here is
-   only 632 KB (u 0.302). Relevant to the §6 item 1 ARAM-multiple discussion.
-Watermarks (informational, content-scan — stale-data prone): main 32,548,960 · vram 16,478,358 · aram 8,388,608.
+Watermarks (informational, content-scan — stale-data prone): main 32,548,960 ·
+vram 16,478,358 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
 ## 5. Cart streaming (axis: 69.7)
 
@@ -75,11 +56,11 @@ Code 1,048,576 B (carve `base 0x8c020000`, entry `0x8c021000`, header title "TRI
 a 1 MB boot blob, half the wave's usual 2 MB) · functions 2,095 · MMIO refs: scif 9,
 rtc 3, g2ext 645 · BIOS vector refs: {} · penalties: `eeprom_bios`+`serial`+`rtc` → −15.
 
-## 7. Controls (axis: 100.0 — `stick`)
+## 7. Controls (axis: 100.0)
 
 Cabinet: standard Naomi 2P panel, 8-way stick + 3 buttons — A = Shot, B = weapon/form
-change (Wide / Missile / Laser), C = Bomb. MAME input ports: `naomi`
-(INPUT_PORTS_START at naomi.cpp @59e7c0b line 1506).
+change (Wide / Missile / Laser), C = Bomb. `controls.device_class = stick`. MAME input
+ports: `naomi` (INPUT_PORTS_START at naomi.cpp @59e7c0b line 1506).
 Proposed DC mapping: d-pad + 3 face buttons, 1:1 — the DC review's verdict: "the
 Dreamcast D-pad is up to the job".
 Sources: MAME naomi.cpp @59e7c0b INPUT_PORTS `naomi`;
@@ -89,18 +70,27 @@ Sources: MAME naomi.cpp @59e7c0b INPUT_PORTS `naomi`;
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 12.4^.40 · 69.7^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **37.7** (C)
+      = 63.6^.40 · 69.7^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **72.5 (A)**
 Similarity inputs: developer match no, SDK overlap **partial**, cart loader match **yes** → 70.0.
 
 ## 9. Risks & notes
 
 - **Porting is redundant**: the official 2005 DC build (TATE, VGA, extra modes) is
-  canonical and has a 2023 English patch. Assessment value: with karous, a second
-  DC-shipped ground-truth title scoring C on the address-keyed main axis — and the only
-  wave title where a real VRAM content trim (8.16 MB → 8 MB budget minus framebuffers)
-  is part of what its shipped port proves possible.
+  canonical and has a 2023 English patch. Assessment value: the only wave title where a
+  real VRAM content trim (8.16 MB → 8 MB budget minus framebuffers) is part of what its
+  shipped port proves possible — the binding region here is real porting work, not a
+  measurement artifact.
+- Main above-cap content (4,102,336 B by address) is placement, not volume, under
+  content keying; the shipped DC port is proof the game fits 16 MB after a real downport.
 - ROT270 vertical — solved in the official port (4 screen modes).
 - Engine lineage: Triangle Service's XII Stag (hidden XII ship here), Exzeal, Shooting
   Love 2007 (`sl2007`, Naomi cart, still pending in the queue) — expect similar metric
   shapes when `sl2007` is assessed.
 - Main-RAM write-truth includes CPU writes (v6+); `dma_high_water` is informational-only.
+
+## 10. History
+
+| Battery | Date | Final | What changed |
+|---|---|---|---|
+| v8 | 2026-08-08 | 37.7 (C) | First assessment (FB-masked VRAM keying); main address-keyed peak 32.5 MB bound at u 1.940; genuine VRAM content pressure (fit-u 1.119) identified — kb §6 item 3 |
+| v9 | 2026-08-08 | 72.5 (A) | Scoring-only re-key (no re-capture): main keyed on content volume `nz_total` 5,725,402 B; binding region moved to VRAM — spec `2026-08-08-main-content-rekey-design.md` |

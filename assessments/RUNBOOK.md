@@ -81,3 +81,10 @@ decide whether `score.py` needs revision before the queue burns further down.
 If instrumentation or `score.py` changes materially, bump `BATTERY_VERSION` in
 `run_battery.py`; sidecars with an older version are stale — re-run them before
 comparing scores (spec §7).
+
+**Doc update on re-assessment:** update the measurement sections (§1, §3–§8) *in
+place* with the new sidecar's values and append ONE row to `## 10. History`
+(battery · date · final · one-line reason + kb §/spec link). Never prepend
+banner blockquotes, never demote old content to a "Historical" section — the
+doc body shows the current result only. Old prose lives in git history;
+forensic root-causes live in `docs/kb/assessment-tooling.md`.

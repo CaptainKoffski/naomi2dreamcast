@@ -1,97 +1,12 @@
 # Tetris Kiwamemichi (Japan) (GDL-0020) (`tetkiwam`) — portability assessment
 
-> **Battery v9 main-content re-score (2026-08-08): 82.9 (S), was 38.1 (C)** — scoring-only blanket re-score, no re-capture: every measurement
-> below is still the battery v6 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
-> adopted to main 2026-08-09): main now keys on write-truth content VOLUME instead of
-> the address peak — `nz_total` 8,643,391 B (content-u 0.515) replaces peak 32,508,220 B (u 1.938).
-> Memory axis 87.4, binding region now **aram** (was memory 12.5). Verdict section below is the capture-time (v≤8) record.
-
-> **Battery v6 cluster re-run (2026-08-07): **38.1 (C)** — this doc's own §9 clustering
-> flag is now ANSWERED.** v6 scores main RAM on the write-truth `peak` (`MAINPROFILE`
-> snapshot+diff) instead of `dma_high_water`; the old `dma_high_water` figure
-> (30,495,872 B) reproduces **byte-identical to v5** — the suspicious kurucham/ss2005/
-> takoron/tetkiwam clustering §9 flagged is confirmed real per-title, not run noise (kb
-> §6 item 3). The DC-bootable-`TETRIS.BIN` tension §9 raised is now quantified rather
-> than qualitative: the write-truth main peak is 32,508,220 B, with **7,268,643 B
-> (7.27 MiB) of changed content sitting above the DC's 16 MB cap** — yet the disc ships
-> an actual DC build of this exact game (TCRF, §2). ARAM/VRAM are unchanged and still fit
-> (ARAM `nz_above_cap` 0, VRAM `nz_above_cap` 0). Tier drop B→C is the main-axis
-> definition change (same story as `kurucham`/`ss2005`), not new content or a retraction
-> of the TETRIS.BIN evidence. Findings: `docs/kb/assessment-tooling.md` §6 item 3
-> (2026-08-07). Sidecar: flycast `65f9f7857`, battery 6, `handoff.trigger = "pio"` (GD
-> DIMM ~1 MB bootstrap).
-
-## v6 verdict & measurements
-
-| | |
-|---|---|
-| **Final** | **38.1 (C)** |
-| Coverage | demo |
-| Assessed | 2026-08-07 · battery v6 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
-| Boot | ok=True · handoff 20.0 s (trigger=pio) · run 600 s · rom `naomi/tetkiwam.zip` |
-
-| Region | v6 peak (scored) | DC cap | u | Note |
-|---|---|---|---|---|
-| Main RAM (write-truth) | 32,508,220 | 16,777,216 | 1.94 | nz_total 8,643,391 · nz_above_cap 7,268,643 · dma_high_water 30,495,872 (1.82×, byte-identical to v5) |
-| VRAM (write-truth) | 7,763,712 | 8,388,608 | 0.93 | nz_total 2,408,482 · nz_above_cap 0 |
-| ARAM (content, fill-excluded) | 2,031,344 | 2,097,152 | 0.97 | content above cap 0 |
-
-Streaming: 1410 DMA events · total 105.5 MB · unique 35.44 MB · re-read 0.664 · steady 8.824 MB/min
-Axes: memory 12.5 · streaming 72.3 · guts 85.0 · controls 100.0 · similarity 70.0 → **final 38.1 (C)**
-Screenshots: `evidence/tetkiwam/shot-060s.png` · `evidence/tetkiwam/shot-365s.png` · `evidence/tetkiwam/shot-609s.png`
-
-Note: the shared `0x1F00000` 64-byte structure seen on `kurucham`/`ss2005`/`ikaruga`
-does not exactly match here — tetkiwam's own writes reach 2,300 B past it
-(32,508,220 vs 32,505,920), still worth flagging as the same structural family (kb §6
-item 3, §8 discipline — no exclusion without a control-run proof). See §9 below for the
-full DC-bootable-build discussion, now updated with the v6 numbers.
-
----
-
-> **Battery v5 re-run (2026-08-06): **43.3 (B)** — confirmed; VRAM artifact gone.**
-> v5's pre-`VRAMHANDOFF` sample drop (kb §9) removes the BIOS boot-frame block from the
-> VRAM peak: now 7,763,712 B (0.93×, fits under 8 MB — vindicating the v2-era §4
-> argument), vs the v4 table's artifact-inflated 9,711,616 B. Main 30,495,872 B still
-> binds (memory 17.3); ARAM 2,031,344 B; final unchanged at 43.3 B, coverage demo.
-> Sidecar: flycast `ebae3b513`, battery 5.
-
-> **Battery v4 re-assessment (2026-08-04): **43.3 (B)**.**
-> 43.3 B (was 43.5 on v2), now with demo coverage — two-board Tetris attract runs (shot-365s); the v2 title-⚠ was the headless-era artifact.
-> Below the v4 section is the battery v2-era assessment: its *measured* figures
-> (boot evidence, memory, streaming, score) are **superseded**; the identity,
-> controls-research and similarity sections remain valid. Instrumentation
-> root-cause: `docs/kb/assessment-tooling.md` §7.
-
-## v4 verdict & measurements
-
-| | |
-|---|---|
-| **Final** | **43.3 (B)** |
-| Coverage | demo |
-| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
-| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/tetkiwam.zip` |
-
-| Region | v4 peak | DC cap | u | Note |
-|---|---|---|---|---|
-| Main RAM (DMA high-water) | 30,495,872 | 16,777,216 | 1.82 |  |
-| VRAM (write-truth diff) | 9,711,616 | 8,388,608 | 1.16 | nz_total 2,388,788 |
-| ARAM (content, fill-excluded) | 2,031,344 | 2,097,152 | 0.97 | content above cap 0 |
-
-Streaming: 1446 DMA events · total 102.8 MB · unique 33.8 MB · re-read 0.6712 · steady 9.098 MB/min
-Axes: memory 17.3 · streaming 71.8 · guts 85.0 · controls 100.0 · similarity 70.0 → **final 43.3 (B)**
-Screenshots: `evidence/tetkiwam/shot-060s.png` · `evidence/tetkiwam/shot-365s.png` · `evidence/tetkiwam/shot-609s.png`
-
----
-
-# Historical: battery v2 assessment (measurements superseded)
-
 ## 1. Verdict
 
 | | |
 |---|---|
-| **Final score** | **43.5** (B) |
-| Bottom line | The numeric score materially understates this title: the Naomi GD-ROM **ships a Dreamcast-bootable build of the game** (`TETRIS.BIN` in the disc root — TCRF, §2/§9), which is empirical, shipped-product proof the game runs on a real DC with 16 MB main RAM. Both measured DC-region budgets fit (ARAM peak exactly 2 MiB, VRAM 7.76 MB < 8 MB); the sole over-budget axis — main-RAM DMA high-water 1.82× — is therefore a v1 measurement artifact (Naomi high RAM used as GD stream cache, the spec's known limitation), not a porting cost. Score left untouched per campaign rules; recorded as a checkpoint calibration data point (kb §6 item 3). Ground-truth portability is arguably the best in the queue — the "port" already exists on the disc. |
-| Assessed | 2026-08-03 · battery v2 · flycast `9e882cbd2` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final score** | **82.9 (S)** |
+| Bottom line | The GD-ROM ships a DC-bootable build of this exact game (`TETRIS.BIN` in the disc root — TCRF, §2) and under content keying the measurements now agree with that shipped proof: main content volume is half the DC's 16 MB, VRAM fits at 0.93×, and the binding region is ARAM at 0.97× cap with nothing above it. |
+| Assessed | capture 2026-08-07 · battery v6 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
 
 ## 2. Identity
 
@@ -106,59 +21,37 @@ Screenshots: `evidence/tetkiwam/shot-060s.png` · `evidence/tetkiwam/shot-365s.p
 
 ## 3. Boot & run evidence
 
-Boots: yes · handoff at 30.0 s · run 600 s · rom: `naomi/tetkiwam.zip` (single clean zip leg)
-Attract/demo reached: **title (conservative lower bound)** — sidecar
-`capture.coverage = "title"`; visual classification is impossible (see Display blindness),
-but activity metrics show the game running for the full window.
-Screenshots: `assessments/evidence/tetkiwam/shot-060s.png`, `shot-606s.png` (curated first + last).
-Anomalies: display blindness (below); otherwise a clean single-leg run.
+Boots: yes · handoff at 20.0 s (`trigger = "pio"`, GD DIMM ~1 MB bootstrap) · run 600 s · rom: `naomi/tetkiwam.zip`
+Attract/demo reached: **demo** — two-board Tetris attract gameplay (`shot-365s.png`); sidecar `capture.coverage = "demo"`
+Screenshots: `evidence/tetkiwam/shot-060s.png` · `evidence/tetkiwam/shot-365s.png` · `evidence/tetkiwam/shot-609s.png`
+Anomalies: none — single clean leg (the v2-era display blindness, kb §4.m, was a capture artifact resolved from v4 on).
 
-### Display blindness
+## 4. Memory fit (axis: 87.4)
 
-All 10 battery screenshots show the same frozen NAOMI GD-ROM SYSTEM splash (first and
-last kept — identical at t=60 s and t=606 s). That is a **stale TA frame** left in the GL
-display path (kb §4.m class, same as `kurucham`/`ss2005`), not a hang: underneath it the
-game verifiably runs — BIOS handoff at 30.0 s, 1,356 GD DMA events / 99,764,224 B
-streamed across the window, ARAM written to exactly 2 MiB, and 2,292,917 B of nonzero
-VRAM uploads (`memory.vram.nz_total`). MAME flags the set preliminary / imperfect
-graphics + sound ([arcadeitalia](http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=tetkiwam)) —
-consistent with a title that trips emulator display paths. The score remains valid
-because memory/streaming/guts measure real game activity, none of which depends on
-rendering.
-
-## 4. Memory fit (axis: 17.3)
-
-| Region | Peak | DC capacity | Utilization | Sub-score | Evidence |
+| Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (DMA high-water) | 30,495,872 B | 16 MB | 1.82× | 17.3 | grep `CARTDMA` in raw log |
-| VRAM (write-truth) | 7,763,712 B | 8 MB | 0.93× | 90.6 | grep `VRAMPROFILE` |
-| ARAM (write-truth) | 2,097,152 B | 2 MB | 1.00× | 85.0 | grep `ARAMPROFILE` |
+| Main RAM (write-truth content volume, `nz_total`) | 8,643,391 | 16,777,216 | 0.5152 | 100.0 | address peak 32,508,220 (u 1.938, informational) · `nz_above_cap` 7,268,643 of content above the 16 MB line by address · `dma_high_water` 30,495,872 (byte-identical v5→v6 — the GD-cluster value, kb §6 item 3) |
+| VRAM (write-truth peak, post-handoff) | 7,763,712 | 8,388,608 | 0.9255 | 90.6 | nz_total 2,408,482 · **0 above cap** |
+| ARAM (fill-excluded content peak — pre-v7 sidecar, no `content_total`) | 2,031,344 | 2,097,152 | 0.9686 | 87.4 | **binding region** · `nz_above_cap` 0 · keyed on `peak` (the scorer's documented fallback, which can only under-score vs a volume re-capture) |
 
-Watermarks (informational, content-scan — stale-data prone): main 32,508,220 /
-vram 7,763,712 / aram 2,097,152. Main watermark 1.07× the DMA high-water — mild.
+Watermarks (informational, content-scan — stale-data prone): main 32,508,220 ·
+vram 9,711,616 (includes the pre-handoff BIOS boot-screen sheet, kb §9) ·
+aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
-The region pattern is the doc's key evidence: **ARAM peaks at exactly 2,097,152 B — the
-DC's AICA capacity to the byte, with `nz_above_cap = 0`** — and **VRAM fits under the DC's
-8 MB** (`nz_above_cap = 0`, nonzero content 2,292,917 B). Sound and video were authored
-inside DC budgets. Only main RAM reads over (1.82×), and §9 argues that number is a
-measurement artifact for this title, not real footprint: the shipped DC build proves the
-game runs in 16 MB.
+## 5. Cart streaming (axis: 72.3)
 
-## 5. Cart streaming (axis: 73.4)
-
-DMA events 1,356 · total 99.76 MB · unique 35.41 MB · re-read ratio 0.645 ·
-steady-state 8.353 MB/min (full window, `short_window: false`)
+DMA events 1,410 · total 105.5 MB · unique 35.44 MB · re-read ratio 0.664 ·
+steady-state 8.824 MB/min (`short_window: false`) · PIO 1,115,456 B
 
 ## 6. Guts (axis: 85.0)
 
 Code 1,114,112 B · functions 3,636 · MMIO refs: scif 25, rtc 3, g2ext 201 ·
-BIOS vector refs: none extra (`extra_bios_classes: 0`) · penalties applied:
-`eeprom_bios`, `serial`, `rtc` → 85.0
-
+BIOS vector refs: none (`extra_bios_classes: 0`) · flags: `eeprom_bios`, `serial`, `rtc`.
+Carve base `0x8c020000`, entry `0x8c021000`, header title `TETRIS KIWAMEMITI JAPAN`.
 `guts.sdk_strings` shows a fully Katana-adjacent stack — including strings that name the
 Dreamcast outright: `Nindows2 for DREAMCAST version %s`, `sd2 for DC Ver 2.50.18`,
 `RMC … SEGAKATANA`, Kunoichi2 Library for NAOMI 2.07, Ninja2 2.01, NEC KAMUI2, CRI
-ADX/Sofdec. Carve header title: `TETRIS KIWAMEMITI JAPAN`.
+ADX/Sofdec.
 
 ## 7. Controls (axis: 100.0)
 
@@ -179,48 +72,38 @@ No in-binary INPUT TEST name strings surfaced in `guts.sdk_strings`.
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 17.3^.40 · 73.4^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **43.5** (tier B)
-Similarity inputs (sidecar): developer no, SDK overlap partial, loader match yes.
+      = 87.4^.40 · 72.3^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **82.9 (S)**
+Similarity inputs: developer no, SDK overlap partial, loader match yes.
 Prose note: the shipped Katana build implies the SDK overlap is **full** in reality —
-the sidecar's `partial` is another checkpoint-worthy calibration observation.
+the sidecar's `partial` remains a checkpoint-worthy calibration observation.
 
 ## 9. Risks & notes
 
-- **The main-RAM axis overcounts this title — shipped-product counter-evidence.** The
-  GD-ROM ships a DC-bootable `TETRIS.BIN` (§2, TCRF), i.e. the game demonstrably runs on
-  real DC hardware with 16 MB main RAM. The measured 30,495,872 B DMA high-water (1.82×)
-  can therefore only be Naomi-side behavior — the game using high Naomi RAM as a GD
-  streaming cache — which is exactly the spec's known v1 limitation (DMA high-water
-  measures where assets land, not the working set). Corroboration: ARAM peaks at exactly
-  the DC's 2 MiB with nothing above the cap, and VRAM fits under 8 MB — the content was
-  authored to DC budgets. **The score is deliberately not hand-adjusted** (campaign
-  comparability); the tension is recorded for the scoring checkpoint (kb §6 item 3),
-  where the suspicious clustering of main high-waters across GD titles (kurucham 27.4 /
-  ss2005 27.5 / takoron 29.4 / tetkiwam 30.5 MB) is also noted.
-  **ANSWERED by the battery v6 cluster re-run (2026-08-07):** the clustering reproduces
-  per-title — this title's own `dma_high_water` is byte-identical between v5 and v6
-  (30,495,872 B) — so it was never run noise; see
-  `docs/kb/assessment-tooling.md` §6 item 3 for the full four-title comparison. v6 also
-  adds a write-truth content number the v1 metric couldn't give: **7,268,643 B
-  (7.27 MiB) of changed main-RAM content sits above the DC's 16 MB cap**
-  (`memory.main.nz_above_cap`, v6 sidecar) even though the disc's own `TETRIS.BIN` proves
-  the game runs in 16 MB — quantifying, not resolving, the tension above. The v6 main
-  peak (32,508,220 B) is close to but not identical with a 64-byte structure
-  (`0x1F00000`–`0x1F0003F`, peak 32,505,920) shared by `kurucham`/`ss2005`/`ikaruga` —
-  tetkiwam's own writes reach 2,300 B past it, so it is a related-but-not-identical
-  signature candidate (kb §6 item 3, §8 discipline: no exclusion without a control-run
-  proof).
+- **Port-planning takeaway: the shipped DC build and the content numbers now agree.**
+  Main content volume is 8.6 MB (u 0.515); the 7,268,643 B of content sitting above the
+  16 MB address line is placement, not volume — exactly what the disc's own `TETRIS.BIN`
+  (§2) proves a real DC build relocates. ARAM is the binding region at 0.9686×
+  (peak-keyed on a pre-v7 sidecar without `content_total`; a volume re-capture can only
+  score the same or higher per the scorer's fallback contract).
 - **Real-hardware verification flag:** upstream Flycast has an open, undiagnosed,
   hardware-independent freeze in the Naomi version's 2P versus mode after ~1–2 min
   ([flyinghead/flycast#1500](https://github.com/flyinghead/flycast/issues/1500), reported
   2024-05-02; prior report libretro/flycast#965). Attract-mode capture is unaffected, but
   any port claim must exercise 2P versus on real hardware per the working-style rule.
-- **Display blindness** (§3): no visual validation is possible in our fork today — the
-  same stale-TA-frame class as `kurucham`/`ss2005` (kb §4.m); coverage is the
-  conservative `title` lower bound, so peaks could be understated vs. played gameplay.
+- The main address peak (32,508,220) is close to but not identical with the 64-byte
+  `0x1F00000` structure shared by `kurucham`/`ss2005`/`ikaruga` — tetkiwam's own writes
+  reach 2,300 B past it (kb §6 item 3). Informational under content keying.
 - The embedded DC build is not free-play (coin on Y, per TCRF) — a trivial delta for any
   release-shaped conversion work.
 - TCRF is currently bot-trapped for automated fetchers (kb §4.o) — citations here come
   from indexed search snippets; a human-browser archival copy is worth taking.
-- Main-RAM v1 limitation carried from the spec: DMA high-water misses CPU-written data
-  above the last DMA'd asset (main watermark 1.07× high-water — mild here).
+
+## 10. History
+
+| Battery | Date | Final | What changed |
+|---|---|---|---|
+| v2 | 2026-08-03 | 43.5 (B) | First assessment; display-blind capture (stale TA frame), coverage `title` lower bound; main DMA high-water 30.5 MB flagged as suspect vs the disc's DC-bootable `TETRIS.BIN` — kb §4.m, §6 item 3 |
+| v4 | 2026-08-04 | 43.3 (B) | Re-capture with demo coverage (the v2 title-⚠ was the headless-era artifact); VRAM peak still carried the BIOS boot-frame block — kb §7 |
+| v5 | 2026-08-06 | 43.3 (B) | Pre-`VRAMHANDOFF` sample drop removed the BIOS boot-frame: VRAM 7,763,712 B fits under 8 MB; main high-water unchanged, still binding — kb §9 |
+| v6 | 2026-08-07 | 38.1 (C) | Cluster re-run: main re-keyed on write-truth address peak 32,508,220 B (u 1.94); `dma_high_water` byte-identical v5→v6, confirming the GD-title clustering is real per-title — kb §6 item 3 |
+| v9 | 2026-08-08 | 82.9 (S) | Scoring-only re-key (no re-capture): main keyed on content volume `nz_total`; binding region moved to ARAM — spec `2026-08-08-main-content-rekey-design.md` |

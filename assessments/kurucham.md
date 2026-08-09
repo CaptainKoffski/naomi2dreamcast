@@ -1,89 +1,12 @@
 # Kurukuru Chameleon (Japan) (GDL-0034) (`kurucham`) — portability assessment
 
-> **Battery v9 main-content re-score (2026-08-08): 45.8 (B), was 38.3 (C)** — scoring-only blanket re-score, no re-capture: every measurement
-> below is still the battery v6 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
-> adopted to main 2026-08-09): main now keys on write-truth content VOLUME instead of
-> the address peak — `nz_total` 2,703,775 B (content-u 0.161) replaces peak 32,505,920 B (u 1.938).
-> Memory axis 19.6, binding region now **vram** (was memory 12.5). Verdict section below is the capture-time (v≤8) record.
-
-> **Battery v6 cluster re-run (2026-08-07): **38.3 (C)** — tier drop is a scoring-axis
-> change, not new content.** v6 scores main RAM on the write-truth `peak`
-> (`MAINPROFILE` snapshot+diff) instead of `dma_high_water`; the old v4 figure
-> (`dma_high_water` 27,449,344 B, 1.64×) reproduces byte-for-byte — the 27–30 MB GD-title
-> clustering flagged at kb §6 item 3 is real, not run noise. The new scored peak,
-> 32,505,920 B (u=1.94×), is a **shared 64-byte structure at `0x1F00000`–`0x1F0003F`**
-> also seen on `ss2005` and `ikaruga` — a signature candidate, not yet excluded (needs a
-> `dragntr3` control run, §8 discipline). Findings: `docs/kb/assessment-tooling.md` §6
-> item 3 (2026-08-07). Sidecar: flycast `65f9f7857`, battery 6, `handoff.trigger = "pio"`
-> (GD DIMM ~1 MB bootstrap).
-
-## v6 verdict & measurements
-
-| | |
-|---|---|
-| **Final** | **38.3 (C)** |
-| Coverage | demo |
-| Assessed | 2026-08-07 · battery v6 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
-| Boot | ok=True · handoff 20.0 s (trigger=pio) · run 600 s · rom `naomi/kurucham.zip` |
-
-| Region | v6 peak (scored) | DC cap | u | Note |
-|---|---|---|---|---|
-| Main RAM (write-truth) | 32,505,920 | 16,777,216 | 1.94 | nz_total 2,703,775 · nz_above_cap 1,352,471 · dma_high_water 27,449,344 (1.64×, byte-identical to v4) |
-| VRAM (write-truth) | 14,770,864 | 8,388,608 | 1.76 | nz_total 5,623,486 |
-| ARAM (content, fill-excluded) | 2,395,328 | 2,097,152 | 1.14 | content above cap 282,380 |
-
-Streaming: 2621 DMA events · total 88.9 MB · unique 28.82 MB · re-read 0.6758 · steady 7.226 MB/min
-Axes: memory 12.5 · streaming 74.1 · guts 85.0 · controls 100.0 · similarity 70.0 → **final 38.3 (C)**
-Screenshots: `evidence/kurucham/shot-060s.png` · `evidence/kurucham/shot-365s.png` · `evidence/kurucham/shot-609s.png`
-
-Note: switching the scored main region from `dma_high_water` to the write-truth `peak`
-is the entire cause of the B→C move — memory axis 19.6 (v4, u=1.64 keyed to
-`dma_high_water`) → 12.5 (v6, u=1.94 keyed to `peak`); VRAM/ARAM are unchanged from v4.
-No new game content, no re-scored risk beyond the axis definition (kb §6 item 3).
-
----
-
-> **Battery v4 re-assessment (2026-08-04): **45.8 (B)**.**
-> 45.8 B stands (same final as v2), but now measured on a rendering build with demo coverage — the v2 run was headless (zeroing-era) and its title-⚠ was an artifact.
-> Below the v4 section is the battery v2-era assessment: its *measured* figures
-> (boot evidence, memory, streaming, score) are **superseded**; the identity,
-> controls-research and similarity sections remain valid. Instrumentation
-> root-cause: `docs/kb/assessment-tooling.md` §7.
-
-## v4 verdict & measurements
-
-| | |
-|---|---|
-| **Final** | **45.8 (B)** |
-| Coverage | demo |
-| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
-| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/kurucham.zip` |
-
-| Region | v4 peak | DC cap | u | Note |
-|---|---|---|---|---|
-| Main RAM (DMA high-water) | 27,449,344 | 16,777,216 | 1.64 |  |
-| VRAM (write-truth diff) | 14,770,864 | 8,388,608 | 1.76 | nz_total 5,612,977 |
-| ARAM (content, fill-excluded) | 2,395,328 | 2,097,152 | 1.14 | content above cap 282,380 |
-
-Streaming: 2621 DMA events · total 84.8 MB · unique 27.5 MB · re-read 0.6758 · steady 7.226 MB/min
-Axes: memory 19.6 · streaming 74.1 · guts 85.0 · controls 100.0 · similarity 70.0 → **final 45.8 (B)**
-Screenshots: `evidence/kurucham/shot-060s.png` · `evidence/kurucham/shot-365s.png` · `evidence/kurucham/shot-609s.png`
-
----
-
-# Historical: battery v2 assessment (measurements superseded)
-
 ## 1. Verdict
 
 | | |
 |---|---|
-| **Final score** | **45.8** (B) |
-| Bottom line | Mid-tier B: the actual content volume is genuinely DC-sized (5.3 MiB of nonzero VRAM assets, 2.4 MB ARAM, 1 MiB code) — but main-RAM DMA high-water is 1.64× the DC's 16 MB and needs real reduction, and our Flycast fork renders no visible frames for this title (display-path gap, §3), so nothing can be visually validated in emulation today. |
-| Assessed | 2026-08-03 · battery v2 · flycast `9e882cbd2` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
-
-History: this doc supersedes the 2026-08-03 `G1 broken: no-handoff-120s` park (commit
-`d7500a1`) — that diagnosis was retracted after the kb §4.l/§4.m investigation showed the
-game boots and runs headless under the fork; two tooling bugs had masked it (see §3/§9).
+| **Final score** | **45.8 (B)** |
+| Bottom line | Content is genuinely DC-sized (main content 0.16× cap, 5.6 MB of actual VRAM assets, ARAM 1.14× near-fit) but the VRAM sub-score binds at 19.6 on the 14.77 MB write-truth address peak — the v6 sidecar predates FB-masked VRAM keying, and nearly all of that peak is a relocatable high-parked asset store, so the real pressure is milder than the score implies. |
+| Assessed | capture 2026-08-07 · battery v6 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
 
 ## 2. Identity
 
@@ -98,72 +21,35 @@ game boots and runs headless under the fork; two tooling bugs had masked it (see
 
 ## 3. Boot & run evidence
 
-Boots: yes · handoff at 30.0 s · run 600 s · rom: `naomi/kurucham.zip` (single clean zip leg)
-Attract/demo reached: **title (conservative lower bound)** — sidecar
-`capture.coverage = "title"`. The run cannot be classified visually (see Display
-blindness below); the game verifiably runs its attract loop for the full window —
-EEPROM init (`Initializing Naomi EEPROM for game KURU KURU CHAMELEON`, raw
-stdout of earlier legs), ~2 framebuffer flips/frame for 600 s, 86.7 MB of GD streaming
-across 2,597 DMA events, ARAM written to 2.4 MB, and 5,600,640 B of nonzero VRAM asset
-uploads (`memory.vram.nz_total`) — but we cannot visually distinguish title-idle from
-demo gameplay, so the conservative `title` label is used.
-
-### Display blindness
-
-The game runs with no visible output under our fork; three image classes prove the
-metrics come from a running game, not a hang:
-
-- `shot-060s.png` / `shot-609s.png` — all 10 battery screenshots show the same frozen
-  NAOMI GD-ROM SYSTEM splash: a **stale TA frame** left in the GL display path, not a
-  boot hang (the activity counters above run underneath it the whole time).
-- `vram-fb-76a000-black.png` — raw VRAM framebuffer decode at the displayed FB address
-  `0x76a000` (640×480 RGB565 per `FB_R_SIZE=0017753f`, from a CLEO-VRAMDUMP snapshot):
-  pure black — the game never composes a frame the fork's display path can show.
-- `vram-assets-c00000.png` — decode of the 5.34 MiB nonzero region above 8 MB at
-  `0xc00000`: dense structured asset data, not a displayable frame.
-
-MAME flags the title imperfect-graphics
-([arcadeitalia](http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=kurucham),
-[minimaws](https://arcade.vastheman.com/minimaws/machine/kurucham)) — consistent with an
-emulator display-path gap for this title's 2D composition method, not a broken game: it
-shipped in arcades and was ported to PSP/DS/Switch/PS4. The score remains valid because
-memory/streaming/guts measure real game activity (DMA, VRAM/ARAM writes, static
-analysis), none of which depends on rendering.
-
-Screenshots kept: `shot-060s.png`, `shot-609s.png` (frozen splash, identical at t=60 s
-and t=609 s), `vram-fb-76a000-black.png`, `vram-assets-c00000.png`.
-Anomalies: the two earlier false G1 parks were tooling, not the game — (a) the boot
-heuristic checked nonzero VRAM only below 8 MB, blind to this title's above-8-MB asset
-store (fixed → total-nz, kb §4.m); (b) genuine launch flakes (kb §4.a DC-BIOS-menu and
-dynarec-assert faces) hit the chd legs repeatedly (fixes: `61350c8`, `4ea17fc`,
-`e5f5649`, plus the boot_ok fix).
+Boots: yes · handoff at 20.0 s (`trigger = "pio"` — GD DIMM ~1 MB bootstrap) · run 600 s · rom: `naomi/kurucham.zip`
+Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"` (the v2 run's
+`title`-only label was a headless zeroing-era artifact, see History).
+Screenshots: `evidence/kurucham/shot-060s.png` · `shot-365s.png` · `shot-609s.png`.
+Also in evidence (v2-era raw-VRAM decodes, durable): `vram-assets-c00000.png` — the
+above-8-MB region decoded as dense structured asset data — and
+`vram-fb-76a000-black.png`.
+Anomalies: none at v6.
 
 ## 4. Memory fit (axis: 19.6)
 
-| Region | Peak | DC capacity | Utilization | Sub-score | Evidence |
+| Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (DMA high-water) | 27,449,344 B | 16 MB | 1.64× | 24.6 | grep `CARTDMA` in raw log |
-| VRAM (write-truth) | 14,770,864 B | 8 MB | 1.76× | 19.6 | grep `VRAMPROFILE` |
-| ARAM (write-truth) | 2,395,328 B | 2 MB | 1.14× | 59.4 | grep `ARAMPROFILE` |
+| Main RAM (write-truth content volume, `nz_total`) | 2,703,775 | 16,777,216 | 0.161 | 100.0 | address peak 32,505,920 (`0x1F00040`, u 1.94, informational — kb §6 item 3 shared-structure signature) · nz_above_cap 1,352,471 · `dma_high_water` 27,449,344 (byte-identical to v4) |
+| VRAM (write-truth address peak — v6 sidecar has no FB-masked `content_total`/`fb_bytes`) | 14,770,864 | 8,388,608 | 1.761 | 19.6 | **binding** — nz_total 5,623,486 with 5,612,252 above the 8 MB line: address extent of a high-parked asset store (decoded at `0xc00000`, `vram-assets-c00000.png`), relocatable in a port |
+| ARAM (write-truth address peak — v6 sidecar has no `content_total`) | 2,395,328 | 2,097,152 | 1.142 | 59.4 | nz_above_cap 282,380 — near-fit |
 
-Watermarks (informational, content-scan — stale-data prone): main 32,505,920 /
-vram 14,770,864 / aram 2,395,328. Main watermark is 1.18× the DMA high-water — mild
-flag; some content above the last DMA'd asset.
+Watermarks (informational, content-scan — stale-data prone): main 32,505,920 ·
+vram 14,770,864 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
-Note on VRAM: the 14.77 MB peak is **address-extent**, not content volume — actual
-nonzero content is only 5,600,640 B (5.34 MiB, `nz_total`), most of it parked above the
-8 MB line at `0xc00000` (`nz_above_cap = 5,599,740 B`); a port would relocate it, so the
-real VRAM pressure is far milder than the sub-score implies. ARAM at 1.14× is near-fit.
-Main RAM at 1.64× is the genuine weak point.
+## 5. Cart streaming (axis: 74.1)
 
-## 5. Cart streaming (axis: 74.4)
-
-DMA events 2,597 · total 86.76 MB · unique 28.82 MB · re-read ratio 0.6678 ·
-steady-state 7.171 MB/min (full window, `short_window: false`)
+DMA events 2,621 · total 88.9 MB · unique 28.8 MB · re-read ratio 0.6758 ·
+steady-state 7.226 MB/min (`short_window: false`) · PIO 1,049,920 B
 
 ## 6. Guts (axis: 85.0)
 
-Code 1,048,576 B · functions 2,634 · MMIO refs: scif 2, rtc 3, g2ext 58 ·
+Code 1,048,576 B (carve `base 0x8c020000`, entry `0x8c020fe0`, header title
+"KURU KURU CHAMELEON") · functions 2,634 · MMIO refs: scif 2, rtc 3, g2ext 58 ·
 BIOS vector refs: none · penalties applied: `eeprom_bios`, `serial`, `rtc` → 85.0
 
 `guts.sdk_strings` shows a heavily DC-adjacent stack: Kunoichi2 Library for NAOMI 2.07,
@@ -187,26 +73,32 @@ competitive colour-matching puzzle); in-binary INPUT TEST strings
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 19.6^.40 · 74.4^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **45.8** (tier B)
+      = 19.6^.40 · 74.1^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **45.8 (B)**
 Similarity inputs: developer no (Starfish SD/Able ≠ reference), SDK overlap partial
 (Kunoichi2/Ninja2/CRI — see §6), loader match yes.
 
 ## 9. Risks & notes
 
-- **Display path is an unknown-class risk.** Under our fork the game produces zero
-  visible frames (§3); whatever 2D composition method Flycast doesn't emulate for this
-  title, a port must implement or replace it — and per the working-style rule, rendering
-  must be verified on real DC hardware, since no emulator check is currently possible.
-  Fork base `9e882cbd2` is effectively current (upstream `d4fc07741` is only 2
-  non-emulation commits ahead, kb §4.l) — a rebase will not fix this today.
-- **Main RAM is the weak axis regardless of the display issue**: 1.64× DC's 16 MB DMA
-  high-water (and a 1.18×-higher content watermark) needs real data reduction, unlike
-  VRAM (5.34 MiB actual content, relocatable) and ARAM (1.14×, near-fit).
-- Coverage is `title` as a conservative lower bound — activity data proves the attract
-  loop ran, but visual confirmation of demo gameplay is impossible (§3), so peaks could
-  be understated relative to played gameplay.
-- Supersedes the 2026-08-03 G1 park (`d7500a1`): "GD-DIMM boot hang" retracted; the
-  false parks were a below-8MB-only boot heuristic (kb §4.m) plus launch flakes on the
-  chd legs (kb §4.a) — both fixed (`61350c8`, `4ea17fc`, `e5f5649`).
-- Main-RAM v1 limitation carried from the spec: DMA high-water misses CPU-written data
-  above the last DMA'd asset (the watermark gap above is consistent with some).
+- **VRAM binds on pre-v8 keying.** The v6 sidecar predates FB-masked VRAM keying (no
+  `content_total`/`fb_bytes` fields), so the sub-score keys on the 14.77 MB address
+  peak; actual nonzero content is 5.6 MB, nearly all of it parked above the 8 MB line
+  (`vram-assets-c00000.png`) — relocatable extent, so the real VRAM pressure is far
+  milder than sub 19.6 implies.
+- **Main RAM is address-sparse:** content volume is only 2.7 MB (0.16×) but the
+  touched address peak is the 32,505,920 B `0x1F00040` shared-structure signature
+  (1.94×, kb §6 item 3) with 1.35 MB of nonzero bytes above the 16 MB line — layout/
+  relocation attention needed.
+- **ARAM is address-keyed** (no `content_total` in the v6 sidecar): 1.14× near-fit
+  with 282,380 B above cap.
+- **Rendering must be verified on real DC hardware** (working-style rule). The v2
+  display-blind run was a tooling artifact (kb §4.l/§4.m); v4+ builds render the
+  attract demo.
+
+## 10. History
+
+| Battery | Date | Final | What changed |
+|---|---|---|---|
+| v2 | 2026-08-03 | 45.8 (B) | First score, headless zeroing-era build (`title` coverage was an artifact). Superseded the same-day `G1 broken: no-handoff-120s` park (commit `d7500a1`), retracted after kb §4.l/§4.m — false parks were a below-8MB-only boot heuristic plus launch flakes (fixes `61350c8`, `4ea17fc`, `e5f5649`) |
+| v4 | 2026-08-04 | 45.8 (B) | Re-captured on a rendering build with demo coverage; same final (kb §7) |
+| v6 | 2026-08-07 | 38.3 (C) | Main re-keyed to the write-truth address peak — 32,505,920 B `0x1F00040` shared-structure signature (kb §6 item 3); `dma_high_water` reproduced byte-for-byte |
+| v9 | 2026-08-08 | 45.8 (B) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`); memory 19.6, binding region moved to VRAM |

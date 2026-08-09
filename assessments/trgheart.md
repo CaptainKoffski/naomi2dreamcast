@@ -1,18 +1,12 @@
 # Trigger Heart Exelica Ver.A (Japan) (GDL-0036A) (`trgheart`) — portability assessment
 
-> **Battery v9 main-content re-score (2026-08-08): 86.5 (S), was 40.0 (B)** — scoring-only blanket re-score, no re-capture: every measurement
-> below is still the battery v8 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
-> adopted to main 2026-08-09): main now keys on write-truth content VOLUME instead of
-> the address peak — `nz_total` 3,897,601 B (content-u 0.232) replaces peak 31,643,808 B (u 1.886).
-> Memory axis 100.0, binding region now **vram** (was memory 14.6). Verdict section below is the capture-time (v≤8) record.
-
 ## 1. Verdict
 
 | | |
 |---|---|
-| **Final score** | **40.0** (B) |
-| Bottom line | Boots and attract-demos cleanly; ARAM fits the DC cap outright (even the address peak stays under 2 MiB — no full-bank load) and VRAM fits under v8 FB-masked keying; the binding axis is main RAM at u=1.886 (address-keyed write-truth peak 31.6 MB) while changed main content is only 3.9 MB total / 2.3 MB above cap — another address-vs-content divergence for the kb §6 item 3 checkpoint. Warashi shipped this exact game on DC in 2007, so the title is reference/validation material, not a porting target. |
-| Assessed | 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final score** | **86.5 (S)** |
+| Bottom line | Everything fits under content keying — memory axis 100.0 (main content 3.9 MB, FB-masked VRAM 4.7 MB, ARAM 1.3 MB; the first assessed title whose ARAM *address* peak already fits the DC cap) — leaving re-read-heavy GD streaming (0.84 on a 14 MB working set) as the lowest axis; Warashi shipped this exact game on DC in 2007, so the title is reference/validation material, not a porting target. |
+| Assessed | capture 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
 
 ## 2. Identity
 
@@ -29,33 +23,25 @@
 
 Boots: yes · handoff at 20.0 s (`trigger=pio`) · run 600 s · rom: `naomi/trgheart.zip` (single clean zip leg)
 Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"`; full attract cycle observed across the 10 battery shots: boot logo → Warashi calligraphy logo → live demo gameplay (DEMONSTRATION overlay) → title → ship/bullet-pattern intro → score ranking.
-Screenshots kept (5 of 10):
-- `assessments/evidence/trgheart/shot-060s.png` — boot: TRIGGERHEART EXELICA logo over circuit-board motif
-- `assessments/evidence/trgheart/shot-182s.png` — attract gameplay, DEMONSTRATION + PRESS START overlays, live score/multiplier HUD
-- `assessments/evidence/trgheart/shot-243s.png` — title screen, PRESS START BUTTON, ©WARASHI 2006, Ver.A badge
-- `assessments/evidence/trgheart/shot-548s.png` — SCORE RANKING table (EXELICA/CRUELTEAR entries)
-- `assessments/evidence/trgheart/shot-609s.png` — attract gameplay, DEMONSTRATION overlay, boss structure
+Screenshots (5 kept of 10):
+- `evidence/trgheart/shot-060s.png` — boot: TRIGGERHEART EXELICA logo over circuit-board motif
+- `evidence/trgheart/shot-182s.png` — attract gameplay, DEMONSTRATION + PRESS START overlays, live score/multiplier HUD
+- `evidence/trgheart/shot-243s.png` — title screen, PRESS START BUTTON, ©WARASHI 2006, Ver.A badge
+- `evidence/trgheart/shot-548s.png` — SCORE RANKING table (EXELICA/CRUELTEAR entries)
+- `evidence/trgheart/shot-609s.png` — attract gameplay, DEMONSTRATION overlay, boss structure
 
-Deleted surplus (5): Warashi logo card, ship close-up on bullet ring, one mid-attract frame, one black transition frame, one duplicate demo frame.
 Anomalies: none.
 
-## 4. Memory fit (axis: 14.6)
+## 4. Memory fit (axis: 100.0)
 
-| Region | Peak / fit | DC capacity | Utilization | Sub-score | Evidence |
+| Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth) | 31,643,808 (`0x1E2D8A0`) | 16,777,216 | 1.886 | 14.6 (binding) | `MAINPROFILE` in raw log; sidecar `memory.main.peak` |
-| VRAM (FB-masked content + 2×FB) | 4,736,359 (content_total 3,507,559 + 2×fb_bytes 614,400) | 8,388,608 | 0.565 | 100.0 | `VRAMPROFILE`; v8 keying — raw address peak 13,277,695 (u 1.583) is the extent artifact, not content |
-| ARAM (content, volume-keyed) | 1,346,112 | 2,097,152 | 0.642 | 100.0 | `ARAMPROFILE`; address peak 1,635,440 — **fits even address-keyed** |
+| Main RAM (write-truth content volume, `nz_total`) | 3,897,601 | 16,777,216 | 0.2323 | 100.0 | address peak 31,643,808 (u 1.886, informational — NOT the `0x1F00040` shared-structure signature, it lands 862,112 B below it, kb §6 item 3) · `nz_above_cap` 2,296,697 · `dma_high_water` 30,078,176 (informational-only from v6 on) |
+| VRAM (FB-masked content + 2×FB) | 4,736,359 (content_total 3,507,559 + 2×fb_bytes 614,400) | 8,388,608 | 0.5646 | 100.0 | raw address peak 13,277,695 (u 1.583) is the extent artifact, not content · nz_total 4,118,519 |
+| ARAM (content volume, fill-excluded, `content_total`) | 1,346,112 | 2,097,152 | 0.6419 | 100.0 | address peak 1,635,440 — **first assessed title whose ARAM address peak already fits the cap** (no 8 MiB full-bank load; `nz_above_cap` 0) — kb §6 item 1 |
 
-Address-vs-content divergence on main (kb §6 item 3 class): peak address u=1.886 but changed
-content `nz_total` is only 3,897,601 B with `nz_above_cap` 2,296,697 B — the address-keyed
-sub-score charges ~31.6 MB of extent against ~3.9 MB of actual changed bytes. Scored
-address-keyed per the standing 2026-08-07 ruling (no per-title re-keying mid-wave); the
-peak is NOT the `0x1F00040` shared-structure signature (kb §6 item 3), it lands 862,112 B
-below it. `dma_high_water` 30,078,176 B is informational-only from v6 on.
-**ARAM note for §6 item 1:** first assessed title whose ARAM *address* peak (1.6 MB) already
-fits the DC cap — no 8 MiB full-bank load at all; `nz_above_cap = 0`.
-Watermarks (informational, content-scan — stale-data prone): main 31,643,808 · vram 13,277,695 · aram 8,388,608.
+Watermarks (informational, content-scan — stale-data prone): main 31,643,808 ·
+vram 13,277,695 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
 ## 5. Cart streaming (axis: 68.2)
 
@@ -74,11 +60,12 @@ SDK strings show the full Sega Katana-derived Naomi stack: Kunoichi2 2.07, Ninja
 KAMUI2, sd2 for DC 2.50.17, CRI ADXT/ADXF/LSC, gdCi 1.03 GD filesystem — heavily
 DC-adjacent tooling (`.nj`/`.pvr` asset names throughout).
 
-## 7. Controls (axis: 100.0 — `stick`)
+## 7. Controls (axis: 100.0)
 
 Cabinet: standard Naomi 2P panel, 8-way stick + 3 buttons — A = Shot (hold to pull an
-anchored enemy in), B = Anchor, C = Bomb. MAME input ports: `naomi`
-(INPUT_PORTS_START at naomi.cpp @59e7c0b line 1506 — digital stick + 6 buttons, no analog).
+anchored enemy in), B = Anchor, C = Bomb. `controls.device_class = stick`. MAME input
+ports: `naomi` (INPUT_PORTS_START at naomi.cpp @59e7c0b line 1506 — digital stick +
+6 buttons, no analog).
 Proposed DC mapping: d-pad + 3 face buttons, 1:1 — proven by the official DC port's
 configurable controls (and the fan patch even added analog-stick support).
 Sources: MAME naomi.cpp @59e7c0b INPUT_PORTS `naomi`;
@@ -88,7 +75,7 @@ Sources: MAME naomi.cpp @59e7c0b INPUT_PORTS `naomi`;
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 14.6^.40 · 68.2^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **40.0** (B)
+      = 100.0^.40 · 68.2^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **86.5 (S)**
 Similarity inputs: developer match no, SDK overlap **partial**, cart loader match **yes**
 (gdCi/Kunoichi GD loader stack — same family as the cleoftp reference) → 70.0.
 
@@ -97,11 +84,19 @@ Similarity inputs: developer match no, SDK overlap **partial**, cart loader matc
 - **The strongest A/B reference candidate after cleoftp**: Warashi's own 2007 DC build of
   this exact GD-ROM game exists — comparing the Naomi image against the retail DC disc
   would show precisely what a first-party downport changed (main-RAM layout above all,
-  given the 1.886 address-u here). High-value control-test material for the campaign.
-- **Main RAM is the only over-budget axis** and it is address-keyed; the 2.3 MB of real
-  above-cap content is checkpoint evidence (kb §6 item 3), not proven unportability —
-  the shipped DC port is proof the game fits 16 MB after a real downport.
+  given the 31.6 MB address extent over 3.9 MB of actual content). High-value
+  control-test material for the campaign.
+- The 2,296,697 B of main content above the 16 MB address line is placement, not volume
+  (kb §6 item 3 divergence class); the shipped DC port is proof the game fits 16 MB
+  after a real downport.
 - ROT270 vertical — solved in the official port (TATE mode).
 - Official DC port's PAL mode shipped 50 Hz-broken (fan patch fixes it) — irrelevant to
   NTSC but worth knowing for PAL hardware testing.
 - Main-RAM write-truth includes CPU writes (v6+); `dma_high_water` is informational-only.
+
+## 10. History
+
+| Battery | Date | Final | What changed |
+|---|---|---|---|
+| v8 | 2026-08-08 | 40.0 (B) | First assessment (FB-masked VRAM keying); main address-keyed peak 31.6 MB bound at u 1.886 while changed content was only 3.9 MB — the address-vs-content divergence logged for the checkpoint — kb §6 item 3 |
+| v9 | 2026-08-08 | 86.5 (S) | Scoring-only re-key (no re-capture): main keyed on content volume `nz_total` 3,897,601 B; memory axis 100.0 — spec `2026-08-08-main-content-rekey-design.md` |

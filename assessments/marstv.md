@@ -1,87 +1,12 @@
 # Kasei Channel Mars TV (Japan) (840-0025C) (`marstv`) — portability assessment
 
-> **Battery v9 main-content re-score (2026-08-08): 74.6 (A), was 47.6 (B)** — scoring-only blanket re-score, no re-capture: every measurement
-> below is still the battery v8 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
-> adopted to main 2026-08-09): main now keys on write-truth content VOLUME instead of
-> the address peak — `nz_total` 9,091,782 B (content-u 0.542) replaces peak 25,984,736 B (u 1.549).
-> Memory axis 86.6, binding region now **aram** (was memory 28.0). Verdict section below is the capture-time (v≤8) record.
-
-> **Battery v8 vram-fb-masking re-run (2026-08-07): 47.6 (B)** — spec
-> `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
-> park, boot ok, PIO handoff at 20.0 s — earlier than v4's 30.0 s (handoff-detection
-> timing moved, not the game; the main/aram raw figures below are unaffected). Main RAM
-> reproduces bit-identically to v4 (25,984,736 B). ARAM `content_total` 2,053,563 B
-> (u=0.979, sub 86.6) is measured by
-> volume for the first time (v7-class keying — this doc never ran v6/v7 individually).
-> **VRAM flips from address high-water (14,350,336 B, u=1.71, sub 21.6) to FB-masked
-> content: `content_total` 5,047,259 B + `2×fb_bytes` 1,228,800 B (`fb_bytes` 614,400 B,
-> exactly 640×480×2) = fit 6,276,059 B, u=0.748 → sub 100.0** — a rise, as required.
-> Main RAM's write-truth sub-score (28.0, u=1.548) is now the binding region, exactly the
-> design doc's predicted "main 28.0 becomes binding". Memory axis **21.6 → 28.0**, final
-> **42.8 → 47.6**, tier unchanged **B**. Sanity clean: `fb_bytes` == 614,400,
-> `content_total + fb_masked_nz` matches `nz_total` exactly in the raw log
-> (5,047,259 + 594,393 = 5,641,652). Coverage re-annotated `demo` (unchanged — display
-> blindness from the v2 era stays fixed, as it was under v4).
-
-> **Battery v4 re-assessment (2026-08-04): **42.8 (B)**.**
-> v2 parked it G3-aram; the park note already flagged "content above cap only 80 KB: gate-metric divergence". v4's content metric vindicates that: 42.8 B.
-> Below the v8 section is the battery v4-era assessment, itself superseding the v2-era
-> assessment below that; each section's *measured* figures (boot evidence, memory,
-> streaming, score) are **superseded** by the section above it — the identity,
-> controls-research and similarity sections remain valid throughout. Instrumentation
-> root-cause: `docs/kb/assessment-tooling.md` §7.
-
-## v8 verdict & measurements
-
-| | |
-|---|---|
-| **Final** | **47.6 (B)** |
-| Coverage | demo |
-| Assessed | 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
-| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/marstv.zip` |
-
-| Region | Peak / fit | DC cap | u | Note |
-|---|---|---|---|---|
-| Main RAM (write-truth) | 25,984,736 | 16,777,216 | 1.548 | bit-identical to v4's DMA-high-water figure — write-truth found nothing beyond it here; sub 28.0, now binding |
-| VRAM (FB-masked content + 2×FB) | 6,276,059 (content_total 5,047,259 + 2×fb_bytes 1,228,800) | 8,388,608 | 0.748 | battery v8 re-keying — sub 100.0, was 21.6 under address high-water (14,350,336, u=1.71) |
-| ARAM (content, volume-keyed) | 2,053,563 | 2,097,152 | 0.979 | sub 86.6, first content-volume measurement (v7-class keying); was 1.02× / content above cap 47,694 under the old address peak |
-
-Streaming: 164 DMA events · total 199.8 MB · unique 52.4 MB · re-read 0.7376 · steady 20.991 MB/min (matches v4's 21.076 within run-to-run noise)
-Axes: memory 28.0 · streaming 54.3 · guts 90.0 · controls 100.0 · similarity 40.0 → **final 47.6 (B)**
-Screenshots: `evidence/marstv/shot-060s.png` · `shot-365s.png` · `shot-609s.png` (same 3-shot curation as v4 — title/eerie-face screen ×2, attract camera-minigame instructions)
-
----
-
-## v4 verdict & measurements
-
-| | |
-|---|---|
-| **Final** | **42.8 (B)** |
-| Coverage | demo |
-| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
-| Boot | ok=True · handoff 30.0 s · run 600 s · rom `naomi/marstv.zip` |
-
-| Region | v4 peak | DC cap | u | Note |
-|---|---|---|---|---|
-| Main RAM (DMA high-water) | 25,984,736 | 16,777,216 | 1.55 |  |
-| VRAM (write-truth diff) | 14,350,336 | 8,388,608 | 1.71 | nz_total 5,788,726 |
-| ARAM (content, fill-excluded) | 2,147,400 | 2,097,152 | 1.02 | content above cap 47,694 |
-
-Streaming: 164 DMA events · total 199.8 MB · unique 52.4 MB · re-read 0.7376 · steady 21.076 MB/min
-Axes: memory 21.6 · streaming 54.2 · guts 90.0 · controls 100.0 · similarity 40.0 → **final 42.8 (B)**
-Screenshots: `evidence/marstv/shot-060s.png` · `evidence/marstv/shot-365s.png` · `evidence/marstv/shot-609s.png`
-
----
-
-# Historical: battery v2 assessment (measurements superseded)
-
 ## 1. Verdict
 
 | | |
 |---|---|
-| **Final score** | **PARKED — `G3 memory: aram peak > 2x DC capacity`** (not a numeric tier) |
-| Bottom line | The full 8 MiB Naomi ARAM bank is written at boot (4.00× the DC's 2 MiB) and `score.py` gates on the peak — the **twelfth** boot-time full-bank G3-aram park and, at 1999, the **earliest**: full-bank behavior now spans the platform's whole life. But this park is the campaign's strongest evidence that the gate is measuring the wrong thing: nonzero content above the DC cap is only **81,598 B** (~80 KB, trivially trimmable) — every earlier full-bank title had MBs up there. A content-based gate (`nz_above_cap`) would let marstv through with essentially DC-fitting sound; see the Gate section and kb §6 item 5. The real memory loads are VRAM 1.70× and main 1.55×, and the title is display-blind under our fork (frozen splash while it demonstrably runs underneath, kb §4.m class). |
-| Assessed | 2026-08-03 · battery v2 · flycast `9e882cbd2` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final score** | **74.6 (A)** |
+| Bottom line | Sega AM3's 3-player Bishi Bashi-style minigame collection (never ported anywhere) whose content fits every DC region under current keying — ARAM is the only tight region (content 0.979× cap) — while the large main/VRAM address extents are placement work, not volume. |
+| Assessed | capture 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
 
 ## 2. Identity
 
@@ -96,81 +21,58 @@ Screenshots: `evidence/marstv/shot-060s.png` · `evidence/marstv/shot-365s.png` 
 
 ## 3. Boot & run evidence
 
-Boots: yes · handoff at 40.0 s · run 600 s · rom: `naomi/marstv.zip` (single clean zip leg)
-Attract/demo reached: **title (conservative)** — sidecar `capture.coverage = "title"`;
-visual classification is impossible (see Display blindness), so the lower-bound label is
-used even though activity metrics show the game running for the full window.
+Boots: yes · handoff at 20.0 s (`trigger = "pio"`) · run 600 s · rom: `naomi/marstv.zip`
+Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"` (the v2-era display
+blindness stayed fixed from v4 on).
+Screenshots: `evidence/marstv/shot-060s.png` · `evidence/marstv/shot-365s.png` ·
+`evidence/marstv/shot-609s.png` (title/eerie-face screen ×2, attract camera-minigame
+instructions)
+Anomalies: none — handoff detected at 20.0 s vs v4's 30.0 s (handoff-detection timing
+moved, not the game).
 
-### Display blindness
+## 4. Memory fit (axis: 86.6)
 
-All 10 battery screenshots are one identical image (single MD5
-`2a3564fc6aea6b69aab2a6de1e03fe81` across all 10) — the frozen NAOMI cart-boot splash
-(orange-ring "NAOMI™" logo on white). That is a stale TA frame in the GL display path
-(kb §4.m class, same as `kurucham`/`ss2005`/`inunoos`), not a hang: underneath it the
-game demonstrably runs — BIOS handoff at 40.0 s, 141 cart DMA events / 177,912,960 B
-streamed across the window (**the campaign's highest streaming volume to date**), the
-full 8 MiB ARAM bank written, and 5,048,671 B of nonzero VRAM content
-(`memory.vram.nz_total`).
+| Region | Scored value | DC cap | u | Sub-score | Evidence / note |
+|---|---|---|---|---|---|
+| Main RAM (write-truth content volume, `nz_total`) | 9,091,782 | 16,777,216 | 0.542 | 100.0 | address peak 25,984,736 (u 1.549, informational) = `dma_high_water` exactly · nz_above_cap 798,810 — relocation work, not volume |
+| VRAM (FB-masked content + 2×FB, `content_total + 2×fb_bytes`) | 6,276,059 (content 5,047,259 + 2×614,400) | 8,388,608 | 0.748 | 100.0 | address peak 14,229,504 (u 1.696, informational) · nz_total 5,641,652 · nz_above_cap 3,281,430 (address extent) · `fb_bytes` = exactly 640×480×2 |
+| ARAM (content volume, fill-excluded, `content_total`) | 2,053,563 | 2,097,152 | 0.979 | 86.6 | **binding region** — address peak 2,147,400 (u 1.024) · nz_above_cap 47,694 (~47 KB trim) |
 
-Screenshots kept (first + last, identical splash, proving the freeze):
-- `assessments/evidence/marstv/shot-060s.png` — frozen NAOMI splash at t=60 s
-- `assessments/evidence/marstv/shot-603s.png` — same splash at t=603 s, unchanged
-Anomalies: display blindness as above; nothing else.
+Watermarks (informational, content-scan — stale-data prone): main 25,984,736 ·
+vram 14,229,504 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
-## Gate
+## 5. Cart streaming (axis: 54.3)
 
-**G3 memory: aram peak > 2x DC capacity.** `memory.aram.peak = 8,388,608 B` (exactly
-8 MiB, the full Naomi ARAM bank) against the DC's 2,097,152 B AICA RAM → utilization
-4.00×, past `region_score()`'s `u > 2.0` gate. **Twelfth** boot-time full-bank load in
-the kb §6 tally — and the **earliest**: at 1999 it pushes full-bank behavior back to the
-platform's first year; the practice now spans Naomi's whole life (1999–2009).
+DMA events 164 · total 199.8 MB · unique 52.4 MB · re-read ratio 0.7376 ·
+steady-state 20.991 MB/min (`short_window: false`) · PIO 2,098,688 B
 
-**But this park exposes a measurement divergence — the strongest single argument yet
-that the G3-aram gate metric should be `nz_above_cap`, not peak.**
-`memory.aram.nz_above_cap = 81,598 B`: the nonzero content above the DC's 2 MiB is
-~80 KB, trivially trimmable. Every earlier full-bank title in the tally had MBs of real
-content up there (azumanga 6.2 MB, ss2005 6.29 MB, illvelo 6.29 MB, inunoos 4.53 MB…);
-marstv's watermark was pushed to the top of the bank by something near-empty (zero-fill
-or test-pass class), not by sound data. The gate fires on peak; a content-based rule
-would let marstv through with essentially DC-fitting sound. Recorded as kb §6 item 5 —
-and re-scoring all parked sidecars under a content rule requires no re-runs, since
-`nz_above_cap` is already in every sidecar.
+## 6. Guts (axis: 90.0)
 
-What would unblock it: under a content-based ARAM rule, nothing audio-side — the ~80 KB
-trim is noise. The real memory work is elsewhere: VRAM peak `14,235,648 B` (1.70× the
-8 MB cap, and unlike the kurucham pattern with real content above it —
-`nz_above_cap = 2,664,632 B` of `nz_total = 5,048,671 B`) and main-RAM DMA high-water
-`25,984,736 B` (1.55× the DC's 16 MB; watermark identical at 25,984,736 B — no gap).
+Code 2,097,152 B · functions 1,473 · MMIO refs: scif 0, rtc 4, g2ext 248 ·
+BIOS vector refs: none · flags: `eeprom_bios`, `rtc`.
+M2 boot blob carved at base `0x0c020000`, entry `0x0c020500`, header title "MARS TV".
+SDK strings: `nlam Ver 1.00 Build:Oct 28 1999` + `libintr Ver 1.051` — a 1999 library
+stack, the campaign's earliest SDK data point.
 
-Context values quoted from the sidecar (no axis scores exist — the pipeline stops at
-the gate): streaming 141 DMA events, 177,912,960 B total / 54,971,872 B unique, re-read
-ratio 0.691, steady-state 18.165 MB/min (`short_window: false`); guts **works** (M2
-cart, `dat_available: true`): 2,097,152 B code, 1,473 functions, MMIO refs scif 0 /
-rtc 4 / g2ext 248, flags `eeprom_bios`/`rtc`; similarity inputs
-`developer_match: false`, `sdk_overlap: "partial"`, `cart_loader_match: false`.
+## 7. Controls (axis: 100.0)
 
-## Controls (researched — recorded for the record)
-
-Sidecar `controls.device_class` set to **`stick`** (the G3 gate fires before controls in
-`score.py`, so the class is recorded, not scored).
-
-**Buttons only — no stick, no special hardware.** First title in the campaign with a
-*dedicated* per-title MAME INPUT_PORTS (naomi.cpp @59e7c0b lines 1567–1584, `marstv`):
-per player Start + three differently-sized buttons — "Red Large Button 大", "Yellow
-Medium Button 中", "Blue Small Button 小" — everything else `IPT_UNUSED`. The size-graded
-buttons are the Bishi Bashi-style cabinet gimmick; electrically they are three plain
-digital buttons. The comment `// TODO: Player 3` marks the cabinet's third player as
-not yet wired in MAME; the in-binary INPUT TEST screen (`guts.sdk_strings`:
+**Buttons only — no stick, no special hardware** (`controls.device_class = stick`, the
+standard-stick/buttons top rung). First title in the campaign with a *dedicated*
+per-title MAME INPUT_PORTS (naomi.cpp @59e7c0b lines 1567–1584, `marstv`): per player
+Start + three differently-sized buttons — "Red Large Button 大", "Yellow Medium Button
+中", "Blue Small Button 小" — everything else `IPT_UNUSED`. The size-graded buttons are
+the Bishi Bashi-style cabinet gimmick; electrically they are three plain digital
+buttons. The comment `// TODO: Player 3` marks the cabinet's third player as not yet
+wired in MAME; the in-binary INPUT TEST screen (`guts.sdk_strings`:
 `"PLAYER      1P      2P      3P"`) confirms 3-player, as do operator photos of the
 dedicated cabinet. No special I/O: no comment in the naomi.cpp table (unlike
 Samba/Marine Fishing rows), no extra firmware in the ROM set, and no marstv
 special-casing in Flycast's `maple_jvs.cpp`/`naomi_roms_input.h` — stock JVS digital.
 
-Ladder reading: the spec §4.4 top rung is "standard stick/buttons (incl. up to 4
-players — DC has 4 ports)". This is *less* than standard — 3 buttons + Start map 1:1
-onto A/B/X + Start on a stock pad, and 3 players fit the DC's 4 ports. Genre precedent:
-Konami's Bishi Bashi Special shipped on PS1 standard pads. Note for a port: P3 input is
-unmapped in current MAME and Flycast (emulation gap, not a hardware one).
+Proposed DC mapping: 3 buttons + Start map 1:1 onto A/B/X + Start on a stock pad, and
+3 players fit the DC's 4 ports. Genre precedent: Konami's Bishi Bashi Special shipped
+on PS1 standard pads. Note for a port: P3 input is unmapped in current MAME and
+Flycast (emulation gap, not a hardware one).
 
 Sources: MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS `marstv` (1567–1584);
 [arcadeitalia](http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=marstv)
@@ -185,23 +87,34 @@ Sources: MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS `marstv` (1567–1584
 exists at https://www.sega.jp/history/arcade/product/9901/ (Cloudflare-blocked to
 fetches; cited for existence).
 
-## Risks & notes
+## 8. Score computation
 
-- **Even with a content-based ARAM rule, two regions still need real reduction:** VRAM
-  1.70× with 2.66 MB of genuine content above the cap, and main RAM 1.55×. The park
-  gate is arguably wrong for this title; the memory work is not.
-- **Heaviest streaming in the campaign:** 177.9 MB total over 600 s, 18.165 MB/min
-  steady-state, re-read 0.691 — from a cart. A GD-ROM-based port needs seek/throughput
-  attention more than any title measured so far.
-- **Display-path gap blocks emulator validation** (kb §4.m): the fork shows a stale TA
-  frame while the game draws 5 MB of content elsewhere. Per the working-style rule,
-  rendering must be verified on real DC hardware; emulator-side diagnostic is the
-  raw-VRAM decode recipe (`FLYCAST_VRAMDUMP` + `vramdump2png.py`).
+final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
+      = 86.6^.40 · 54.3^.20 · 90.0^.20 · 100.0^.10 · 40.0^.10 = **74.6 (A)**
+Similarity inputs: developer no, SDK overlap partial, loader match no.
+
+## 9. Risks & notes
+
+- **ARAM is the binding region at 0.979× content** — near cap but no longer a gate;
+  the old address view showed only ~47 KB above cap, a trivial trim.
+- **Main and VRAM fit by volume but not by address:** main content is 9.1 MB yet
+  the write extent reaches 25,984,736 B (1.549× cap, ~0.8 MB of content above the
+  16 MB line); VRAM content fits FB-masked (0.748×) but 3.28 MB sits above the 8 MB
+  line by address. A port needs layout/relocation work in both regions.
+- **Heavy cart streaming:** 199.8 MB total over 600 s, 20.99 MB/min steady, re-read
+  0.7376 — from a cart. A GD-ROM-based port needs seek/throughput attention.
+- **Rendering must be verified on real DC hardware** (working-style rule): the v2
+  capture was display-blind under our fork (stale TA frame, kb §4.m class); v4+
+  captures show the game rendering, but emulator-side proof is not hardware proof.
 - MAME status is the blanket `GAME_FLAGS` macro (kb §4.r) — no per-title signal;
-  arcadeitalia's "preliminary / imperfect gfx+sound" mirrors the driver-wide boilerplate,
-  and its "GD-ROM" + "BAD DUMP" labels are refuted in §2.
-- Early-Naomi SDK snapshot in `guts.sdk_strings`: `nlam Ver 1.00 Build:Oct 28 1999` +
-  `libintr Ver 1.051` — a 1999 library stack, useful as the campaign's earliest SDK data
-  point.
-- Main-RAM v1 limitation carried from the spec: DMA high-water misses CPU-written data
-  above the last DMA'd asset (here watermark = high-water exactly, so no observed gap).
+  arcadeitalia's "preliminary / imperfect gfx+sound" mirrors the driver-wide
+  boilerplate, and its "GD-ROM" + "BAD DUMP" labels are refuted in §2.
+
+## 10. History
+
+| Battery | Date | Final | What changed |
+|---|---|---|---|
+| v2 | 2026-08-03 | PARKED G3-ARAM | Full 8 MiB ARAM bank at boot (4.00×) with only ~80 KB of content above cap — the gate-metric divergence that argued for content keying (kb §6 item 5); capture display-blind (kb §4.m) |
+| v4 | 2026-08-04 | 42.8 (B) | Unparked by the v4 ARAM content metric; display blindness fixed; VRAM address high-water 1.71× binding (root-causes kb §7) |
+| v8 | 2026-08-07 | 47.6 (B) | Re-capture. VRAM re-keyed on FB-masked content (sub 100.0) and ARAM measured by content volume for the first time; main write-truth 1.548× became binding (spec `2026-08-07-vram-fb-masking-design.md`) |
+| v9 | 2026-08-08 | 74.6 (A) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`); binding region moved to ARAM |

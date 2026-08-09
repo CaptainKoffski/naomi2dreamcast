@@ -1,18 +1,12 @@
 # Cannon Spike / Gun Spike (`cspike`) — portability assessment
 
-> **Battery v9 main-content re-score (2026-08-08): 42.8 (B), unchanged** — scoring-only blanket re-score, no re-capture: every measurement
-> below is still the battery v7 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
-> adopted to main 2026-08-09): main now keys on write-truth content VOLUME instead of
-> the address peak — `nz_total` 8,435,427 B (content-u 0.503) replaces peak 17,948,000 B (u 1.070).
-> Memory axis 20.3, binding region now **aram** (was memory 20.3). Verdict section below is the capture-time (v≤8) record.
-
 ## 1. Verdict
 
 | | |
 |---|---|
-| **Final score** | **42.8 (B)** — un-parked 2026-08-07 (battery v7); was `PARKED — G3 memory: aram peak > 2x DC capacity` under the old address-keyed rule |
-| Bottom line | Clean demo-coverage run. The §6 checkpoint re-keys G3-ARAM on content volume: `content_total` = 3,654,043 B (u = 1.742, under the u>2.0 gate) — but the real 1,649,859 B of non-fill sound content above the 2 MiB cap doesn't disappear, it just scores instead of gating, landing the lowest sub-score (20.3) and binding the memory axis. VRAM (1.25×, sub-score ~39.9) and main RAM (1.07×, sub-score ~72.4, properly measured here) are also over budget but milder. Final **42.8 (B)**. The official 2000 DC port is shipped proof the rework is possible and is the ready-made reference. |
-| Assessed | 2026-08-06 · battery v5 · flycast `ebae3b513` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b`; aram-volume re-run 2026-08-07 · battery v7 · flycast `65f9f7857` |
+| **Final score** | **42.8 (B)** |
+| Bottom line | ARAM is the real problem: 3.65 MB of non-fill sound content (1.742× the DC's 2 MiB, with 1.65 MB genuinely above the cap) binds the memory axis at sub-score 20.3, and VRAM is 1.25× with 1.87 MB above cap — main content fits at 0.50× — but the official 2000 DC port is shipped proof the rework is possible and is the ready-made reference. |
+| Assessed | capture 2026-08-07 · battery v7 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
 
 ## 2. Identity
 
@@ -27,36 +21,37 @@
 
 ## 3. Boot & run evidence
 
-Boots: yes · handoff at 20.0 s · run 600 s · rom: `naomi/cspike.zip` (single clean zip leg)
+Boots: yes · handoff at 20.0 s (`trigger = "pio"`) · run 600 s · rom: `naomi/cspike.zip` (single clean zip leg)
 Attract/demo reached: **demo** — `shot-304s.png` is an in-game attract-demo frame
 (Arthur HUD, GAME OVER card); `shot-060s.png` title, `shot-609s.png` character-art
 attract screen. Sidecar `capture.coverage = "demo"`.
-Screenshots: `assessments/evidence/cspike/shot-060s.png`, `shot-304s.png`, `shot-609s.png` (curated from 10).
+Screenshots: `evidence/cspike/shot-060s.png` · `evidence/cspike/shot-304s.png` ·
+`evidence/cspike/shot-609s.png` (curated from 10).
 Anomalies: none — DMA loader (main high-water live, unlike the gwing2/sgtetris PIO face).
 
-## Gate
+## 4. Memory fit (axis: 20.3)
 
-**No gate — un-parked 2026-08-07 (battery v7): ARAM re-keyed on content volume, but the real above-cap sound content still binds the memory axis at its lowest sub-score (20.3) — final 42.8 (B).**
+| Region | Scored value | DC cap | u | Sub-score | Evidence / note |
+|---|---|---|---|---|---|
+| Main RAM (write-truth content volume, `nz_total`) | 8,435,427 | 16,777,216 | 0.5028 | 100.0 | address peak 17,948,000 (u 1.070) · 1,142,859 nonzero above cap · `dma_high_water` 17,948,000 (= peak — DMA loader) |
+| VRAM (write-truth peak, post-handoff) | 10,516,642 | 8,388,608 | 1.254 | 39.9 | nz_total 3,637,559 · 1,872,598 above cap |
+| ARAM (content volume, fill-excluded, `content_total`) | 3,654,043 | 2,097,152 | 1.742 | 20.3 | address peak 8,257,552 (u 3.94, the pre-v7 gated keying) · 1,649,859 content above cap — **binding region** |
 
-| Region | Peak | DC cap | u | Note |
-|---|---|---|---|---|
-| Main RAM (write-truth diff) | 17,948,000 | 16,777,216 | 1.07 | nz_total 8,435,427 · above cap 1,142,859; sub-score ~72.4 |
-| VRAM (write-truth diff) | 10,516,642 | 8,388,608 | 1.25 | nz_total 3,608,767 · above cap 1,872,598; sub-score ~39.9 |
-| ARAM (content volume, fill-excluded) | 3,654,043 | 2,097,152 | **1.742** | `content_total` (§6 volume-keyed, battery v7) — sub-score 20.3, the binding region; old content-high address peak 8,257,552 (u=3.94, pre-v7 keying, gated) unchanged, same 1,649,859 B above the 2 MB line either way |
+Watermarks (informational, content-scan — stale-data prone): main 17,948,000 ·
+vram 10,516,642 · aram 8,388,608 (boot-time fill, not content).
 
-Streaming (informational): 152 DMA events · total 132.7 MB · unique 34.5 MB ·
-re-read 0.7402 · steady 12.99 MB/min.
+## 5. Cart streaming (axis: 64.9)
 
-Un-parked but still the low axis in the sidecar: main 1.07× (sub-score ~72.4) and VRAM
-1.25× (sub-score ~39.9) are both moderately over cap, but ARAM's real 1.65 MB
-above-cap content computes the lowest sub-score (20.3, u=1.742) and binds the axis — this
-was a real memory problem regardless of the ARAM address-vs-volume semantics (contrast
-gwing2, where that distinction was the entire story).
+DMA events 152 · total 132.7 MB · unique 34.5 MB · re-read ratio 0.7402 ·
+steady-state 12.99 MB/min (`short_window: false`) · PIO 2,281,280 B
 
-What would still raise the score: the azumanga playbook — ARAM bank-structure dump
-(`FLYCAST_ARAMDUMP` + `tools/assess/parse_osb.py`) to check whether the 1.65 MB
-above-cap content is position-independent OSB banks + streamable BGM; plus the
-official DC port as an audio-budget reference (Capcom fit it in 2 MiB in 2000).
+## 6. Guts (axis: 85.0)
+
+Code 2,097,152 B · functions 1,707 · MMIO refs: scif 2, rtc 4, g2ext 50 ·
+BIOS vector refs: none · flags: `eeprom_bios`, `serial`, `rtc` → 85.0.
+Boot blob carved at base `0x0c020000`, entry `0x0c021000`, header title `GUN SPIKE`.
+No Sega library version banners among the 500 captured `sdk_strings` — game/engine
+strings dominate (including `dc_pad->id/support/on/off` debug fields).
 
 ## 7. Controls (axis: 100.0)
 
@@ -68,3 +63,30 @@ Sources: MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS `naomi`;
 (8-way joystick + 6-button JVS standard declaration, 2P);
 [Wikipedia](https://en.wikipedia.org/wiki/Cannon_Spike) (Shoot / Mark / Attack,
 three specials on combinations).
+
+## 8. Score computation
+
+final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
+      = 20.3^.40 · 64.9^.20 · 85.0^.20 · 100.0^.10 · 40.0^.10 = **42.8 (B)**
+Similarity inputs: developer no, SDK overlap partial, loader match no.
+
+## 9. Risks & notes
+
+- **ARAM's 1,649,859 B of real above-cap sound content is the binding cost** — a
+  genuine memory problem regardless of the address-vs-volume keying (contrast
+  `gwing2`, where that distinction was the entire story).
+- What would raise the score: the azumanga playbook — ARAM bank-structure dump
+  (`FLYCAST_ARAMDUMP` + `tools/assess/parse_osb.py`) to check whether the above-cap
+  content is position-independent OSB banks + streamable BGM; plus the official DC
+  port as an audio-budget reference (Capcom fit it in 2 MiB in 2000).
+- VRAM 1.254× with 1.87 MB above cap needs texture reduction; main content fits but
+  the address peak (17,948,000 B, u 1.070, 1.14 MB nonzero above cap) needs
+  layout/relocation attention.
+
+## 10. History
+
+| Battery | Date | Final | What changed |
+|---|---|---|---|
+| v5 | 2026-08-06 | PARKED G3-ARAM | ARAM address-keyed peak 8,257,552 (u 3.94) gated before axes (flycast `ebae3b513`) |
+| v7 | 2026-08-07 | 42.8 (B) | Un-parked: ARAM re-keyed on content volume (kb §6 checkpoint) — 3,654,043 B (u 1.742) scores instead of gating and binds memory at 20.3 |
+| v9 | 2026-08-08 | 42.8 (B) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`) — 8,435,427 (u 0.503) replaces the address peak; final unchanged, ARAM still binds |

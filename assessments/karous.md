@@ -1,18 +1,12 @@
 # Karous (Japan) (GDL-0040) (`karous`) — portability assessment
 
-> **Battery v9 main-content re-score (2026-08-08): 85.0 (S), was 37.0 (C)** — scoring-only blanket re-score, no re-capture: every measurement
-> below is still the battery v8 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
-> adopted to main 2026-08-09): main now keys on write-truth content VOLUME instead of
-> the address peak — `nz_total` 6,738,574 B (content-u 0.402) replaces peak 32,505,920 B (u 1.938).
-> Memory axis 100.0, binding region now **vram** (was memory 12.5). Verdict section below is the capture-time (v≤8) record.
-
 ## 1. Verdict
 
 | | |
 |---|---|
-| **Final score** | **37.0** (C) |
-| Bottom line | **Ground-truth tension made visible**: Milestone shipped this exact game on DC on 2007-03-08 (the last officially licensed Dreamcast release), yet it scores C because the main-RAM axis binds at 12.5 on an address peak of 32,505,920 B = `0x1F00040` — the **fifth instance** of the kb §6 item 3 shared-structure signature. VRAM and ARAM both fit (ARAM even address-keyed, 16 B under the 2 MiB cap). A real DC build of this game exists; the C tier measures the address-keyed main metric, not portability. |
-| Assessed | 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final score** | **85.0 (S)** |
+| Bottom line | Milestone shipped this exact game on DC on 2007-03-08 — the last officially licensed Dreamcast release — and under content keying the measurement now agrees with that ground truth: every region fits (main content 0.40× cap, VRAM fit 0.66×, ARAM 0.74×), so the assessment's value is scorer calibration, not a port target. |
+| Assessed | capture 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
 
 ## 2. Identity
 
@@ -35,29 +29,18 @@ Screenshots kept (5 of 10):
 - `assessments/evidence/karous/shot-243s.png` — attract gameplay: boss fight, EXP 12,313,180, Level 101, shield HUD
 - `assessments/evidence/karous/shot-304s.png` — story cinematic: photographic sky band with narration
 - `assessments/evidence/karous/shot-609s.png` — title: カラス / Karous feather art, RANK NORMAL / EXTEND table
-
-Deleted surplus (5): one gameplay frame, one dark transition, ADX logo card, two intermediate attract frames.
 Anomalies: none.
 
-## 4. Memory fit (axis: 12.5)
+## 4. Memory fit (axis: 100.0)
 
-| Region | Peak / fit | DC capacity | Utilization | Sub-score | Evidence |
+| Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth) | 32,505,920 (`0x1F00040`) | 16,777,216 | 1.938 | 12.5 (binding) | `MAINPROFILE`; **fifth instance of the kb §6 item 3 shared-structure signature** |
-| VRAM (FB-masked content + 2×FB) | 5,577,788 (content_total 4,348,988 + 2×fb_bytes 614,400) | 8,388,608 | 0.665 | 100.0 | `VRAMPROFILE`; raw address peak 13,778,944 (u 1.643) is extent — 4,933,719 of 4,944,963 nonzero bytes above the 8 MB line (high asset store, kurucham pattern) |
-| ARAM (content, volume-keyed) | 1,545,306 | 2,097,152 | 0.737 | 100.0 | `ARAMPROFILE`; address peak 2,097,136 — 16 B under the cap, **fits even address-keyed** |
+| Main RAM (write-truth content volume, `nz_total`) | 6,738,574 | 16,777,216 | 0.402 | 100.0 | address peak 32,505,920 (`0x1F00040`, u 1.938, informational) — **fifth instance of the kb §6 item 3 shared-structure signature** · `nz_above_cap` 5,092,992 B of real changed content above the 16 MB line — the shipped DC port trimmed/restructured ~5 MB · `dma_high_water` 27,289,280 (byte-identical to illvelo's v4 figure — same-engine determinism) |
+| VRAM (FB-masked content + 2×FB) | 5,577,788 (content_total 4,348,988 + 2×`fb_bytes` 614,400) | 8,388,608 | 0.665 | 100.0 | raw address peak 13,778,944 (u 1.643) is extent — 4,933,719 of 4,944,963 nonzero bytes above the 8 MB line (high asset store, kurucham pattern) |
+| ARAM (content volume, fill-excluded, `content_total`) | 1,545,306 | 2,097,152 | 0.737 | 100.0 | address peak 2,097,136 — 16 B under the cap, **fits even address-keyed**; matches illvelo's v4 ARAM peak exactly (the Milestone engine loads a just-under-2-MiB sound budget, DC-sized by construction) |
 
-**§6 checkpoint evidence — the signature's fifth instance, with a twist:** the main peak
-is byte-identical to ikaruga/kurucham/ss2005/illvelo (`0x1F00040`), but unlike illvelo
-(nz_above_cap 2.3 MB), karous carries `nz_above_cap` **5,092,992 B** of real changed
-content above the 16 MB cap (`nz_total` 6,738,574 B) — content keying alone would not
-rescue it to a fit; what the shipped DC port proves is that Milestone's real downport
-trimmed/restructured ~5 MB. Same-engine determinism: karous's `dma_high_water`
-(27,289,280 B) is **byte-identical to illvelo's** v4 figure, and its ARAM address peak
-(2,097,136 B) matches illvelo's v4 ARAM peak exactly — the Milestone engine loads a
-just-under-2-MiB sound budget, DC-sized by construction.
-Watermarks (informational, content-scan — stale-data prone): main 32,505,920 · vram 13,778,944 · aram 8,388,608.
-`dma_high_water` 27,289,280 B (informational-only from v6 on).
+Watermarks (informational, content-scan — stale-data prone): main 32,505,920 ·
+vram 13,778,944 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
 ## 5. Cart streaming (axis: 62.4)
 
@@ -87,23 +70,29 @@ Sources: MAME naomi.cpp @59e7c0b INPUT_PORTS `naomi`;
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 12.5^.40 · 62.4^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **37.0** (C)
-Similarity inputs: developer match no (reference `makers` list artifact — Milestone's own
-DC pedigree isn't in it, same note as the illvelo doc), SDK overlap **partial**, cart
-loader match **yes** → 70.0.
+      = 100.0^.40 · 62.4^.20 · 85.0^.20 · 100.0^.10 · 70.0^.10 = **85.0 (S)**
+Similarity inputs: developer match no (reference `makers` list artifact — Milestone's
+own DC pedigree isn't in it, same note as the illvelo doc), SDK overlap **partial**,
+cart loader match **yes** → 70.0.
 
 ## 9. Risks & notes
 
-- **This is the campaign's cleanest gate-calibration case after ikaruga**: an officially
-  DC-shipped game (the literal last licensed DC release) scores 37.0 C with the memory
-  axis floored on the `0x1F00040` shared-structure signature. Whatever the §6 checkpoint
-  decides about main-RAM keying, karous is the ground-truth row to test it against —
-  alongside the 5.1 MB of genuine above-cap content its real port had to deal with.
 - **Porting is redundant**: the official 2007 DC GD-ROM (TATE, VGA) is canonical, has an
   English fan translation, and is being re-released commercially. Assessment value is
   calibration, not a port target.
+- **Ground-truth calibration row**: the officially DC-shipped game now scores S under
+  v9 content keying — the keying agrees with reality. The durable caveats are the
+  5,092,992 B of real above-cap main content the actual downport had to
+  trim/restructure, and the 1.94× `0x1F00040` address peak a port must relocate.
 - ROT270 vertical — solved in the official port.
 - Milestone engine family (Radirgy `radirgy`/`radirgyn`, Illvelo `illvelo`): metrics here
   reproduce illvelo's byte-for-byte on two axes (dma_high_water, ARAM peak) — useful
   determinism check for the instrumentation.
 - Main-RAM write-truth includes CPU writes (v6+); `dma_high_water` is informational-only.
+
+## 10. History
+
+| Battery | Date | Final | What changed |
+|---|---|---|---|
+| v8 | 2026-08-08 | 37.0 (C) | First assessment: main bound at sub 12.5 on the 32,505,920 B `0x1F00040` address peak — fifth instance of the kb §6 item 3 signature; flagged as the campaign's cleanest gate-calibration case after ikaruga (spec `2026-08-07-vram-fb-masking-design.md` keying) |
+| v9 | 2026-08-08 | 85.0 (S) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`); memory 100.0 |

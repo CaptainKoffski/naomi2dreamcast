@@ -1,18 +1,12 @@
 # Giga Wing 2 (`gwing2`) — portability assessment
 
-> **Battery v9 main-content re-score (2026-08-08): 79.0 (A), was 78.6 (A)** — scoring-only blanket re-score, no re-capture: every measurement
-> below is still the battery v7 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
-> adopted to main 2026-08-09): main now keys on write-truth content VOLUME instead of
-> the address peak — `nz_total` 8,050,490 B (content-u 0.480) replaces peak 16,433,920 B (u 0.980).
-> Memory axis 87.7, binding region now **aram** (was memory 86.5). Verdict section below is the capture-time (v≤8) record.
-
 ## 1. Verdict
 
 | | |
 |---|---|
-| **Final score** | **78.6 (A)** — un-parked 2026-08-07 (battery v7); was `PARKED — G3 memory: aram peak > 2x DC capacity` under the old address-keyed rule |
-| Bottom line | Clean full-window run. Under the old address-keyed G3 rule, ARAM *content high-water address* reached 7.98 MB (3.99× the DC's 2 MiB) — but the above-cap content **volume** was only 48,662–48,674 B, the smallest observed by far (zerogu2: 2.1 MB, azumanga: 1.7 MB). The §6 checkpoint re-keyed the gate on volume (2026-08-07): measured `content_total` = 2,021,207 B (u = 0.964, under the 2 MiB cap) — the title un-parks and scores **78.6 (A)**, memory axis 86.5 (main is the binding region at u=0.980, not aram). Official 2001 DC port exists regardless. |
-| Assessed | 2026-08-06 · battery v5 · flycast `ebae3b513` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b`; gate re-run 2026-08-07 · battery v6 · flycast `65f9f7857` (main axis measured, tension 2 resolved — see § Gate); aram-volume re-run 2026-08-07 · battery v7 · flycast `65f9f7857` |
+| **Final score** | **79.0 (A)** |
+| Bottom line | Clean full-window cart shmup whose official 2001 DC port already proves the fit — under content keying every region is under cap (ARAM binds at 0.964×, and its 48,674 B above the 2 MB address line is placement, not volume) — assessed as reference/validation data per GAME_FORMATS.md policy since the DC port exists regardless. |
+| Assessed | capture 2026-08-07 · battery v7 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
 
 ## 2. Identity
 
@@ -27,76 +21,49 @@
 
 ## 3. Boot & run evidence
 
-Boots: yes · handoff at 20.0 s (battery v6 unified `dma|pio` trigger; v5 measured 40.0 s
-under the older ARAM/VRAM-DMA-only detector) · run 600 s · rom: `naomi/gwing2.zip`
+Boots: yes · handoff at 20.0 s (`trigger = "pio"`) · run 600 s · rom: `naomi/gwing2.zip`
 (single clean zip leg)
 Attract/demo reached: **title (conservative lower bound)** — the attract loop verifiably
 cycles (title `shot-060s` → red title card → Capcom logo → ... → character-intro art
 `shot-487s` → TAG SCORE RANKING `shot-609s`), but no sampled frame caught in-game demo
-footage, so `capture.coverage = "title"` (restored 2026-08-07 from the v5 sidecar's
-annotated value — the v6 sidecar's `capture.coverage` came back `null`).
-Screenshots: `assessments/evidence/gwing2/shot-060s.png`, `shot-487s.png`, `shot-609s.png` (curated from 10).
-Anomalies: `memory.main.dma_high_water = 0` despite 1,366 cart-DMA events — the
-cart→main-RAM load path is PIO, invisible to the DMA high-water metric (kb §4.v family;
-here the ARAM handoff still fired, so the run was measurable otherwise).
-**Resolved 2026-08-07 (battery v6, flycast `65f9f7857`):** the unified `dma|pio` handoff
-now baselines main RAM directly, so main-RAM fit is no longer blind — write-truth peak
-measured at 16,433,920 B (u = 0.980), matching this doc's old "informational" watermark
-byte-for-byte (real game writes all along; see § Gate). `pio_bytes` 57,520,864 B is the
-first measured lower bound for the PIO-streamed traffic the streaming figures below
-still don't count (non-main DMA only).
+footage, so `capture.coverage = "title"`.
+Screenshots: `evidence/gwing2/shot-060s.png` · `shot-487s.png` · `shot-609s.png`
+(curated from 10).
+Anomalies: the cart→main-RAM load path is PIO — `dma_high_water = 0` despite 1,370
+cart-DMA events (kb §4.v, resolved in battery v6: the unified `dma|pio` handoff baselines
+main RAM directly, so main is write-truth measured, not blind). Streaming figures below
+count non-main DMA only; `pio_bytes` 57,520,864 B is the measured lower bound for the
+PIO-streamed traffic they don't cover.
 
-## Gate
+## 4. Memory fit (axis: 87.7)
 
-**No gate — un-parked 2026-08-07 (battery v7): the §6 checkpoint re-keyed G3-ARAM on content volume, exactly as tension 1 below argued.**
+| Region | Scored value | DC cap | u | Sub-score | Evidence / note |
+|---|---|---|---|---|---|
+| Main RAM (write-truth content volume, `nz_total`) | 8,050,490 | 16,777,216 | 0.480 | 100.0 | address peak 16,433,920 (u 0.980, informational) — equals the old informational watermark byte-for-byte: real game writes all along (kb §4.v) · `nz_above_cap` 0 · `dma_high_water` 0 (PIO loader) |
+| VRAM (write-truth peak, post-handoff) | 8,066,048 | 8,388,608 | 0.9615 | 87.9 | nz_total 3,444,253 · 0 above cap · pre-v8 sidecar (no FB-masked `content_total`) — the peak fallback can only under-score |
+| ARAM (content volume, fill-excluded, `content_total`) | 2,021,207 | 2,097,152 | 0.9638 | 87.7 | **binding region** · content-high address 8,372,160 (u 3.99 — the pre-v7 park driver) · `nz_above_cap` 48,674 B, the smallest observed by far (zerogu2: 2.1 MB, azumanga: 1.7 MB); OSB banks are position-independent, so compaction covers it |
 
-| Region | Peak | DC cap | u | Note |
-|---|---|---|---|---|
-| Main RAM (write-truth diff) | 16,433,920 | 16,777,216 | 0.980 | nz_total 8,050,490 · above cap 0 |
-| VRAM (write-truth diff) | 8,066,048 | 8,388,608 | 0.96 | nz_total 3,444,253 · above cap 0 |
-| ARAM (content volume, fill-excluded) | 2,021,207 | 2,097,152 | **0.964** | `content_total` (§6 volume-keyed, battery v7) — under cap; old content-high **address** was 8,372,160 (u=3.99, pre-v7 keying), same 48,674 B sitting above the 2 MB line either way |
+Watermarks (informational, content-scan — stale-data prone): main 16,433,920 ·
+vram 9,692,984 (includes the pre-handoff BIOS boot-screen sheet, kb §9) ·
+aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
-Streaming (informational, partial — non-main DMA only): 1,366 events · total 11.2 MB ·
-unique 3.1 MB · re-read 0.7247 · steady 1.157 MB/min. PIO-streamed (main-RAM loader,
-measured for the first time in battery v6): **57,520,864 B (57.5 MB)** over the window —
-a lower bound for the traffic this doc's old "streaming figures cover only non-main DMA"
-caveat left uncounted.
+## 5. Cart streaming (axis: 74.6)
 
-Two recorded tensions, no hand-adjustment (campaign comparability):
-1. ~~**§6 checkpoint data point (G3-ARAM semantics), standing:** the gate keys on the
-   content high-water *address* (`content_high`), which a single 47.5 KB blob near the
-   top of ARAM maxes out. gwing2 is the divergent case the checkpoint needs: address
-   says 3.99×, volume says 1.02× (2,097,152 + 48,662). If the checkpoint re-keys the
-   gate on volume, gwing2 un-parks and scores with a near-perfect ARAM sub-score.
-   Battery v6 re-run (2026-08-07, flycast `65f9f7857`) reproduces this same tiny-volume
-   class: `nz_above_cap` = 48,674 B vs v5's 48,662 B — a 12 B run-to-run delta, same
-   conclusion. Still open, still §6 scope.~~
-   **RESOLVED 2026-08-07 (battery v7, flycast `65f9f7857`):** the §6 checkpoint re-keyed
-   `score.py`'s G3-ARAM gate on content **volume** (`memory.aram.content_total`) instead
-   of the content high-water address, exactly as this tension argued. Measured
-   `content_total` = 2,021,207 B (u = 0.964, under the 2 MiB cap) — gwing2 un-parks and
-   scores **78.6 (A)**; memory axis 86.5 is bound by main RAM (u=0.980), not aram
-   (u=0.964, sub-score ≈87.7). This was the sole remaining park driver.
-2. ~~**Main-RAM axis blind** on PIO-loading carts (this set, sgtetris): had the ARAM
-   gate not fired, memory_axis would have scored main at u=0 → 100.0 from a metric that
-   saw nothing. Flagged in kb §4.v.~~
-   **RESOLVED 2026-08-07 (battery v6, flycast `65f9f7857`):** the unified `dma|pio`
-   handoff now baselines main RAM directly. Main axis is measured for the first time —
-   write-truth peak **16,433,920 B (u = 0.980)**, `nz_above_cap` **0**, `nz_total`
-   8,050,490. That peak equals the v5 doc's old "informational" watermark byte-for-byte:
-   those were real game writes all along, and gwing2's main RAM **fits the DC cap**. Had
-   the ARAM gate not fired, main would now score ~86 as a real measurement instead of
-   the old 100-from-nothing hazard — which the v6 scorer guard also closes by
-   construction (`score.py`: an unmeasured main axis is dropped/renormalized and
-   flagged `main_unmeasured`, never scored as u=0 → 100). See kb §4.v RESOLVED note
-   (sgtetris is the sibling case, resolved the same way).
+Partial — non-main DMA only (PIO loader, §3): DMA events 1,370 · total 11.2 MB ·
+unique 3.1 MB · re-read ratio 0.7255 · steady-state 1.159 MB/min (`short_window: false`) ·
+PIO 57,520,864 B (57.5 MB over the window, first measured in battery v6 — a lower bound
+for the main-RAM loader traffic the DMA figures don't count)
 
-Both tensions are now closed: PIO instrumentation landed in battery v6 and closed
-tension 2 (main-RAM axis blindness); the §6 checkpoint's volume-keying landed in battery
-v7 and closed tension 1 (G3-ARAM address-vs-volume semantics). gwing2 is fully scored,
-no gate remains.
+## 6. Guts (axis: 85.0)
 
-## 7. Controls (research done, informational)
+Code 1,572,864 B · functions 1,560 · MMIO refs: scif 2, rtc 2, g2ext 52 ·
+BIOS vector refs: none · penalties applied: `eeprom_bios`, `serial`, `rtc` → 85.0
+Carved at base `0x0c021000`, entry `0x0c021000`, header title `GIGAWING2 JAPAN`.
+SDK strings (sidecar `guts.sdk_strings`): NAOMI LIBRARY Ver 0.9 AM R&D (Apr 2000 build),
+NLOBJPUT 0.99, NLSPRITE 0.2, nlam 1.00, plus NEC's KAMUI2 Ver 16,3,2,0 and
+KAMUI-Darkness (kmdk 1,3,0,0) graphics libraries.
+
+## 7. Controls (axis: 100.0)
 
 Cabinet: standard Naomi 8-way stick + 2 used buttons (shot · bomb), 2 players. MAME
 input ports: `naomi`. Stock-pad trivial; the official DC port shipped A=shot / B=bomb
@@ -106,3 +73,36 @@ Sources: MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS `naomi`;
 (8-way joystick + 6-button JVS standard declaration, 2P);
 [GameFAQs DC systems FAQ](https://gamefaqs.gamespot.com/dreamcast/479801-giga-wing-2/faqs/12525)
 (A shot / B bomb / R autofire).
+
+## 8. Score computation
+
+final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
+      = 87.7^.40 · 74.6^.20 · 85.0^.20 · 100.0^.10 · 40.0^.10 = **79.0 (A)**
+Similarity inputs: developer no, SDK overlap partial, loader match no.
+
+## 9. Risks & notes
+
+- **Port-planning takeaway: everything fits — and the official DC port (2001) already
+  proved it.** This assessment is reference/validation data for the pipeline, not a port
+  candidate ranking.
+- **ARAM is the binding region at 0.964× as content volume.** The 48,674 B sitting above
+  the 2 MB address line is placement, not volume — OSB banks are position-independent
+  (azumanga live verification), so a rebuild-and-move compaction covers it.
+- **Main RAM is address-sparse:** content 8.05 MB (0.480×) against an address peak of
+  16,433,920 B (0.980× cap) — volume fits easily; layout/relocation attention for the
+  high-address writes.
+- **The streaming axis sees non-main DMA only.** The PIO loader moved 57.5 MB over the
+  window (measured lower bound) — a real port's streaming budget is higher than §5's DMA
+  figures suggest.
+- Coverage is a conservative `title` annotation: the attract loop cycles but no sampled
+  frame verified in-game demo footage, so measured figures may understate gameplay
+  pressure.
+
+## 10. History
+
+| Battery | Date | Final | What changed |
+|---|---|---|---|
+| v5 | 2026-08-06 | PARKED `G3 memory: aram peak > 2x DC capacity` | ARAM content high-water *address* read 3.99× cap under address keying while above-cap volume was only 48,662 B — the divergent case that drove the §6 checkpoint (kb §6 item 5) |
+| v6 | 2026-08-07 | PARKED (gate re-run) | Unified `dma|pio` handoff measured main for the first time: write-truth peak 16,433,920 (u 0.980, fits — old watermark was real writes); `pio_bytes` 57.5 MB first measured; tiny-volume ARAM class reproduced (48,674 B, 12 B run-to-run delta) — kb §4.v resolved |
+| v7 | 2026-08-07 | 78.6 (A) | §6 checkpoint re-keyed G3-ARAM on content volume (spec `2026-08-07-aram-gate-volume-design.md`): `content_total` 2,021,207 (u 0.964) — un-parked; memory 86.5, main binding |
+| v9 | 2026-08-08 | 79.0 (A) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` 8,050,490 (u 0.480); memory axis 87.7, binding moved to ARAM (spec `2026-08-08-main-content-rekey-design.md`) |

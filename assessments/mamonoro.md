@@ -1,95 +1,12 @@
 # Mamoru-kun wa Norowarete Shimatta! (Japan) (841-0060C) (`mamonoro`) — portability assessment
 
-> **Battery v9 main-content re-score (2026-08-08): 76.7 (A), was 47.8 (B)** — scoring-only blanket re-score, no re-capture: every measurement
-> below is still the battery v8 run. §6 item 8 ruling (spec `2026-08-08-main-content-rekey-design.md`,
-> adopted to main 2026-08-09): main now keys on write-truth content VOLUME instead of
-> the address peak — `nz_total` 12,939,092 B (content-u 0.771) replaces peak 26,807,247 B (u 1.598).
-> Memory axis 85.2, binding region now **vram** (was memory 26.1). Verdict section below is the capture-time (v≤8) record.
-
-> **Battery v8 vram-fb-masking re-run (2026-08-08): 47.8 (B)** — spec
-> `2026-08-07-vram-fb-masking-design.md`. Sidecar: flycast `f014a410c`, battery 8. No
-> park, boot ok, PIO handoff at 20.0 s. Leg 1 hit an `emulator-exited` flake (Flycast
-> process died mid-run, a known operational flake class, kb §7); the battery's automatic
-> leg-2 retry ran the full 600 s window cleanly — used for all figures below. Main peak
-> reproduces the doc's own "informational" watermark exactly (26,807,247 B, same
-> real-writes-not-noise pattern as chocomk/sgtetris/gunsur2/marstv). ARAM `content_total`
-> 1,265,219 B (u=0.603) → sub 100.0, first content-volume measurement (v7-class keying).
-> **VRAM: `fb_bytes` reads 917,760 B, not the anchors' 614,400 B** — investigated before
-> trusting it (this title is ROT270 free-scrolling, per §2/§3, and `fb_bytes` is computed
-> straight from live `FB_R_SIZE`/`FB_W_LINESTRIDE` PowerVR2 registers each sample,
-> `naomi.cpp cartlog_vram_profile()`, not an independent counter) — the earliest samples
-> read the BIOS-default 614,400 B (`0x96000`, matching the anchors exactly), then flip to
-> a stable 917,760 B (`0xE0100`) from early gameplay onward and stay there for the rest of
-> the 600 s window: a genuine, stable, game-programmed mode change, not register garbage
-> — the arithmetic: 917,760 B = 1,920-byte stride × 478 lines = 640×478 at 24bpp, i.e. a
-> depth change, not the extra scroll height originally speculated. `content_total`
-> 6,535,347 B + `2×fb_bytes` 1,835,520 B = fit 8,370,867 B, u=0.998 → sub **85.2** — still a rise (was 24.6 under
-> address high-water, u=1.64). Main RAM's write-truth sub (26.1, u=1.598) is the binding
-> region regardless. Memory axis **24.6 → 26.1**, final **46.6 → 47.8**, tier unchanged
-> **B**. Sanity: `content_total + fb_masked_nz` matches `nz_total` exactly in the raw log
-> (6,535,347 + 700,924 = 7,236,271) — the identity holds within each sample; the
-> sidecar's `nz_total` (7,434,215) is the independent run-max across all samples, not
-> this particular sample's total. Coverage re-annotated `demo` (unchanged).
-
-> **Battery v4 re-assessment (2026-08-04): **46.6 (B)**.**
-> v2 parked it G3-aram via the DMPD fill artifact. v4 content metric: scored; attract demo renders (logo-overlay gameplay, shot-182s).
-> Below the v8 section is the battery v4-era assessment, itself superseding the v2-era
-> assessment below that; each section's *measured* figures (boot evidence, memory,
-> streaming, score) are **superseded** by the section above it — the identity,
-> controls-research and similarity sections remain valid throughout. Instrumentation
-> root-cause: `docs/kb/assessment-tooling.md` §7.
-
-## v8 verdict & measurements
-
-| | |
-|---|---|
-| **Final** | **47.8 (B)** |
-| Coverage | demo |
-| Assessed | 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
-| Boot | ok=True · handoff 20.0 s · run 600 s (leg 2 of 2 — leg 1 `emulator-exited` flake, auto-retried) · rom `naomi/mamonoro.zip` |
-
-| Region | Peak / fit | DC cap | u | Note |
-|---|---|---|---|---|
-| Main RAM (write-truth) | 26,807,247 | 16,777,216 | 1.598 | matches the doc's old "informational" watermark exactly (real writes, not stale data); sub 26.1, binding |
-| VRAM (FB-masked content + 2×FB) | 8,370,867 (content_total 6,535,347 + 2×fb_bytes 1,835,520) | 8,388,608 | 0.998 | `fb_bytes` 917,760 B (not the standard 614,400 — verified genuine, see banner) — sub 85.2, was 24.6 under address high-water (13,718,016, u=1.64) |
-| ARAM (content, volume-keyed) | 1,265,219 | 2,097,152 | 0.603 | sub 100.0, first content-volume measurement (v7-class keying); was 0.98× under the old address peak |
-
-Streaming: 617 DMA events · total 136.5 MB · unique 53.3 MB · re-read 0.6095 · steady 13.088 MB/min (matches v4's 13.057 within run-to-run noise)
-Axes: memory 26.1 · streaming 67.9 · guts 85.0 · controls 100.0 · similarity 40.0 → **final 47.8 (B)**
-Screenshots: `evidence/mamonoro/shot-121s.png` · `shot-182s.png` · `shot-243s.png` · `shot-426s.png` · `shot-548s.png` (re-curated this run — manga story card, title over shrine island, Beniko ranking table, night-stage gameplay with HUD, character panel)
-
----
-
-## v4 verdict & measurements
-
-| | |
-|---|---|
-| **Final** | **46.6 (B)** |
-| Coverage | demo |
-| Assessed | 2026-08-04 · battery v4 · flycast `4b59eceff` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
-| Boot | ok=True · handoff 20.0 s · run 600 s · rom `naomi/mamonoro.zip` |
-
-| Region | v4 peak | DC cap | u | Note |
-|---|---|---|---|---|
-| Main RAM (DMA high-water) | 22,092,160 | 16,777,216 | 1.32 |  |
-| VRAM (write-truth diff) | 13,718,016 | 8,388,608 | 1.64 | nz_total 7,422,814 |
-| ARAM (content, fill-excluded) | 2,064,240 | 2,097,152 | 0.98 | content above cap 0 |
-
-Streaming: 617 DMA events · total 136.5 MB · unique 53.3 MB · re-read 0.6095 · steady 13.057 MB/min
-Axes: memory 24.6 · streaming 68.0 · guts 85.0 · controls 100.0 · similarity 40.0 → **final 46.6 (B)**
-Screenshots: `evidence/mamonoro/shot-060s.png` · `evidence/mamonoro/shot-182s.png` · `evidence/mamonoro/shot-365s.png` · `evidence/mamonoro/shot-609s.png`
-
----
-
-# Historical: battery v2 assessment (measurements superseded)
-
 ## 1. Verdict
 
 | | |
 |---|---|
-| **Final score** | **PARKED — `G3 memory: aram peak > 2x DC capacity`** (not a numeric tier) |
-| Bottom line | The full 8 MiB Naomi ARAM bank is written at boot (4.00× the DC's 2 MiB AICA RAM) — the **eleventh** boot-time full-bank G3-aram park in the campaign. The sibling-precedent stack is maximal for this title: G.Rev's own Under Defeat Naomi→DC self-port (the `senko` precedent) **plus** mamonoro's own pad-native X360/PS3 console ports prove both the studio's and this exact game's portability. Outside the gate it is light: main RAM 1.32× (second-lightest after `radirgyn`'s 1.17×) and VRAM 1.60× extent with 7.17 MB actual content — a strong unpark candidate behind `ausfache` and `radirgyn`. The title renders fully under the fork — attract demo confirmed. |
-| Assessed | 2026-08-03 · battery v2 · flycast `9e882cbd2` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final score** | **76.7 (A)** |
+| Bottom line | Comedic curtain-fire shmup whose memory fits under content keying — VRAM is the binding region at 0.998× cap (FB-masked content plus a verified 24bpp 640×478 double framebuffer) — and portability is proven twice over: G.Rev's own Under Defeat Naomi→DC self-port and this exact game's pad-native X360/PS3 ports. |
+| Assessed | capture 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
 
 ## 2. Identity
 
@@ -104,92 +21,84 @@ Screenshots: `evidence/mamonoro/shot-060s.png` · `evidence/mamonoro/shot-182s.p
 
 ## 3. Boot & run evidence
 
-Boots: yes · handoff at 40.0 s · run 600 s · rom: `naomi/mamonoro.zip` (single clean zip leg)
-Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"`. Full rendering
-(vertical 480×640); the attract cycle observed across the 10 battery shots: NAOMI splash →
-manga story card → title over a 3D shrine island → live attract gameplay with LIFE hearts +
-NOROI (curse) gauge HUD → G.REVOLUTION logo → story panels → character profile → second
-attract gameplay (night stage) → Mayuno RANKING table.
+Boots: yes · handoff at 20.0 s (`trigger = "pio"`) · run 600 s (leg 2 of 2 — leg 1 hit
+an `emulator-exited` flake, a known operational class kb §7; the battery's automatic
+retry ran the full window cleanly) · rom: `naomi/mamonoro.zip`
+Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"`; attract cycle:
+manga story card → title over a 3D shrine island → live attract gameplay with LIFE
+hearts + NOROI (curse) gauge HUD → character panels → ranking table.
+Screenshots: `evidence/mamonoro/shot-121s.png` · `shot-182s.png` · `shot-243s.png` ·
+`shot-426s.png` · `shot-548s.png` (manga story card, title over shrine island, Beniko
+ranking table, night-stage gameplay with HUD, character panel)
+Anomalies: the leg-1 flake only.
 
-Screenshots kept (5 of 10):
-- `assessments/evidence/mamonoro/shot-121s.png` — early attract: manga story card (Mamoru startled by the red curse imp), PRESS START / FREE PLAY
-- `assessments/evidence/mamonoro/shot-183s.png` — title screen: logo over 3D floating shrine island with torii, ©2008 G.REV LTD.
-- `assessments/evidence/mamonoro/shot-246s.png` — attract gameplay: player firing blue shots up a grass/cliff stage, LIFE hearts + NOROI curse gauge HUD, treasure chest and bullets on screen
-- `assessments/evidence/mamonoro/shot-490s.png` — attract gameplay, night stone-path stage: player character, rabbit enemies, enemy bullets, full HUD
-- `assessments/evidence/mamonoro/shot-544s.png` — "Mayuno RANKING" high-score table over the 3D island
+## 4. Memory fit (axis: 85.2)
 
-Deleted surplus (5): NAOMI boot splash, G.REVOLUTION logo card, second manga story panel, Beniko Higatera character profile, white transition flash.
-Anomalies: none — full rendering under the fork.
+| Region | Scored value | DC cap | u | Sub-score | Evidence / note |
+|---|---|---|---|---|---|
+| Main RAM (write-truth content volume, `nz_total`) | 12,939,092 | 16,777,216 | 0.771 | 100.0 | address peak 26,807,247 (u 1.598, informational) — matches the pre-v8 informational watermark exactly: real writes, not stale data (same pattern as chocomk/sgtetris/gunsur2/marstv) · nz_above_cap 6,337,712 · `dma_high_water` 22,092,160 |
+| VRAM (FB-masked content + 2×FB) | 8,370,867 (content_total 6,535,347 + 2×`fb_bytes` 917,760) | 8,388,608 | 0.998 | 85.2 | **binding region** — 17,741 B under cap. `fb_bytes` 917,760 B is a genuine game-programmed mode, not register garbage: earliest samples read the BIOS-default 614,400 B then flip to a stable 1,920-byte stride × 478 lines = 640×478 at 24bpp for the rest of the window (live `FB_R_SIZE`/`FB_W_LINESTRIDE` each sample) · raw address peak 13,718,016 (u 1.64) is extent |
+| ARAM (content volume, fill-excluded, `content_total`) | 1,265,219 | 2,097,152 | 0.603 | 100.0 | address peak 2,064,240 — under the 2 MiB cap even address-keyed |
 
-## Gate
+Watermarks (informational, content-scan — stale-data prone): main 26,807,247 ·
+vram 13,718,016 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
-**G3 memory: aram peak > 2x DC capacity.** `memory.aram.peak = 8,388,608 B` (exactly
-8 MiB, the full Naomi ARAM bank) against the DC's 2,097,152 B AICA RAM → utilization
-4.00×, past `region_score()`'s `u > 2.0` gate; `nz_above_cap = 6,291,456 B` nonzero above
-the cap at scan. Boot-time full-bank load — **eleventh** in the kb §6 tally after
-`ikaruga`, `azumanga`, `ss2005`, `takoron`, `illvelo`, `radirgyn`, `senko`, `senkosp`,
-`ausfache`, `inunoos`.
+## 5. Cart streaming (axis: 67.9)
 
-**Sibling-precedent stack — maximal for this title:** (a) G.Rev itself shipped its own
-Naomi shmup *Under Defeat* on Dreamcast (2006, developed and published by G.Rev — the
-`senko` precedent line), so the studio provably fit its Naomi-era sound into 2 MiB AICA;
-(b) **this exact game** shipped pad-native console ports (X360 2009, PS3 2011/2013, see
-§2), so the title itself is proven portable off Naomi. The 8 MiB bank measures Naomi-side
-luxury, not intrinsic unportability.
+DMA events 617 · total 136.5 MB · unique 53.3 MB · re-read ratio 0.6095 ·
+steady-state 13.088 MB/min (`short_window: false`) · PIO 2,099,776 B
 
-Outside the gate mamonoro is light: main-RAM DMA high-water `22,092,160 B` (1.32× the
-DC's 16 MB — second-lightest among the full-bank parks after `radirgyn`'s 1.17×) and VRAM
-peak `13,449,728 B` (1.60×), with nonzero content `7,166,193 B` total and `3,958,684 B`
-above the 8 MB line — partly the high-parked-asset address-extent pattern (`kurucham`),
-so relocation helps. **Third-strongest unpark candidate** behind `ausfache` (everything
-but sound fits) and `radirgyn` (main 1.17×/VRAM 1.33×).
+## 6. Guts (axis: 85.0)
 
-Context values quoted from the sidecar (no axis scores exist — the pipeline stops at the
-gate): streaming 442 DMA events, `102,471,680 B` total / `55,398,400 B` unique, re-read
-ratio 0.4594, steady-state 8.909 MB/min (`short_window: false`). Guts was
-**unavailable at v2 time**: `static scan: load entry out of file:
-rom=0x40000000 len=0x200000` — fifth instance of the kb §4.q M4-cart carve failure
-(zunou, illvelo, radirgyn, ausfache) — so `guts.flags` was BIOS-only (`[eeprom_bios]`)
-and `sdk_strings` was empty. Similarity inputs from the sidecar at that time:
-`developer_match: false`, `sdk_overlap: "none"`, `cart_loader_match: false` — the
-developer false is the known reference-list artifact (reference `makers` lists only
-`Altron / Taito`), despite G.Rev's first-party Naomi→DC pedigree; same checkpoint note
-as `illvelo`/`senko`. **Re-scanned 2026-08-06** after the `carve_boot.py` bit-30 fix:
-the M4 load-entry rom offset carries bit 30 as an encrypted-read flag, not a file
-offset (MAME `src/mame/sega/naomim4.cpp:124-125` @59e7c0b, Flycast
-`m4cartridge.cpp:115,132` @ebae3b513); masking it (`& 0x1ffffffe`) lets the scan carve
-and Ghidra-analyze the 2 MiB boot blob → `guts.dat_available = true`, guts axis
-**85.0**, `similarity.sdk_overlap = "partial"`, similarity axis **40.0**
-(`developer_match` and `cart_loader_match` remain false — v4 axes above; capture
-itself was not re-run).
+Code 2,097,152 B · functions 3,446 · MMIO refs: scif 2, rtc 3, g2ext 364 ·
+BIOS vector refs: none · flags: `eeprom_bios`, `serial`, `rtc` → −15.
+M4 boot blob carved at base `0x8c020000`, entry `0x8c021000` (header title
+"MAMO NORO") — needs the `carve_boot.py` bit-30 mask (M4 encrypted-read flag, MAME
+`src/mame/sega/naomim4.cpp:124-125` @59e7c0b, Flycast `m4cartridge.cpp:115,132`;
+kb §4.q).
 
-What would unblock it: a per-title audio trim (downsample PCM/ADPCM — in-house precedent
-in Under Defeat DC, and the game's own console ports), plus modest main-RAM reduction at
-1.32× and VRAM relocation/trimming.
+## 7. Controls (axis: 100.0)
 
-## Risks & notes
+Cabinet: 8-way stick + **2 buttons** (A shot, B chargeable curse bomb) — the lightest
+scheme in the campaign. `controls.device_class = stick`.
+Proposed DC mapping: 1:1 on a stock DC pad; every console port shipped on standard
+pads (PS3 even offers optional twin-stick).
+Sources: MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS `naomi` (GAME line ROT270);
+[arcadeitalia](http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=mamonoro)
+(8-way joystick, JVS 6-button declaration, "[A] Shoot, [B] Bomb");
+[Wikipedia](https://en.wikipedia.org/wiki/Mamorukun_Curse!);
+[PlayStation.Blog](https://blog.playstation.com/2013/06/25/how-to-shmup-mamorukun-curse-from-the-makers-of-ikaruga/)
+(curse button charges up to three levels, clears standard bullets).
 
-- **Controls are the lightest scheme in the campaign**: `controls.device_class = stick` —
-  8-way stick + **2 buttons** (A shot, B chargeable curse bomb). 1:1 on a stock DC pad;
-  every console port shipped on standard pads (PS3 even offers optional twin-stick).
-  Sources: MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS `naomi` (GAME line ROT270);
-  [arcadeitalia](http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=mamonoro)
-  (8-way joystick, JVS 6-button declaration, "[A] Shoot, [B] Bomb");
-  [Wikipedia](https://en.wikipedia.org/wiki/Mamorukun_Curse!);
-  [PlayStation.Blog](https://blog.playstation.com/2013/06/25/how-to-shmup-mamorukun-curse-from-the-makers-of-ikaruga/)
-  (curse button charges up to three levels, clears standard bullets).
+## 8. Score computation
+
+final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
+      = 85.2^.40 · 67.9^.20 · 85.0^.20 · 100.0^.10 · 40.0^.10 = **76.7 (A)**
+Similarity inputs: developer no (reference-list artifact — reference `makers` lists
+only `Altron / Taito`, despite G.Rev's first-party Naomi→DC pedigree; same checkpoint
+note as `illvelo`/`senko`), SDK overlap partial, loader match no.
+
+## 9. Risks & notes
+
+- **VRAM is at the cap edge**: fit is 8,370,867 B against 8,388,608 — 17,741 B of
+  margin — driven by the game's 24bpp 640×478 double framebuffer. The FB mode is the
+  first lever a real port would examine.
+- **Main RAM is address-sparse but the heaviest content in this cluster:** content
+  volume 12.9 MB (0.77×) with the touched address peak at 26,807,247 B (1.60× cap,
+  confirmed real writes) and 6.3 MB of nonzero bytes above the 16 MB line —
+  layout/relocation work needed.
 - **ROT270 vertical screen.** A DC port must handle tate/yoko presentation — solved
-  in-family precedent: Karous DC shipped 2007 with proper TATE support (line established
-  in `illvelo.md`); mamonoro's own Wide-ban PS3 port solved widescreen presentation.
-- **M4 guts gap: closed 2026-08-06.** `carve_boot.py` now masks bit 30 (the M4
-  encrypted-read flag) on cart load-entry offsets, so the static scan carves and
-  Ghidra-analyzes the boot blob. Re-scored via `tools/assess/rescore_static.py`
-  (guts 85.0, similarity 40.0, final 46.6 B above — up from tier C); capture was not
-  re-run.
+  in-family: Karous DC shipped 2007 with proper TATE support; mamonoro's own Wide-ban
+  PS3 port solved widescreen presentation.
 - MAME emulation status: blanket naomi.cpp `GAME_FLAGS`
-  (IMPERFECT_GRAPHICS|IMPERFECT_SOUND|NOT_WORKING, line 10914) — per kb §4.r no per-title
-  signal; the title runs and renders fully under our fork.
-- Main watermark `26,744,783 B` (informational, content-scan — stale-data prone) is 1.21×
-  the DMA high-water; moderate gap, treat the high-water as the load-bearing figure.
-- Main-RAM v1 limitation carried from the spec: DMA high-water misses CPU-written data
-  above the last DMA'd asset.
+  (IMPERFECT_GRAPHICS|IMPERFECT_SOUND|NOT_WORKING, line 10914) — per kb §4.r no
+  per-title signal; the title runs and renders fully under our fork.
+
+## 10. History
+
+| Battery | Date | Final | What changed |
+|---|---|---|---|
+| v2 | 2026-08-03 | PARKED G3-ARAM | Full 8 MiB ARAM bank at boot read as 4.00× cap — the DIMM "DMPD" fill artifact; eleventh full-bank park, with the maximal sibling-precedent stack (Under Defeat DC self-port + own X360/PS3 ports). M4 static scan also failed (kb §4.q, §7) |
+| v4 | 2026-08-04 | 46.6 (B) | Unparked by the v4 fill-excluded ARAM content metric (kb §7); attract demo renders; 2026-08-06 `carve_boot.py` bit-30 fix unlocked M4 guts (85.0) + similarity (40.0) via `rescore_static.py` (kb §4.q) |
+| v8 | 2026-08-08 | 47.8 (B) | Re-capture (leg 2 after an `emulator-exited` flake, kb §7). VRAM re-keyed to FB-masked content + 2×FB with `fb_bytes` 917,760 verified genuine (spec `2026-08-07-vram-fb-masking-design.md`); main write-truth 26,807,247 binding at sub 26.1 |
+| v9 | 2026-08-08 | 76.7 (A) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`); memory 85.2, binding region moved to VRAM |
