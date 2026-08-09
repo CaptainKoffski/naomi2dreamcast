@@ -4,9 +4,9 @@
 
 | | |
 |---|---|
-| **Final score** | **80.7 (S)** |
-| Bottom line | 2D doujin fighter whose 2003–2007 PC-era assets fit DC budgets everywhere — VRAM is the only tight region (0.94× cap, nothing over) — and no port of Ausf. Achse exists on any platform, making it uniquely valuable, not redundant. |
-| Assessed | capture 2026-08-07 · battery v7 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| **Final score** | **84.4 (S)** |
+| Bottom line | 2D doujin fighter whose 2003–2007 PC-era assets fit DC budgets comfortably — every memory region now measures ≤0.75× cap with nothing over (ARAM the tightest) — and no port of Ausf. Achse exists on any platform, making it uniquely valuable, not redundant. |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -22,17 +22,18 @@
 ## 3. Boot & run evidence
 
 Boots: yes · handoff at 20.0 s (`trigger = "pio"`) · run 600 s · rom: `naomi/ausfache.zip`
-Attract/demo reached: **demo** — live attract gameplay in `shot-609s.png` (sidecar `capture.coverage = "demo"`)
+Attract/demo reached: **demo** — live attract gameplay in `shot-609s.png` (two characters fighting,
+"RECOVER 500pts" HUD; sidecar `capture.coverage = "demo"`)
 Screenshots: `evidence/ausfache/shot-060s.png` · `evidence/ausfache/shot-365s.png` · `evidence/ausfache/shot-609s.png`
-Anomalies: none — single clean leg.
+Anomalies: none — single clean leg (battery log: `leg 1: ausfache.zip attempt 1 -> ran full window`).
 
-## 4. Memory fit (axis: 89.4)
+## 4. Memory fit (axis: 100.0)
 
 | Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth content volume, `nz_total`) | 8,000,910 | 16,777,216 | 0.477 | 100.0 | address peak 16,349,952 (u 0.975, informational — see Risks) · `dma_high_water` 5,065,888 (informational floor) |
-| VRAM (write-truth peak, post-handoff) | 7,892,608 | 8,388,608 | 0.941 | 89.4 | nz_total 3,699,405 · **0 above cap** — **binding region** |
-| ARAM (content volume, fill-excluded, `content_total`) | 1,561,912 | 2,097,152 | 0.745 | 100.0 | address peak 2,097,136 (16 B under cap, informational — full-bank touch is uniform fill) |
+| Main RAM (write-truth content volume, `nz_total`) | 8,000,910 | 16,777,216 | 0.477 | 100.0 | address peak 16,349,952 (u 0.975, informational — see Risks) · `dma_high_water` 5,065,888 (informational floor) — unchanged from v7 |
+| VRAM (FB-masked content volume + 2×framebuffer, `content_total + 2*fb_bytes`) | 4,415,300 | 8,388,608 | 0.526 | 100.0 | `content_total` 3,186,500 + 2×`fb_bytes` 614,400 — **first real measurement of the v8 keying fields** (absent from the v7 sidecar); nz_total 3,699,405 · 0 above cap. Address peak is unchanged from v7 at 7,892,608 (u 0.941) — that peak is what the old (v7) sidecar scored through, as a provably conservative fallback (score.py, kb §6/§11), since it had no `content_total`/`fb_bytes` fields yet |
+| ARAM (content volume, fill-excluded, `content_total`) | 1,561,912 | 2,097,152 | 0.745 | 100.0 | address peak 2,097,136 (16 B under cap, informational — full-bank touch is uniform fill) — unchanged from v7; now the tightest-fitting region, still comfortably ≤0.80 |
 
 Watermarks (informational, content-scan — stale-data prone): main 16,349,952 ·
 vram 9,692,984 (includes the pre-handoff BIOS boot-screen sheet, kb §9) ·
@@ -40,8 +41,10 @@ aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
 ## 5. Cart streaming (axis: 79.8)
 
-DMA events 458 · total 50.2 MB · unique 24.7 MB · re-read ratio 0.507 ·
-steady-state 5.055 MB/min (`short_window: false`) · PIO 1,051,200 B
+DMA events 457 · total 50.2 MB (50,165,760 B) · unique 24.7 MB (24,721,408 B) ·
+re-read ratio 0.5072 · steady-state 5.052 MB/min (`short_window: false`) ·
+PIO 1,051,200 B — sub-score unchanged at 79.8 (v7 was 458 events / 50,184,192 B /
+24,739,840 B / 0.507 / 5.055 MB/min; run-to-run capture noise, same axis score)
 
 ## 6. Guts (axis: 85.0)
 
@@ -68,15 +71,17 @@ Flycast `naomi_roms_input.h:195` `INPUT_3_BUTTONS("Weak Attack", "Medium Attack"
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 89.4^.40 · 79.8^.20 · 85.0^.20 · 100.0^.10 · 40.0^.10 = **80.7 (S)**
+      = 100.0^.40 · 79.8^.20 · 85.0^.20 · 100.0^.10 · 40.0^.10 = **84.4 (S)**
 Similarity inputs: developer no, SDK overlap partial, loader match no.
 
 ## 9. Risks & notes
 
-- **Port-planning takeaway: everything fits.** VRAM is the binding region at 0.941×
-  with zero bytes above cap; main content volume is under half the DC's 16 MB; ARAM
-  content is 0.745× with the Ikaruga 4× audio-trim precedent (kb §4.d) in reserve if
-  a real port needs margin.
+- **Port-planning takeaway: everything fits, comfortably now.** With the v8 VRAM
+  FB-mask fields measured for real (§4), no region is binding under the
+  `region_score` piecewise map — main 0.477×, VRAM 0.526×, ARAM 0.745× (the
+  tightest), all with zero bytes above cap. Main content volume is under half the
+  DC's 16 MB; ARAM still has the Ikaruga 4× audio-trim precedent (kb §4.d) in
+  reserve if a real port needs margin.
 - **Main RAM is address-sparse:** write-truth content is 8.0 MB but the touched
   address peak reaches 16,349,952 B (0.975× cap). Volume fits easily; a port may
   still need layout/relocation attention for the sparse high-address writes.
@@ -95,3 +100,4 @@ Similarity inputs: developer no, SDK overlap partial, loader match no.
 | v5 | 2026-08-06 | 79.1 (A) | v4 VRAM artifact fixed; same day the `carve_boot.py` bit-30 fix unlocked M4 guts (85.0) + similarity (40.0) via `rescore_static.py` |
 | v7 | 2026-08-07 | 79.8 (A) | Re-capture. ARAM re-keyed on content volume (kb §6 checkpoint) — no longer binding; main write-truth measured for the first time (address peak 0.975× became binding) |
 | v9 | 2026-08-08 | 80.7 (S) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`); binding region moved to VRAM |
+| v9 | 2026-08-09 | 84.4 S | ranking-groom chunk 2: fresh v9 capture (was v7) — first real measurement of v8 VRAM FB-mask fields replaces conservative fallback; 80.7→84.4 |
