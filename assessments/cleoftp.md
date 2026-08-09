@@ -6,7 +6,7 @@
 |---|---|
 | **Final score** | **85.8 (S)** |
 | Bottom line | Calibration A — the already fan-ported, real-hardware-verified control title: every region fits with zero nonzero bytes above any DC cap (ARAM is the tightest at 0.936× content), and every clean run reproduces `../cleopatra`'s known-good instrumentation bit-for-bit, which is what makes the battery trustworthy on every other set. |
-| Assessed | capture 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -29,31 +29,37 @@ screen wipes, not faults). Sidecar `capture.coverage = "demo"`.
 Screenshots: `evidence/cleoftp/shot-060s.png` · `evidence/cleoftp/shot-243s.png` ·
 `evidence/cleoftp/shot-426s.png` · `evidence/cleoftp/shot-609s.png` (curated from 10 —
 all four show the attract "how to play" demo loop).
-Anomalies: none this run — clean single zip leg. Historical: the v1/v2 sessions flaked
-`no-handoff-120s` (Flycast lands on the DC BIOS home menu, clears on a plain re-run) on
-2 of 6 launches; `RUNBOOK.md` documents the auto-retry and flake pattern.
+Anomalies: none this run — clean single zip leg (`leg 1: cleoftp.zip attempt 1 -> ran
+full window`, battery log). All three calibration anchors reproduced bit-identically on
+this v9 re-capture vs. the v8 sidecar: main `dma_high_water` 11,761,888 · VRAM address
+peak 8,181,717 · ARAM address peak 2,094,512 (the −2,640 B vs. the historical exact
+2,097,152 is the documented since-v5 baseline race, §4 below — not new drift).
+Historical: the v1/v2 sessions flaked `no-handoff-120s` (Flycast lands on the DC BIOS
+home menu, clears on a plain re-run) on 2 of 6 launches; `RUNBOOK.md` documents the
+auto-retry and flake pattern.
 
 ## 4. Memory fit (axis: 89.8)
 
 | Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth content volume, `nz_total`) | 10,537,734 | 16,777,216 | 0.6281 | 100.0 | address peak 16,252,992 (u 0.9688) · 0 above cap · `dma_high_water` 11,761,888 (informational floor) |
+| Main RAM (write-truth content volume, `nz_total`) | 10,537,841 | 16,777,216 | 0.6281 | 100.0 | address peak 16,252,992 (u 0.9688) · 0 above cap · `dma_high_water` 11,761,888 (informational floor) |
 | VRAM (FB-masked content + 2×FB, `content_total + 2×fb_bytes`) | 6,022,568 | 8,388,608 | 0.7180 | 100.0 | content_total 4,793,768 + 2×fb_bytes 1,228,800 (`fb_bytes` 614,400, exactly 640×480×2) · address peak 8,181,717 (u 0.9753) · 0 above cap |
-| ARAM (content volume, fill-excluded, `content_total`) | 1,963,360 | 2,097,152 | 0.9362 | 89.8 | address peak 2,094,512 · 0 above cap — **binding region** |
+| ARAM (content volume, fill-excluded, `content_total`) | 1,963,359 | 2,097,152 | 0.9362 | 89.8 | address peak 2,094,512 · 0 above cap — **binding region** |
 
 Watermarks (informational, content-scan — stale-data prone): main 16,252,992 ·
 vram 9,711,616 · aram 8,388,608 (boot-time fill, not content).
 Cross-check vs. `../cleopatra/docs/kb/phase2-measurements.md`: main DMA high-water
 11,761,888, VRAM address peak 8,181,717 and the ~2 MiB ARAM bank reproduce across every
-clean run v1 → v8 (ARAM address peak 2,094,512 since v5 — −2,640 B from the historical
+clean run v1 → v9 (ARAM address peak 2,094,512 since v5 — −2,640 B from the historical
 exact 2,097,152, a baseline race at the last ARM-reset rebase, stable 70/70 samples,
-not a regression). `nz_above_cap = 0` in all three regions: no genuine game write lands
-above any DC capacity.
+not a regression). This v9 re-capture reproduced all three anchors bit-identically
+against the v8 sidecar (see §3). `nz_above_cap = 0` in all three regions: no genuine
+game write lands above any DC capacity.
 
 ## 5. Cart streaming (axis: 68.0)
 
 DMA events 894 · total 100.1 MB · unique 21.8 MB · re-read ratio 0.7824 ·
-steady-state 9.906 MB/min (`short_window: false`) · PIO 1,049,920 B
+steady-state 9.908 MB/min (`short_window: false`) · PIO 1,049,920 B
 Durable invariant: `unique_bytes` (22,827,008 B) is identical at 360 s and 600 s
 capture lengths — the real streamed-asset footprint doesn't grow with capture length,
 only how many times it gets re-touched does.
@@ -109,3 +115,4 @@ construction against `assessments/reference/similarity-reference.json`.
 | v7 | 2026-08-07 | 84.8 (S) | ARAM re-keyed on content volume (kb §6 checkpoint): 1,963,361 B (u 0.936); VRAM became binding |
 | v8 | 2026-08-07 | 84.9 (S) | VRAM re-keyed on FB-masked content + 2×FB (spec `2026-08-07-vram-fb-masking-design.md`); v4-era BIOS-signature clamp retired to a MetricRegression canary (ruling 4); main bound |
 | v9 | 2026-08-08 | 85.8 (S) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`); ARAM binds at 89.8 |
+| v9 | 2026-08-09 | 85.8 S | ranking-groom chunk 2: fresh v9 capture, provenance v8→v9 (scoring keys unchanged); calibration anchors reproduced bit-identically |

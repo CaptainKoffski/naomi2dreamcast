@@ -4,10 +4,10 @@
   "maker": "Altron / Taito",
   "year": "2002",
   "format": "GD-ROM",
-  "assessed": "2026-08-07",
+  "assessed": "2026-08-09",
   "versions": {
     "flycast": "f014a410c",
-    "battery": "8",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -34,7 +34,7 @@
     },
     "screenshots": [
       "assessments/evidence/cleoftp/shot-060s.png",
-      "assessments/evidence/cleoftp/shot-121s.png",
+      "assessments/evidence/cleoftp/shot-120s.png",
       "assessments/evidence/cleoftp/shot-182s.png",
       "assessments/evidence/cleoftp/shot-243s.png",
       "assessments/evidence/cleoftp/shot-304s.png",
@@ -54,7 +54,7 @@
   "memory": {
     "main": {
       "peak": 16252992,
-      "nz_total": 10537734,
+      "nz_total": 10537841,
       "nz_above_cap": 0,
       "dma_high_water": 11761888
     },
@@ -69,7 +69,7 @@
     "aram": {
       "peak": 2094512,
       "nz_above_cap": 0,
-      "content_total": 1963360
+      "content_total": 1963359
     }
   },
   "streaming": {
@@ -77,7 +77,7 @@
     "total_bytes": 104912896,
     "unique_bytes": 22827008,
     "reread_ratio": 0.7824,
-    "steady_mb_per_min": 9.906,
+    "steady_mb_per_min": 9.908,
     "short_window": false,
     "pio_bytes": 1049920
   },
