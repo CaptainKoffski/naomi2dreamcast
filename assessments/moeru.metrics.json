@@ -4,10 +4,10 @@
   "maker": "Altron",
   "year": "2002",
   "format": "GD-ROM",
-  "assessed": "2026-08-08",
+  "assessed": "2026-08-09",
   "versions": {
     "flycast": "f014a410c",
-    "battery": "8",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -77,7 +77,7 @@
     "total_bytes": 208265216,
     "unique_bytes": 48766976,
     "reread_ratio": 0.7658,
-    "steady_mb_per_min": 19.93,
+    "steady_mb_per_min": 19.922,
     "short_window": false,
     "pio_bytes": 1443136
   },
@@ -630,7 +630,7 @@
   "gate": null,
   "scores": {
     "memory": 100.0,
-    "streaming": 55.0,
+    "streaming": 55.1,
     "guts": 85.0,
     "controls": 100.0,
     "similarity": 100.0,

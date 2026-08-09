@@ -6,7 +6,7 @@
 |---|---|
 | **Final score** | **85.9 (S)** |
 | Bottom line | A Katana/Ninja2-SDK casino minigame collection from the reference maker (Altron) whose content fits every DC region outright (all three memory sub-scores 100) — the porting cost is the attract loop's 19.9 MB/min GD re-streaming, not memory. |
-| Assessed | capture 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -33,9 +33,18 @@ shots cycle the blackjack table demo.
 Screenshots: `evidence/moeru/shot-060s.png` · `evidence/moeru/shot-365s.png` ·
 `evidence/moeru/shot-609s.png`
 Anomalies: launch-flake class only (known operational class, not a game defect) —
-the final v4-era pass hit a dynarec-init assert on leg 1, and the v8 re-run hit an
-`emulator-exited` flake on leg 1; in both cases the automatic retry ran the full
-600 s window cleanly and is the leg used for all figures.
+leg 1 ran the full 600 s window cleanly on the first attempt this run (`moeru-battery.log`:
+"leg 1: moeru.zip attempt 1 -> ran full window"), unlike the v4/v8 passes which needed
+the auto-retry. All three memory regions (main `peak`/`nz_total`/`nz_above_cap`/
+`dma_high_water`, VRAM `peak`/`nz_total`/`content_total`/`fb_bytes`, ARAM `peak`/
+`content_total`) reproduced byte-identically against the v8 sidecar
+(`git show HEAD:assessments/moeru.metrics.json` pre-this-commit) — same capture is
+stable frame-for-frame. Streaming reproduced near-identically (`dma_events` 1,135,
+`total_bytes`/`unique_bytes`/`reread_ratio` unchanged; `steady_mb_per_min` 19.922 vs
+v8's 19.93, an immaterial capture-window rounding difference, not a regression).
+`shot-060s.png` and `shot-365s.png` are pixel-identical to the v8 capture (deterministic
+attract loop); `shot-609s.png` differs slightly (credit/reel state at the 609 s mark)
+but shows the same slot-demo screen.
 
 ## 4. Memory fit (axis: 100.0)
 
@@ -52,10 +61,10 @@ exclude; the clamp is now a `MetricRegression` canary, spec
 `2026-08-07-vram-fb-masking-design.md` ruling 4, and this run's values do not match
 the signature) · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
-## 5. Cart streaming (axis: 55.0)
+## 5. Cart streaming (axis: 55.1)
 
 DMA events 1,135 · total 198.6 MB · unique 46.5 MB · re-read ratio 0.7658 ·
-steady-state 19.93 MB/min (`short_window: false`) · PIO 1,443,136 B — the attract
+steady-state 19.922 MB/min (`short_window: false`) · PIO 1,443,136 B — the attract
 loop re-streams its minigame assets from GD continuously; a DC port would want them
 resident or repacked.
 
@@ -77,7 +86,7 @@ Sources: MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS `naomi`.
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 100.0^.40 · 55.0^.20 · 85.0^.20 · 100.0^.10 · 100.0^.10 = **85.9 (S)**
+      = 100.0^.40 · 55.1^.20 · 85.0^.20 · 100.0^.10 · 100.0^.10 = **85.9 (S)**
 Similarity inputs: developer yes (Altron is the reference maker), SDK overlap
 partial, loader match yes — 100 (points cap).
 
@@ -101,3 +110,4 @@ partial, loader match yes — 100 (points cap).
 | v5 | 2026-08-06 | 81.6 (S) | Pre-`VRAMHANDOFF` sample drop gave a clean VRAM peak 8,066,096 (0.96×); memory 85.0 → 87.9 (kb §9) |
 | v8 | 2026-08-08 | 82.2 (S) | Re-capture. VRAM re-keyed on FB-masked content (sub 100.0), first write-truth main measurement (peak 15,728,704, sub 89.7, binding) and first ARAM content-volume measurement (spec `2026-08-07-vram-fb-masking-design.md`) |
 | v9 | 2026-08-08 | 85.9 (S) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`); memory axis 100.0, no region binding |
+| v9 | 2026-08-09 | 85.9 S | ranking-groom chunk 1: fresh v9 capture, provenance v8→v9 (scoring keys unchanged) |
