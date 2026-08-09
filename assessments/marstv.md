@@ -6,7 +6,7 @@
 |---|---|
 | **Final score** | **74.6 (A)** |
 | Bottom line | Sega AM3's 3-player Bishi Bashi-style minigame collection (never ported anywhere) whose content fits every DC region under current keying — ARAM is the only tight region (content 0.979× cap) — while the large main/VRAM address extents are placement work, not volume. |
-| Assessed | capture 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -22,29 +22,40 @@
 ## 3. Boot & run evidence
 
 Boots: yes · handoff at 20.0 s (`trigger = "pio"`) · run 600 s · rom: `naomi/marstv.zip`
-Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"` (the v2-era display
-blindness stayed fixed from v4 on).
-Screenshots: `evidence/marstv/shot-060s.png` · `evidence/marstv/shot-365s.png` ·
-`evidence/marstv/shot-609s.png` (title/eerie-face screen ×2, attract camera-minigame
-instructions)
-Anomalies: none — handoff detected at 20.0 s vs v4's 30.0 s (handoff-detection timing
-moved, not the game).
+Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"`. The loop cycles
+eerie-face title card (`shot-060s.png`) → milk-pour minigame demo (`shot-121s.png`) →
+火星タレントランキング (Mars Talent Ranking) screen (`shot-182s.png`) → "CHANNEL 3" black
+title card → camera-minigame "press start" instructions (`shot-304s.png`, `shot-609s.png`).
+Screenshots: `evidence/marstv/shot-060s.png` · `shot-121s.png` · `shot-182s.png` ·
+`shot-304s.png` · `shot-609s.png` (curated from 10; `shot-243s.png`/`shot-548s.png` were
+the same "CHANNEL 3" black card, `shot-365s.png` repeated the `shot-060s.png` face card,
+`shot-426s.png`/`shot-487s.png` repeated the milk-minigame/ranking screens already
+captured — all dropped as redundant).
+Anomalies: none — clean single-leg cart run, handoff at 20.0 s matches the v8 capture.
+VRAM content counters are NOT byte-identical vs. the prior (v8-capture, v9-keyed)
+sidecar — demo-loop sample timing landed on a different frame this run: peak
+14,229,504→14,118,912 B, `content_total` 5,047,259→4,934,060 B (Δ ≈113 KB), `nz_above_cap`
+3,281,430→3,174,319 B. Expected capture-to-capture variance from a live demo loop, not a
+regression — the VRAM sub-score was already saturated at 100.0 (u 0.735 vs 0.748, both
+≤0.80) so it doesn't move. Main `nz_total` 9,091,782→9,093,490 (+1,708 B) and ARAM
+`content_total` 2,053,563→2,053,564 (+1 B) are within noise. Guts, controls, and handoff
+timing are byte-identical.
 
 ## 4. Memory fit (axis: 86.6)
 
 | Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth content volume, `nz_total`) | 9,091,782 | 16,777,216 | 0.542 | 100.0 | address peak 25,984,736 (u 1.549, informational) = `dma_high_water` exactly · nz_above_cap 798,810 — relocation work, not volume |
-| VRAM (FB-masked content + 2×FB, `content_total + 2×fb_bytes`) | 6,276,059 (content 5,047,259 + 2×614,400) | 8,388,608 | 0.748 | 100.0 | address peak 14,229,504 (u 1.696, informational) · nz_total 5,641,652 · nz_above_cap 3,281,430 (address extent) · `fb_bytes` = exactly 640×480×2 |
-| ARAM (content volume, fill-excluded, `content_total`) | 2,053,563 | 2,097,152 | 0.979 | 86.6 | **binding region** — address peak 2,147,400 (u 1.024) · nz_above_cap 47,694 (~47 KB trim) |
+| Main RAM (write-truth content volume, `nz_total`) | 9,093,490 | 16,777,216 | 0.542 | 100.0 | address peak 25,984,736 (u 1.549, informational) = `dma_high_water` exactly · nz_above_cap 798,810 — relocation work, not volume |
+| VRAM (FB-masked content + 2×FB, `content_total + 2×fb_bytes`) | 6,162,860 (content 4,934,060 + 2×614,400) | 8,388,608 | 0.735 | 100.0 | address peak 14,118,912 (u 1.683, informational) · nz_total 5,528,453 · nz_above_cap 3,174,319 (address extent) · `fb_bytes` = exactly 640×480×2 |
+| ARAM (content volume, fill-excluded, `content_total`) | 2,053,564 | 2,097,152 | 0.979 | 86.6 | **binding region** — address peak 2,147,400 (u 1.024) · nz_above_cap 47,694 (~47 KB trim) |
 
 Watermarks (informational, content-scan — stale-data prone): main 25,984,736 ·
-vram 14,229,504 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
+vram 14,118,912 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
 ## 5. Cart streaming (axis: 54.3)
 
 DMA events 164 · total 199.8 MB · unique 52.4 MB · re-read ratio 0.7376 ·
-steady-state 20.991 MB/min (`short_window: false`) · PIO 2,098,688 B
+steady-state 21.0 MB/min (`short_window: false`) · PIO 2,098,688 B
 
 ## 6. Guts (axis: 90.0)
 
@@ -99,9 +110,9 @@ Similarity inputs: developer no, SDK overlap partial, loader match no.
   the old address view showed only ~47 KB above cap, a trivial trim.
 - **Main and VRAM fit by volume but not by address:** main content is 9.1 MB yet
   the write extent reaches 25,984,736 B (1.549× cap, ~0.8 MB of content above the
-  16 MB line); VRAM content fits FB-masked (0.748×) but 3.28 MB sits above the 8 MB
+  16 MB line); VRAM content fits FB-masked (0.735×) but 3.03 MB sits above the 8 MB
   line by address. A port needs layout/relocation work in both regions.
-- **Heavy cart streaming:** 199.8 MB total over 600 s, 20.99 MB/min steady, re-read
+- **Heavy cart streaming:** 199.8 MB total over 600 s, 21.0 MB/min steady, re-read
   0.7376 — from a cart. A GD-ROM-based port needs seek/throughput attention.
 - **Rendering must be verified on real DC hardware** (working-style rule): the v2
   capture was display-blind under our fork (stale TA frame, kb §4.m class); v4+
@@ -118,3 +129,4 @@ Similarity inputs: developer no, SDK overlap partial, loader match no.
 | v4 | 2026-08-04 | 42.8 (B) | Unparked by the v4 ARAM content metric; display blindness fixed; VRAM address high-water 1.71× binding (root-causes kb §7) |
 | v8 | 2026-08-07 | 47.6 (B) | Re-capture. VRAM re-keyed on FB-masked content (sub 100.0) and ARAM measured by content volume for the first time; main write-truth 1.548× became binding (spec `2026-08-07-vram-fb-masking-design.md`) |
 | v9 | 2026-08-08 | 74.6 (A) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`); binding region moved to ARAM |
+| v9 | 2026-08-09 | 74.6 A | ranking-groom chunk 3: fresh v9 capture, provenance v8→v9 (scoring keys unchanged); VRAM counters shifted ~113 KB on demo-loop timing (peak 14,229,504→14,118,912), no axis moved |

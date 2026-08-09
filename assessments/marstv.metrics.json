@@ -4,10 +4,10 @@
   "maker": "Sega",
   "year": "1999",
   "format": "cart",
-  "assessed": "2026-08-07",
+  "assessed": "2026-08-09",
   "versions": {
     "flycast": "f014a410c",
-    "battery": "8",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -47,29 +47,29 @@
     "coverage": "demo",
     "watermarks_info": {
       "main": 25984736,
-      "vram": 14229504,
+      "vram": 14118912,
       "aram": 8388608
     }
   },
   "memory": {
     "main": {
       "peak": 25984736,
-      "nz_total": 9091782,
+      "nz_total": 9093490,
       "nz_above_cap": 798810,
       "dma_high_water": 25984736
     },
     "vram": {
-      "peak": 14229504,
-      "nz_total": 5641652,
-      "nz_above_cap": 3281430,
+      "peak": 14118912,
+      "nz_total": 5528453,
+      "nz_above_cap": 3174319,
       "regs_last": "isp_base=400000 isp_limit=510f00 ol_base=55c280 ol_limit=511000 fb_w_sof1=c00000 fb_w_sof2=c00000 fb_r_sof1=800000",
-      "content_total": 5047259,
+      "content_total": 4934060,
       "fb_bytes": 614400
     },
     "aram": {
       "peak": 2147400,
       "nz_above_cap": 47694,
-      "content_total": 2053563
+      "content_total": 2053564
     }
   },
   "streaming": {
@@ -77,7 +77,7 @@
     "total_bytes": 209528960,
     "unique_bytes": 54971872,
     "reread_ratio": 0.7376,
-    "steady_mb_per_min": 20.991,
+    "steady_mb_per_min": 21.0,
     "short_window": false,
     "pio_bytes": 2098688
   },
