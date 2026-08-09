@@ -6,7 +6,7 @@
 |---|---|
 | **Final score** | **90.5 (S)** |
 | Bottom line | Best-scoring title of the DC-ported ★ batch: under current keys every region fits with room to spare — main content 0.55× cap, FB-masked VRAM 0.46×, ARAM 0.64× — consistent with content authored to DC-shaped budgets (Ecole shipped the official DC port the same year); the residual porting cost is main's sparse layout, whose write-truth address peak still reaches 1.11× cap. |
-| Assessed | capture 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -22,14 +22,19 @@
 ## 3. Boot & run evidence
 
 Boots: yes · handoff at 20.0 s (`trigger = "pio"`) · run 600 s · rom: `naomi/chocomk.zip` (single clean zip leg)
-Attract/demo reached: **demo** — `shot-060s.png` and `shot-304s.png` are live attract
-gameplay with the デモプレイ/Demo banner; `shot-182s.png` and `shot-548s.png` are the
-"回転" (rotate) tutorial cards, also part of the demo loop. Sidecar
-`capture.coverage = "demo"`.
-Screenshots: `evidence/chocomk/shot-060s.png` · `evidence/chocomk/shot-182s.png` ·
-`evidence/chocomk/shot-304s.png` · `evidence/chocomk/shot-548s.png` (curated from 10;
-`shot-609s.png` caught the loop's blank transition frame and was dropped).
-Anomalies: none — clean single-leg GD run, no flake, no display blindness.
+Attract/demo reached: **demo** — `shot-060s.png`, `shot-121s.png`, and `shot-304s.png`
+show live attract gameplay with the explicit デモプレイ/"DEMO PLAY" banner (falling-block
+board states, score counting up to 1,076,549); `shot-548s.png` is the "回転" (rotate)
+tutorial card, also part of the demo loop; `shot-243s.png` is the title card between loop
+iterations. Sidecar `capture.coverage = "demo"`.
+Screenshots: `evidence/chocomk/shot-060s.png` · `shot-121s.png` · `shot-243s.png` ·
+`shot-304s.png` · `shot-548s.png` (curated from 10; `shot-182s.png`/`shot-365s.png`
+landed on the loop's blank transition frame this capture — sample timing shifted vs. the
+v8-keyed capture — and `shot-426s.png`/`shot-487s.png`/`shot-609s.png` were redundant
+title/demo repeats).
+Anomalies: none — clean single-leg GD run, no flake, no display blindness; two sampled
+frames (182s, 365s) landing on a black transition frame is a normal artifact of
+demo-loop sampling cadence, not a capture fault.
 
 ## 4. Memory fit (axis: 100.0)
 
@@ -48,7 +53,7 @@ as `gwing2`'s v6 re-run).
 ## 5. Cart streaming (axis: 76.5)
 
 DMA events 1,526 · total 46.5 MB · unique 16.5 MB · re-read ratio 0.6459 ·
-steady-state 3.705 MB/min (`short_window: false`) · PIO 1,574,212 B
+steady-state 3.699 MB/min (`short_window: false`) · PIO 1,574,212 B
 
 ## 6. Guts (axis: 95.0)
 
@@ -101,3 +106,4 @@ overlap is closer to full — checkpoint-worthy calibration observation.
 | v5 | 2026-08-06 | 52.5 (B) | Baseline capture (flycast `ebae3b513`): VRAM address high-water 13,496,860 (u 1.61 — framebuffers placed above the 8 MB line) bound memory at 25.6; FB-placement artifact filed as a §6 checkpoint calibration observation (kb §6) |
 | v8 | 2026-08-07 | 76.7 (A) | Re-capture catching up three §6 rulings at once: main write-truth (v6), ARAM content volume (v7), VRAM FB-masked content + 2×FB (v8 — chocomk was the wave's motivating case, spec `2026-08-07-vram-fb-masking-design.md`); write-truth main (u 1.105) became binding at 66.2 |
 | v9 | 2026-08-08 | 90.5 (S) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`); memory axis 100.0 |
+| v9 | 2026-08-09 | 90.5 S | ranking-groom chunk 1: fresh v9 capture, provenance v8→v9 (scoring keys unchanged) |
