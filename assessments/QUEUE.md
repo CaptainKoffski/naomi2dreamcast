@@ -50,7 +50,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `ggxx` — Guilty Gear XX (GDL-0011) | `ggxx` | Fighting | 250.2 MB | done |
 | `ggxxac` — Guilty Gear XX Accent Core (Japan) (GDL-0041) | `ggxxac` | Fighting | 255.1 MB | done |
 | `ggxxrl` — Guilty Gear XX #Reload (Japan, Rev A) (GDL-0019A) | `ggxxrl`, `ggxxrlo` | Fighting | 254.8 MB | pending |
-| `ggxxsla` — Guilty Gear XX Slash (Japan, Rev A) (GDL-0033A) | `ggxxsla` | Fighting | 249.6 MB | pending |
+| `ggxxsla` — Guilty Gear XX Slash (Japan, Rev A) (GDL-0033A) | `ggxxsla` | Fighting | 249.6 MB | done |
 | `mbaa` — Melty Blood Actress Again Version A (Japan, Rev A) | `mbaa` | Fighting | 233.9 MB | pending |
 | `meltyb` — Melty Blood Act Cadenza Version B2 (Japan) (GDL-0039A) | `meltyb`, `meltybo` | Fighting | 202.9 MB | pending |
 | `meltybld` — Melty Blood Act Cadenza Ver. A (Japan) (GDL-0028C) | `meltybld`, `meltyblo` | Fighting | 214.9 MB | pending |
