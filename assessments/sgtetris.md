@@ -6,7 +6,7 @@
 |---|---|
 | **Final score** | **67.6 (A)** |
 | Bottom line | Official 2000 DC port exists (assessed as reference/validation data): under content keying main RAM fits easily (0.438× cap) and ARAM fits (0.765×) — VRAM is the one genuinely over-cap region (FB-masked fit 1.196×, 8.8 MB of real non-FB content plus two framebuffers doesn't fit 8 MB), and it binds the memory axis at 49.8. |
-| Assessed | capture 2026-08-07 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Assessed | capture 2026-08-09 · battery v9 (verified re-run) · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -23,24 +23,28 @@
 
 Boots: yes · handoff at 20.0 s (`trigger = "pio"`) · run 600 s · rom: `naomi/sgtetris.zip`
 Attract/demo reached: **demo** — `shot-060s.png` (title, beach backdrop), `shot-121s.png`
-(how-to-play attract overlay with a live gameplay board, beach backdrop), `shot-365s.png`
+(how-to-play attract overlay with a live gameplay board, mesa/canyon backdrop), `shot-365s.png`
 (online RANKING table), `shot-487s.png` (how-to-play attract overlay, Shibuya-crossing
-backdrop), `shot-609s.png` (attract auto-play gameplay board, safari backdrop). The title
-screen and how-to-play overlay each rotate through multiple 3D backdrops across the 600 s
-window. (`capture.coverage` was `null` in the raw sidecar; set to `"demo"` at assessment —
+backdrop), `shot-609s.png` (attract logo/board transition, grassland backdrop with iguana). The
+title screen and how-to-play overlay each rotate through multiple 3D backdrops across the 600 s
+window. (`capture.coverage` was `null` in the raw v9 sidecar; set to `"demo"` at assessment —
 the curated shots show live gameplay boards and a ranking screen, not just an idle title loop.)
 Screenshots: `evidence/sgtetris/shot-060s.png` · `shot-121s.png` · `shot-365s.png` ·
 `shot-487s.png` · `shot-609s.png`
-Anomalies: none — kb §4.v's G1 blindness for this PIO-loading title is closed since
-battery v6 (see History).
+Anomalies: none blocking. Memory/streaming/guts counters reproduce v8 byte-identically
+except main RAM `nz_total` (7,350,605 → 7,350,612, +7 B — run-to-run noise, sub-score
+unaffected). Attract-loop backdrop at matching timestamps shifted from v8 (e.g. `shot-121s`
+now shows a canyon backdrop rather than beach) — expected non-determinism in emulated frame
+timing, not a regression. kb §4.v's G1 blindness for this PIO-loading title remains closed
+since battery v6 (see History).
 
 ## 4. Memory fit (axis: 49.8)
 
 | Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth content volume, `nz_total`) | 7,350,605 | 16,777,216 | 0.4381 | 100.0 | matches v7's 7,350,612 within run-to-run noise · address peak 29,130,560 (u 1.736, informational; nz_above_cap 3,289,898) · `dma_high_water` 0 — PIO-loaded, measured via snapshot+diff |
-| VRAM (FB-masked content + 2×FB: 8,800,955 + 2×614,400) | 10,029,755 | 8,388,608 | 1.196 | 49.8 | **binding region** — genuinely over cap: real non-FB content plus two 640×480×2 framebuffers doesn't fit 8 MB · raw address peak 16,279,552 (u 1.941, informational) |
-| ARAM (content volume, fill-excluded, `content_total`) | 1,604,876 | 2,097,152 | 0.7653 | 100.0 | reproduces bit-identically v7→v8 · address peak 8,257,552 (u 3.94 under pre-v7 keying) with only 8 B of content above the 2 MB line (raw nz above 2M 32,768 — the fill-exclusion doing real work); NOT the DMPD canary (that requires `nz_above_cap == 0x600000` exactly, kb §8/§4) |
+| Main RAM (write-truth content volume, `nz_total`) | 7,350,612 | 16,777,216 | 0.4381 | 100.0 | v8 was 7,350,605 (+7 B, run-to-run noise, u unchanged at displayed precision) · address peak 29,130,560 (u 1.736, informational; nz_above_cap 3,289,898 — byte-identical to v8) · `dma_high_water` 0 — PIO-loaded, measured via snapshot+diff |
+| VRAM (FB-masked content + 2×FB: 8,800,955 + 2×614,400) | 10,029,755 | 8,388,608 | 1.196 | 49.8 | **binding region**, byte-identical to v8 — genuinely over cap: real non-FB content plus two 640×480×2 framebuffers doesn't fit 8 MB · raw address peak 16,279,552 (u 1.941, informational, byte-identical to v8) |
+| ARAM (content volume, fill-excluded, `content_total`) | 1,604,876 | 2,097,152 | 0.7653 | 100.0 | reproduces bit-identically v7→v8→v9 · address peak 8,257,552 (u 3.94 under pre-v7 keying) with only 8 B of content above the 2 MB line (raw nz above 2M 32,768 — the fill-exclusion doing real work); NOT the DMPD canary (that requires `nz_above_cap == 0x600000` exactly, kb §8/§4) |
 
 Watermarks (informational, content-scan — stale-data prone): main 29,130,560 ·
 vram 16,279,552 · aram 8,388,608.
@@ -51,7 +55,7 @@ DMA events 0 · `pio_bytes` 27,167,524 B (~27 MB streamed via PIO over the 600 s
 a lower bound; the `CARTPIOCNT` counter is cumulative from the first PIO read, not gated
 by the handoff threshold) · 1,078 `CARTPIO offset=` pokes logged. The entire cart loads
 and streams by PIO — zero cart-DMA traffic the whole run (`steady_mb_per_min` 0.0,
-re-read 0.0, `short_window: false`).
+re-read 0.0, `short_window: false`). All streaming counters reproduce v8 byte-identically.
 
 ## 6. Guts (axis: 90.0)
 
@@ -98,3 +102,4 @@ Similarity inputs: developer no, SDK overlap partial, loader match no.
 | v7 | 2026-08-07 | 38.7 (C) | §6 checkpoint re-keyed G3-ARAM on content volume (1,604,876 B, u 0.765 — the most extreme address-vs-volume divergence on record, 8 B above cap at address-u 3.94) → un-parked; VRAM address high-water binding (12.4) — kb §6 item 5 |
 | v8 | 2026-08-07 | 47.4 (B) | VRAM re-keyed on FB-masked content + 2×FB (sub 12.4 → 49.8); main write-truth address peak became binding (20.5); main and ARAM reproduce bit-identically to v7 — spec `2026-08-07-vram-fb-masking-design.md` |
 | v9 | 2026-08-08 | 67.6 (A) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` 7,350,605 (u 0.438) instead of address peak (u 1.736); binding region moved back to VRAM — spec `2026-08-08-main-content-rekey-design.md` |
+| v9 | 2026-08-09 | 67.6 (A) | ranking-groom chunk 4: fresh v9 capture, provenance v8→v9 (scoring keys unchanged) — memory/streaming/guts reproduce v8 byte-identically except main `nz_total` +7 B (run-to-run noise) |

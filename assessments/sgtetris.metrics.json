@@ -4,10 +4,10 @@
   "maker": "Sega",
   "year": "1999",
   "format": "cart",
-  "assessed": "2026-08-07",
+  "assessed": "2026-08-09",
   "versions": {
     "flycast": "f014a410c",
-    "battery": "8",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -54,7 +54,7 @@
   "memory": {
     "main": {
       "peak": 29130560,
-      "nz_total": 7350605,
+      "nz_total": 7350612,
       "nz_above_cap": 3289898,
       "dma_high_water": 0
     },
