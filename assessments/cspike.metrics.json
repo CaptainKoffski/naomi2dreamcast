@@ -4,10 +4,10 @@
   "maker": "Psikyo / Capcom",
   "year": "2000",
   "format": "cart",
-  "assessed": "2026-08-07",
+  "assessed": "2026-08-09",
   "versions": {
-    "flycast": "65f9f7857",
-    "battery": "7",
+    "flycast": "f014a410c",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -54,7 +54,7 @@
   "memory": {
     "main": {
       "peak": 17948000,
-      "nz_total": 8435427,
+      "nz_total": 8435421,
       "nz_above_cap": 1142859,
       "dma_high_water": 17948000
     },
@@ -62,7 +62,9 @@
       "peak": 10516642,
       "nz_total": 3637559,
       "nz_above_cap": 1872598,
-      "regs_last": "isp_base=400000 isp_limit=5bc8a0 ol_base=650b80 ol_limit=5bc9a0 fb_w_sof1=66a000 fb_w_sof2=c00000 fb_r_sof1=26a000"
+      "regs_last": "isp_base=400000 isp_limit=5bc8a0 ol_base=650b80 ol_limit=5bc9a0 fb_w_sof1=66a000 fb_w_sof2=c00000 fb_r_sof1=26a000",
+      "content_total": 3257631,
+      "fb_bytes": 614400
     },
     "aram": {
       "peak": 8257552,
@@ -75,7 +77,7 @@
     "total_bytes": 132683520,
     "unique_bytes": 34476224,
     "reread_ratio": 0.7402,
-    "steady_mb_per_min": 12.99,
+    "steady_mb_per_min": 12.993,
     "short_window": false,
     "pio_bytes": 2281280
   },

@@ -5,8 +5,8 @@
 | | |
 |---|---|
 | **Final score** | **42.8 (B)** |
-| Bottom line | ARAM is the real problem: 3.65 MB of non-fill sound content (1.742× the DC's 2 MiB, with 1.65 MB genuinely above the cap) binds the memory axis at sub-score 20.3, and VRAM is 1.25× with 1.87 MB above cap — main content fits at 0.50× — but the official 2000 DC port is shipped proof the rework is possible and is the ready-made reference. |
-| Assessed | capture 2026-08-07 · battery v7 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Bottom line | ARAM is the real problem: 3.65 MB of non-fill sound content (1.742× the DC's 2 MiB, with 1.65 MB genuinely above the cap) binds the memory axis at sub-score 20.3 — main content fits at 0.50× and VRAM's FB-masked content now measured for real (3.26 MB content + 2×614 KB double-framebuffer budget = 4.49 MB, 0.535×) also fits comfortably, superseding the v7 address-peak fallback (1.254×, sub-score 39.9) — but the official 2000 DC port is shipped proof the rework is possible and is the ready-made reference. |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -33,8 +33,8 @@ Anomalies: none — DMA loader (main high-water live, unlike the gwing2/sgtetris
 
 | Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
-| Main RAM (write-truth content volume, `nz_total`) | 8,435,427 | 16,777,216 | 0.5028 | 100.0 | address peak 17,948,000 (u 1.070) · 1,142,859 nonzero above cap · `dma_high_water` 17,948,000 (= peak — DMA loader) |
-| VRAM (write-truth peak, post-handoff) | 10,516,642 | 8,388,608 | 1.254 | 39.9 | nz_total 3,637,559 · 1,872,598 above cap |
+| Main RAM (write-truth content volume, `nz_total`) | 8,435,421 | 16,777,216 | 0.5028 | 100.0 | address peak 17,948,000 (u 1.070) · 1,142,859 nonzero above cap · `dma_high_water` 17,948,000 (= peak — DMA loader) |
+| VRAM (FB-masked content volume + 2×framebuffer, `content_total` + 2×`fb_bytes`) | 4,486,431 | 8,388,608 | 0.535 | 100.0 | content_total 3,257,631 · fb_bytes 614,400 (double-buffered → 1,228,800) — v8 real measurement, replaces the v7 address-peak fallback (peak 10,516,642, u 1.254, sub-score 39.9); raw write-truth peak still 10,516,642 (nz_total 3,637,559 · 1,872,598 above cap, informational) |
 | ARAM (content volume, fill-excluded, `content_total`) | 3,654,043 | 2,097,152 | 1.742 | 20.3 | address peak 8,257,552 (u 3.94, the pre-v7 gated keying) · 1,649,859 content above cap — **binding region** |
 
 Watermarks (informational, content-scan — stale-data prone): main 17,948,000 ·
@@ -43,7 +43,7 @@ vram 10,516,642 · aram 8,388,608 (boot-time fill, not content).
 ## 5. Cart streaming (axis: 64.9)
 
 DMA events 152 · total 132.7 MB · unique 34.5 MB · re-read ratio 0.7402 ·
-steady-state 12.99 MB/min (`short_window: false`) · PIO 2,281,280 B
+steady-state 12.993 MB/min (`short_window: false`) · PIO 2,281,280 B
 
 ## 6. Guts (axis: 85.0)
 
@@ -78,10 +78,15 @@ Similarity inputs: developer no, SDK overlap partial, loader match no.
 - What would raise the score: the azumanga playbook — ARAM bank-structure dump
   (`FLYCAST_ARAMDUMP` + `tools/assess/parse_osb.py`) to check whether the above-cap
   content is position-independent OSB banks + streamable BGM; plus the official DC
-  port as an audio-budget reference (Capcom fit it in 2 MiB in 2000).
-- VRAM 1.254× with 1.87 MB above cap needs texture reduction; main content fits but
-  the address peak (17,948,000 B, u 1.070, 1.14 MB nonzero above cap) needs
-  layout/relocation attention.
+  port as an audio-budget reference (Capcom fit it in 2 MiB in 2000). ARAM is now
+  the *only* memory region needing rework — VRAM and main both fit comfortably
+  under the real (content-keyed) measurements.
+- VRAM no longer needs texture reduction: the v8 FB-mask fields (`content_total`
+  3,257,631 + 2×`fb_bytes` 614,400) show the real fit at 0.535×, sub-score 100.0 —
+  the v7 doc's 1.254×/39.9 was the address-peak fallback, now superseded. Main
+  content fits at 0.503× (`nz_total`); its raw address peak (17,948,000 B, u 1.070,
+  1.14 MB nonzero above cap) still flags layout/relocation attention but doesn't
+  score — content volume does.
 
 ## 10. History
 
@@ -90,3 +95,4 @@ Similarity inputs: developer no, SDK overlap partial, loader match no.
 | v5 | 2026-08-06 | PARKED G3-ARAM | ARAM address-keyed peak 8,257,552 (u 3.94) gated before axes (flycast `ebae3b513`) |
 | v7 | 2026-08-07 | 42.8 (B) | Un-parked: ARAM re-keyed on content volume (kb §6 checkpoint) — 3,654,043 B (u 1.742) scores instead of gating and binds memory at 20.3 |
 | v9 | 2026-08-08 | 42.8 (B) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`) — 8,435,427 (u 0.503) replaces the address peak; final unchanged, ARAM still binds |
+| v9 | 2026-08-09 | 42.8 (B) | ranking-groom chunk 5: fresh v9 capture (was v7) — VRAM FB-mask fields measured for real (content_total 3,257,631 + 2×fb_bytes 614,400 → u 0.535, sub-score 100.0, was fallback address-peak u 1.254/39.9); every other raw counter reproduced within noise (main nz_total ±6 B, streaming bandwidth +0.003 MB/min); ARAM still binds memory at 20.3, final unchanged 42.8 (B) |
