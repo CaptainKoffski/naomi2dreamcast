@@ -5,8 +5,8 @@
 | | |
 |---|---|
 | **Final score** | **34.3 (C)** |
-| Bottom line | ARAM binds: content volume 4,115,639 B (u 1.962) sits just under the u>2.0 gate — sub-score 11.5, floor-adjacent, a genuine borderline result — while main content (0.42×) fits and VRAM (peak-keyed, u 1.218) carries 1.44 MB above cap; the official 2001 DC port is shipped proof the audio can be re-authored to fit, and the ready-made reference for what that rework looks like. |
-| Assessed | capture 2026-08-07 · battery v7 · flycast `65f9f7857` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Bottom line | ARAM binds: content volume 4,115,639 B (u 1.962) sits just under the u>2.0 gate — sub-score 11.5, floor-adjacent, a genuine borderline result — while main content (0.42×) fits and VRAM, now measured directly (content_total + 2×fb_bytes, u 0.472) instead of falling back to the raw address peak, fits comfortably too; the official 2001 DC port is shipped proof the audio can be re-authored to fit, and the ready-made reference for what that rework looks like. |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -22,10 +22,15 @@
 ## 3. Boot & run evidence
 
 Boots: yes · handoff at 20.0 s (`trigger=pio`) · run 600 s · rom: `naomi/zerogu2.zip` (single clean zip leg)
-Attract/demo reached: **demo** — `shot-060s.png` / `shot-609s.png` show the attract
-gameplay demo (helicopter vs. stealth-bomber boss, PRESS START overlay), `shot-304s.png`
-the title screen. Sidecar `capture.coverage = "demo"`.
-Screenshots: `evidence/zerogu2/shot-060s.png` · `evidence/zerogu2/shot-304s.png` · `evidence/zerogu2/shot-609s.png` (curated from 10)
+Attract/demo reached: **demo** — `shot-060s.png` shows the opening attract cutscene
+(helicopter vs. flying-wing bomber, PRESS START overlay), `shot-182s.png` the RANKING
+high-score cycle, `shot-243s.png` in-game HUD during the scripted attract playthrough
+(score/weapon icons, enemies, PRESS START overlay), `shot-304s.png` the title screen
+("ZERO GUNNER 2"), `shot-609s.png` a later attract cutscene near the end of the 600 s
+capture. Sidecar `capture.coverage = "demo"` (set this pass — battery wrote `null`).
+Screenshots: `evidence/zerogu2/shot-060s.png` · `evidence/zerogu2/shot-182s.png` ·
+`evidence/zerogu2/shot-243s.png` · `evidence/zerogu2/shot-304s.png` ·
+`evidence/zerogu2/shot-609s.png` (curated from 10)
 Anomalies: none — no flake, no display blindness.
 
 ## 4. Memory fit (axis: 11.5)
@@ -33,7 +38,7 @@ Anomalies: none — no flake, no display blindness.
 | Region | Scored value | DC cap | u | Sub-score | Evidence / note |
 |---|---|---|---|---|---|
 | Main RAM (write-truth content volume, `nz_total`) | 7,071,568 | 16,777,216 | 0.4215 | 100.0 | address peak 15,859,776 (u 0.9453 — fits even address-keyed) · `nz_above_cap` 0 · `dma_high_water` 12,582,912 (the old v5 scoring input, informational) |
-| VRAM (write-truth peak — pre-v8 sidecar, no `content_total`) | 10,217,733 | 8,388,608 | 1.218 | 45.8 | nz_total 3,137,828 · `nz_above_cap` 1,441,076 of real above-cap content · peak bit-identical to v5 |
+| VRAM (FB-masked content fit, `content_total + 2×fb_bytes`) | 3,954,850 | 8,388,608 | 0.4715 | 100.0 | `content_total` 2,726,050 + 2×`fb_bytes` 614,400 (dual-framebuffer budget) — **now measured**, not the v7 fallback; fits comfortably · nz_total 3,137,828 · `nz_above_cap` 1,441,076 (informational, address-keyed relic — textures are TA-relative per the v8 ruling, so position doesn't matter) · raw address peak 10,217,733 (u 1.218 — the v7 fallback that under-scored this region 45.8) |
 | ARAM (content volume, fill-excluded, `content_total`) | 4,115,639 | 2,097,152 | 1.962 | 11.5 | **binding region**, floor-adjacent, just under the u>2.0 gate · address peak 8,257,552 (u 3.94 — the pre-v7 keying that gated the title) · `nz_above_cap` 2,130,349 either way |
 
 Watermarks (informational, content-scan — stale-data prone): main 15,859,776 ·
@@ -83,8 +88,12 @@ Similarity inputs: developer match no, SDK overlap partial, cart loader match no
   BGM. Decisive shortcut available here that azumanga lacks: **diff against the official
   DC port's audio** — Psikyo already solved the 2 MiB fit in 2001; matching sample banks
   would turn the rework from research into transcription.
-- VRAM carries 1,441,076 B of real above-cap content (u 1.218) — a texture trim the
-  official DC port also demonstrably made.
+- VRAM is no longer a concern: v9's fresh capture carries the `content_total`/`fb_bytes`
+  fields v7 lacked, so scoring now measures the FB-masked fit (u 0.472, sub-score 100.0)
+  instead of falling back to the raw address peak (u 1.218, which had under-scored this
+  region 45.8 in v7). The address-keyed `nz_above_cap` (1,441,076 B) is a relic of that
+  old keying, not a live risk — textures are TA-relative (v8 ruling), so placement doesn't
+  matter, only content volume does, and that volume fits.
 - Main-RAM write-truth includes CPU writes (v6+ metric, first measured here at v7);
   `dma_high_water` is informational-only.
 
@@ -95,3 +104,4 @@ Similarity inputs: developer match no, SDK overlap partial, cart loader match no
 | v5 | 2026-08-06 | PARKED G3-ARAM | ARAM address peak 8,257,552 B (u 3.94) tripped the memory gate under address keying; capture itself clean (flycast `ebae3b513`, coverage demo) — kb §6 |
 | v7 | 2026-08-07 | 34.3 (C) | Un-parked: ARAM re-keyed on content volume (u 1.962, just under the u>2.0 gate); main write-truth measured for the first time (title skipped v6) — spec `2026-08-07-aram-gate-volume-design.md`, kb §6 |
 | v9 | 2026-08-08 | 34.3 (C) | Scoring-only re-key (no re-capture): main keyed on content volume `nz_total` 7,071,568 B (u 0.421) — ARAM still binding, final unchanged — spec `2026-08-08-main-content-rekey-design.md` |
+| v9 | 2026-08-09 | 34.3 (C) | ranking-groom chunk 5: fresh v9 capture (was v7) — VRAM sub-score moved from the v7 address-peak fallback (u 1.218, 45.8) to the measured FB-masked fit (`content_total` + 2×`fb_bytes`, u 0.472, 100.0); every shared raw counter (main/ARAM/streaming/PIO/handoff) reproduced byte-identical to v7; ARAM still binds (u 1.962), final unchanged |

@@ -4,10 +4,10 @@
   "maker": "Psikyo",
   "year": "2001",
   "format": "cart",
-  "assessed": "2026-08-07",
+  "assessed": "2026-08-09",
   "versions": {
-    "flycast": "65f9f7857",
-    "battery": "7",
+    "flycast": "f014a410c",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -62,7 +62,9 @@
       "peak": 10217733,
       "nz_total": 3137828,
       "nz_above_cap": 1441076,
-      "regs_last": "isp_base=0 isp_limit=1bc8a0 ol_base=250b80 ol_limit=1bc9a0 fb_w_sof1=26a000 fb_w_sof2=c00000 fb_r_sof1=66a000"
+      "regs_last": "isp_base=0 isp_limit=1bc8a0 ol_base=250b80 ol_limit=1bc9a0 fb_w_sof1=26a000 fb_w_sof2=c00000 fb_r_sof1=66a000",
+      "content_total": 2726050,
+      "fb_bytes": 614400
     },
     "aram": {
       "peak": 8257552,
