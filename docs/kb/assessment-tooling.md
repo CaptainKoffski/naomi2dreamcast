@@ -845,6 +845,40 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
      common floor, not each title's exact firmware share — but any per-title
      excess is charged against that title, again the safe direction.
 
+9. **Checkpoint re-run at 32 assessed families, all-fresh v9 capture provenance
+   (2026-08-10) — no semantics changes.** The ranking-groom campaign (2026-08-09/10)
+   replaced every scoring fallback with a measurement (25 scored rows re-captured, plus
+   the three runnable G3 parks takoron/inunoos/pokasuka), so the open items were
+   re-checked against final, fallback-free distributions:
+   - **Item 1 (ARAM 2× multiple) — re-affirmed intact.** The scored/parked band is
+     still empty: max scored volume-u 1.962 (zerogu2 — ARAM content byte-identical
+     across v7→v9 captures, so no drift risk at the line), min parked 2.997 (takoron).
+     Any threshold in (1.962, 2.997) changes no title's fate. Cautionary detail:
+     takoron drifted across 3.0 (3.020 → 2.997, −0.77%) and inunoos +1.89% between
+     captures — a gate placed at a measured point would be capture-noise-fragile;
+     the wide-gap placement is the robust one. The groom also showed main and VRAM
+     clear their caps on all three parked titles — ARAM is the sole blocker, which is
+     exactly what the G3 park label communicates.
+   - **Item 2 (streaming re-read penalty) — re-affirmed intact.** Across the 27
+     DMA-active v9 sidecars, Pearson r(reread_ratio, unique_bytes) = **+0.002** — no
+     working-set-size correlation at all; the cache-forgiveness candidate fix has no
+     supporting signal. The ratio range widened downward vs the 30-family reading
+     (0.343–0.842; senkosp at 0.343 already scores streaming 87.9) — the penalty
+     behaves as a mild near-constant offset, as ruled.
+   - **Item 4 (controls band for proven pad ports) — still deferred.** The scored
+     cohort remains stick-dominated; gunsur2 is still the only `pad_adaptable`. The
+     pending fighter (10 families) and light-gun (5) cohorts populate the bands
+     before this is decidable — re-check after they land.
+   - **`backlog-aram-p16-discount.md` — stays parked.** Evidence bar still unmet:
+     `parse_osb.py`-verified `.p16` share exists for one title (azumanga); ≥3 required.
+   - Gate-line safety margin confirmed everywhere: max main content-u 1.025
+     (azumanga), max VRAM fit-u 1.258 (azumanga), max scored ARAM-u 1.962 (zerogu2,
+     deterministic). Item 8's firmware-bound caveat (≤0.16 inflation) holds with
+     margin on every title.
+
+   Next checkpoint trigger: after the fighter/light-gun cohort is assessed (item 4's
+   evidence), not a family count.
+
 Rankings stay internally fair meanwhile — every game is measured by the same rules — but
 absolute scores near tier boundaries should be read with these two caveats in mind.
 
