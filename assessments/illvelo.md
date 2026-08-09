@@ -6,7 +6,7 @@
 |---|---|
 | **Final score** | **79.8 (A)** |
 | Bottom line | Milestone vertical shmup whose content fits DC budgets everywhere under current keying (main content 0.49× cap, VRAM fit 0.67×, ARAM 0.36×) — held below S only by the campaign's heaviest streaming — with in-family DC portability proven by Milestone's own Radirgy/Karous Dreamcast ports. |
-| Assessed | capture 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Assessed | capture 2026-08-09 · battery v9 (fresh re-capture) · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — provenance v8→v9, scoring keys unchanged (see History) |
 
 ## 2. Identity
 
@@ -22,9 +22,9 @@
 ## 3. Boot & run evidence
 
 Boots: yes · handoff at 20.0 s (`trigger = "pio"`) · run 600 s · rom: `naomi/illvelo.zip`
-Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"`; full attract cycle observed (story text card, MADOWS "98se" ranking-window fake-desktop, live ILLMATIC ENVELOPE gameplay, MILESTONE INC. logo).
-Screenshots: `evidence/illvelo/shot-060s.png` · `shot-121s.png` · `shot-304s.png` · `shot-548s.png` · `shot-609s.png` (black story-text card, MADOWS ranking-window desktop, live gameplay ×2, MILESTONE INC. logo card)
-Anomalies: none — single clean leg.
+Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"`; full attract cycle observed across all 10 shots (interstitial test card, title logo, MADOWS "98se" fake-desktop loading + ranking windows, in-fiction character-dialogue overlay, live ILLMATIC ENVELOPE gameplay, MILESTONE INC. logo, "DEMONSTRATION"-watermarked gameplay).
+Screenshots: `evidence/illvelo/shot-060s.png` (black interstitial card, "適正を見るためのテスト" / "a test to check aptitude") · `shot-121s.png` (title logo, EXTEND SCORE card, ©2008 Milestone Inc.) · `shot-304s.png` (live gameplay, score 000000009417370) · `shot-548s.png` (MILESTONE INC. logo card) · `shot-609s.png` (live gameplay, "DEMONSTRATION" overlay, score reset to 000000000001900)
+Anomalies: **fresh v9 capture is a genuine re-run of the battery** (not a rescore of v8 bytes) — provenance v8→v9. Memory content is bit-exact reproduction: main `nz_total` 8,294,066, main peak 32,505,920, VRAM `content_total` 4,390,214, ARAM `content_total` 762,858 all unchanged from the v8 capture — strong evidence the memory-content capture path is deterministic. Streaming counters shifted by exactly one boundary DMA transfer: `dma_events` 3,243 (v8: 3,244, −1), `total_bytes` 163,213,312 (v8: 163,295,232, −81,920 B), `unique_bytes` 37,226,496 (v8: 37,308,416, −81,920 B — the same delta, i.e. one dropped 81,920 B transfer, not a new unique region), `reread_ratio` 0.7719 (v8: 0.7715), `steady_mb_per_min` 16.057 (v8: 16.063); `pio_bytes` unchanged at 2,099,776. This small real-time drift also shows up in the screenshots: at the same nominal offsets the attract-cycle content lands differently than in v8 (e.g. the MILESTONE INC. logo now falls at 548 s vs 609 s previously) — cosmetic capture-window jitter, not a functional or content difference.
 
 ## 4. Memory fit (axis: 100.0)
 
@@ -39,8 +39,8 @@ vram 14,172,160 · aram 8,388,608 (the boot-time "DMPD" fill, not content).
 
 ## 5. Cart streaming (axis: 60.1)
 
-DMA events 3,244 · total 163.3 MB · unique 37.3 MB · re-read ratio 0.7715 ·
-steady-state 16.063 MB/min (`short_window: false`) · PIO 2,099,776 B
+DMA events 3,243 · total 163.2 MB · unique 37.2 MB · re-read ratio 0.7719 ·
+steady-state 16.057 MB/min (`short_window: false`) · PIO 2,099,776 B
 
 ## 6. Guts (axis: 85.0)
 
@@ -103,3 +103,4 @@ pedigree), SDK overlap partial, loader match no.
 | v4 | 2026-08-04 | 43.9 (B) | Unparked by the v4 fill-excluded ARAM content metric (kb §7); 2026-08-06 `carve_boot.py` bit-30 fix unlocked M4 guts (85.0) + similarity (40.0) via `rescore_static.py` (kb §4.q) |
 | v8 | 2026-08-08 | 34.7 (C) | Re-capture. VRAM re-keyed to FB-masked content + 2×FB → sub 100.0 (spec `2026-08-07-vram-fb-masking-design.md`); main write-truth first measured — address peak 32,505,920 `0x1F00040`, first cart instance of the kb §6 item 3 signature, sub 12.5 binding |
 | v9 | 2026-08-08 | 79.8 (A) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`); memory 100.0, tightest region moved to VRAM |
+| v9 | 2026-08-09 | 79.8 A | ranking-groom chunk 3: fresh v9 capture, provenance v8→v9 (scoring keys unchanged); memory content bit-exact reproduction, streaming off by one boundary DMA transfer (3,243 vs 3,244 events, −81,920 B) |

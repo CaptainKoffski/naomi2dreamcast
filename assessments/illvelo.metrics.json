@@ -4,10 +4,10 @@
   "maker": "Milestone",
   "year": "2008",
   "format": "cart",
-  "assessed": "2026-08-08",
+  "assessed": "2026-08-09",
   "versions": {
     "flycast": "f014a410c",
-    "battery": "8",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -73,11 +73,11 @@
     }
   },
   "streaming": {
-    "dma_events": 3244,
-    "total_bytes": 163295232,
-    "unique_bytes": 37308416,
-    "reread_ratio": 0.7715,
-    "steady_mb_per_min": 16.063,
+    "dma_events": 3243,
+    "total_bytes": 163213312,
+    "unique_bytes": 37226496,
+    "reread_ratio": 0.7719,
+    "steady_mb_per_min": 16.057,
     "short_window": false,
     "pio_bytes": 2099776
   },
