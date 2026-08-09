@@ -6,7 +6,7 @@
 |---|---|
 | **Final score** | **76.7 (A)** |
 | Bottom line | Comedic curtain-fire shmup whose memory fits under content keying — VRAM is the binding region at 0.998× cap (FB-masked content plus a verified 24bpp 640×478 double framebuffer) — and portability is proven twice over: G.Rev's own Under Defeat Naomi→DC self-port and this exact game's pad-native X360/PS3 ports. |
-| Assessed | capture 2026-08-08 · battery v8 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — scored under battery v9 keying (scoring-only re-score 2026-08-08, see History) |
+| Assessed | capture 2026-08-09 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
 
 ## 2. Identity
 
@@ -21,16 +21,22 @@
 
 ## 3. Boot & run evidence
 
-Boots: yes · handoff at 20.0 s (`trigger = "pio"`) · run 600 s (leg 2 of 2 — leg 1 hit
-an `emulator-exited` flake, a known operational class kb §7; the battery's automatic
-retry ran the full window cleanly) · rom: `naomi/mamonoro.zip`
+Boots: yes · handoff at 20.0 s (`trigger = "pio"`) · run 600 s · rom:
+`naomi/mamonoro.zip`
 Attract/demo reached: **demo** — sidecar `capture.coverage = "demo"`; attract cycle:
-manga story card → title over a 3D shrine island → live attract gameplay with LIFE
-hearts + NOROI (curse) gauge HUD → character panels → ranking table.
+manga story card → title card over live gameplay footage with LIFE hearts + NOROI
+(curse) gauge HUD → Beniko ranking table → night-stage gameplay with HUD →
+character panel.
 Screenshots: `evidence/mamonoro/shot-121s.png` · `shot-182s.png` · `shot-243s.png` ·
-`shot-426s.png` · `shot-548s.png` (manga story card, title over shrine island, Beniko
-ranking table, night-stage gameplay with HUD, character panel)
-Anomalies: the leg-1 flake only.
+`shot-426s.png` · `shot-548s.png` (manga story card, title over gameplay footage,
+Beniko ranking table, night-stage gameplay with HUD, character panel)
+Anomalies: none numerically — every scored counter (memory/streaming/guts/controls/
+similarity, `scores.final` 76.7 A) reproduced byte-identical between the v8 sidecar
+and this fresh v9 capture; only `assessed` and `versions.battery` differ. Per-frame
+demo content at matching timestamps drifted slightly from v8 (`shot-182s.png` now
+shows the title card over a grass-stage gameplay loop rather than the shrine-island
+backdrop cited in v8) — expected, since attract-mode timing isn't frame-locked
+across separate runs, and it doesn't change the coverage classification.
 
 ## 4. Memory fit (axis: 85.2)
 
@@ -102,3 +108,4 @@ note as `illvelo`/`senko`), SDK overlap partial, loader match no.
 | v4 | 2026-08-04 | 46.6 (B) | Unparked by the v4 fill-excluded ARAM content metric (kb §7); attract demo renders; 2026-08-06 `carve_boot.py` bit-30 fix unlocked M4 guts (85.0) + similarity (40.0) via `rescore_static.py` (kb §4.q) |
 | v8 | 2026-08-08 | 47.8 (B) | Re-capture (leg 2 after an `emulator-exited` flake, kb §7). VRAM re-keyed to FB-masked content + 2×FB with `fb_bytes` 917,760 verified genuine (spec `2026-08-07-vram-fb-masking-design.md`); main write-truth 26,807,247 binding at sub 26.1 |
 | v9 | 2026-08-08 | 76.7 (A) | Scoring-only re-key (no re-capture): main scored on content volume `nz_total` (spec `2026-08-08-main-content-rekey-design.md`); memory 85.2, binding region moved to VRAM |
+| v9 | 2026-08-09 | 76.7 A | ranking-groom chunk 3: fresh v9 capture, provenance v8→v9 (scoring keys unchanged) |
