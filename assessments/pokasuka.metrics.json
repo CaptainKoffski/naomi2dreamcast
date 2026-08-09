@@ -4,10 +4,10 @@
   "maker": "Sega",
   "year": "2007",
   "format": "cart",
-  "assessed": "2026-08-07",
+  "assessed": "2026-08-10",
   "versions": {
-    "flycast": "65f9f7857",
-    "battery": "7",
+    "flycast": "f014a410c",
+    "battery": "9",
     "ghidra": "12.1.2_PUBLIC",
     "mame_src": "59e7c0b"
   },
@@ -62,20 +62,22 @@
       "peak": 10465280,
       "nz_total": 3626053,
       "nz_above_cap": 1866630,
-      "regs_last": "isp_base=0 isp_limit=173960 ol_base=20b980 ol_limit=173a60 fb_w_sof1=61f000 fb_w_sof2=c00000 fb_r_sof1=21f000"
+      "regs_last": "isp_base=0 isp_limit=173960 ol_base=20b980 ol_limit=173a60 fb_w_sof1=61f000 fb_w_sof2=c00000 fb_r_sof1=21f000",
+      "content_total": 2871312,
+      "fb_bytes": 917760
     },
     "aram": {
       "peak": 8339264,
       "nz_above_cap": 5068306,
-      "content_total": 7064300
+      "content_total": 7064212
     }
   },
   "streaming": {
-    "dma_events": 11140,
-    "total_bytes": 139786368,
+    "dma_events": 11104,
+    "total_bytes": 139491456,
     "unique_bytes": 36576864,
-    "reread_ratio": 0.7383,
-    "steady_mb_per_min": 12.183,
+    "reread_ratio": 0.7378,
+    "steady_mb_per_min": 12.15,
     "short_window": false,
     "pio_bytes": 3149632
   },
