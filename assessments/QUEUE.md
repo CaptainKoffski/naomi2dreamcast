@@ -61,7 +61,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `mazan` — Mazan: Flash of the Blade (World, MAZ2 Ver.A) | `mazan` | Light-gun | 73.7 MB | parked |
 | `mok` — The Maze of the Kings (GDS-0022) | `mok` | Light-gun | 140.0 MB | parked |
 | `ninjaslt` — Ninja Assault (World, NJA2 Ver.A) | `ninjaslt` | Light-gun | 81.2 MB | parked |
-| `sl2007` — Shooting Love 2007 (Japan) | `sl2007` | Light-gun | 109.3 MB | pending |
+| `sl2007` — Shooting Love 2007 (Japan) | `sl2007` | Light-gun | 109.3 MB | done |
 | `crackndj` — Crackin' DJ | `crackndj` | Rhythm | 108.0 MB | pending |
 | `crakndj2` — Crackin' DJ Part 2 (Japan) | `crakndj2` | Rhythm | 105.5 MB | pending |
 | `jingystm` — Jingi Storm - The Arcade (Japan) (GDL-0037) | `jingystm` | Rhythm | 141.4 MB | pending |
