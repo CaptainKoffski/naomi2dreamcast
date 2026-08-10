@@ -107,3 +107,4 @@ reproduction re-run will settle.
 | Battery | Date | Final | What changed |
 |---|---|---|---|
 | v9 | 2026-08-10 | PARKED G3 memory: aram content > 2x DC capacity | initial assessment — fighter cohort, fresh v9 capture; u 2.033 = first in-band park, 3.3% over the line (checkpoint-flagged) |
+| v9 | 2026-08-10 | PARKED (reproduction run) | same-day stability re-run for the near-gate park: ARAM `content_total` 4,267,829 B (u 2.0351) vs first capture's 4,262,853 B (u 2.0327) — +0.117%, far inside the ±1.9% drift envelope that would have straddled the 2.0 line. The in-band park is measurement-stable: toyfight is a genuine, reproducible 2.03× ARAM case for the next §6 checkpoint, not capture noise |

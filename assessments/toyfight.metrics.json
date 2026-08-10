@@ -47,37 +47,37 @@
     "coverage": "demo",
     "watermarks_info": {
       "main": 33554412,
-      "vram": 14639104,
+      "vram": 14478894,
       "aram": 8388608
     }
   },
   "memory": {
     "main": {
       "peak": 33554412,
-      "nz_total": 7121855,
-      "nz_above_cap": 5491198,
+      "nz_total": 7304101,
+      "nz_above_cap": 5661443,
       "dma_high_water": 30694656
     },
     "vram": {
-      "peak": 14639104,
-      "nz_total": 6628160,
-      "nz_above_cap": 3960911,
+      "peak": 14478894,
+      "nz_total": 6921987,
+      "nz_above_cap": 3807061,
       "regs_last": "isp_base=400000 isp_limit=50f700 ol_base=553700 ol_limit=50f800 fb_w_sof1=c00000 fb_w_sof2=c00000 fb_r_sof1=800000",
-      "content_total": 6041148,
+      "content_total": 6317573,
       "fb_bytes": 614400
     },
     "aram": {
       "peak": 8257552,
-      "nz_above_cap": 2267732,
-      "content_total": 4262853
+      "nz_above_cap": 2272548,
+      "content_total": 4267829
     }
   },
   "streaming": {
     "dma_events": 260,
-    "total_bytes": 112657664,
-    "unique_bytes": 41521152,
-    "reread_ratio": 0.6314,
-    "steady_mb_per_min": 10.464,
+    "total_bytes": 115332096,
+    "unique_bytes": 47757312,
+    "reread_ratio": 0.5859,
+    "steady_mb_per_min": 10.783,
     "short_window": false,
     "pio_bytes": 1078648
   },
