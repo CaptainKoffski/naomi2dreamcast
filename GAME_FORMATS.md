@@ -167,7 +167,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Ring Out 4x4 (Rev A) | `ringout` | **cart** | parent | 39.0 MB | ? | No | not assessed |
 | Samba de Amigo ver. 2000 (Japan) | `samba2k` | **cart** | parent | 159.5 MB | Rhythm | Yes (2000) | not assessed |
 | Sega Marine Fishing | `smarinef` | **cart** | parent | 35.6 MB | Fishing ⚠ | Yes (2000) | not assessed |
-| Sega Strike Fighter (Rev A) | `sstrkfgt` | **cart** | parent | 75.9 MB | Fighting | No | not assessed |
+| Sega Strike Fighter (Rev A) | `sstrkfgt` | **cart** | parent | 75.9 MB | Fighting | No | parked G3 · [notes](assessments/sstrkfgt.md) |
 | Sega Tetris | `sgtetris` | **cart** | parent | 33.7 MB | Puzzle ★ | Yes (2000) | **67.6** A · [assessment](assessments/sgtetris.md) |
 | Shin Nihon Pro Wrestling Toukon Retsuden 4 Arcade Edition (Japan, TRF1 Ver.A) | `toukon4` | **cart** | parent | 217.0 MB | Fighting | Yes (1999) | not assessed |
 | Shooting Love 2007 (Japan) | `sl2007` | **cart** | parent | 109.3 MB | Light-gun | No | not assessed |
