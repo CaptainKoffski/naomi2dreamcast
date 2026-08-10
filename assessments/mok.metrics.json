@@ -1,0 +1,203 @@
+{
+  "set": "mok",
+  "title": "The Maze of the Kings (GDS-0022)",
+  "maker": "Sega",
+  "year": "2002",
+  "format": "GD-ROM",
+  "assessed": "2026-08-10",
+  "versions": {
+    "flycast": "f014a410c",
+    "battery": "9",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/mok.zip"
+  },
+  "boot": {
+    "ok": true,
+    "failure_class": null,
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 20.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
+    },
+    "screenshots": [
+      "assessments/evidence/mok/shot-060s.png",
+      "assessments/evidence/mok/shot-121s.png",
+      "assessments/evidence/mok/shot-182s.png",
+      "assessments/evidence/mok/shot-243s.png",
+      "assessments/evidence/mok/shot-304s.png",
+      "assessments/evidence/mok/shot-365s.png",
+      "assessments/evidence/mok/shot-426s.png",
+      "assessments/evidence/mok/shot-487s.png",
+      "assessments/evidence/mok/shot-548s.png",
+      "assessments/evidence/mok/shot-609s.png"
+    ],
+    "coverage": "demo",
+    "watermarks_info": {
+      "main": 32706376,
+      "vram": 14382857,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "peak": 32706376,
+      "nz_total": 15639228,
+      "nz_above_cap": 12894723,
+      "dma_high_water": 27615776
+    },
+    "vram": {
+      "peak": 14382857,
+      "nz_total": 7480446,
+      "nz_above_cap": 5276014,
+      "regs_last": "isp_base=400000 isp_limit=4f24c0 ol_base=543100 ol_limit=4f25c0 fb_w_sof1=15a000 fb_w_sof2=c00000 fb_r_sof1=55a000",
+      "content_total": 6339569,
+      "fb_bytes": 614400
+    },
+    "aram": {
+      "peak": 8323024,
+      "nz_above_cap": 5531121,
+      "content_total": 7461993
+    }
+  },
+  "streaming": {
+    "dma_events": 371,
+    "total_bytes": 49501088,
+    "unique_bytes": 26737536,
+    "reread_ratio": 0.4599,
+    "steady_mb_per_min": 3.606,
+    "short_window": false,
+    "pio_bytes": 31190656
+  },
+  "guts": {
+    "code_bytes": 792320,
+    "functions": 1461,
+    "mmio_refs": {
+      "rtc": 2,
+      "g2ext": 130,
+      "scif": 1
+    },
+    "bios_refs": {},
+    "dat_available": true,
+    "carve_meta": {
+      "base": "0x0c020000",
+      "entry": "0x0c020000",
+      "size": 792320,
+      "entries": [
+        [
+          839200,
+          201457664,
+          792320
+        ]
+      ],
+      "hdr_at": 0,
+      "title": "THE MAZE OF THE KINGS"
+    },
+    "flags": [
+      "eeprom_bios",
+      "serial",
+      "rtc"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": [
+      "MAIN BD ID %s",
+      "ROM  BD ID %s",
+      "AUSTRALIAN VERSION",
+      "NOW LOADING TEST (31K)",
+      "NOW LOADING GAME (31K)",
+      "NOW LOADING TEST (15K)",
+      "NOW LOADING GAME (15K)",
+      "WARNNING !!",
+      "THIS BOOT ROM IS NOT A REGULAR ROM.",
+      "I/O BD IS NOT CONNECTED TO NAOMI BD.",
+      "INFO [ %d / %d ]",
+      "I/O BOARD SPECIFICATION",
+      "~~~~~~~~~~~~~~~~~~~~~~~",
+      "  NAME         %s ",
+      "  PLAYERS      %d ",
+      "     BITS      %d ",
+      "     BYTES     %d ",
+      "  COIN CHUTES  %d ",
+      "  A/D CHANNELS %d ",
+      "  POS CHANNELS %d ",
+      "I/O BD CONNECTED TO NAOMI BD DOES NOT FULFILL",
+      "THE GAME SPECS.",
+      "COM. ERROR OCCURRED BETWEEN NAOMI BD AND I/O BD.",
+      "May 19 2001 18:15:12",
+      "libsnd Ver.1.05a Build:Mar 16 2001 10:24:59",
+      "NLOBJPUT Ver 0.99 COPYRIGHT (C) SEGA ENTERPRISES,LTD.",
+      "NLOBJPUT Ver 0.99 SOFT R&D1 Build:Jul 30 2001 10:22:46",
+      "nlajamma Ver 1.01 Build:May 18 2001 18:15:03",
+      "libintr Ver 1.051 Build:Feb 21 2000 21:12:57",
+      "@@COPYRIGHT (C) SEGA ENTERPRISES,LTD.",
+      "NAOMI LIBRARY Ver 0.9 AM R&D",
+      "NAOMI LIBRARY Ver 0.9 AM R&D Build:Sep 10 2001 12:32:26",
+      "Sep 10 2001 12:32:26",
+      "NLSPRITE Ver 0.2 COPYRIGHT (C) SEGA ENTERPRISES,LTD.",
+      "libspr Ver 0.2 Build:Feb 21 2000 21:10:33",
+      "syTmr Ver 1.04am Build:May 14 2001 14:29:05",
+      "syHw Ver 1.08am Build:May 14 2001 14:29:02",
+      "KAMUI2 Copyright (C) NEC Corporation 1999 kamui2 Ver 16,3,5,0 Build:Feb 24 2000 12:36:29",
+      "syExtChk Ver 2.04 Build:Dec 14 2000 15:49:52",
+      "syCache Ver 2.01 Build:Mar 01 2000 22:08:51",
+      "syChain Ver 1.50am Build:May 14 2001 14:28:49",
+      "syInt Ver 2.02am Build:May 14 2001 14:28:57",
+      "sySq Ver 1.50 Build:May 31 1999 16:26:00",
+      "syMmu Ver 1.50 Build:May 31 1999 16:25:13",
+      "syG2 Ver 1.02.02 Build:Oct 26 2000 16:59:55",
+      "KAMUI-Darkness Copyright (C) NEC Corporation 1999 kmdk Ver 1,3,2,0 Build:Feb 24 2000 12:34:26",
+      " --- ADDRESS CHECKER TRAP --- ",
+      "FR0-7:    ",
+      "FR8-15:   ",
+      "FR0-7(B): ",
+      "FR8-15(B):",
+      "R0-7:     ",
+      "R8-15:    ",
+      "R0-7(B):  ",
+      "Please, cancel the interrupt from ADRESS CHECKER, then hit RETURN key.",
+      "Please, cancel the interrupt from ADRESS CHECKER.",
+      "SPHINX-DATA-0008",
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ.-@ ",
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ.-@ ",
+      "NTERPRISES CO,LTD.  1998",
+      "Mioz/Version 0.131000/Sat Nov 25 2000/NAOMI0.131000, Sat Nov 25 20001.400000, 13354.I1.400000, COMMAND.I1.300000, EEPROM.S1.300000, INTR.S1.300000, JVS.S1.100000, JVS1109.S1.300000, MACRO.I1.500000, MAIN.S1.400000, RAM.I1.100000, RS422.S",
+      "nlam/Version 2.220780/Wed Sep 12 2001/NAOMI LIBRARY FOR AM ",
+      "@Wed Sep 12 2001",
+      "?comread.c,v",
+      "?eeprom.c,v",
+      "?eeprom.h,v",
+      "?mapleam.h,v",
+      "?romread.c,v",
+      "?usereep.c,v"
+    ]
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "dc_peripheral",
+    "input_ports": "hotd2",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b GAME() row line 11181: mok assigned INPUT_PORTS 'hotd2'",
+      "Flycast core/hw/maple/maple_jvs.cpp lines 1532-1536 (../cleopatra/tools/flycast-src): gameId == \"THE MAZE OF THE KINGS\" hard-coded into the same lightgun-as-analog JVS group as hotd2/Confidential Mission/Death Crimson OX/lupinsho",
+      "arcadeitalia MAME DB (http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=mok): Input Device 'Lightgun', 2 players, 2 buttons"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "partial",
+    "cart_loader_match": true
+  },
+  "gate": "G3 memory: aram content > 2x DC capacity",
+  "scores": null
+}

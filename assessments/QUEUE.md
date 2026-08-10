@@ -59,7 +59,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `toyfight` — Toy Fighter | `toyfight` | Fighting | 46.0 MB | parked |
 | `lupinsho` — Lupin The Third - The Shooting (Rev A) (GDS-0018A) | `lupinsho`, `lupinshoo` | Light-gun | 190.2 MB | done |
 | `mazan` — Mazan: Flash of the Blade (World, MAZ2 Ver.A) | `mazan` | Light-gun | 73.7 MB | parked |
-| `mok` — The Maze of the Kings (GDS-0022) | `mok` | Light-gun | 140.0 MB | pending |
+| `mok` — The Maze of the Kings (GDS-0022) | `mok` | Light-gun | 140.0 MB | parked |
 | `ninjaslt` — Ninja Assault (World, NJA2 Ver.A) | `ninjaslt` | Light-gun | 81.2 MB | pending |
 | `sl2007` — Shooting Love 2007 (Japan) | `sl2007` | Light-gun | 109.3 MB | pending |
 | `crackndj` — Crackin' DJ | `crackndj` | Rhythm | 108.0 MB | pending |

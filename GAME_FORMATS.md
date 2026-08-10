@@ -89,7 +89,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Super Shanghai 2005 (Japan) (GDL-0031) | `ss2005o` | **GD-ROM** | clone of `ss2005` | 54.2 MB | Puzzle ★ | No | see [`ss2005`](assessments/ss2005.md) |
 | Super Shanghai 2005 (Japan, Rev A) (GDL-0031A) | `ss2005` | **GD-ROM** | parent | 63.1 MB | Puzzle ★ | No | **54.8** B · [assessment](assessments/ss2005.md) |
 | Tetris Kiwamemichi (Japan) (GDL-0020) | `tetkiwam` | **GD-ROM** | parent | 62.3 MB | Puzzle ★ | No | **87.5** S · [assessment](assessments/tetkiwam.md) |
-| The Maze of the Kings (GDS-0022) | `mok` | **GD-ROM** | parent | 140.0 MB | Light-gun | No | not assessed |
+| The Maze of the Kings (GDS-0022) | `mok` | **GD-ROM** | parent | 140.0 MB | Light-gun | No | parked G3 · [notes](assessments/mok.md) |
 | Trigger Heart Exelica (Japan) (GDL-0036) | `trghearto` | **GD-ROM** | clone of `trgheart` | 80.1 MB | Shmup ★ | Yes (2007) | see [`trgheart`](assessments/trgheart.md) |
 | Trigger Heart Exelica Ver.A (Japan) (GDL-0036A) | `trgheart` | **GD-ROM** | parent | 91.6 MB | Shmup ★ | Yes (2007) | **86.5** S · [assessment](assessments/trgheart.md) |
 | Trizeal (Japan) (GDL-0026) | `trizeal` | **GD-ROM** | parent | 129.4 MB | Shmup ★ | Yes (2005) | **72.5** A · [assessment](assessments/trizeal.md) |
