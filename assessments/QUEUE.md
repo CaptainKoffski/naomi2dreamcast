@@ -39,7 +39,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `ringout` — Ring Out 4x4 (Rev A) | `ringout` | ? | 39.0 MB | parked |
 | `shootopl` — Shootout Pool | `shootopl` | Sports | 16.6 MB | done |
 | `tduno2` — Touch de Uno! 2 (Japan) | `tduno2` | Quiz ⚠ | 49.9 MB | parked |
-| `vonot` — Cyber Troopers Virtual-On: Oratorio Tangram M.S.B.S. ver 5.66 2000 Edition | `vonot` | ? | 91.6 MB | pending |
+| `vonot` — Cyber Troopers Virtual-On: Oratorio Tangram M.S.B.S. ver 5.66 2000 Edition | `vonot` | ? | 91.6 MB | parked |
 | `alienfnt` — Alien Front (Rev T) | `alienfnt` | Action | 45.9 MB | pending |
 | `monkeyba` — Monkey Ball (GDS-0008) | `monkeyba` | Action | 82.5 MB | pending |
 | `asndynmt` — Asian Dynamite / Dynamite Deka EX | `asndynmt` | Beat-em-up | 148.0 MB | pending |

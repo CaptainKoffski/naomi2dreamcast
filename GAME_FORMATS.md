@@ -123,7 +123,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Crackin' DJ | `crackndj` | **cart** | parent | 108.0 MB | Rhythm | No | not assessed |
 | Crackin' DJ Part 2 (Japan) | `crakndj2` | **cart** | parent | 105.5 MB | Rhythm | No | not assessed |
 | Crazy Taxi | `crzytaxi` | **cart** | parent | 62.3 MB | Driving | Yes (2000) | not assessed |
-| Cyber Troopers Virtual-On: Oratorio Tangram M.S.B.S. ver 5.66 2000 Edition | `vonot` | **cart** | parent | 91.6 MB | ? | Partial | not assessed |
+| Cyber Troopers Virtual-On: Oratorio Tangram M.S.B.S. ver 5.66 2000 Edition | `vonot` | **cart** | parent | 91.6 MB | ? | Partial | parked G3 · [notes](assessments/vonot.md) |
 | Dead or Alive 2 | `doa2` | **cart** | clone of `doa2m` | 113.7 MB | Fighting | Yes (2000) | not assessed |
 | Dead or Alive 2 Millennium | `doa2m` | **cart** | parent | 113.7 MB | Fighting | Yes (2000) | not assessed |
 | Death Crimson OX (USA) | `deathcox` | **cart** | parent | 62.5 MB | Light-gun | Yes (2001) | not assessed |
