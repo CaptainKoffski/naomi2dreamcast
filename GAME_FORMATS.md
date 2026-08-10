@@ -68,7 +68,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Mobile Suit Gundam: Federation Vs. Zeon (GDL-0001) | `gundmgd` | **GD-ROM** | parent | 142.3 MB | Fighting | Yes (2002) | not assessed |
 | Mobile Suit Gundam: Federation Vs. Zeon DX (USA, Japan) (GDL-0006) | `gundmxgd` | **GD-ROM** | parent | 172.9 MB | Fighting | Yes (2002) | not assessed |
 | Moeru Casinyo (Japan) (GDL-0013) | `moeru` | **GD-ROM** | parent | 98.0 MB | ? | No | **85.9** S · [assessment](assessments/moeru.md) |
-| Monkey Ball (GDS-0008) | `monkeyba` | **GD-ROM** | parent | 82.5 MB | Action | No | not assessed |
+| Monkey Ball (GDS-0008) | `monkeyba` | **GD-ROM** | parent | 82.5 MB | Action | No | parked G3 · [notes](assessments/monkeyba.md) |
 | Musapey's Choco Marker (Rev A) (GDL-0014A) | `chocomk` | **GD-ROM** | parent | 68.5 MB | Puzzle ★ | Yes (2002) | **90.5** S · [assessment](assessments/chocomk.md) |
 | Noukone Puzzle Takoron (Japan) (GDL-0042) | `takoron` | **GD-ROM** | parent | 52.6 MB | Puzzle ★ | No | parked G3 · [notes](assessments/takoron.md) |
 | Psyvariar 2 - The Will To Fabricate (Japan) (GDL-0024) | `psyvar2` | **GD-ROM** | parent | 136.7 MB | Shmup ★ | Yes (2004) | not assessed |
