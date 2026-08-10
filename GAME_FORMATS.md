@@ -54,7 +54,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Guilty Gear XX Accent Core (Japan) (GDL-0041) | `ggxxac` | **GD-ROM** | parent | 255.1 MB | Fighting | No | **65.4** A · [assessment](assessments/ggxxac.md) |
 | Guilty Gear XX Slash (Japan, Rev A) (GDL-0033A) | `ggxxsla` | **GD-ROM** | parent | 249.6 MB | Fighting | No | **58.6** B · [assessment](assessments/ggxxsla.md) |
 | Ikaruga (GDL-0010) | `ikaruga` | **GD-ROM** | parent | 40.5 MB | Shmup ★ | Yes (2002) | **88.7** S · [assessment](assessments/ikaruga.md) |
-| Jingi Storm - The Arcade (Japan) (GDL-0037) | `jingystm` | **GD-ROM** | parent | 141.4 MB | Fighting | No | not assessed |
+| Jingi Storm - The Arcade (Japan) (GDL-0037) | `jingystm` | **GD-ROM** | parent | 141.4 MB | Fighting | No | **90.0** S · [assessment](assessments/jingystm.md) |
 | Karous (Japan) (GDL-0040) | `karous` | **GD-ROM** | parent | 126.5 MB | Shmup ★ | Yes (2007) | **85.0** S · [assessment](assessments/karous.md) |
 | Kurukuru Chameleon (Japan) (GDL-0034) | `kurucham` | **GD-ROM** | parent | 41.6 MB | Puzzle ★ | No | **85.2** S · [assessment](assessments/kurucham.md) |
 | La Keyboard (GDS-0017) | `keyboard` | **GD-ROM** | parent | 33.6 MB | Typing ⚠ | No | not assessed |
