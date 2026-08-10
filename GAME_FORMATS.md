@@ -171,7 +171,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Sega Tetris | `sgtetris` | **cart** | parent | 33.7 MB | Puzzle ★ | Yes (2000) | **67.6** A · [assessment](assessments/sgtetris.md) |
 | Shin Nihon Pro Wrestling Toukon Retsuden 4 Arcade Edition (Japan, TRF1 Ver.A) | `toukon4` | **cart** | parent | 217.0 MB | Fighting | Yes (1999) | not assessed |
 | Shooting Love 2007 (Japan) | `sl2007` | **cart** | parent | 109.3 MB | Light-gun | No | **86.6** S · [assessment](assessments/sl2007.md) |
-| Shootout Pool | `shootopl` | **cart** | parent | 16.6 MB | ? | No | not assessed |
+| Shootout Pool | `shootopl` | **cart** | parent | 16.6 MB | Sports | No | **79.0** A · [assessment](assessments/shootopl.md) |
 | Spawn: In the Demon's Hand (Rev B) | `spawn` | **cart** | parent | 58.5 MB | Fighting | Yes (2000) | not assessed |
 | The House of the Dead 2 (USA) | `hotd2` | **cart** | parent | 100.2 MB | Light-gun | Yes (1999) | not assessed |
 | The Typing of the Dead (Rev A) | `totd` | **cart** | parent | 89.4 MB | Typing ⚠ | Yes (2000) | not assessed |
