@@ -115,7 +115,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | 18 Wheeler: American Pro Trucker (deluxe, Rev A) | `18wheelr` | **cart** | parent | 105.3 MB | Driving | Yes (2000) | not assessed |
 | Airline Pilots (World, Rev B) | `alpilot` | **cart** | parent | 41.3 MB | Driving | No | not assessed |
 | Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | **cart** | parent | 75.4 MB | ? | No | **84.4** S · [assessment](assessments/ausfache.md) |
-| Alien Front (Rev T) | `alienfnt` | **cart** | parent | 45.9 MB | Action | Partial | not assessed |
+| Alien Front (Rev T) | `alienfnt` | **cart** | parent | 45.9 MB | Action | Partial | parked G3 · [notes](assessments/alienfnt.md) |
 | Asian Dynamite / Dynamite Deka EX | `asndynmt` | **cart** | parent | 148.0 MB | Beat-em-up | No | not assessed |
 | Cannon Spike / Gun Spike | `cspike` | **cart** | parent | 63.6 MB | Shmup ★ | Yes (2000) | **42.8** B · [assessment](assessments/cspike.md) |
 | Capcom Vs. SNK: Millennium Fight 2000 (Rev C) | `capsnk` | **cart** | parent | 95.6 MB | Fighting | Yes (2000) | not assessed |
