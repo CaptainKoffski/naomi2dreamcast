@@ -23,7 +23,7 @@ Every ROM set in the `naomi/` library folder: format, set relationship, size, ge
 | Local size | ~22 GB total (516 MB of it is images/videos/manuals) |
 | Missing discs | none — all present & hash-verified |
 
-**Triage at a glance:** ★ candidates ≈ 34 (14 puzzle + 20 shmup) · ⚠ exotic ≈ 28 (12 football-card, 4 horse-race, 3 mahjong, 3 typing, 2 quiz, 2 gambling, 1 fishing, 1 card) · fighting 29 · sports 13 · light-gun 9 · driving 7 · rhythm 6 · ? 20.
+**Triage at a glance:** ★ candidates ≈ 34 (14 puzzle + 20 shmup) · ⚠ exotic ≈ 28 (12 football-card, 4 horse-race, 3 mahjong, 3 typing, 2 quiz, 2 gambling, 1 fishing, 1 card) · fighting 30 · sports 13 · light-gun 9 · driving 7 · rhythm 5 · ? 20.
 
 ## Completeness
 
@@ -54,7 +54,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Guilty Gear XX Accent Core (Japan) (GDL-0041) | `ggxxac` | **GD-ROM** | parent | 255.1 MB | Fighting | No | **65.4** A · [assessment](assessments/ggxxac.md) |
 | Guilty Gear XX Slash (Japan, Rev A) (GDL-0033A) | `ggxxsla` | **GD-ROM** | parent | 249.6 MB | Fighting | No | **58.6** B · [assessment](assessments/ggxxsla.md) |
 | Ikaruga (GDL-0010) | `ikaruga` | **GD-ROM** | parent | 40.5 MB | Shmup ★ | Yes (2002) | **88.7** S · [assessment](assessments/ikaruga.md) |
-| Jingi Storm - The Arcade (Japan) (GDL-0037) | `jingystm` | **GD-ROM** | parent | 141.4 MB | Rhythm | No | not assessed |
+| Jingi Storm - The Arcade (Japan) (GDL-0037) | `jingystm` | **GD-ROM** | parent | 141.4 MB | Fighting | No | not assessed |
 | Karous (Japan) (GDL-0040) | `karous` | **GD-ROM** | parent | 126.5 MB | Shmup ★ | Yes (2007) | **85.0** S · [assessment](assessments/karous.md) |
 | Kurukuru Chameleon (Japan) (GDL-0034) | `kurucham` | **GD-ROM** | parent | 41.6 MB | Puzzle ★ | No | **85.2** S · [assessment](assessments/kurucham.md) |
 | La Keyboard (GDS-0017) | `keyboard` | **GD-ROM** | parent | 33.6 MB | Typing ⚠ | No | not assessed |
