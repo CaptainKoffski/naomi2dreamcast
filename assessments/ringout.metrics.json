@@ -1,0 +1,203 @@
+{
+  "set": "ringout",
+  "title": "Ring Out 4x4 (Rev A)",
+  "maker": "Sega",
+  "year": "1999",
+  "format": "cart",
+  "assessed": "2026-08-11",
+  "versions": {
+    "flycast": "f014a410c",
+    "battery": "9",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/ringout.zip"
+  },
+  "boot": {
+    "ok": true,
+    "failure_class": null,
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 20.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
+    },
+    "screenshots": [
+      "assessments/evidence/ringout/shot-060s.png",
+      "assessments/evidence/ringout/shot-121s.png",
+      "assessments/evidence/ringout/shot-182s.png",
+      "assessments/evidence/ringout/shot-243s.png",
+      "assessments/evidence/ringout/shot-304s.png",
+      "assessments/evidence/ringout/shot-365s.png",
+      "assessments/evidence/ringout/shot-426s.png",
+      "assessments/evidence/ringout/shot-487s.png",
+      "assessments/evidence/ringout/shot-548s.png",
+      "assessments/evidence/ringout/shot-609s.png"
+    ],
+    "coverage": "demo",
+    "watermarks_info": {
+      "main": 31666976,
+      "vram": 16533504,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "peak": 31666976,
+      "nz_total": 19793309,
+      "nz_above_cap": 8983740,
+      "dma_high_water": 21407328
+    },
+    "vram": {
+      "peak": 16533504,
+      "nz_total": 6009816,
+      "nz_above_cap": 5289275,
+      "regs_last": "isp_base=400000 isp_limit=68f700 ol_base=74c180 ol_limit=68f800 fb_w_sof1=c00000 fb_w_sof2=c00000 fb_r_sof1=800000",
+      "content_total": 5550216,
+      "fb_bytes": 614400
+    },
+    "aram": {
+      "peak": 8088219,
+      "nz_above_cap": 5767137,
+      "content_total": 7726701
+    }
+  },
+  "streaming": {
+    "dma_events": 1,
+    "total_bytes": 9872992,
+    "unique_bytes": 9872992,
+    "reread_ratio": 0.0,
+    "steady_mb_per_min": 0.0,
+    "short_window": false,
+    "pio_bytes": 21991954
+  },
+  "guts": {
+    "code_bytes": 2097152,
+    "functions": 1271,
+    "mmio_refs": {
+      "rtc": 4,
+      "g2ext": 91,
+      "scif": 0
+    },
+    "bios_refs": {},
+    "dat_available": true,
+    "carve_meta": {
+      "base": "0x0c020000",
+      "entry": "0x0c021000",
+      "size": 2097152,
+      "entries": [
+        [
+          0,
+          201457664,
+          2097152
+        ]
+      ],
+      "hdr_at": 0,
+      "title": "RINGOUT 4X4 JAPAN"
+    },
+    "flags": [
+      "eeprom_bios",
+      "rtc"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": [
+      "CREDIT TO START                 ",
+      "        NOT SUPPORT COMMON CHUTE TYPE.",
+      "TWO JAMMA I/O BOARDS ARE REQUIRED FOR THIS GAME.",
+      "JAMMA ACKNOWLEDGE ERROW WAS OCCURED.",
+      "CHECK I/O CONNECTION.",
+      "              WARNING            ",
+      "THIS GAME IS TO BE USED ONLY IN JAPAN.",
+      "EXPORT,SALES,DISTRIBUTION AND/OR   ",
+      "OPERATION OUTSIDE THIS AREA MAY    ",
+      "CONSTITUTE A VIOLATION OF INTERNATIONAL",
+      "LAWS ON COPYRIGHTS AND/OR INDUSTRIAL",
+      "PROPERTY RIGHTS AND SUBJECT THE    ",
+      "VIOLATING PARTY TO LEGAL PROCEEDINGS.",
+      "                 SEGA ENTERPRISES,LTD.",
+      "LocalOptions",
+      "SelectZone",
+      "AD%d: %04x %04x",
+      "RecordPtr: %08x",
+      "RecordTop: %08x",
+      "RecordBtm: %08x",
+      "NbRecord:  %08x",
+      "Start:     %08x",
+      "End:       %08x",
+      ")@ tex cont :  0x%08x     ",
+      "COMMON   : %4.1f%%",
+      "REPLACE  : %4.1f%%",
+      "TOTAL    : %4.1f%%",
+      "AdvViewStage",
+      "AdvBreakDown",
+      "AirShipAppear",
+      "AirShipBombInvest",
+      "BrokenStage",
+      "COPYRIGHT (C) SEGA ENTERPRISES,LTD.",
+      "NAOMI LIBRARY Ver 0.8 AM R&D",
+      "0123456789abcdef",
+      "0123456789ABCDEF",
+      "syG2 Ver 1.01.01 Build:Nov 27 1998 01:47:35",
+      "EnableTexture16MB",
+      "DisplayMode",
+      "syChain Ver 1.01 Build:Jan 10 1999 00:44:08",
+      "syHw Ver 1.03 Build:Jan 10 1999 00:53:07",
+      "VSYNCCount",
+      "RegionSize",
+      "ObjListSize",
+      "ISPParamSize",
+      "TSPParamSize",
+      "VertexBuffer",
+      "BufferBase",
+      "BufferSize",
+      "PoolingTAStatus",
+      "RenderTimeOut",
+      "VertexTimeOut",
+      "VSYNCTimeOut",
+      "EnableTexture16MB",
+      "EnableTexture16MB",
+      "syTmr Ver 1.02 Build:Nov 25 1998 11:41:00",
+      "syCache Ver 1.07 Build:Nov 26 1998 22:22:06",
+      "sySq Ver 1.02 Build:Nov 26 1998 22:35:12",
+      "syInt Ver 1.03 Build:Jan 10 1999 00:47:04",
+      "libam/Version 1.232590/Fri May 28 1999/NAOMI LIBRARY FOR AM ",
+      "?Fri May 28 1999",
+      "?comread.c,v",
+      "?eeprom.c,v",
+      "?eeprom.h,v",
+      "?jammafunc.c,v",
+      "?mapleam.h,v",
+      "?romread.c,v",
+      "?usereep.c,v",
+      "NTERPRISES CO,LTD.  1998",
+      "Mioz/Version 1.102000/Tue Oct 20 1998/NAOMI ARCADE CONTROLLER1.102000, Tue Oct 20 19981.300000, 13354.I1.300000, COMMAND.I1.200000, EEPROM.S1.200000, INTR.S1.200000, JVS.S1.300000, MACRO.I1.400000, MAIN.S1.300000, RAM.I",
+      "COPYRIGHT        (C) NEC        Corporation 1998All rights reserved by NEC Corporation. This program must beused solely for the purpose for which it was furnished by NECCorporation. No part of this program may be reproduced ordisclosed to others, in any form, without the prior writtenpermission of NEC Corporation.Use of copyright notice does not evidence publication of thisprogram.Developed by  * Semiconductor Solution Engineering Division   NEC Corpolation. * Home Multimedia Development Division   NEC Corpolation * Client Server Software Development Division   NEC Software,Ltd."
+    ]
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "stick",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'naomi'",
+      "arcadeitalia http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=ringout (8-way joystick + 6 buttons, 2P concurrent / up to 4)"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": "G3 memory: aram content > 2x DC capacity",
+  "scores": null
+}

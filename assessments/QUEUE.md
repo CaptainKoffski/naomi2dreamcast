@@ -36,7 +36,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `marstv` — Kasei Channel Mars TV (Japan) | `marstv` | Party | 57.8 MB | done |
 | `moeru` — Moeru Casinyo (Japan) (GDL-0013) | `moeru` | ? | 98.0 MB | done |
 | `pokasuka` — Pokasuka Ghost! (Japan) | `pokasuka` | ? | 142.3 MB | parked |
-| `ringout` — Ring Out 4x4 (Rev A) | `ringout` | ? | 39.0 MB | pending |
+| `ringout` — Ring Out 4x4 (Rev A) | `ringout` | ? | 39.0 MB | parked |
 | `shootopl` — Shootout Pool | `shootopl` | ? | 16.6 MB | pending |
 | `tduno2` — Touch de Uno! 2 (Japan) | `tduno2` | ? | 49.9 MB | pending |
 | `vonot` — Cyber Troopers Virtual-On: Oratorio Tangram M.S.B.S. ver 5.66 2000 Edition | `vonot` | ? | 91.6 MB | pending |
