@@ -1,0 +1,120 @@
+{
+  "set": "lupinsho",
+  "title": "Lupin The Third - The Shooting (Rev A) (GDS-0018A)",
+  "maker": "Sega / Eighting",
+  "year": "2001",
+  "format": "GD-ROM",
+  "assessed": "2026-08-10",
+  "versions": {
+    "flycast": "f014a410c",
+    "battery": "9",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/lupinsho.zip"
+  },
+  "boot": {
+    "ok": true,
+    "failure_class": null,
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 20.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
+    },
+    "screenshots": [
+      "assessments/evidence/lupinsho/shot-060s.png",
+      "assessments/evidence/lupinsho/shot-121s.png",
+      "assessments/evidence/lupinsho/shot-182s.png",
+      "assessments/evidence/lupinsho/shot-243s.png",
+      "assessments/evidence/lupinsho/shot-304s.png",
+      "assessments/evidence/lupinsho/shot-365s.png",
+      "assessments/evidence/lupinsho/shot-426s.png",
+      "assessments/evidence/lupinsho/shot-487s.png",
+      "assessments/evidence/lupinsho/shot-548s.png",
+      "assessments/evidence/lupinsho/shot-609s.png"
+    ],
+    "coverage": "demo",
+    "watermarks_info": {
+      "main": 33403968,
+      "vram": 13484438,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "peak": 33403968,
+      "nz_total": 9514579,
+      "nz_above_cap": 728259,
+      "dma_high_water": 12649120
+    },
+    "vram": {
+      "peak": 13484438,
+      "nz_total": 3516259,
+      "nz_above_cap": 3489819,
+      "regs_last": "isp_base=0 isp_limit=2fff00 ol_base=3f0280 ol_limit=300000 fb_w_sof1=800000 fb_w_sof2=c00000 fb_r_sof1=c00000",
+      "content_total": 2957946,
+      "fb_bytes": 614400
+    },
+    "aram": {
+      "peak": 8372192,
+      "nz_above_cap": 185211,
+      "content_total": 2151785
+    }
+  },
+  "streaming": {
+    "dma_events": 1263,
+    "total_bytes": 137959424,
+    "unique_bytes": 57192448,
+    "reread_ratio": 0.5854,
+    "steady_mb_per_min": 13.059,
+    "short_window": false,
+    "pio_bytes": 1049920
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "FAIL lupinsho: no PIC produced a NAOMI image\nkey=8cc0d8e226fcd6c4 name='BAA.BIN' netpic=1\nread_gdrom failed at lba 0\n",
+    "flags": [
+      "eeprom_bios"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "dc_peripheral",
+    "input_ports": "hotd2",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'hotd2'",
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS_START(hotd2) lines 1588-1624 -- IPT_LIGHTGUN_X/IPT_LIGHTGUN_Y analog screen position + P1 Trigger (BUTTON1) + P1 Screen-In reload (BUTTON2); GAME() rows lines 11173-11174 assign lupinshoo/lupinsho this port",
+      "Flycast core/hw/maple/maple_jvs.cpp:1532-1542 (../cleopatra/tools/flycast-src) -- gameId == 'LUPIN THE THIRD  -THE SHOOTING-' explicitly grouped with hotd2*/Confidential Mission/Death Crimson OX, sets settings.input.lightgunGame = true",
+      "https://en.wikipedia.org/wiki/Dreamcast_light_guns (official Sega HKT-7800 Dreamcast Gun; confirms House of the Dead 2, Confidential Mission, and Death Crimson OX -- the same titles Flycast groups lupinsho with above -- all officially played with this DC gun peripheral)",
+      "http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=lupinsho (Input Device: Lightgun, 2 buttons/player, up to 2 players)"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": null,
+  "scores": {
+    "memory": 80.3,
+    "streaming": 68.5,
+    "guts": null,
+    "controls": 75.0,
+    "similarity": 20.0,
+    "final": 64.3,
+    "tier": "A"
+  }
+}
