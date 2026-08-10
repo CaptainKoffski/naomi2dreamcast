@@ -153,7 +153,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Mazan: Flash of the Blade (World, MAZ2 Ver.A) | `mazan` | **cart** | parent | 73.7 MB | Light-gun | No | parked G3 · [notes](assessments/mazan.md) |
 | Melty Blood Actress Again Version A (Japan, Rev A) | `mbaa` | **cart** | parent | 233.9 MB | Fighting | No | **55.9** B · [assessment](assessments/mbaa.md) |
 | Mushiking The King Of Beetles - Mushiking II / III / III+ (Ver. 2.001) (World) | `mushik2e` | **cart** | parent | 72.8 MB | Card battle ⚠ | No | not assessed |
-| Ninja Assault (World, NJA2 Ver.A) | `ninjaslt` | **cart** | parent | 81.2 MB | Light-gun | No | not assessed |
+| Ninja Assault (World, NJA2 Ver.A) | `ninjaslt` | **cart** | parent | 81.2 MB | Light-gun | No | parked G3 · [notes](assessments/ninjaslt.md) |
 | Oinori-daimyoujin Matsuri | `oinori` | **cart** | parent | 36.4 MB | Gambling/medal ⚠ | No | not assessed |
 | OutTrigger | `otrigger` | **cart** | parent | 82.1 MB | Action | Yes (2001) | not assessed |
 | Pokasuka Ghost! (Japan) | `pokasuka` | **cart** | clone of `manicpnc` | 142.3 MB | ? | No | parked G3 · [notes](assessments/pokasuka.md) |
