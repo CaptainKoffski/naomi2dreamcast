@@ -56,7 +56,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `meltybld` — Melty Blood Act Cadenza Ver. A (Japan) (GDL-0028C) | `meltybld`, `meltyblo` | Fighting | 214.9 MB | done |
 | `sfz3ugd` — Street Fighter Zero 3 Upper (Japan) (GDL-0002) | `sfz3ugd` | Fighting | 112.1 MB | done |
 | `sstrkfgt` — Sega Strike Fighter (Rev A) | `sstrkfgt` | Fighting | 75.9 MB | parked |
-| `toyfight` — Toy Fighter | `toyfight` | Fighting | 46.0 MB | pending |
+| `toyfight` — Toy Fighter | `toyfight` | Fighting | 46.0 MB | parked |
 | `lupinsho` — Lupin The Third - The Shooting (Rev A) (GDS-0018A) | `lupinsho`, `lupinshoo` | Light-gun | 190.2 MB | pending |
 | `mazan` — Mazan: Flash of the Blade (World, MAZ2 Ver.A) | `mazan` | Light-gun | 73.7 MB | pending |
 | `mok` — The Maze of the Kings (GDS-0022) | `mok` | Light-gun | 140.0 MB | pending |
