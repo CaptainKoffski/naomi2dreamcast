@@ -81,6 +81,22 @@ def test_carve_rejects_entry_point_outside_blob():
     except ValueError:
         pass
 
+def test_carve_mixed_view_entry_point():
+    # meltyb/meltybld class: load-table ram entries in physical view (0x0c02xxxx)
+    # but the entrypoint in the P1 cached mirror (0x8c021000) — same bytes on
+    # SH-4 (29-bit external space, SH7750 HW manual §3.3). The bounds check must
+    # compare in physical view; recorded meta keeps the raw values.
+    img = bytearray(0x2000)
+    img[0:5] = b"NAOMI"
+    img[0x30:0x36] = b"MIXVIE"
+    struct.pack_into("<III", img, 0x360, 0x1000, 0x0c020000, 0x100)
+    struct.pack_into("<I", img, 0x360 + 12, 0xFFFFFFFF)
+    struct.pack_into("<II", img, 0x420, 0x8c020000, 0x8c020000)  # mirrored entry
+    img[0x1000:0x1100] = b"Z" * 0x100
+    blob, meta = carve_boot.carve(bytes(img))
+    assert meta["base"] == "0x0c020000" and meta["entry"] == "0x8c020000"
+    assert blob[0:0x100] == b"Z" * 0x100
+
 def test_carve_garbage_raises_valueerror():
     # Documents the exception type run_battery.py's static_scan() now catches (final-review
     # IMPORTANT-2): a malformed-but-produced .dat must degrade to dat_available=False, not
@@ -111,6 +127,7 @@ if __name__ == "__main__":
     test_carve_at_0(); print("test_carve_at_0 OK")
     test_carve_at_800000(); print("test_carve_at_800000 OK")
     test_carve_fallback(); print("test_carve_fallback OK")
+    test_carve_mixed_view_entry_point(); print("test_carve_mixed_view_entry_point OK")
     test_carve_garbage_raises_valueerror(); print("test_carve_garbage_raises_valueerror OK")
     test_carve_rejects_illegal_flag_bits(); print("test_carve_rejects_illegal_flag_bits OK")
     test_carve_rejects_entry_point_outside_blob(); print("test_carve_rejects_entry_point_outside_blob OK")

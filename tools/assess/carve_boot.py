@@ -59,7 +59,12 @@ def carve(data):
     entry, _test_ep = struct.unpack_from("<II", data, hdr + 0x420)
     # A mis-carve that survives the offset checks almost always leaves the
     # entrypoint outside the carved image — make that loud, not a Ghidra mystery.
-    if not base <= entry < top:
+    # Compare in physical view: SH-4 external space is 29-bit; P1/P2 (0x8xxxxxxx/
+    # 0xAxxxxxxx) mirror the same physical addresses (SH7750 HW manual §3.3).
+    # Headers mix views — meltyb: ram entries physical 0x0c02xxxx, entry mirrored
+    # 0x8c021000 (calibration goldens show both conventions: inunoos 0x0c..,
+    # ausfache/ikaruga 0x8c..). Recorded meta keeps the raw values.
+    if not (base & 0x1FFFFFFF) <= (entry & 0x1FFFFFFF) < (top & 0x1FFFFFFF):
         raise ValueError(f"entrypoint 0x{entry:x} outside carved image "
                          f"0x{base:x}..0x{top:x}")
     meta = {"base": f"0x{base:08x}", "entry": f"0x{entry:08x}", "size": len(blob),

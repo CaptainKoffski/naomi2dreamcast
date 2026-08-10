@@ -4,9 +4,9 @@
 
 | | |
 |---|---|
-| **Final score** | **64.3** (A) |
-| Bottom line | The corpus's first light-gun title clears full memory headroom on main (u 0.567) and VRAM (u 0.499) but binds narrowly on ARAM (u 1.026×, sub 80.3 — 54,633 B over the 2 MB cap); the guts axis is unmeasured (Ghidra carve failed to decrypt the GD PIC, §6) and drops out, renormalizing the other four axes upward. Controls score 75.0 (`dc_peripheral`): MAME assigns `lupinsho` the identical `hotd2` input ports as House of the Dead 2, and Flycast's own source hard-codes `lupinsho` into the same lightgun-as-analog JVS group as `hotd2`, Confidential Mission, and Death Crimson OX — three titles that all officially shipped as Sega Dreamcast Gun (HKT-7800) games (§7). Similarity floors at 20.0 because the failed carve leaves `sdk_overlap` unmeasured rather than confirmed-absent (§8). |
-| Assessed | 2026-08-10 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final score** | **77.1** (A) |
+| Bottom line | The corpus's first light-gun title clears full memory headroom on main (u 0.567) and VRAM (u 0.499) but binds narrowly on ARAM (u 1.026×, sub 80.3 — 54,633 B over the 2 MB cap). Guts is solid (85.0): 1 MiB code, 2,717 functions, with `serial`/`rtc` MMIO touches beyond the universal `eeprom_bios` — measured after the 2026-08-10 dat-extract sector-size fix (this dump stores plain 2048-byte MODE1 sectors where the extractor assumed 2352-raw, §6). Controls score 75.0 (`dc_peripheral`): MAME assigns `lupinsho` the identical `hotd2` input ports as House of the Dead 2, and Flycast's own source hard-codes `lupinsho` into the same lightgun-as-analog JVS group as `hotd2`, Confidential Mission, and Death Crimson OX — three titles that all officially shipped as Sega Dreamcast Gun (HKT-7800) games (§7). Similarity is 70.0 (SDK overlap partial + GD-ROM loader match, §8). |
+| Assessed | capture 2026-08-10 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — guts/similarity re-scored 2026-08-10 after the dat-extract sector-size fix (see History) |
 
 ## 2. Identity
 
@@ -42,15 +42,24 @@ Risk flag: ARAM binds only just over cap — 54,633 B (2.6%) above the 2 MB line
 DMA events 1,263 · total 137,959,424 B (131.6 MiB) · unique 57,192,448 B (54.5 MiB) · re-read ratio 0.5854 ·
 steady-state 13.059 MB/min (`short_window: false`) · PIO 1,049,920 B
 
-## 6. Guts (axis: n/a — no .dat)
+## 6. Guts (axis: 85.0)
 
-Ghidra carve failed to produce a NAOMI image: `guts.error` quotes
-```
-FAIL lupinsho: no PIC produced a NAOMI image
-key=8cc0d8e226fcd6c4 name='BAA.BIN' netpic=1
-read_gdrom failed at lba 0
-```
-`dat_available: false`, `sdk_strings: []` (no carve, no strings to search). `flags: ["eeprom_bios"]` is recorded but unused for scoring since `guts_axis()` only runs when `dat_available` is true (`tools/assess/score.py` line 222). The axis is dropped from the geometric mean and the remaining weights renormalize per spec §4.3 (§8).
+Code 1,048,576 B (1 MiB) · functions 2,717 · MMIO refs: scif 2, rtc 3, g2ext 39 ·
+BIOS vector refs: none · penalties applied: `eeprom_bios`, `serial`, `rtc` → 85.0.
+Carved at base `0x8c020000`, entry `0x8c021000`, header title `LUPIN THE THIRD  -THE SHOOTING-`.
+The original v9 scan failed (`guts.error`: `no PIC produced a NAOMI image … read_gdrom failed
+at lba 0`, `netpic=1`) — root-caused 2026-08-10 to a sector-format assumption in
+`tools/dat-extract`, not the PIC or disc: this dump's CHD stores plain **MODE1 2048-byte**
+sectors (`chdman info`: `TRACK:3 TYPE:MODE1`) where `extract_dat` hardcoded 2352-byte raw
+sectors with user data at +16 (the format ikaruga/meltyb use, `TYPE:MODE1_RAW`) — so every
+read landed at garbage offsets, the PVD walk returned zeros, and the tool aborted. The fix
+passes the GDI-declared per-track sector size through `chd2dat.sh` to `extract_dat`;
+calibration-guard golden hashes (incl. the GD golden ikaruga) reproduced bit-for-bit across
+the fix (kb §10), so no battery version bump. The `netpic=1` byte in the PIC was a red
+herring — the disc has a normal PVD at LBA 45016 and carves through the standard GD walk.
+SDK strings (sidecar `guts.sdk_strings`, 500 recovered) include the game's asset/model
+runtime text (`lpfont.pvr`, `OPKFILE.TBL`, model-bone work errors) plus shared-SDK entries
+feeding similarity's `sdk_overlap: partial` (§8).
 
 ## 7. Controls (axis: 75.0 — `dc_peripheral`)
 
@@ -65,14 +74,18 @@ Sources: MAME src/mame/sega/naomi.cpp @59e7c0b `INPUT_PORTS 'hotd2'`; MAME src/m
 ## 8. Score computation
 
 final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
-      = 80.3^.5 · 68.5^.25 · 75.0^.125 · 20.0^.125 = **64.3 (A)**
-Guts dropped (no `.dat`, §6): renormalized weights .40/.20/.20/.10/.10 → .50/.25/–/.125/.125 (memory/streaming/controls/similarity) per spec §4.3.
-Similarity inputs: developer no, SDK overlap none, loader match no → 20.0. Note: `sdk_overlap = "none"` is downstream of the same failed carve (§6, `guts.sdk_strings = []`) — no binary text was available to search for DC-lineage strings, so this reflects an *unmeasured* similarity signal, not a confirmed absence of one.
+      = 80.3^.40 · 68.5^.20 · 85.0^.20 · 75.0^.10 · 70.0^.10 = **77.1 (A)**
+Similarity inputs: developer no, SDK overlap **partial**, loader match **yes** → 70.0 —
+both recovered by the dat-extract fix (§6): the carved binary's `sdk_strings` share entries
+with the reference, and `cart_loader_match` is true (GD-ROM format, `dat_available` truthy).
 
 ## 9. Risks & notes
 
-- **Guts axis entirely unmeasured** — the GD PIC decrypt failed (§6 error quoted); code size, function count, MMIO/BIOS-vector reuse, and any DC-lineage SDK strings are all unknown. A port project has no static-analysis baseline here and must disassemble the binary independently.
-- **Similarity axis (20.0, floor) is a downstream artifact of the same carve failure**, not a measured dissimilarity — see §8.
+- The initial 64.3 A score was a lower bound from a dat-extract measurement gap, since
+  resolved: the 2026-08-10 sector-size fix (§6) restored the guts axis (85.0) and lifted
+  similarity 20.0 → 70.0, moving the final to 77.1 A with no change to any captured metric.
+- `serial` and `rtc` MMIO touches (§6) are real porting surface beyond the universal
+  EEPROM/BIOS path — small, but a DC port must stub or reroute them.
 - **ARAM binds barely over the DC cap** (u 1.026×, §4) — the smallest region overage margin in the axis, a minor audio-asset trim target rather than a structural blocker.
 - **First light-gun title in the corpus**: the `dc_peripheral` classification rests on MAME's `hotd2` input-port assignment plus Flycast's explicit `lupinsho`/`hotd2`/Confidential Mission/Death Crimson OX grouping (§7) — a well-sourced precedent, but `mok` and `ninjaslt` (next in this cohort) need their own independent MAME/Flycast source checks before assuming the same class carries over.
 - Verify on real DC hardware before any port claim (working-style rule) — this is an emulator-only (Flycast) measurement. The DC Gun peripheral itself requires a CRT display ([Dreamcast light guns](https://en.wikipedia.org/wiki/Dreamcast_light_guns) and multiple retailer listings note CRT-only operation) — a port's controls testing needs a CRT, not a modern flat panel.
@@ -83,3 +96,4 @@ Similarity inputs: developer no, SDK overlap none, loader match no → 20.0. Not
 | Battery | Date | Final | What changed |
 |---|---|---|---|
 | v9 | 2026-08-10 | 64.3 A | initial assessment — light-gun cohort, fresh v9 capture |
+| v9 | 2026-08-10 | 77.1 A | static-only rescore after the dat-extract sector-size fix (`chd2dat.sh` now passes the GDI-declared per-track sector size to `extract_dat`; this dump is plain MODE1 2048 B/sector, the tool assumed 2352-raw; calibration goldens incl. GD reproduced bit-for-bit, no battery bump): guts measured for the first time (85.0 — 1 MiB code, 2,717 funcs, `serial`+`rtc` penalties), similarity 20.0 → 70.0; capture metrics untouched |

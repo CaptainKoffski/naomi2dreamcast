@@ -4,9 +4,9 @@
 
 | | |
 |---|---|
-| **Final score** | **52.4 (B)** |
-| Bottom line | VRAM is the binding constraint — FB-masked content fit 9,978,034 B (`content_total` 8,749,234 + 2×`fb_bytes` 1,228,800) against the 8 MB cap (u 1.1895) drags the memory axis to 50.9, even though main RAM (u 0.9203, 91.0) sits just under its cap and ARAM (u 1.0248, 80.5) also lands just past its own 1x line without binding — `region_score()`'s `min()` makes VRAM's 50.9 the memory axis. Streaming is mid-low (65.3), driven by a re-read ratio of 0.5595 that runs far heavier than the sibling GD-ROM fighters `ggxx`/`ggxxac`/`ggxxsla` (0.27–0.31) and is close to the cart title `mbaa`'s 0.5811 despite `meltyb` itself being GD-ROM. Controls is a perfect 1:1 stick+6-button fit (100.0). Guts could not be measured — the static-scan carve failed (`entrypoint 0x8c021000 outside carved image 0xc020000..0xc1a0000`) — so that axis drops and weights renormalize to .50/.25/.125/.125 (spec §4.3); the same carve failure also forces `cart_loader_match` to `false` (it requires `guts.dat_available`) despite `meltyb` being GD-ROM format like the anchor titles, and `sdk_overlap` to `none` (no `sdk_strings` extracted), pulling similarity to 20.0 — well below the ~70 a healthy GD-ROM carve scores elsewhere in this campaign. This is the fourth Naomi fighter this session to land VRAM-bound in the 1.0–1.6x overage band, alongside `ggxx` (55.4 B), `ggxxac` (65.4 A), and `mbaa` (55.9 B); no DC port, official or fan, exists for any Melty Blood Act Cadenza revision to validate against. |
-| Assessed | 2026-08-10 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final score** | **66.9 (A)** |
+| Bottom line | VRAM is the binding constraint — FB-masked content fit 9,978,034 B (`content_total` 8,749,234 + 2×`fb_bytes` 1,228,800) against the 8 MB cap (u 1.1895) drags the memory axis to 50.9, even though main RAM (u 0.9203, 91.0) sits just under its cap and ARAM (u 1.0248, 80.5) also lands just past its own 1x line without binding — `region_score()`'s `min()` makes VRAM's 50.9 the memory axis. Streaming is mid-low (65.3), driven by a re-read ratio of 0.5595 that runs far heavier than the sibling GD-ROM fighters `ggxx`/`ggxxac`/`ggxxsla` (0.27–0.31) and is close to the cart title `mbaa`'s 0.5811 despite `meltyb` itself being GD-ROM. Controls is a perfect 1:1 stick+6-button fit (100.0). Guts is clean (95.0): 1.5 MiB code, 671 functions, near-zero MMIO surface (only `eeprom_bios` flagged) — measured after the 2026-08-10 carve-tool mirror-mask fix recovered the `.dat` this title's mixed-view header (physical load table, P1-mirror entrypoint) had blocked; the recovered `sdk_strings` include the DC Katana kernel string `syStartKn Ver 2.08` and CRI ADX audio middleware, lifting similarity to 70.0 (SDK overlap partial + GD-ROM loader match). This is the fourth Naomi fighter this session to land VRAM-bound in the 1.0–1.6x overage band, alongside `ggxx` (55.4 B), `ggxxac` (65.4 A), and `mbaa` (55.9 B); no DC port, official or fan, exists for any Melty Blood Act Cadenza revision to validate against. |
+| Assessed | capture 2026-08-10 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — guts/similarity re-scored 2026-08-10 after the carve mirror-mask fix (see History) |
 
 ## 2. Identity
 
@@ -92,18 +92,23 @@ re-reading roughly twice the fraction of its unique data that its own GD-ROM sib
 worth understanding before assuming the fighter cohort's GD-ROM streaming behavior is uniform
 (§9).
 
-## 6. Guts (axis: n/a — no .dat)
+## 6. Guts (axis: 95.0)
 
-No `.dat` available — the static-scan carve failed: `entrypoint 0x8c021000 outside carved
-image 0xc020000..0xc1a0000` (`guts.error`, `carve_boot.py`'s entrypoint-bounds check;
-degrade-to-no-guts per spec §4.3 — a produced-but-odd `.dat` must not crash the battery or
-lose the capture). Code bytes / functions / MMIO refs / BIOS vector refs: unavailable (carve
-never reached Ghidra). Flags recorded but **unscored** since `guts_axis()` only runs when
-`dat_available` is true: `eeprom_bios` (`extra_bios_classes` 0). `sdk_strings` empty — no
-SDK-overlap evidence could be extracted, which also drives similarity's `sdk_overlap: none`
-and `cart_loader_match: false` in §8 below (`run_battery.py` `similarity()` requires
-`guts.get("dat_available")` truthy for `cart_loader_match`, and non-empty `sdk_strings` for any
-overlap beyond `none`).
+Code 1,572,864 B (1.5 MiB) · functions 671 · MMIO refs: scif 0, rtc 0, g2ext 1 ·
+BIOS vector refs: none · penalties applied: `eeprom_bios` only (`extra_bios_classes` 0) → 95.0.
+Carved at base `0x0c020000`, entry `0x8c021000`, header title `MELTY BLOOD ACT CADENZA VER B`.
+The base/entry pair is the diagnostic signature of the original failure: the load table
+declares its RAM targets in the physical view (`0x0c02xxxx`) while the entrypoint uses the
+SH-4 P1 cached mirror (`0x8c021000`) — the same bytes on hardware (29-bit external address
+space, SH7750 HW manual §3.3). `carve_boot.py`'s entrypoint-bounds check originally compared
+the two views raw and rejected the carve (`entrypoint 0x8c021000 outside carved image
+0xc020000..0xc1a0000`); the 2026-08-10 fix masks both sides to physical (`& 0x1FFFFFFF`)
+before comparing. Calibration-guard golden hashes reproduced bit-for-bit across the fix
+(kb §10), so no battery version bump — this recovered a failure without altering any
+previously-successful carve.
+SDK strings (sidecar `guts.sdk_strings`, 500 recovered): DC Katana kernel `syStartKn Ver 2.08`
+(Mar 14 2001 build) + `AIPKN Ver 0.91`, CRI ADX audio middleware (`ADXT Ver.5.94`) — a
+direct DC-SDK-lineage signal that also feeds similarity's `sdk_overlap: partial` (§8).
 
 ## 7. Controls (axis: 100.0)
 
@@ -136,28 +141,21 @@ at line 11286);
 
 ## 8. Score computation
 
-final = memory^.50 · streaming^.25 · controls^.125 · similarity^.125 (guts dropped — no `.dat`
-— weights renormalized per spec §4.3, nominal .40/.20/.20/.10/.10 → .50/.25/·/.125/.125)
-      = 50.9^.50 · 65.3^.25 · 100.0^.125 · 20.0^.125 = **52.4 (B)**
-Similarity inputs: developer match no, SDK overlap **none**, loader match **no** → 20.0.
+final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
+      = 50.9^.40 · 65.3^.20 · 95.0^.20 · 100.0^.10 · 70.0^.10 = **66.9 (A)**
+Similarity inputs: developer match no, SDK overlap **partial**, loader match **yes** → 70.0.
 Developer match is false on its own merits — Ecole Software is not in
-`assessments/reference/similarity-reference.json`'s `makers` list (Altron / Taito) —
-independent of the carve failure. SDK overlap and loader match, by contrast, are **both**
-downstream of the same carve failure (§6): `sdk_overlap` can only be `none` with an empty
-`sdk_strings` list, and `cart_loader_match` requires `guts.dat_available` truthy regardless of
-format match, so `meltyb` being GD-ROM (matching the reference's GD-ROM format) does not save
-it the way it does for `ggxx`/`ggxxac`/`ggxxsla` (similarity 70.0 each) — this pulls `meltyb`
-down to `mbaa`'s cart-format similarity band (40.0) and below, at 20.0, purely on the missing
-carve, not a title-specific SDK difference.
+`assessments/reference/similarity-reference.json`'s `makers` list (Altron / Taito). SDK
+overlap and loader match were both recovered by the carve fix (§6): the recovered
+`sdk_strings` share entries with the reference (partial overlap), and `cart_loader_match` is
+true (GD-ROM format matching the reference, `dat_available` now truthy) — landing `meltyb`
+in the same 70.0 similarity band as `ggxx`/`ggxxac`/`ggxxsla`.
 
 ## 9. Risks & notes
 
-- The carve failure is the single biggest lever on this score: recovering a `.dat` (different
-  Ghidra pass, or an addressing fix to `carve_boot.py`'s load-entry handling for this title)
-  would both restore the guts axis and very likely lift `cart_loader_match` to true (this is a
-  GD-ROM title, format-matching the reference), pushing similarity from 20.0 toward the
-  GD-ROM-fighter norm of 70.0 — a substantially higher final score is plausible without any
-  change to the game itself. This is a measurement gap, not a porting-difficulty finding.
+- The initial 52.4 B score was a lower bound from a carve-tool measurement gap, since
+  resolved: the 2026-08-10 mirror-mask fix (§6) restored the guts axis (95.0) and lifted
+  similarity 20.0 → 70.0, moving the final to 66.9 A with no change to any captured metric.
 - VRAM is a real work item: u 1.1895 on FB-masked content needs a texture/asset-store trim to
   clear the 8 MB cap — the mildest overage of the four VRAM-bound fighters measured this
   campaign (`ggxx` u 1.5314, `mbaa` u 1.2605, `ggxxac`'s ARAM u 1.2318), but still binding.
@@ -182,3 +180,4 @@ carve, not a title-specific SDK difference.
 | Battery | Date | Final | What changed |
 |---|---|---|---|
 | v9 | 2026-08-10 | 52.4 B | initial assessment — fighter cohort, fresh v9 capture |
+| v9 | 2026-08-10 | 66.9 A | static-only rescore after the carve mirror-mask fix (`carve_boot.py` entrypoint bounds now compared in physical view, `& 0x1FFFFFFF`; calibration goldens reproduced bit-for-bit, no battery bump): guts measured for the first time (95.0 — 1.5 MiB code, 671 funcs, `eeprom_bios` only), similarity 20.0 → 70.0 (`sdk_overlap` partial incl. Katana `syStartKn`, `cart_loader_match` true); capture metrics untouched |

@@ -17,10 +17,14 @@ typedef uint64_t u64;
 
 #include "des_block.c"   // DES tables, permutate, des_generate_subkeys, des_encrypt_decrypt<>, rev64, FILENAME_LENGTH
 
-// ---- disc access: track3 raw 2352 sectors, mode1 user data at offset 16, base LBA 45000 ----
+// ---- disc access: track3 data sectors, base LBA 45000 ----
+// Sector layout follows the dump's stored format (chdman extractcd preserves it,
+// and the GDI's 4th field declares it): MODE1_RAW = 2352 bytes/sector with user
+// data at +16, MODE1 = plain 2048 (e.g. lupinsho gds-0018a vs ikaruga gdl-0010).
 static FILE* g_track = nullptr;
 static const u32 TRACK_BASE_LBA = 45000;
-static const int SECTOR_RAW = 2352, USER_OFF = 16, USER_LEN = 2048;
+static int SECTOR_RAW = 2352, USER_OFF = 16;
+static const int USER_LEN = 2048;
 
 static void read_gdrom(u32 lba, u8* dst, u32 count) {
     for (u32 i = 0; i < count; i++) {
@@ -47,7 +51,12 @@ static void find_file(const char *name, const u8 *dir_sector, u32 &file_start, u
 }
 
 int main(int argc, char** argv) {
-    if (argc != 4) { fprintf(stderr, "usage: %s <pic> <track3.bin> <out.dat>\n", argv[0]); return 1; }
+    if (argc != 4 && argc != 5) { fprintf(stderr, "usage: %s <pic> <track3.bin> <out.dat> [sectorsize 2352|2048]\n", argv[0]); return 1; }
+    if (argc == 5) {
+        SECTOR_RAW = atoi(argv[4]);
+        if (SECTOR_RAW == 2048) USER_OFF = 0;
+        else if (SECTOR_RAW != 2352) { fprintf(stderr, "unsupported sector size %s\n", argv[4]); return 1; }
+    }
     // ---- PIC: key + rom filename (RomSize >= 0x4000 "real PIC binary" branch) ----
     FILE* pf = fopen(argv[1], "rb"); if (!pf) { perror("pic"); return 1; }
     u8 pic[0x4000]; if (fread(pic, 1, 0x4000, pf) != 0x4000) { fprintf(stderr, "pic must be >=16KB\n"); return 1; } fclose(pf);

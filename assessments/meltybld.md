@@ -4,9 +4,9 @@
 
 | | |
 |---|---|
-| **Final score** | **45.3** (B) |
-| Bottom line | ARAM is the binding constraint — compacted content volume `content_total` 2,758,787 B against the 2 MB cap (u 1.3155) drags the memory axis to 37.4, even though VRAM (FB-masked fit 7,874,493 B, u 0.9387, sub-score 89.6) and main RAM (`nz_total` 15,540,720 B, u 0.9263, sub-score 90.5) both clear their caps comfortably — `region_score()`'s `min()` makes ARAM's 37.4 the memory axis, a harder bind than sibling `meltyb`'s VRAM-bound 50.9. Streaming is mid (67.5), and its re-read ratio (0.5993) is the **highest** measured anywhere in the Melty Blood family so far — above `meltyb`'s own 0.5595 and `mbaa`'s 0.5811 — strengthening the case that this is a genuine Act Cadenza-engine streaming trait rather than a one-off. Controls is a perfect 1:1 stick fit (100.0); unlike `meltyb` (Version B2), this Ver. A revision predates the 5th "shortcut" button added in the December 2006 arcade "Ver. B" update, so the game itself only drives 4 of the cabinet's 6 buttons. Guts could not be measured — the same static-scan carve failure as `meltyb`, byte-identical error string — so that axis drops (weights renormalize to .50/.25/.125/.125) and `cart_loader_match` is forced false despite this being a GD-ROM title, pulling similarity to 20.0. This is a controller-diagnosed measurement gap (§6/§9): **the final score is a lower bound** pending a carve-tool fix (SH-4 cached-mirror address normalization) and re-carve. No DC port, official or fan, exists for any Melty Blood Act Cadenza revision. |
-| Assessed | 2026-08-10 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final score** | **59.6** (B) |
+| Bottom line | ARAM is the binding constraint — compacted content volume `content_total` 2,758,787 B against the 2 MB cap (u 1.3155) drags the memory axis to 37.4, even though VRAM (FB-masked fit 7,874,493 B, u 0.9387, sub-score 89.6) and main RAM (`nz_total` 15,540,720 B, u 0.9263, sub-score 90.5) both clear their caps comfortably — `region_score()`'s `min()` makes ARAM's 37.4 the memory axis, a harder bind than sibling `meltyb`'s VRAM-bound 50.9. Streaming is mid (67.5), and its re-read ratio (0.5993) is the **highest** measured anywhere in the Melty Blood family so far — above `meltyb`'s own 0.5595 and `mbaa`'s 0.5811 — strengthening the case that this is a genuine Act Cadenza-engine streaming trait rather than a one-off. Controls is a perfect 1:1 stick fit (100.0); unlike `meltyb` (Version B2), this Ver. A revision predates the 5th "shortcut" button added in the December 2006 arcade "Ver. B" update, so the game itself only drives 4 of the cabinet's 6 buttons. Guts is clean (95.0): 1.5 MiB code, 597 functions, near-zero MMIO surface (`eeprom_bios` only) — measured after the 2026-08-10 carve mirror-mask fix recovered the `.dat` (the same mixed-view header signature as `meltyb`), lifting similarity to 70.0 (SDK overlap partial + GD-ROM loader match). No DC port, official or fan, exists for any Melty Blood Act Cadenza revision. |
+| Assessed | capture 2026-08-10 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` — guts/similarity re-scored 2026-08-10 after the carve mirror-mask fix (see History) |
 
 ## 2. Identity
 
@@ -17,7 +17,7 @@
 | Genre / format | Fighting ★ (2D versus fighter), **GD-ROM**, machine `naomigd` (`naomi.cpp` @59e7c0b line 11270 `GAME()` row for `meltybld` declares `machine=naomigd`, `input_ports=naomi`) — `rom_used` `naomi/meltybld.zip` is a GD-ROM DIMM-firmware bootstrap (BIOS zip + `.chd` pair), same format class as sibling `meltyb` (`assessments/meltyb.md` §2) |
 | Official DC port | **No.** `GAME_FORMATS.md` marks "No" for `meltybld`. This is the **original** Act Cadenza arcade release (March 2005, [Wikipedia: Melty Blood](https://en.wikipedia.org/wiki/Melty_Blood), accessed 2026-08-10) — GDL-0028C, "Ver. A", is the newest revision of that original release (following unreleased/internal GDL-0028A/0028B revision markers noted in `naomi.cpp`'s comments, both skipped in the ROM set list). The PS2 console port followed in August 2006, and that PS2 build was then used as the base for the arcade "Ver. B" update (GDL-0039, Dec 23 2006) assessed separately as `meltyb`/`meltybo`. Dreamcast never appears in any Act Cadenza port history for either revision line |
 | Community ports | None found for `meltybld`/Act Cadenza Ver. A on Dreamcast (searched 2026-08-10) — no fan/homebrew NAOMI→DC conversion of this title exists, matching the same finding already recorded for the Ver. B2 sibling `meltyb` (`assessments/meltyb.md` §2); research not repeated in full since it is the same underlying game/engine and franchise |
-| Representative choice | GDL-0028C ("Ver. A") is the newest revision of the original Act Cadenza GD-ROM release tracked in `GAME_FORMATS.md`, and covers clone `meltyblo` (GDL-0028) per the `naomi.cpp` parent link above. The later Act Cadenza "Ver. B" line (`meltyb`/`meltybo`, GDL-0039/0039A) is a separate, already-assessed `QUEUE.md` row (52.4 B) — the family is split across two representative sets because the Ver. B update is a materially different build (new 5th button, roster changes) layered on a PS2-derived base, not merely a revision stamp |
+| Representative choice | GDL-0028C ("Ver. A") is the newest revision of the original Act Cadenza GD-ROM release tracked in `GAME_FORMATS.md`, and covers clone `meltyblo` (GDL-0028) per the `naomi.cpp` parent link above. The later Act Cadenza "Ver. B" line (`meltyb`/`meltybo`, GDL-0039/0039A) is a separate, already-assessed `QUEUE.md` row (66.9 A after the carve-fix rescore) — the family is split across two representative sets because the Ver. B update is a materially different build (new 5th button, roster changes) layered on a PS2-derived base, not merely a revision stamp |
 
 ## 3. Boot & run evidence
 
@@ -97,32 +97,23 @@ relative to the other GD-ROM fighters, this strengthens — but does not confirm
 hypothesis raised in `meltyb.md` §9 that the elevated re-read ratio is a genuine Act Cadenza
 engine streaming characteristic rather than a one-off carve/measurement artifact (§9).
 
-## 6. Guts (axis: n/a — no .dat)
+## 6. Guts (axis: 95.0)
 
-No `.dat` available — the static-scan carve failed: `guts.error` = `"static scan: entrypoint
-0x8c021000 outside carved image 0xc020000..0xc1a0000"` — **byte-identical** to sibling
-`meltyb`'s carve failure (`assessments/meltyb.md` §6). Controller-diagnosed root cause (not
-re-diagnosed here): this game's header declares its entrypoint in the SH-4 cached mirror
-(0x8c021000), while `carve_boot.py`'s carve range is physical (0x0c020000-based); masked to
-physical (`& 0x1FFFFFFF` → 0x0c021000), the entry point lies *inside* the carved image. This
-is a static-scan address-normalization gap systematic to the Act Cadenza engine — both
-GD-ROM revisions assessed this campaign hit it identically — not a game defect.
-
-Consequences (score.py, `score_sidecar()` lines 221–223): `guts = None; if
-sc["guts"]["dat_available"]: guts = guts_axis(...)` — since `dat_available` is `false`, `guts`
-stays `None` and `final_score()` (lines 133–138) drops it from the weighted geometric mean,
-renormalizing `.40/.20/.20/.10/.10` to `.50/.25/·/.125/.125` (spec §4.3). The same carve
-failure also forces `similarity_axis()`'s `cart_loader_match` to `false` (`run_battery.py`'s
-`similarity()` requires `guts.get("dat_available")` truthy for a loader match) and
-`sdk_overlap` to `none` (`sdk_strings` empty — carve never reached Ghidra), pulling similarity
-to 20.0 despite `meltybld` being GD-ROM format like the anchor titles. Code bytes / functions
-/ MMIO refs / BIOS vector refs: unavailable. Flags recorded but **unscored** since
-`guts_axis()` only runs when `dat_available` is true: `eeprom_bios` (`extra_bios_classes` 0).
-
-**The final score is a lower bound.** Recovering a `.dat` (a carve-range/entrypoint-masking
-fix in `carve_boot.py`, queued as a controller follow-up) would restore the guts axis and very
-likely lift `cart_loader_match` to true, pushing similarity from 20.0 toward the GD-ROM-fighter
-norm of ~70.0 — see §9.
+Code 1,572,864 B (1.5 MiB) · functions 597 · MMIO refs: scif 0, rtc 0, g2ext 1 ·
+BIOS vector refs: none · penalties applied: `eeprom_bios` only (`extra_bios_classes` 0) → 95.0.
+Carved at base `0x0c020000`, entry `0x8c021000`, header title `MELTY BLOOD ACT CADENZA`.
+The original v9 scan failed with `guts.error` = `"static scan: entrypoint 0x8c021000 outside
+carved image 0xc020000..0xc1a0000"` — **byte-identical** to sibling `meltyb`'s failure, and
+the carve meta now shows why: the load table declares its RAM targets in the physical view
+(`0x0c02xxxx`) while the entrypoint uses the SH-4 P1 cached mirror (`0x8c021000`) — the same
+bytes on hardware (29-bit external address space, SH7750 HW manual §3.3). The 2026-08-10 fix
+masks both sides of `carve_boot.py`'s entrypoint-bounds check to physical (`& 0x1FFFFFFF`);
+calibration-guard golden hashes reproduced bit-for-bit across the fix (kb §10), so no battery
+version bump. The mixed-view header is systematic to the Act Cadenza engine — both GD-ROM
+revisions hit it identically.
+SDK strings (sidecar `guts.sdk_strings`, 497 recovered) include the game's own debug-menu
+text (`CHANGE DEBUG MODE`, `PLAY VS DEMO`, `PLAY OPENING MOVIE`) alongside shared-SDK entries
+that feed similarity's `sdk_overlap: partial` (§8).
 
 ## 7. Controls (axis: 100.0)
 
@@ -154,30 +145,23 @@ the Ver. A vs. Ver. B 5th-button distinction).
 
 ## 8. Score computation
 
-final = memory^.50 · streaming^.25 · controls^.125 · similarity^.125 (guts dropped — no `.dat`
-— weights renormalized per spec §4.3, nominal .40/.20/.20/.10/.10 → .50/.25/·/.125/.125)
-      = 37.4^.50 · 67.5^.25 · 100.0^.125 · 20.0^.125 = **45.3 (B)**
-Similarity inputs: developer match no, SDK overlap **none**, loader match **no** → 20.0.
+final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
+      = 37.4^.40 · 67.5^.20 · 95.0^.20 · 100.0^.10 · 70.0^.10 = **59.6 (B)**
+Similarity inputs: developer match no, SDK overlap **partial**, loader match **yes** → 70.0.
 Developer match is false on its own merits — Ecole Software is not in
-`assessments/reference/similarity-reference.json`'s `makers` list (Altron / Taito) —
-independent of the carve failure, same as `meltyb` (`assessments/meltyb.md` §8). SDK overlap
-and loader match are both downstream of the carve failure (§6): `sdk_overlap` can only be
-`none` with an empty `sdk_strings` list, and `cart_loader_match` requires
-`guts.dat_available` truthy regardless of format match — `meltybld` being GD-ROM (matching the
-reference's GD-ROM format) does not save it, pulling similarity to 20.0 purely on the missing
-carve, not a title-specific SDK difference.
+`assessments/reference/similarity-reference.json`'s `makers` list (Altron / Taito), same as
+`meltyb` (`assessments/meltyb.md` §8). SDK overlap and loader match were both recovered by
+the carve fix (§6), landing `meltybld` in the same 70.0 similarity band as its GD-ROM fighter
+siblings.
 
-Command run: `python3 tools/assess/score.py assessments/meltybld.metrics.json` → output
-`meltybld 45.3 B`.
+Command run: `python3 tools/assess/rescore_static.py meltybld` → output
+`meltybld: 59.6 B (guts 95.0)`.
 
 ## 9. Risks & notes
 
-- The carve failure is the single biggest lever on this score, exactly as for `meltyb`
-  (`assessments/meltyb.md` §9): recovering a `.dat` would restore the guts axis and very
-  likely lift `cart_loader_match` to true (GD-ROM format match), pushing similarity from 20.0
-  toward the GD-ROM-fighter norm of 70.0 — a substantially higher final score is plausible
-  without any change to the game itself. This is a measurement gap, not a porting-difficulty
-  finding. Root cause and fix are tracked as a controller follow-up (§6).
+- The initial 45.3 B score was a lower bound from a carve-tool measurement gap, since
+  resolved: the 2026-08-10 mirror-mask fix (§6) restored the guts axis (95.0) and lifted
+  similarity 20.0 → 70.0, moving the final to 59.6 B with no change to any captured metric.
 - ARAM is the real work item here: u 1.3155 on compacted content volume needs roughly 0.6 MB
   trimmed (downsample/ADPCM/stream, per the v7 volume-is-work ruling) to clear the 2 MB cap —
   this is the binding region for `meltybld`, unlike `meltyb` where VRAM bound instead (§4).
@@ -205,3 +189,4 @@ Command run: `python3 tools/assess/score.py assessments/meltybld.metrics.json` �
 | Battery | Date | Final | What changed |
 |---|---|---|---|
 | v9 | 2026-08-10 | 45.3 B | initial assessment — fighter cohort, fresh v9 capture; guts carve failed (mirror-address gap, lower-bound score) |
+| v9 | 2026-08-10 | 59.6 B | static-only rescore after the carve mirror-mask fix (`carve_boot.py` entrypoint bounds now compared in physical view, `& 0x1FFFFFFF`; calibration goldens reproduced bit-for-bit, no battery bump): guts measured for the first time (95.0 — 1.5 MiB code, 597 funcs, `eeprom_bios` only), similarity 20.0 → 70.0 (`sdk_overlap` partial, `cart_loader_match` true); capture metrics untouched |

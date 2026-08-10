@@ -460,16 +460,33 @@ measured main-RAM figure at its own v6 re-run, not here.
    meltybld (Act Cadenza engine, both discs) fail static scan with
    `entrypoint 0x8c021000 outside carved image 0xc020000..0xc1a0000`: the
    header entry is in the SH-4 cached mirror while the carve range is
-   physical; masked with `& 0x1FFFFFFF` the entry is in-range. Fix is a
-   normalization mask in the bounds check — pending user ruling (task #45).
+   physical (SH7750 HW manual §3.3 — 29-bit external space, P1/P2 mirrors).
+   **RESOLVED 2026-08-10 (user-approved, task #45):** `carve_boot.py`'s
+   entrypoint-bounds check now masks both sides to physical (`& 0x1FFFFFFF`)
+   before comparing; recorded meta keeps raw values, so calibration goldens
+   reproduced bit-for-bit (no battery bump). Regression test
+   `test_carve_mixed_view_entry_point`. Rescored: meltyb 52.4 B → 66.9 A,
+   meltybld 45.3 B → 59.6 B (guts 95.0 each, similarity 20 → 70).
 3. **Guts carve failure class B — GD read.** lupinsho: `no PIC produced a
-   NAOMI image … read_gdrom failed at lba 0` (netpic=1) while the same disc
-   runs fine in Flycast — the carve pipeline's own GD reader, separate
-   diagnosis needed (task #45).
+   NAOMI image … read_gdrom failed at lba 0` while the same disc runs fine
+   in Flycast. **RESOLVED 2026-08-10 (user-approved, task #45):** root cause
+   was a sector-format assumption, not the PIC and not the `netpic=1` byte
+   (red herring — the disc has a normal PVD at LBA 45016): lupinsho's CHD
+   stores plain MODE1 2048 B/sector (`chdman info` `TRACK:3 TYPE:MODE1`)
+   where `extract_dat` hardcoded 2352-raw (+16 user-data offset, the
+   MODE1_RAW format ikaruga/meltyb use), so every read hit garbage offsets
+   and the PVD walk returned zeros → bogus `read_gdrom(0)`. Fix:
+   `chd2dat.sh` passes the GDI-declared per-track sector size to
+   `extract_dat` (which now takes it as an optional 4th arg); the script
+   also rebuilds the binary when the source is newer (the old `[ -x ]`
+   check silently kept stale builds). GD golden (ikaruga) reproduced
+   bit-for-bit. Rescored: lupinsho 64.3 A → 77.1 A (guts 85.0).
 4. **Null-guts scoring path first exercised** (3 titles above): guts axis
    null → `cart_loader_match` false → similarity 20; finals are honest lower
-   bounds, documented per-title. Cosmetic: RANKING.md renders the Guts cell
-   as literal `None` — gen_tables gap, harmless.
+   bounds, documented per-title. All three recovered via the item-2/item-3
+   fixes — `rescore_static.py` (static-only, capture provenance untouched)
+   + one History row each. Cosmetic: RANKING.md renders a null Guts cell
+   as literal `None` — gen_tables gap, harmless, now moot here.
 5. **Sidecar/doc source-parity gap in finalize subagents.** Two agents cited
    2–3 controls sources in the doc §7 but appended only 1 to the sidecar's
    `controls.sources` (controller amended both). Cure: the dispatch must say
