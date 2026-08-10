@@ -443,6 +443,48 @@ pins this shape so the PIO trigger can't silently regress. gwing2's partial face
 (main-RAM axis blind despite a DMA handoff) is addressed the same way but gets its own
 measured main-RAM figure at its own v6 re-run, not here.
 
+### 4.vi Fighter/light-gun cohort lessons (2026-08-10, 15 families)
+
+1. **EEPROM-defaults prompt class (new false-G1 mechanism).** Titles with blank
+   EEPROM may idle forever on a first-boot "Press Start Button key To Start
+   Default Setting" prompt; the sparse prompt text (~32 KB VRAM content) falls
+   under the battery's 64 KiB no-render heuristic and auto-mislabels the run
+   `G1 broken: no-render-after-handoff` (ggxxrl — dump verified good, chd SHA1
+   matches MAME). Detection: all screenshots byte-identical (same md5) across
+   the whole window + tiny VRAM content on a "no-render" park. Operator
+   pressing Start at the prompt is a legitimate assist (input via normal
+   controls; ggxx precedent) and the EEPROM save persists, so one attended
+   boot immunizes all later runs. Roughly 1-in-3 of this cohort's first boots
+   prompted; the rest booted clean or auto-timed-out into attract.
+2. **Guts carve failure class A — mirror-address bounds check.** meltyb and
+   meltybld (Act Cadenza engine, both discs) fail static scan with
+   `entrypoint 0x8c021000 outside carved image 0xc020000..0xc1a0000`: the
+   header entry is in the SH-4 cached mirror while the carve range is
+   physical; masked with `& 0x1FFFFFFF` the entry is in-range. Fix is a
+   normalization mask in the bounds check — pending user ruling (task #45).
+3. **Guts carve failure class B — GD read.** lupinsho: `no PIC produced a
+   NAOMI image … read_gdrom failed at lba 0` (netpic=1) while the same disc
+   runs fine in Flycast — the carve pipeline's own GD reader, separate
+   diagnosis needed (task #45).
+4. **Null-guts scoring path first exercised** (3 titles above): guts axis
+   null → `cart_loader_match` false → similarity 20; finals are honest lower
+   bounds, documented per-title. Cosmetic: RANKING.md renders the Guts cell
+   as literal `None` — gen_tables gap, harmless.
+5. **Sidecar/doc source-parity gap in finalize subagents.** Two agents cited
+   2–3 controls sources in the doc §7 but appended only 1 to the sidecar's
+   `controls.sources` (controller amended both). Cure: the dispatch must say
+   explicitly "every doc-cited source also goes into the sidecar array" —
+   zero recurrences after that line was added.
+6. **Gun/motion titles are an ARAM-park cluster.** mazan 3.483 · mok 3.558 ·
+   ninjaslt 3.341 (+ flight sstrkfgt 3.687) — voice-heavy rail/motion games
+   carry 5–5.5 MB banks; main+VRAM clear on mok/ninjaslt (ARAM sole blocker)
+   and both carry dc_peripheral-class gun controls (DC Gun lineage via
+   Flycast maple_jvs.cpp / native Namco JYU branch) — prime unpark
+   candidates if the ARAM multiple ever softens. Consequence: the item-4
+   controls-band evidence the light-gun cohort was meant to provide mostly
+   G3-parked before controls could score; only lupinsho (64.3 A,
+   dc_peripheral 75.0) landed a scored data point.
+
 ## 5. Campaign start checklist
 
 The battery is calibrated (§3) and the queue is generated. From here the campaign is pure
@@ -878,6 +920,25 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
 
    Next checkpoint trigger: after the fighter/light-gun cohort is assessed (item 4's
    evidence), not a family count.
+
+   **Addendum (2026-08-10, same day — the cohort landed and falsified the
+   empty-band premise):** `toyfight` parked at ARAM volume-u **2.033** — the
+   first title measured inside the (1.962, 2.997) band — and a same-day
+   reproduction run confirmed it stable (4,262,853 → 4,267,829 B, +0.117%,
+   nowhere near the ±1.9% drift envelope; `assessments/toyfight.md` History).
+   The "no threshold in the gap changes any fate" argument no longer holds:
+   a gate anywhere in (2.035, 2.997] would score toyfight, whose main
+   (u 0.424) and VRAM (u 0.867) both clear. The scored/parked straddle around
+   the 2.0 line is now zerogu2 1.962 (scored, byte-stable) vs toyfight 2.033
+   (parked, ±0.12%) — both measurement-solid, so the line's *placement* is a
+   pure semantics question for the next checkpoint, with the ikaruga 4×
+   official-trim precedent still the outer bound. The cohort also added four
+   above-band parks (ninjaslt 3.341 · mazan 3.483 · mok 3.558 · sstrkfgt
+   3.687), two of which (mok, ninjaslt) are ARAM-sole-blocker with
+   dc_peripheral controls — the unpark payoff if the multiple moves. Item 4
+   (controls bands) remains data-starved: the gun cohort mostly parked before
+   controls could score (§4.vi lesson 6); only lupinsho contributed a scored
+   dc_peripheral point (75.0 band, 64.3 A).
 
 Rankings stay internally fair meanwhile — every game is measured by the same rules — but
 absolute scores near tier boundaries should be read with these two caveats in mind.
