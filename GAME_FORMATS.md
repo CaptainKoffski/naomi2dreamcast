@@ -19,11 +19,11 @@ Every ROM set in the `naomi/` library folder: format, set relationship, size, ge
 | Cartridge | 75 |
 | GD-ROM | 77 |
 | **Total sets** | **152** (16 clones) |
-| Official DC ports | **58 Yes** · 3 Partial · 91 No |
+| Official DC ports | **57 Yes** · 4 Partial · 91 No |
 | Local size | ~22 GB total (516 MB of it is images/videos/manuals) |
 | Missing discs | none — all present & hash-verified |
 
-**Triage at a glance:** ★ candidates ≈ 33 (13 puzzle + 20 shmup) · ⚠ exotic ≈ 28 (12 football-card, 4 horse-race, 3 mahjong, 3 typing, 2 quiz, 2 gambling, 1 fishing, 1 card) · fighting 29 · sports 13 · light-gun 9 · driving 7 · rhythm 6 · ? 21.
+**Triage at a glance:** ★ candidates ≈ 34 (14 puzzle + 20 shmup) · ⚠ exotic ≈ 28 (12 football-card, 4 horse-race, 3 mahjong, 3 typing, 2 quiz, 2 gambling, 1 fishing, 1 card) · fighting 29 · sports 13 · light-gun 9 · driving 7 · rhythm 6 · ? 20.
 
 ## Completeness
 
@@ -43,7 +43,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Chaos Field (Japan) (GDL-0025) | `cfield` | **GD-ROM** | parent | 142.9 MB | Shmup ★ | Yes (2004) | not assessed |
 | Cleopatra Fortune Plus (GDL-0012) | `cleoftp` | **GD-ROM** | parent | 65.8 MB | Puzzle ★ | No | **85.8** S · [assessment](assessments/cleoftp.md) |
 | Confidential Mission (GDS-0001) | `confmiss` | **GD-ROM** | parent | 126.4 MB | Light-gun | Yes (2001) | not assessed |
-| Doki Doki Idol Star Seeker (GDL-0005) | `starseek` | **GD-ROM** | parent | 37.2 MB | ? | Yes (2002) | not assessed |
+| Doki Doki Idol Star Seeker (GDL-0005) | `starseek` | **GD-ROM** | parent | 37.2 MB | Puzzle ★ | Partial | not assessed |
 | Dragon Treasure (Rev A) (GDS-0030A) | `dragntra` | **GD-ROM** | clone of `dragntr` | 142.4 MB | Medal | No | see [`dragntr`](assessments/dragntr.md) |
 | Dragon Treasure (Rev B) (GDS-0030B) | `dragntr` | **GD-ROM** | parent | 142.3 MB | Medal | No | parked G1 · [notes](assessments/dragntr.md) |
 | Dragon Treasure 2 (Rev A) (GDS-0037A) | `dragntr2` | **GD-ROM** | parent | 231.6 MB | Medal | No | parked G1 · [notes](assessments/dragntr2.md) |
@@ -193,5 +193,6 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 - **`alienfnt`** — only *Alien Front Online* reached DC (NA), a retooled online-centric version, not a straight port of this arcade game.
 - **`vonot`** (Virtual-On Oratorio Tangram) — the game reached DC (JP 1999 / US 2000), but as an **earlier revision**; this exact *ver 5.66* set shipped on Xbox 360, not DC.
 - **`suchie3`** — DC version was retitled and substantially altered (adult content removed, extra modes), Japan-only.
+- **`starseek`** — DC release was retitled *Doki Doki Idol Star Seeker Remix* (2002), which added a story mode and voice acting on top of the arcade puzzle mode — a reworked version, not a straight port. Low-priority queue candidate given the small 37.2 MB footprint.
 
 Also flagged **No** despite near-misses: `cleoftp` (only the unrelated Taito *Cleopatra Fortune* hit DC, not this NAOMI "Plus"), `sfz3ugd` (DC got base *Street Fighter Zero 3*, never the "Upper" revision), the `ggxx*` family (all went PS2/Xbox, never DC), and cancelled-but-unreleased DC ports `dygolf` / `spkrbtl` / `toyfight` / `sl2007` / `wrungp` / `wldkicks` / `dybbnao` / `illvelo`.
