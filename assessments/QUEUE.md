@@ -68,7 +68,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `rhytngk` — Rhythm Tengoku (Japan) | `rhytngk` | Rhythm | 119.9 MB | pending |
 | `shaktamb` — Shakatto Tambourine Cho Powerup Chu (2K1 AUT) (GDS-0016) | `shaktamb` | Rhythm | 180.2 MB | parked |
 | `dybb99` — Dynamite Baseball '99 (Japan, Rev B) | `dybb99` | Sports | 106.4 MB | parked |
-| `dybbnao` — Dynamite Baseball NAOMI (Japan) | `dybbnao` | Sports | 114.8 MB | pending |
+| `dybbnao` — Dynamite Baseball NAOMI (Japan) | `dybbnao` | Sports | 114.8 MB | parked |
 | `dygolf` — Virtua Golf / Dynamic Golf (Rev A) (GDS-0009A) | `dygolf` | Sports | 70.6 MB | pending |
 | `jambo` — Jambo! Safari (Rev A) | `jambo` | Sports | 31.7 MB | pending |
 | `smlg99` — World Series 99 / Super Major League 99 | `smlg99` | Sports | 109.7 MB | pending |
