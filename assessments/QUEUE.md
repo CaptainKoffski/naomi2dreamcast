@@ -42,7 +42,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `vonot` — Cyber Troopers Virtual-On: Oratorio Tangram M.S.B.S. ver 5.66 2000 Edition | `vonot` | ? | 91.6 MB | parked |
 | `alienfnt` — Alien Front (Rev T) | `alienfnt` | Action | 45.9 MB | parked |
 | `monkeyba` — Monkey Ball (GDS-0008) | `monkeyba` | Action | 82.5 MB | parked |
-| `asndynmt` — Asian Dynamite / Dynamite Deka EX | `asndynmt` | Beat-em-up | 148.0 MB | pending |
+| `asndynmt` — Asian Dynamite / Dynamite Deka EX | `asndynmt` | Beat-em-up | 148.0 MB | parked |
 | `slashout` — Slashout (GDS-0004) | `slashout` | Beat-em-up | 137.4 MB | pending |
 | `alpilot` — Airline Pilots (World, Rev B) | `alpilot` | Driving | 41.3 MB | pending |
 | `f355twn2` — Ferrari F355 Challenge 2 - International Course Edition (twin/deluxe) | `f355twn2` | Driving | 104.7 MB | pending |
