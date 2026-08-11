@@ -480,6 +480,37 @@ check both files, and confirm the closest working analog actually shares the *sa
 class/board before writing "add gameId to gate X" as the unblock — the fix may already be
 wired and the real gap lives one layer deeper.
 
+**y. Fork catalog pins a multi-revision CD/GD family to ONE disc revision under a shared
+name; child MAME set names park `emulator-exited` (mj1, 2026-08-12).** Flycast's
+`naomi_roms.cpp` catalogs some multi-revision update-disc families under a single entry
+name distinct from every MAME set name in the family: the `mj1` catalog entry
+(`naomi_roms.cpp` line 6117) is hardcoded to disc `cdp-10002b` — content-identical to
+MAME's `mj1b` (`naomi.cpp` @59e7c0b lines 10514–10524) — while the family actually owned
+is `mj1a`–`mj1e` (CDP-10002A–E) plus MAME's own true `mj1` parent (CDP-10002F), none of
+which are the catalog's `mj1` disc. Mounting any real set name (`mj1e` tried first, being
+the newest owned revision) throws `naomi_cart.cpp:218`'s `NaomiCartException("Unknown
+game")`, logged at `gui.cpp:1358` as `E[BOOT]: Unknown game` and battery-classified
+`PARKED G1 broken: emulator-exited` — indistinguishable at a glance from a real dump/PIC
+problem. **Triage rule:** on an instant `Unknown game` park for a title whose MAME entry
+has sibling ROM_STARTs (revisions/clones), grep the fork's `naomi_roms.cpp` for the
+family's game name/PIC — if a catalog entry exists under a *different* set name pinned to
+one specific disc, present the matching **owned** disc under the catalog's name: copy the
+PIC-bearing zip (identical PIC across revisions, confirmed by matching CRC) to
+`naomi/<catalog_name>.zip`, symlink `naomi/<catalog_name>/<disc>.chd` → the owned disc,
+then re-run under the catalog name. All gitignored (CLAUDE.md rule 5 — method, not bytes,
+gets committed). This produced mj1's real measurement: full 600 s run, DHCP-wait park (see
+next) instead of an instant naming-artifact exit.
+
+**mj1's DHCP-wait is a fourth `no-render-after-handoff` face: network-bring-up wait, the
+network sibling of item x's device-init wait.** Same shape as ntvmys's touch-panel wait —
+boots, runs the full window, all shots byte-identical — but the blocking screen here reads
+"DHCP error. retry." (not a device-init prompt): the game's own network stack never gets a
+lease from Flycast's (absent) virtual network and loops the retry screen forever
+(`assessments/mj1.md` §3/Gate). Unlike ntvmys, no amount of network-stack fixing would
+clear this one: the cabinet is a CRP-1231 magnetic-card terminal dialing a specific
+Sega online service retired decades ago — structural blockers (card-terminal hardware +
+dead server), not a fixable emulation gap, per `assessments/mj1.md` §Gate.
+
 ### 4.vi Fighter/light-gun cohort lessons (2026-08-10, 15 families)
 
 1. **EEPROM-defaults prompt class (new false-G1 mechanism).** Titles with blank

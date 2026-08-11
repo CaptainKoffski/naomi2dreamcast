@@ -96,7 +96,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `derbyoc` — Derby Owners Club (Japan, Rev B) | `derbyoc` | Horse-race sim ⚠ | 52.5 MB | parked |
 | `derbyoc2` — Derby Owners Club II Ver.2.1 (Japan, Rev B) | `derbyoc2` | Horse-race sim ⚠ | 118.9 MB | parked |
 | `derbyocw` — Derby Owners Club World Edition EX (Rev D) | `derbyocw` | Horse-race sim ⚠ | 46.7 MB | parked |
-| `mj1e` — Sega Yonin Uchi Mahjong MJ Network Taisen Ver. (Update Disc Ver.2.002, Japan) (CDP-10002E) | `mj1a`, `mj1b`, `mj1c`, `mj1d`, `mj1e` | Mahjong ⚠ | 75.4 MB | pending |
+| `mj1` — Sega Yonin Uchi Mahjong MJ (Update Disc Ver.1.008, Japan) (CDP-10002B) | `mj1a`, `mj1b`, `mj1c`, `mj1d`, `mj1e` | Mahjong ⚠ | 75.4 MB | parked (G1 no-render-after-handoff — DHCP-wait network terminal) |
 | `shangril` — Dengen Tenshi Taisen Janshi Shangri-la | `shangril` | Mahjong ⚠ | 98.6 MB | done |
 | `suchie3` — Idol Janshi Suchie-Pai 3 (Japan) | `suchie3` | Mahjong ⚠ | 102.3 MB | done |
 | `usagiym` — Usagi - Yamashiro Mahjong Hen (Japan) (GDL-0022) | `usagiym` | Mahjong ⚠ | 110.4 MB | done |
@@ -111,3 +111,4 @@ Exception (2026-08-06, user request): the five smallest DC-ported ★ families (
 Extension (2026-08-08, user request "next starred families to 30"): the next five smallest unassessed ★ families (`trgheart`, `puyoda`, `shikgam2`, `karous`, `trizeal` — all DC-ported, same rationale as the 2026-08-06 exception) pulled in to bring assessed families from 25 to the ~30 the kb §6 scoring-semantics checkpoint requires.
 Addition (2026-08-12, user request): `starseek` (Puzzle ★, GD-ROM) added pending — its DC-port column is `Partial`, not `Yes`, so the DC-ported exclusion that kept the other 45 not-assessed titles out of the queue doesn't cleanly apply.
 Addition (2026-08-12, Nikita folder import): `ntvmys` (Party) and the `mj1a`–`mj1e` Mahjong ⚠ family (representative `mj1e` — newest revision actually owned; MAME's real `mj1` parent, CDP-10002F, was not in the dump) added pending assessment. `anpanman2`/`anpanman2a` (Redemption/vending ⚠, new bucket) added to `GAME_FORMATS.md` but excluded here per user ruling — same "not a port target" treatment as the wccf/dragntr hardware-locked families.
+Representative override (2026-08-12): `mj1e` → `mj1`. `mj1e` isn't a Flycast catalog set name (only `mj1`, pinned to CDP-10002B/`mj1b` content, is) and parks instantly as "Unknown game"; `mj1` is the only owned content Flycast will actually boot for this family, so it replaces `mj1e` as representative (`assessments/mj1.md`).

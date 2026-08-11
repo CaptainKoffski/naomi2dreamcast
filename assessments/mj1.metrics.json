@@ -1,0 +1,112 @@
+{
+  "set": "mj1",
+  "title": "Sega Yonin Uchi Mahjong MJ Network Taisen Ver. (Update Disc Ver.3.000, Japan) (CDP-10002F)",
+  "maker": "Sega",
+  "year": "2003",
+  "format": "GD-ROM",
+  "assessed": "2026-08-12",
+  "versions": {
+    "flycast": "f014a410c",
+    "battery": "9",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/mj1.zip"
+  },
+  "boot": {
+    "ok": false,
+    "failure_class": "no-render-after-handoff",
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 20.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
+    },
+    "screenshots": [
+      "assessments/evidence/mj1/shot-060s.png",
+      "assessments/evidence/mj1/shot-121s.png",
+      "assessments/evidence/mj1/shot-182s.png",
+      "assessments/evidence/mj1/shot-243s.png",
+      "assessments/evidence/mj1/shot-304s.png",
+      "assessments/evidence/mj1/shot-365s.png",
+      "assessments/evidence/mj1/shot-426s.png",
+      "assessments/evidence/mj1/shot-487s.png",
+      "assessments/evidence/mj1/shot-548s.png",
+      "assessments/evidence/mj1/shot-609s.png"
+    ],
+    "coverage": null,
+    "watermarks_info": {
+      "main": 32770656,
+      "vram": 9711616,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "peak": 32770656,
+      "nz_total": 1588901,
+      "nz_above_cap": 37323,
+      "dma_high_water": 23656448
+    },
+    "vram": {
+      "peak": 6309884,
+      "nz_total": 31175,
+      "nz_above_cap": 0,
+      "regs_last": "isp_base=400000 isp_limit=5be4c0 ol_base=653100 ol_limit=5be5c0 fb_w_sof1=26a000 fb_w_sof2=c00000 fb_r_sof1=66a000",
+      "content_total": 18035,
+      "fb_bytes": 611840
+    },
+    "aram": {
+      "peak": 8257552,
+      "nz_above_cap": 8,
+      "content_total": 37070
+    }
+  },
+  "streaming": {
+    "dma_events": 2,
+    "total_bytes": 63456,
+    "unique_bytes": 63456,
+    "reread_ratio": 0.0,
+    "steady_mb_per_min": 0.0,
+    "short_window": false,
+    "pio_bytes": 2100096
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "skipped (--skip-static or no boot)",
+    "flags": [
+      "eeprom_bios"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "card_reader",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b line 10501 (cart-PCB comment above the mj1a-mj1/mj1 ROM_STARTs): 'uses CRP-1231 card RW connected via 838-13661 RS422/RS232C converter BD, and 2x JVS I/O boards (or one special I/O ?)'",
+      "Flycast fork core/hw/naomi/naomi_roms.cpp @f014a410c line 6115 (identical catalog comment above the 'mj1' entry)",
+      "https://github.com/GXTX/YACardEmu \u2014 Sanwa CRP-1231BR-10/LR-10NAB is a magnetic-stripe card reader/dispenser (3 data tracks, 69 B each), the same reader family used across Sega Naomi/Chihiro/Triforce network cabinets (Initial D3, WMMT, Mario Kart Arcade GP)",
+      "https://www.sega.jp/history/arcade/product/17883/ (official Sega arcade history page; via search snippet, direct fetch blocked HTTP 403 per kb \u00a74.o) \u2014 cabinet control panel is touchscreen for tile selection plus dedicated hard buttons (agari/win button called out specifically), consistent with the MJ1-era panel style",
+      "https://en.wikipedia.org/wiki/Sega_Network_Taisen_Mahjong_MJ \u2014 confirms the MJ series' satellite-terminal/national-network-ranking architecture (MJ5 later added multi-touch, implying the MJ1-era cabinet in this dump used the touchscreen+hard-button combo above)"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": "G1 broken: no-render-after-handoff",
+  "scores": null
+}

@@ -79,11 +79,11 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Quiz Keitai Q mode (GDL-0017) | `quizqgd` | **GD-ROM** | parent | 126.4 MB | Quiz ⚠ | No | parked G3 · [notes](assessments/quizqgd.md) |
 | Radirgy (Japan) (GDL-0032) | `radirgyo` | **GD-ROM** | clone of `radirgy` | 124.3 MB | Shmup ★ | Yes (2006) | not assessed |
 | Radirgy (Japan, Rev A) (GDL-0032A) | `radirgy` | **GD-ROM** | parent | 132.4 MB | Shmup ★ | Yes (2006) | not assessed |
-| Sega Yonin Uchi Mahjong MJ (Update Disc Ver.1.007, Japan) (CDP-10002A) | `mj1a` | **GD-ROM** | clone of `mj1` | 83.2 MB | Mahjong ⚠ | No | not assessed |
-| Sega Yonin Uchi Mahjong MJ (Update Disc Ver.1.008, Japan) (CDP-10002B) | `mj1b` | **GD-ROM** | clone of `mj1` | 83.4 MB | Mahjong ⚠ | No | not assessed |
-| Sega Yonin Uchi Mahjong MJ (Update Disc Ver.1.011, Japan) (CDP-10002C) | `mj1c` | **GD-ROM** | clone of `mj1` | 83.8 MB | Mahjong ⚠ | No | not assessed |
-| Sega Yonin Uchi Mahjong MJ Network Taisen Ver. (Update Disc Ver.2.000, Japan) (CDP-10002D) | `mj1d` | **GD-ROM** | clone of `mj1` | 75.4 MB | Mahjong ⚠ | No | not assessed |
-| Sega Yonin Uchi Mahjong MJ Network Taisen Ver. (Update Disc Ver.2.002, Japan) (CDP-10002E) | `mj1e` | **GD-ROM** | clone of `mj1` | 75.4 MB | Mahjong ⚠ | No | parked G1 · [notes](assessments/mj1e.md) |
+| Sega Yonin Uchi Mahjong MJ (Update Disc Ver.1.007, Japan) (CDP-10002A) | `mj1a` | **GD-ROM** | clone of `mj1` | 83.2 MB | Mahjong ⚠ | No | see [`mj1`](assessments/mj1.md) |
+| Sega Yonin Uchi Mahjong MJ (Update Disc Ver.1.008, Japan) (CDP-10002B) | `mj1b` | **GD-ROM** | clone of `mj1` | 83.4 MB | Mahjong ⚠ | No | see [`mj1`](assessments/mj1.md) |
+| Sega Yonin Uchi Mahjong MJ (Update Disc Ver.1.011, Japan) (CDP-10002C) | `mj1c` | **GD-ROM** | clone of `mj1` | 83.8 MB | Mahjong ⚠ | No | see [`mj1`](assessments/mj1.md) |
+| Sega Yonin Uchi Mahjong MJ Network Taisen Ver. (Update Disc Ver.2.000, Japan) (CDP-10002D) | `mj1d` | **GD-ROM** | clone of `mj1` | 75.4 MB | Mahjong ⚠ | No | see [`mj1`](assessments/mj1.md) |
+| Sega Yonin Uchi Mahjong MJ Network Taisen Ver. (Update Disc Ver.2.002, Japan) (CDP-10002E) | `mj1e` | **GD-ROM** | clone of `mj1` | 75.4 MB | Mahjong ⚠ | No | see [`mj1`](assessments/mj1.md) |
 | Senko no Ronde (Japan) (GDL-0030) | `senkoo` | **GD-ROM** | clone of `senko` | 215.3 MB | Shmup ★ | No | see [`senko`](assessments/senko.md) |
 | Senko no Ronde (Japan, Rev A) (GDL-0030A) | `senko` | **GD-ROM** | parent | 241.0 MB | Shmup ★ | No | **89.9** S · [assessment](assessments/senko.md) |
 | Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | **GD-ROM** | parent | 237.7 MB | Shmup ★ | No | **91.0** S · [assessment](assessments/senkosp.md) |
