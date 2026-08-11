@@ -16,18 +16,20 @@ Every ROM set in the `naomi/` library folder: format, set relationship, size, ge
 
 | | |
 |---|---|
-| Cartridge | 75 |
-| GD-ROM | 77 |
-| **Total sets** | **152** (16 clones) |
-| Official DC ports | **59 Yes** · 4 Partial · 89 No (shangril No→Yes 2026-08-11: DC T-40801M found during assessment) |
-| Local size | ~22 GB total (516 MB of it is images/videos/manuals) |
+| Cartridge | 78 |
+| GD-ROM | 82 |
+| **Total sets** | **160** (18 clones) |
+| Official DC ports | **59 Yes** · 4 Partial · 97 No (shangril No→Yes 2026-08-11: DC T-40801M found during assessment) |
+| Local size | ~23 GB total (516 MB of it is images/videos/manuals) |
 | Missing discs | none — all present & hash-verified |
 
-**Triage at a glance:** ★ candidates ≈ 36 (15 puzzle + 21 shmup) · ⚠ exotic ≈ 28 (12 football-card, 4 horse-race, 3 mahjong, 3 typing, 2 quiz, 2 gambling, 1 fishing, 1 card) · fighting 30 · sports 13 · light-gun 9 · driving 7 · rhythm 5 · beat-em-up 4 · action 3 · ? 10. (Recounted from table rows 2026-08-11 after in-assessment genre fills: shootopl ?→Sports, spkrbtl Sports→Beat-em-up; tduno2 ?→Quiz ⚠→Puzzle — user ruling 2026-08-11: right-brain mini-game machine, not a text quiz, stays out of the ⚠ lane.)
+**Triage at a glance:** ★ candidates ≈ 36 (15 puzzle + 21 shmup) · ⚠ exotic ≈ 35 (12 football-card, 4 horse-race, 8 mahjong, 3 typing, 2 quiz, 2 gambling, 2 redemption/vending, 1 fishing, 1 card) · fighting 30 · sports 13 · light-gun 9 · driving 7 · rhythm 5 · beat-em-up 4 · action 3 · ? 10. (2026-08-12: added `mj1a`–`mj1e` (Mahjong ⚠, 5 disc revisions of the same game — MAME's newest revision, CDP-10002F/Ver.3.000, was not part of this dump), `ntvmys` (Party), `anpanman2`/`anpanman2a` (Redemption/vending ⚠, new bucket — popcorn-vending cabinet needs dedicated vendor hardware + RFID) from a Nikita folder import. Recounted from table rows 2026-08-11 after in-assessment genre fills: shootopl ?→Sports, spkrbtl Sports→Beat-em-up; tduno2 ?→Quiz ⚠→Puzzle — user ruling 2026-08-11: right-brain mini-game machine, not a text quiz, stays out of the ⚠ lane.)
 
 ## Completeness
 
-**All 152 sets are complete and Flycast-runnable** — every GD-ROM set has disc + BIOS + PIC, all hash-verified against MAME. The 9 sets that were previously PIC-less (`wccf116`, `wccf1dup`, `wccf212e`, `wccf234j`, `wccf310j`, `wccf322e`, `wccf341j`, `dragntr`, `quizqgd`) were completed from their romset archives; clones `wccf331e`/`wccf331j`/`dragntra` inherit the parent zips.
+**All 160 sets are complete and Flycast-runnable** — every GD-ROM set has disc + BIOS + PIC, all hash-verified against MAME. The 9 sets that were previously PIC-less (`wccf116`, `wccf1dup`, `wccf212e`, `wccf234j`, `wccf310j`, `wccf322e`, `wccf341j`, `dragntr`, `quizqgd`) were completed from their romset archives; clones `wccf331e`/`wccf331j`/`dragntra` inherit the parent zips.
+
+**2026-08-12 Nikita import:** `mj1a`–`mj1e`, `ntvmys`, `anpanman2`/`anpanman2a` added from `~/Downloads/Nikita`, all hash-verified against MAME `naomi.cpp`. `anpanman2a` was rebuilt into a full standalone zip (shared ROMs copied from parent `anpanman2` + its unique `epr-24049a.ic11`) to match this library's one-complete-zip-per-set convention. `mj1` arrived as a single `mj1.zip` (BIOS PIC) + one folder holding all 5 discs (`cdp-10002a`–`e`); split into `mj1a`/…/`mj1e` per-set zip+folder pairs — note MAME's actual `mj1` parent (CDP-10002F, Ver.3.000, 2003) was **not** in this dump, so no `mj1` row exists; `mj1e` (Ver.2.002) is the newest revision actually owned.
 
 ## Full inventory / triage sheet
 
@@ -77,6 +79,11 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Quiz Keitai Q mode (GDL-0017) | `quizqgd` | **GD-ROM** | parent | 126.4 MB | Quiz ⚠ | No | parked G3 · [notes](assessments/quizqgd.md) |
 | Radirgy (Japan) (GDL-0032) | `radirgyo` | **GD-ROM** | clone of `radirgy` | 124.3 MB | Shmup ★ | Yes (2006) | not assessed |
 | Radirgy (Japan, Rev A) (GDL-0032A) | `radirgy` | **GD-ROM** | parent | 132.4 MB | Shmup ★ | Yes (2006) | not assessed |
+| Sega Yonin Uchi Mahjong MJ (Update Disc Ver.1.007, Japan) (CDP-10002A) | `mj1a` | **GD-ROM** | clone of `mj1` | 83.2 MB | Mahjong ⚠ | No | not assessed |
+| Sega Yonin Uchi Mahjong MJ (Update Disc Ver.1.008, Japan) (CDP-10002B) | `mj1b` | **GD-ROM** | clone of `mj1` | 83.4 MB | Mahjong ⚠ | No | not assessed |
+| Sega Yonin Uchi Mahjong MJ (Update Disc Ver.1.011, Japan) (CDP-10002C) | `mj1c` | **GD-ROM** | clone of `mj1` | 83.8 MB | Mahjong ⚠ | No | not assessed |
+| Sega Yonin Uchi Mahjong MJ Network Taisen Ver. (Update Disc Ver.2.000, Japan) (CDP-10002D) | `mj1d` | **GD-ROM** | clone of `mj1` | 75.4 MB | Mahjong ⚠ | No | not assessed |
+| Sega Yonin Uchi Mahjong MJ Network Taisen Ver. (Update Disc Ver.2.002, Japan) (CDP-10002E) | `mj1e` | **GD-ROM** | clone of `mj1` | 75.4 MB | Mahjong ⚠ | No | not assessed |
 | Senko no Ronde (Japan) (GDL-0030) | `senkoo` | **GD-ROM** | clone of `senko` | 215.3 MB | Shmup ★ | No | see [`senko`](assessments/senko.md) |
 | Senko no Ronde (Japan, Rev A) (GDL-0030A) | `senko` | **GD-ROM** | parent | 241.0 MB | Shmup ★ | No | **89.9** S · [assessment](assessments/senko.md) |
 | Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | **GD-ROM** | parent | 237.7 MB | Shmup ★ | No | **91.0** S · [assessment](assessments/senkosp.md) |
@@ -154,6 +161,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Melty Blood Actress Again Version A (Japan, Rev A) | `mbaa` | **cart** | parent | 233.9 MB | Fighting | No | **55.9** B · [assessment](assessments/mbaa.md) |
 | Mushiking The King Of Beetles - Mushiking II / III / III+ (Ver. 2.001) (World) | `mushik2e` | **cart** | parent | 72.8 MB | Card battle ⚠ | No | **70.5** A · [assessment](assessments/mushik2e.md) |
 | Ninja Assault (World, NJA2 Ver.A) | `ninjaslt` | **cart** | parent | 81.2 MB | Light-gun | No | parked G3 · [notes](assessments/ninjaslt.md) |
+| Nittere Shiki! Mirai Yosou Studio / NTV Future Forecast Studio (Japan, Rev A) | `ntvmys` | **cart** | parent | 61.4 MB | Party | No | not assessed |
 | Oinori-daimyoujin Matsuri | `oinori` | **cart** | parent | 36.4 MB | Gambling/medal ⚠ | No | parked G3 · [notes](assessments/oinori.md) |
 | OutTrigger | `otrigger` | **cart** | parent | 82.1 MB | Action | Yes (2001) | not assessed |
 | Pokasuka Ghost! (Japan) | `pokasuka` | **cart** | clone of `manicpnc` | 142.3 MB | ? | No | parked G3 · [notes](assessments/pokasuka.md) |
@@ -172,6 +180,8 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Shin Nihon Pro Wrestling Toukon Retsuden 4 Arcade Edition (Japan, TRF1 Ver.A) | `toukon4` | **cart** | parent | 217.0 MB | Fighting | Yes (1999) | not assessed |
 | Shooting Love 2007 (Japan) | `sl2007` | **cart** | parent | 109.3 MB | Light-gun | No | **86.6** S · [assessment](assessments/sl2007.md) |
 | Shootout Pool | `shootopl` | **cart** | parent | 16.6 MB | Sports | No | **79.0** A · [assessment](assessments/shootopl.md) |
+| Soreike! Anpanman Popcorn Koujou 2 (Rev A) | `anpanman2a` | **cart** | clone of `anpanman2` | 11.0 MB | Redemption/vending ⚠ | No | not assessed |
+| Soreike! Anpanman Popcorn Koujou 2 (Rev C) | `anpanman2` | **cart** | parent | 11.0 MB | Redemption/vending ⚠ | No | not assessed |
 | Spawn: In the Demon's Hand (Rev B) | `spawn` | **cart** | parent | 58.5 MB | Fighting | Yes (2000) | not assessed |
 | The House of the Dead 2 (USA) | `hotd2` | **cart** | parent | 100.2 MB | Light-gun | Yes (1999) | not assessed |
 | The Typing of the Dead (Rev A) | `totd` | **cart** | parent | 89.4 MB | Typing ⚠ | Yes (2000) | not assessed |

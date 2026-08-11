@@ -64,6 +64,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `mok` — The Maze of the Kings (GDS-0022) | `mok` | Light-gun | 140.0 MB | parked |
 | `ninjaslt` — Ninja Assault (World, NJA2 Ver.A) | `ninjaslt` | Light-gun | 81.2 MB | parked |
 | `sl2007` — Shooting Love 2007 (Japan) | `sl2007` | Light-gun | 109.3 MB | done |
+| `ntvmys` — Nittere Shiki! Mirai Yosou Studio / NTV Future Forecast Studio (Japan, Rev A) | `ntvmys` | Party | 61.4 MB | pending |
 | `crackndj` — Crackin' DJ | `crackndj` | Rhythm | 108.0 MB | done |
 | `crakndj2` — Crackin' DJ Part 2 (Japan) | `crakndj2` | Rhythm | 105.5 MB | done |
 | `rhytngk` — Rhythm Tengoku (Japan) | `rhytngk` | Rhythm | 119.9 MB | done |
@@ -93,14 +94,17 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `derbyoc` — Derby Owners Club (Japan, Rev B) | `derbyoc` | Horse-race sim ⚠ | 52.5 MB | parked |
 | `derbyoc2` — Derby Owners Club II Ver.2.1 (Japan, Rev B) | `derbyoc2` | Horse-race sim ⚠ | 118.9 MB | parked |
 | `derbyocw` — Derby Owners Club World Edition EX (Rev D) | `derbyocw` | Horse-race sim ⚠ | 46.7 MB | parked |
+| `mj1e` — Sega Yonin Uchi Mahjong MJ Network Taisen Ver. (Update Disc Ver.2.002, Japan) (CDP-10002E) | `mj1a`, `mj1b`, `mj1c`, `mj1d`, `mj1e` | Mahjong ⚠ | 75.4 MB | pending |
 | `shangril` — Dengen Tenshi Taisen Janshi Shangri-la | `shangril` | Mahjong ⚠ | 98.6 MB | done |
 | `suchie3` — Idol Janshi Suchie-Pai 3 (Japan) | `suchie3` | Mahjong ⚠ | 102.3 MB | done |
 | `usagiym` — Usagi - Yamashiro Mahjong Hen (Japan) (GDL-0022) | `usagiym` | Mahjong ⚠ | 110.4 MB | done |
 | `qmegamis` — Quiz Aa! Megami-sama ~Tatakau Tsubasa to Tomoni~ (Japan) | `qmegamis` | Quiz ⚠ | 60.0 MB | parked |
 | `quizqgd` — Quiz Keitai Q mode (GDL-0017) | `quizqgd` | Quiz ⚠ | 126.4 MB | parked |
+| `anpanman2` — Soreike! Anpanman Popcorn Koujou 2 (Rev C) | `anpanman2`, `anpanman2a` | Redemption/vending ⚠ | 11.0 MB | excluded (user 2026-08-12: popcorn-vending redemption cabinet, requires dedicated vendor-control board + RFID reader, not a port target) |
 | `keyboard` — La Keyboard (GDS-0017) | `keyboard` | Typing ⚠ | 33.6 MB | done |
 | `luptype` — Lupin The Third - The Typing (Rev A) (GDS-0021A) | `luptype` | Typing ⚠ | 153.9 MB | done |
 
 Excluded beyond official DC ports: `cleoftp` (reference — already fan-ported (`../cleopatra`)).
 Exception (2026-08-06, user request): the five smallest DC-ported ★ families (`sgtetris`, `zerogu2`, `gwing2`, `cspike`, `chocomk`) were pulled into the queue as reference/validation assessments — every never-on-DC ★ family was already done or parked, and GAME_FORMATS.md marks a `Yes` DC port as "not a reason to skip".
 Extension (2026-08-08, user request "next starred families to 30"): the next five smallest unassessed ★ families (`trgheart`, `puyoda`, `shikgam2`, `karous`, `trizeal` — all DC-ported, same rationale as the 2026-08-06 exception) pulled in to bring assessed families from 25 to the ~30 the kb §6 scoring-semantics checkpoint requires.
+Addition (2026-08-12, Nikita folder import): `ntvmys` (Party) and the `mj1a`–`mj1e` Mahjong ⚠ family (representative `mj1e` — newest revision actually owned; MAME's real `mj1` parent, CDP-10002F, was not in the dump) added pending assessment. `anpanman2`/`anpanman2a` (Redemption/vending ⚠, new bucket) added to `GAME_FORMATS.md` but excluded here per user ruling — same "not a port target" treatment as the wccf/dragntr hardware-locked families.
