@@ -183,7 +183,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Virtua Striker 2 Ver. 2000 (Rev C) | `vs2_2k` | **cart** | parent | 60.9 MB | ? | Yes (2000) | not assessed |
 | Wave Runner GP | `wrungp` | **cart** | parent | 48.1 MB | Driving | No | **37.9** C · [assessment](assessments/wrungp.md) |
 | World Kicks (World, WK2 Ver.A) | `wldkicks` | **cart** | parent | 74.3 MB | Sports | No | not assessed |
-| World Series 99 / Super Major League 99 | `smlg99` | **cart** | parent | 109.7 MB | Sports | No | not assessed |
+| World Series 99 / Super Major League 99 | `smlg99` | **cart** | parent | 109.7 MB | Sports | No | parked G3 · [notes](assessments/smlg99.md) |
 | WWF Royal Rumble | `wwfroyal` | **cart** | parent | 104.6 MB | ? | Yes (2000) | not assessed |
 | Zero Gunner 2 | `zerogu2` | **cart** | parent | 46.6 MB | Shmup ★ | Yes (2001) | **34.3** C · [assessment](assessments/zerogu2.md) |
 | Zombie Revenge (Rev A) | `zombrvn` | **cart** | parent | 97.2 MB | Beat-em-up | Yes (1999) | not assessed |

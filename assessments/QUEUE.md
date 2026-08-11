@@ -71,7 +71,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `dybbnao` — Dynamite Baseball NAOMI (Japan) | `dybbnao` | Sports | 114.8 MB | parked |
 | `dygolf` — Virtua Golf / Dynamic Golf (Rev A) (GDS-0009A) | `dygolf` | Sports | 70.6 MB | parked |
 | `jambo` — Jambo! Safari (Rev A) | `jambo` | Sports | 31.7 MB | parked |
-| `smlg99` — World Series 99 / Super Major League 99 | `smlg99` | Sports | 109.7 MB | pending |
+| `smlg99` — World Series 99 / Super Major League 99 | `smlg99` | Sports | 109.7 MB | parked |
 | `spkrbtl` — Spikers Battle (GDS-0005) | `spkrbtl` | Sports | 147.3 MB | pending |
 | `virnba` — Virtua NBA (USA) | `virnba` | Sports | 100.2 MB | pending |
 | `wldkicks` — World Kicks (World, WK2 Ver.A) | `wldkicks` | Sports | 74.3 MB | pending |
