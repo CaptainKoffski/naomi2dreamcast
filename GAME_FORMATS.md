@@ -163,7 +163,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Puyo Puyo Da! (Japan) | `puyoda` | **cart** | parent | 111.0 MB | Puzzle ★ | Yes (1999) | **81.8** S · [assessment](assessments/puyoda.md) |
 | Quiz Aa! Megami-sama ~Tatakau Tsubasa to Tomoni~ (Japan) | `qmegamis` | **cart** | parent | 60.0 MB | Quiz ⚠ | Yes (2000) | not assessed |
 | Radirgy Noa (Japan) | `radirgyn` | **cart** | parent | 107.4 MB | Shmup ★ | No | **79.0** A · [assessment](assessments/radirgyn.md) |
-| Rhythm Tengoku (Japan) | `rhytngk` | **cart** | parent | 119.9 MB | Rhythm | No | not assessed |
+| Rhythm Tengoku (Japan) | `rhytngk` | **cart** | parent | 119.9 MB | Rhythm | No | **26.7** C · [assessment](assessments/rhytngk.md) |
 | Ring Out 4x4 (Rev A) | `ringout` | **cart** | parent | 39.0 MB | ? | No | parked G3 · [notes](assessments/ringout.md) |
 | Samba de Amigo ver. 2000 (Japan) | `samba2k` | **cart** | parent | 159.5 MB | Rhythm | Yes (2000) | not assessed |
 | Sega Marine Fishing | `smarinef` | **cart** | parent | 35.6 MB | Fishing ⚠ | Yes (2000) | not assessed |

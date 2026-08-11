@@ -1,0 +1,120 @@
+{
+  "set": "rhytngk",
+  "title": "Rhythm Tengoku (Japan)",
+  "maker": "Sega / Nintendo - J.P ROOM",
+  "year": "2007",
+  "format": "cart",
+  "assessed": "2026-08-11",
+  "versions": {
+    "flycast": "f014a410c",
+    "battery": "9",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/rhytngk.zip"
+  },
+  "boot": {
+    "ok": true,
+    "failure_class": null,
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 20.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
+    },
+    "screenshots": [
+      "assessments/evidence/rhytngk/shot-060s.png",
+      "assessments/evidence/rhytngk/shot-121s.png",
+      "assessments/evidence/rhytngk/shot-182s.png",
+      "assessments/evidence/rhytngk/shot-243s.png",
+      "assessments/evidence/rhytngk/shot-304s.png",
+      "assessments/evidence/rhytngk/shot-365s.png",
+      "assessments/evidence/rhytngk/shot-426s.png",
+      "assessments/evidence/rhytngk/shot-487s.png",
+      "assessments/evidence/rhytngk/shot-548s.png",
+      "assessments/evidence/rhytngk/shot-609s.png"
+    ],
+    "coverage": "demo",
+    "watermarks_info": {
+      "main": 32528992,
+      "vram": 9692984,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "peak": 32528992,
+      "nz_total": 6906466,
+      "nz_above_cap": 19930,
+      "dma_high_water": 10542720
+    },
+    "vram": {
+      "peak": 9052160,
+      "nz_total": 2869137,
+      "nz_above_cap": 338474,
+      "regs_last": "isp_base=400000 isp_limit=4a00e0 ol_base=4d5680 ol_limit=4a01e0 fb_w_sof1=4ea000 fb_w_sof2=c00000 fb_r_sof1=ea000",
+      "content_total": 2766291,
+      "fb_bytes": 614400
+    },
+    "aram": {
+      "peak": 8257552,
+      "nz_above_cap": 2116214,
+      "content_total": 4103604
+    }
+  },
+  "streaming": {
+    "dma_events": 1018,
+    "total_bytes": 30196896,
+    "unique_bytes": 16896992,
+    "reread_ratio": 0.4404,
+    "steady_mb_per_min": 3.036,
+    "short_window": false,
+    "pio_bytes": 4343004
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "ghidra: )\nWARNING: Please consider reporting this to the maintainers of class org.apache.felix.framework.util.SecureAction\nWARNING: sun.misc.Unsafe::staticFieldOffset will be removed in a future release\n/Users/captainkoffski/AntigravityProjects/cleopatra/tools/ghidra_12.1.2_PUBLIC/support/launch.sh: line 240:  6510 Killed: 9               \"${JAVA_CMD}\" \"${VMARGS_FROM_LAUNCH_PROPS[@]}\" \"${VMARGS_FROM_LAUNCH_SH[@]}\" ${VMARGS_FROM_CALLER} -showversion -cp \"${CPATH}\" ghidra.Ghidra ${CLASSNAME} \"${ARGS[@]}\"\n",
+    "flags": [
+      "eeprom_bios"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "stick",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b GAME line 11048 (2007, machine naomim4, INPUT_PORTS 'naomi' = standard JVS 2P stick + digital buttons, line 1506)",
+      "Flycast fork core/hw/naomi/naomi_roms_input.h:548 @f014a410c \u2014 rhytngk_inputs = INPUT_2_BUTTONS(\"SHOT A\", \"SHOT B\") (2 digital buttons + dpad + start)",
+      "Flycast fork core/hw/naomi/naomi_roms.cpp:4901-4917 @f014a410c \u2014 plain JVS input entry; no rhytngk gameId hooks in naomi_cart.cpp / maple_jvs.cpp / card_reader.cpp (grepped)",
+      "https://rhythmheaven.fandom.com/wiki/Rhythm_Tengoku/Arcade \u2014 cabinet is simple A/B button play (GBA game reprogrammed for arcade)",
+      "https://en.wikipedia.org/wiki/Rhythm_Tengoku \u2014 GBA original, arcade version by Sega 2007; no Dreamcast release"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": null,
+  "scores": {
+    "memory": 11.7,
+    "streaming": 83.0,
+    "guts": null,
+    "controls": 100.0,
+    "similarity": 20.0,
+    "final": 26.7,
+    "tier": "C"
+  }
+}

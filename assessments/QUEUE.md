@@ -66,7 +66,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `sl2007` — Shooting Love 2007 (Japan) | `sl2007` | Light-gun | 109.3 MB | done |
 | `crackndj` — Crackin' DJ | `crackndj` | Rhythm | 108.0 MB | done |
 | `crakndj2` — Crackin' DJ Part 2 (Japan) | `crakndj2` | Rhythm | 105.5 MB | done |
-| `rhytngk` — Rhythm Tengoku (Japan) | `rhytngk` | Rhythm | 119.9 MB | pending |
+| `rhytngk` — Rhythm Tengoku (Japan) | `rhytngk` | Rhythm | 119.9 MB | done |
 | `shaktamb` — Shakatto Tambourine Cho Powerup Chu (2K1 AUT) (GDS-0016) | `shaktamb` | Rhythm | 180.2 MB | parked |
 | `dybb99` — Dynamite Baseball '99 (Japan, Rev B) | `dybb99` | Sports | 106.4 MB | parked |
 | `dybbnao` — Dynamite Baseball NAOMI (Japan) | `dybbnao` | Sports | 114.8 MB | parked |
