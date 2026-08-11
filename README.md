@@ -5,7 +5,7 @@ Umbrella repo for porting games from the **Sega Naomi** arcade system to the
 is memory — Naomi has far more RAM/VRAM/ARAM than a Dreamcast. So before
 porting anything, every game in the library gets a uniform **portability
 assessment**, and games are ported easiest-first. Proven reference case:
-the fan port of *Cleopatra Fortune Plus* (`../cleopatra`).
+the fan port of [*Cleopatra Fortune Plus*](https://github.com/CaptainKoffski/cfp2dreamcast).
 
 This repo stores the library inventory, the assessment method and tooling, the
 per-game assessment results, and the shared knowledge base. Individual ports
