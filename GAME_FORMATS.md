@@ -83,7 +83,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Shakatto Tambourine Cho Powerup Chu (2K1 AUT) (GDS-0016) | `shaktamb` | **GD-ROM** | parent | 180.2 MB | Rhythm | No | parked G3 · [notes](assessments/shaktamb.md) |
 | Shikigami no Shiro II / The Castle of Shikigami II (GDL-0021) | `shikgam2` | **GD-ROM** | parent | 111.1 MB | Shmup ★ | Yes (2004) | **87.7** S · [assessment](assessments/shikgam2.md) |
 | Slashout (GDS-0004) | `slashout` | **GD-ROM** | parent | 137.4 MB | Beat-em-up | No | parked G3 · [notes](assessments/slashout.md) |
-| Spikers Battle (GDS-0005) | `spkrbtl` | **GD-ROM** | parent | 147.3 MB | Sports | No | parked G3 · [notes](assessments/spkrbtl.md) |
+| Spikers Battle (GDS-0005) | `spkrbtl` | **GD-ROM** | parent | 147.3 MB | Beat-em-up | No | parked G3 · [notes](assessments/spkrbtl.md) |
 | Sports Jam (GDS-0003) | `sprtjam` | **GD-ROM** | parent | 124.4 MB | Sports | Yes (2001) | not assessed |
 | Street Fighter Zero 3 Upper (Japan) (GDL-0002) | `sfz3ugd` | **GD-ROM** | parent | 112.1 MB | Fighting | No | **89.2** S · [assessment](assessments/sfz3ugd.md) |
 | Super Shanghai 2005 (Japan) (GDL-0031) | `ss2005o` | **GD-ROM** | clone of `ss2005` | 54.2 MB | Puzzle ★ | No | see [`ss2005`](assessments/ss2005.md) |

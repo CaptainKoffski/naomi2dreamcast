@@ -44,6 +44,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `monkeyba` — Monkey Ball (GDS-0008) | `monkeyba` | Action | 82.5 MB | parked |
 | `asndynmt` — Asian Dynamite / Dynamite Deka EX | `asndynmt` | Beat-em-up | 148.0 MB | parked |
 | `slashout` — Slashout (GDS-0004) | `slashout` | Beat-em-up | 137.4 MB | parked |
+| `spkrbtl` — Spikers Battle (GDS-0005) | `spkrbtl` | Beat-em-up | 147.3 MB | parked |
 | `alpilot` — Airline Pilots (World, Rev B) | `alpilot` | Driving | 41.3 MB | parked |
 | `f355twn2` — Ferrari F355 Challenge 2 - International Course Edition (twin/deluxe) | `f355twn2` | Driving | 104.7 MB | parked |
 | `wrungp` — Wave Runner GP | `wrungp` | Driving | 48.1 MB | done |
@@ -72,7 +73,6 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `dygolf` — Virtua Golf / Dynamic Golf (Rev A) (GDS-0009A) | `dygolf` | Sports | 70.6 MB | parked |
 | `jambo` — Jambo! Safari (Rev A) | `jambo` | Sports | 31.7 MB | parked |
 | `smlg99` — World Series 99 / Super Major League 99 | `smlg99` | Sports | 109.7 MB | parked |
-| `spkrbtl` — Spikers Battle (GDS-0005) | `spkrbtl` | Sports | 147.3 MB | parked |
 | `virnba` — Virtua NBA (USA) | `virnba` | Sports | 100.2 MB | pending |
 | `wldkicks` — World Kicks (World, WK2 Ver.A) | `wldkicks` | Sports | 74.3 MB | pending |
 | `wsbbgd` — World Series Baseball / Super Major League (GDS-0010) | `wsbbgd` | Sports | 157.8 MB | pending |
