@@ -130,7 +130,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Dengen Tenshi Taisen Janshi Shangri-la | `shangril` | **cart** | parent | 98.6 MB | Mahjong ⚠ | No | not assessed |
 | Derby Owners Club (Japan, Rev B) | `derbyoc` | **cart** | parent | 52.5 MB | Horse-race sim ⚠ | No | parked G3 · [notes](assessments/derbyoc.md) |
 | Derby Owners Club 2000 Ver.2 (Japan, Rev A) | `derbyo2k` | **cart** | parent | 60.7 MB | Horse-race sim ⚠ | No | parked G3 · [notes](assessments/derbyo2k.md) |
-| Derby Owners Club II Ver.2.1 (Japan, Rev B) | `derbyoc2` | **cart** | parent | 118.9 MB | Horse-race sim ⚠ | No | not assessed |
+| Derby Owners Club II Ver.2.1 (Japan, Rev B) | `derbyoc2` | **cart** | parent | 118.9 MB | Horse-race sim ⚠ | No | parked G3 · [notes](assessments/derbyoc2.md) |
 | Derby Owners Club World Edition EX (Rev D) | `derbyocw` | **cart** | parent | 46.7 MB | Horse-race sim ⚠ | No | not assessed |
 | Dynamite Baseball '99 (Japan, Rev B) | `dybb99` | **cart** | parent | 106.4 MB | Sports | No | parked G3 · [notes](assessments/dybb99.md) |
 | Dynamite Baseball NAOMI (Japan) | `dybbnao` | **cart** | parent | 114.8 MB | Sports | No | parked G3 · [notes](assessments/dybbnao.md) |
