@@ -23,7 +23,7 @@ Every ROM set in the `naomi/` library folder: format, set relationship, size, ge
 | Local size | ~22 GB total (516 MB of it is images/videos/manuals) |
 | Missing discs | none — all present & hash-verified |
 
-**Triage at a glance:** ★ candidates ≈ 34 (14 puzzle + 20 shmup) · ⚠ exotic ≈ 28 (12 football-card, 4 horse-race, 3 mahjong, 3 typing, 2 quiz, 2 gambling, 1 fishing, 1 card) · fighting 30 · sports 13 · light-gun 9 · driving 7 · rhythm 5 · ? 20.
+**Triage at a glance:** ★ candidates ≈ 35 (14 puzzle + 21 shmup) · ⚠ exotic ≈ 29 (12 football-card, 4 horse-race, 3 mahjong, 3 typing, 3 quiz, 2 gambling, 1 fishing, 1 card) · fighting 30 · sports 13 · light-gun 9 · driving 7 · rhythm 5 · beat-em-up 4 · action 3 · ? 10. (Recounted from table rows 2026-08-11 after in-assessment genre fills: shootopl ?→Sports, tduno2 ?→Quiz ⚠, spkrbtl Sports→Beat-em-up.)
 
 ## Completeness
 

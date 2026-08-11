@@ -502,6 +502,42 @@ measured main-RAM figure at its own v6 re-run, not here.
    G3-parked before controls could score; only lupinsho (64.3 A,
    dc_peripheral 75.0) landed a scored data point.
 
+### 4.vii Non-⚠ sweep lessons (2026-08-11, 25 families)
+
+1. **Dedicated-BIOS parents park `G1 broken: emulator-exited` when only naomi.zip
+   is installed.** alpilot's MAME parent IS the `airlbios` BIOS root (epr-21801/21802,
+   naomi.cpp `MACHINE_IS_BIOS_ROOT` line 10921); without airlbios.zip both legs exit
+   instantly — `naomi_cart.cpp:201 Region 0 bios not found in airlbios` →
+   `gui.cpp:1358 E[BOOT]: Error: cannot load BIOS airlbios` in raw/stdout.log.
+   Triage rule: on any `emulator-exited` park, grep stdout.log for "cannot load
+   BIOS" before blaming the game. Install record (2026-08-11): `airlbios.zip` +
+   `f355bios.zip` copied from `~/Downloads/Naomi BIOS/` to
+   `~/Library/Application Support/Flycast/data/` AND `naomi/` (both locations
+   gitignored — BIOS dumps are copyrighted bytes, never committed). alpilot re-ran
+   clean immediately after.
+2. **Naomi multiboard titles cannot be captured on this macOS environment — vanilla
+   and fork alike.** f355twn2 face: full streaming/ARAM/main measurements (game runs
+   deep into boot) then `multiboard.cpp:391 Can't open mapped file
+   /naomi_multiboard_mem1: errno 2` → "Cannot initialize Naomi multiboard shared
+   memory" → Flycast stops; vram nz_total = 0, all 10 shots byte-identical →
+   battery labels it `no-render-after-handoff`. Control test (CLAUDE.md rule 2):
+   stock /Applications/Flycast.app 2.6, plain launch, same disc — master spawns the
+   slave process, slave times out (`multiboard.cpp:188 Time out waiting for
+   multiboard vsync. Slave 0`), then the identical errno 2 failure. Emulator/platform
+   limitation, not fork, battery env, or dump. Expect the same for every multiboard
+   set (`f355`, `f355twn`); unblock = multiboard shm working on macOS or capture on
+   another platform.
+3. **Controller-side background batteries can be killed by the harness; relaunch-on-
+   kill is the cure.** 4 kills across 27 battery invocations (alienfnt, crakndj2,
+   rhytngk ×2). First three matched "killed shortly after a finalize subagent
+   completed mid-battery" (cousin of §4.j's subagent-turn-end reaping); rhytngk's
+   second kill broke that pattern (no subagent active, capture window already
+   complete, killed during post-processing before the sidecar write). Every kill
+   left clean state (no orphan Flycast — `pgrep -x Flycast` empty; no partial
+   sidecar); relaunches ran clean for alienfnt/crakndj2. rhytngk, stopped twice in a
+   row, was treated as a possible deliberate stop and deferred rather than
+   relaunched a third time (queue status left `pending`).
+
 ## 5. Campaign start checklist
 
 The battery is calibrated (§3) and the queue is generated. From here the campaign is pure
@@ -562,6 +598,23 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
    pad-native ports — third-strongest unpark candidate), `marstv` (2026-08-03 — TWELFTH
    and earliest at 1999; peak 8 MiB but only 81,598 B nonzero above cap — see the
    divergence item 5).
+   **2026-08-11 non-⚠ sweep: 17 new G3-aram parks in one day** (all content-keyed,
+   battery v9 — volume-u in parens): `ringout` (3.684), `tduno2` (2.615 — sole
+   blocker, main 0.71/vram 0.91 fit), `vonot` (3.746 — **same-game official DC port
+   precedent**: Oratorio Tangram ver 5.45 DC 1999/2000 shipped in 2 MiB ARAM, and the
+   cart's sdk_strings contain the DC-port codebase in situ: SEGAKATANA libs,
+   VOORATAN.SYS, "M.S.B.S.VER.5.45", "Twin Stick"), `alienfnt` (3.702 — same-game DC
+   precedent #2: Alien Front Online 2001), `monkeyba` (3.637 — sole blocker, main
+   0.57/vram 0.91 fit; active 2026 Memorix101 community DC port), `asndynmt` (2.782 —
+   built on DC Dynamite Deka 2 codebase per Katana sdk_strings), `slashout` (3.756 —
+   cohort max), `alpilot` (2.958), `shaktamb` (3.245 — sole blocker), `dybb99`
+   (3.531), `dybbnao` (3.729), `dygolf` (2.921 — near-sole, Sega's own DC port
+   cancelled), `jambo` (3.468), `smlg99` (3.684), `spkrbtl` (3.355), `virnba` (3.08 —
+   all three regions over), `wsbbgd` (3.470 — sole blocker, main 0.55/vram 0.91 fit).
+   The former (1.962, 2.997) empty band now holds toyfight 2.035 / tduno2 2.615 /
+   asndynmt 2.782 / dygolf 2.921 / alpilot 2.958 / takoron 2.997. ARAM-sole-blocker
+   unpark shortlist grew by tduno2, monkeyba, shaktamb, wsbbgd (joining ausfache,
+   radirgyn, mamonoro, mok, ninjaslt).
 2. **Streaming re-read penalty may be pessimistic for small-working-set loops.** cleoftp
    measured re-read ratio 0.77 (97.8 MiB streamed / 22.8 MiB unique over 600 s of attract
    loops) → streaming axis 69 — yet the actual Cleopatra port streams fine from GD-ROM,
