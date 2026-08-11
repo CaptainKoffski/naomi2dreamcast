@@ -1366,3 +1366,39 @@ carries forward per the v4 fix 4 precedent, §7; coverage does not) — hand-
 restored on all 8 re-run sidecars this wave. Candidate FIX for a future
 battery version; RUNBOOK's existing "set coverage" after-work step covers
 it procedurally in the meantime.
+
+## 12. Library completeness vs the full MAME NAOMI catalog (2026-08-12, reference)
+
+Prompted by the Nikita import (`ntvmys`, `mj1a`–`e`, `anpanman2/2a` — found by a
+tester, not by us): the library was believed complete, so the actual coverage
+was diffed against the primary source.
+
+**Method.** All `GAME()` entries parsed from MAME `src/mame/sega/naomi.cpp`
+(local checkout `../cleopatra/tools/mame`, master @ `59e7c0b`): 314 entries
+(7 BIOS roots) vs the 160 sets in `GAME_FORMATS.md`. Sanity results: every
+table set is a valid MAME name (zero mismatches), the table fully covers
+`naomi/`, and the two special-BIOS deps are satisfied inside merged zips
+(`hotd2.zip` bundles `hod2bios` ROMs, `f355.zip` bundles `f355dlx`).
+
+**147 MAME sets absent from the library**, grouped:
+
+| Group | Sets | Notes |
+|---|---|---|
+| NAOMI 2 (different hw: Elan T&L) | 45 | VF4/Evo/Final Tuned, Initial D 1–3, Club Kart, Beach Spikers, Virtua Striker 3, King of Route 66, Wild Riders, Soul Surfer, Driving Simulator. Zero owned — de facto scope exclusion, not yet stated in GAME_FORMATS.md header. |
+| Clones of in-table parents | 46 | Extra revs/regions/protos (4× `18wheelr`, 3× `hotd2`, 4× `wldkicks`, 3× `ninjaslt`, 3× `virnba` protos, …). Library is a curated subset (keeps 18 clones), not a full-romset mirror. |
+| Alternate releases of owned games | 8 | `gundmct`/`slasho`/`vtennis`/`vtenis2c` (cart twins of GD sets), `alpilotj`, `f355twin`(+p), `manicpnc` (export twin of `pokasuka`). |
+| Non-games / service | 5 | `hopper` (SWP hopper board), DIMM firmware `ngdup23a/c/e`, `ndcfboxa` (CF-BOX). Same bucket as the tracked `wccf1dup`/`wccf2chk`. |
+| **Game families with no version owned** | **43** | See below — the only true content gaps. |
+
+**Truly missing families:** Samba De Amigo 1999 original (`samba`+2; only
+`samba2k` owned) · Touch de Uno! 1 (`tduno`; only `tduno2` owned) · Shakatto
+Tambourine GDS-0002B + Motto Norinori GDS-0013 (`shaktam`, `shaktmsp`; only
+`shaktamb` owned) · Shootout Pool Prize/The Medal (`shootpl`, `shootplm`+p;
+only `shootopl` owned) · Star Horse ×5 series, 18 sets (horse-race ⚠
+multi-board) · Mushiking ×~5 series, 12 sets (card ⚠; only `mushik2e` owned) ·
+`mj1` Ver.3.000 CDP-10002F (already noted in GAME_FORMATS.md §Completeness).
+
+**Verdict.** "Full library" is false in the collector sense but effectively
+true for the porting lane: no missing family is a ★ candidate — all gaps are
+rhythm-peripheral, touchscreen, or ⚠-exotic (horse/card/medal). Atomiswave
+lives in a separate MAME driver and was not counted as NAOMI.
