@@ -45,7 +45,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Chaos Field (Japan) (GDL-0025) | `cfield` | **GD-ROM** | parent | 142.9 MB | Shmup ★ | Yes (2004) | not assessed |
 | Cleopatra Fortune Plus (GDL-0012) | `cleoftp` | **GD-ROM** | parent | 65.8 MB | Puzzle ★ | No | **85.8** S · [assessment](assessments/cleoftp.md) |
 | Confidential Mission (GDS-0001) | `confmiss` | **GD-ROM** | parent | 126.4 MB | Light-gun | Yes (2001) | not assessed |
-| Doki Doki Idol Star Seeker (GDL-0005) | `starseek` | **GD-ROM** | parent | 37.2 MB | Puzzle ★ | Partial | not assessed |
+| Doki Doki Idol Star Seeker (GDL-0005) | `starseek` | **GD-ROM** | parent | 37.2 MB | Puzzle ★ | Partial | **79.0** A · [assessment](assessments/starseek.md) |
 | Dragon Treasure (Rev A) (GDS-0030A) | `dragntra` | **GD-ROM** | clone of `dragntr` | 142.4 MB | Medal | No | see [`dragntr`](assessments/dragntr.md) |
 | Dragon Treasure (Rev B) (GDS-0030B) | `dragntr` | **GD-ROM** | parent | 142.3 MB | Medal | No | parked G1 · [notes](assessments/dragntr.md) |
 | Dragon Treasure 2 (Rev A) (GDS-0037A) | `dragntr2` | **GD-ROM** | parent | 231.6 MB | Medal | No | parked G1 · [notes](assessments/dragntr2.md) |

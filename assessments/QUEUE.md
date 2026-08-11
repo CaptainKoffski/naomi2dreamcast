@@ -9,7 +9,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `azumanga` — Azumanga Daioh Puzzle Bobble (GDL-0018) | `azumanga` | Puzzle ★ | 86.7 MB | done |
 | `kurucham` — Kurukuru Chameleon (Japan) (GDL-0034) | `kurucham` | Puzzle ★ | 41.6 MB | done |
 | `ss2005` — Super Shanghai 2005 (Japan, Rev A) (GDL-0031A) | `ss2005`, `ss2005o` | Puzzle ★ | 63.1 MB | done |
-| `starseek` — Doki Doki Idol Star Seeker (GDL-0005) | `starseek` | Puzzle ★ | 37.2 MB | pending |
+| `starseek` — Doki Doki Idol Star Seeker (GDL-0005) | `starseek` | Puzzle ★ | 37.2 MB | done |
 | `takoron` — Noukone Puzzle Takoron (Japan) (GDL-0042) | `takoron` | Puzzle ★ | 52.6 MB | parked |
 | `tetkiwam` — Tetris Kiwamemichi (Japan) (GDL-0020) | `tetkiwam` | Puzzle ★ | 62.3 MB | done |
 | `zunou` — Touch De Zunou (Japan, Rev A) | `zunou` | Puzzle ★ | 61.9 MB | parked |
