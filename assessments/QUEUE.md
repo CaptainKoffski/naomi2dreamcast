@@ -97,7 +97,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `suchie3` — Idol Janshi Suchie-Pai 3 (Japan) | `suchie3` | Mahjong ⚠ | 102.3 MB | done |
 | `usagiym` — Usagi - Yamashiro Mahjong Hen (Japan) (GDL-0022) | `usagiym` | Mahjong ⚠ | 110.4 MB | done |
 | `qmegamis` — Quiz Aa! Megami-sama ~Tatakau Tsubasa to Tomoni~ (Japan) | `qmegamis` | Quiz ⚠ | 60.0 MB | parked |
-| `quizqgd` — Quiz Keitai Q mode (GDL-0017) | `quizqgd` | Quiz ⚠ | 126.4 MB | pending |
+| `quizqgd` — Quiz Keitai Q mode (GDL-0017) | `quizqgd` | Quiz ⚠ | 126.4 MB | parked |
 | `keyboard` — La Keyboard (GDS-0017) | `keyboard` | Typing ⚠ | 33.6 MB | pending |
 | `luptype` — Lupin The Third - The Typing (Rev A) (GDS-0021A) | `luptype` | Typing ⚠ | 153.9 MB | pending |
 

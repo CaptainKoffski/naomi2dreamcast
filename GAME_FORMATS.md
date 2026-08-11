@@ -74,7 +74,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Psyvariar 2 - The Will To Fabricate (Japan) (GDL-0024) | `psyvar2` | **GD-ROM** | parent | 136.7 MB | Shmup ★ | Yes (2004) | not assessed |
 | Puyo Pop Fever (World) (GDS-0034) | `puyofev` | **GD-ROM** | parent | 150.3 MB | Puzzle ★ | Yes (2004) | not assessed |
 | Puyo Puyo Fever (Japan) (GDS-0031) | `puyofevj` | **GD-ROM** | clone of `puyofev` | 141.1 MB | Puzzle ★ | Yes (2004) | not assessed |
-| Quiz Keitai Q mode (GDL-0017) | `quizqgd` | **GD-ROM** | parent | 126.4 MB | Quiz ⚠ | No | not assessed |
+| Quiz Keitai Q mode (GDL-0017) | `quizqgd` | **GD-ROM** | parent | 126.4 MB | Quiz ⚠ | No | parked G3 · [notes](assessments/quizqgd.md) |
 | Radirgy (Japan) (GDL-0032) | `radirgyo` | **GD-ROM** | clone of `radirgy` | 124.3 MB | Shmup ★ | Yes (2006) | not assessed |
 | Radirgy (Japan, Rev A) (GDL-0032A) | `radirgy` | **GD-ROM** | parent | 132.4 MB | Shmup ★ | Yes (2006) | not assessed |
 | Senko no Ronde (Japan) (GDL-0030) | `senkoo` | **GD-ROM** | clone of `senko` | 215.3 MB | Shmup ★ | No | see [`senko`](assessments/senko.md) |
