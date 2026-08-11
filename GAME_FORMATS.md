@@ -142,7 +142,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Guilty Gear X | `ggx` | **cart** | parent | 89.1 MB | Fighting | Yes (2000) | not assessed |
 | Gun Survivor 2 Biohazard Code: Veronica (World, BHF2 Ver.E) | `gunsur2` | **cart** | parent | 175.7 MB | Gun (3-axis) | No | **73.0** A · [assessment](assessments/gunsur2.md) |
 | Heavy Metal: Geomatrix (Rev B) | `hmgeo` | **cart** | parent | 74.4 MB | Fighting | Yes (2001) | not assessed |
-| Idol Janshi Suchie-Pai 3 (Japan) | `suchie3` | **cart** | parent | 102.3 MB | Mahjong ⚠ | Partial | not assessed |
+| Idol Janshi Suchie-Pai 3 (Japan) | `suchie3` | **cart** | parent | 102.3 MB | Mahjong ⚠ | Partial | **53.8** B · [assessment](assessments/suchie3.md) |
 | Illvelo (Illmatic Envelope) (Japan) | `illvelo` | **cart** | parent | 88.4 MB | Shmup ★ | No | **79.8** A · [assessment](assessments/illvelo.md) |
 | Inu no Osanpo / Dog Walking (Japan, Export, Rev A) | `inunoos` | **cart** | parent | 79.7 MB | Simulation | No | parked G3 · [notes](assessments/inunoos.md) |
 | Jambo! Safari (Rev A) | `jambo` | **cart** | parent | 31.7 MB | Sports | No | parked G3 · [notes](assessments/jambo.md) |
