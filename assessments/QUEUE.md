@@ -99,7 +99,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `qmegamis` — Quiz Aa! Megami-sama ~Tatakau Tsubasa to Tomoni~ (Japan) | `qmegamis` | Quiz ⚠ | 60.0 MB | parked |
 | `quizqgd` — Quiz Keitai Q mode (GDL-0017) | `quizqgd` | Quiz ⚠ | 126.4 MB | parked |
 | `keyboard` — La Keyboard (GDS-0017) | `keyboard` | Typing ⚠ | 33.6 MB | done |
-| `luptype` — Lupin The Third - The Typing (Rev A) (GDS-0021A) | `luptype` | Typing ⚠ | 153.9 MB | pending |
+| `luptype` — Lupin The Third - The Typing (Rev A) (GDS-0021A) | `luptype` | Typing ⚠ | 153.9 MB | done |
 
 Excluded beyond official DC ports: `cleoftp` (reference — already fan-ported (`../cleopatra`)).
 Exception (2026-08-06, user request): the five smallest DC-ported ★ families (`sgtetris`, `zerogu2`, `gwing2`, `cspike`, `chocomk`) were pulled into the queue as reference/validation assessments — every never-on-DC ★ family was already done or parked, and GAME_FORMATS.md marks a `Yes` DC port as "not a reason to skip".

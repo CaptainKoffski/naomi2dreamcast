@@ -60,7 +60,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | La Keyboard (GDS-0017) | `keyboard` | **GD-ROM** | parent | 33.6 MB | Typing ⚠ | No | **84.2** S · [assessment](assessments/keyboard.md) |
 | Lupin The Third - The Shooting (GDS-0018) | `lupinshoo` | **GD-ROM** | clone of `lupinsho` | 199.7 MB | Light-gun | No | see [`lupinsho`](assessments/lupinsho.md) |
 | Lupin The Third - The Shooting (Rev A) (GDS-0018A) | `lupinsho` | **GD-ROM** | parent | 190.2 MB | Light-gun | No | **77.1** A · [assessment](assessments/lupinsho.md) |
-| Lupin The Third - The Typing (Rev A) (GDS-0021A) | `luptype` | **GD-ROM** | parent | 153.9 MB | Typing ⚠ | No | not assessed |
+| Lupin The Third - The Typing (Rev A) (GDS-0021A) | `luptype` | **GD-ROM** | parent | 153.9 MB | Typing ⚠ | No | **60.6** A · [assessment](assessments/luptype.md) |
 | Melty Blood Act Cadenza (Japan) (GDL-0028) | `meltyblo` | **GD-ROM** | clone of `meltybld` | 207.1 MB | Fighting | No | see [`meltybld`](assessments/meltybld.md) |
 | Melty Blood Act Cadenza Ver. A (Japan) (GDL-0028C) | `meltybld` | **GD-ROM** | parent | 214.9 MB | Fighting | No | **59.6** B · [assessment](assessments/meltybld.md) |
 | Melty Blood Act Cadenza Version B (Japan) (GDL-0039) | `meltybo` | **GD-ROM** | clone of `meltyb` | 189.5 MB | Fighting | No | see [`meltyb`](assessments/meltyb.md) |
