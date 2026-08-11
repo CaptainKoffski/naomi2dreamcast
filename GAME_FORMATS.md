@@ -145,7 +145,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Idol Janshi Suchie-Pai 3 (Japan) | `suchie3` | **cart** | parent | 102.3 MB | Mahjong ⚠ | Partial | not assessed |
 | Illvelo (Illmatic Envelope) (Japan) | `illvelo` | **cart** | parent | 88.4 MB | Shmup ★ | No | **79.8** A · [assessment](assessments/illvelo.md) |
 | Inu no Osanpo / Dog Walking (Japan, Export, Rev A) | `inunoos` | **cart** | parent | 79.7 MB | Simulation | No | parked G3 · [notes](assessments/inunoos.md) |
-| Jambo! Safari (Rev A) | `jambo` | **cart** | parent | 31.7 MB | Sports | No | not assessed |
+| Jambo! Safari (Rev A) | `jambo` | **cart** | parent | 31.7 MB | Sports | No | parked G3 · [notes](assessments/jambo.md) |
 | Kasei Channel Mars TV (Japan) | `marstv` | **cart** | parent | 57.8 MB | Party | No | **74.6** A · [assessment](assessments/marstv.md) |
 | Kick '4' Cash (Export) | `kick4csh` | **cart** | parent | 42.6 MB | Gambling/medal ⚠ | No | not assessed |
 | Mamoru-kun wa Norowarete Shimatta! (Japan) | `mamonoro` | **cart** | parent | 146.1 MB | Shmup ★ | No | **76.7** A · [assessment](assessments/mamonoro.md) |
@@ -195,4 +195,4 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 - **`suchie3`** — DC version was retitled and substantially altered (adult content removed, extra modes), Japan-only.
 - **`starseek`** — DC release was retitled *Doki Doki Idol Star Seeker Remix* (2002), which added a story mode and voice acting on top of the arcade puzzle mode — a reworked version, not a straight port. Low-priority queue candidate given the small 37.2 MB footprint.
 
-Also flagged **No** despite near-misses: `cleoftp` (only the unrelated Taito *Cleopatra Fortune* hit DC, not this NAOMI "Plus"), `sfz3ugd` (DC got base *Street Fighter Zero 3*, never the "Upper" revision), the `ggxx*` family (all went PS2/Xbox, never DC), and cancelled-but-unreleased DC ports `dygolf` / `spkrbtl` / `toyfight` / `sl2007` / `wrungp` / `wldkicks` / `dybbnao` / `illvelo`.
+Also flagged **No** despite near-misses: `cleoftp` (only the unrelated Taito *Cleopatra Fortune* hit DC, not this NAOMI "Plus"), `sfz3ugd` (DC got base *Street Fighter Zero 3*, never the "Upper" revision), the `ggxx*` family (all went PS2/Xbox, never DC), and cancelled-but-unreleased DC ports `dygolf` / `spkrbtl` / `toyfight` / `sl2007` / `wrungp` / `wldkicks` / `dybbnao` / `illvelo` / `jambo` (ODCM UK reported a 3-in-1 "Real Life Career Series" compilation with *Brave Firefighters* and *Emergency Call Ambulance*; never released — [Wikipedia](https://en.wikipedia.org/wiki/Jambo!_Safari)).
