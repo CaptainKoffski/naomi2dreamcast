@@ -9,9 +9,11 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `azumanga` — Azumanga Daioh Puzzle Bobble (GDL-0018) | `azumanga` | Puzzle ★ | 86.7 MB | done |
 | `kurucham` — Kurukuru Chameleon (Japan) (GDL-0034) | `kurucham` | Puzzle ★ | 41.6 MB | done |
 | `ss2005` — Super Shanghai 2005 (Japan, Rev A) (GDL-0031A) | `ss2005`, `ss2005o` | Puzzle ★ | 63.1 MB | done |
+| `starseek` — Doki Doki Idol Star Seeker (GDL-0005) | `starseek` | Puzzle ★ | 37.2 MB | pending |
 | `takoron` — Noukone Puzzle Takoron (Japan) (GDL-0042) | `takoron` | Puzzle ★ | 52.6 MB | parked |
 | `tetkiwam` — Tetris Kiwamemichi (Japan) (GDL-0020) | `tetkiwam` | Puzzle ★ | 62.3 MB | done |
 | `zunou` — Touch De Zunou (Japan, Rev A) | `zunou` | Puzzle ★ | 61.9 MB | parked |
+| `ikaruga` — Ikaruga (GDL-0010) | `ikaruga` | Shmup ★ (DC 2002) | 40.5 MB | done |
 | `illvelo` — Illvelo (Illmatic Envelope) (Japan) | `illvelo` | Shmup ★ | 88.4 MB | done |
 | `radirgyn` — Radirgy Noa (Japan) | `radirgyn` | Shmup ★ | 107.4 MB | done |
 | `senko` — Senko no Ronde (Japan, Rev A) (GDL-0030A) | `senko`, `senkoo` | Shmup ★ | 241.0 MB | done |
@@ -107,4 +109,5 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 Excluded beyond official DC ports: `cleoftp` (reference — already fan-ported (`../cleopatra`)).
 Exception (2026-08-06, user request): the five smallest DC-ported ★ families (`sgtetris`, `zerogu2`, `gwing2`, `cspike`, `chocomk`) were pulled into the queue as reference/validation assessments — every never-on-DC ★ family was already done or parked, and GAME_FORMATS.md marks a `Yes` DC port as "not a reason to skip".
 Extension (2026-08-08, user request "next starred families to 30"): the next five smallest unassessed ★ families (`trgheart`, `puyoda`, `shikgam2`, `karous`, `trizeal` — all DC-ported, same rationale as the 2026-08-06 exception) pulled in to bring assessed families from 25 to the ~30 the kb §6 scoring-semantics checkpoint requires.
+Addition (2026-08-12, user request): `starseek` (Puzzle ★, GD-ROM) added pending — its DC-port column is `Partial`, not `Yes`, so the DC-ported exclusion that kept the other 45 not-assessed titles out of the queue doesn't cleanly apply.
 Addition (2026-08-12, Nikita folder import): `ntvmys` (Party) and the `mj1a`–`mj1e` Mahjong ⚠ family (representative `mj1e` — newest revision actually owned; MAME's real `mj1` parent, CDP-10002F, was not in the dump) added pending assessment. `anpanman2`/`anpanman2a` (Redemption/vending ⚠, new bucket) added to `GAME_FORMATS.md` but excluded here per user ruling — same "not a port target" treatment as the wccf/dragntr hardware-locked families.
