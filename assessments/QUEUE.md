@@ -66,7 +66,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `mok` — The Maze of the Kings (GDS-0022) | `mok` | Light-gun | 140.0 MB | parked |
 | `ninjaslt` — Ninja Assault (World, NJA2 Ver.A) | `ninjaslt` | Light-gun | 81.2 MB | parked |
 | `sl2007` — Shooting Love 2007 (Japan) | `sl2007` | Light-gun | 109.3 MB | done |
-| `ntvmys` — Nittere Shiki! Mirai Yosou Studio / NTV Future Forecast Studio (Japan, Rev A) | `ntvmys` | Party | 61.4 MB | pending |
+| `ntvmys` — Nittere Shiki! Mirai Yosou Studio / NTV Future Forecast Studio (Japan, Rev A) | `ntvmys` | Party | 61.4 MB | parked (G1 no-render-after-handoff — touch-panel device-init wait) |
 | `crackndj` — Crackin' DJ | `crackndj` | Rhythm | 108.0 MB | done |
 | `crakndj2` — Crackin' DJ Part 2 (Japan) | `crakndj2` | Rhythm | 105.5 MB | done |
 | `rhytngk` — Rhythm Tengoku (Japan) | `rhytngk` | Rhythm | 119.9 MB | done |

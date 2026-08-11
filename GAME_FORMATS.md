@@ -83,7 +83,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Sega Yonin Uchi Mahjong MJ (Update Disc Ver.1.008, Japan) (CDP-10002B) | `mj1b` | **GD-ROM** | clone of `mj1` | 83.4 MB | Mahjong ⚠ | No | not assessed |
 | Sega Yonin Uchi Mahjong MJ (Update Disc Ver.1.011, Japan) (CDP-10002C) | `mj1c` | **GD-ROM** | clone of `mj1` | 83.8 MB | Mahjong ⚠ | No | not assessed |
 | Sega Yonin Uchi Mahjong MJ Network Taisen Ver. (Update Disc Ver.2.000, Japan) (CDP-10002D) | `mj1d` | **GD-ROM** | clone of `mj1` | 75.4 MB | Mahjong ⚠ | No | not assessed |
-| Sega Yonin Uchi Mahjong MJ Network Taisen Ver. (Update Disc Ver.2.002, Japan) (CDP-10002E) | `mj1e` | **GD-ROM** | clone of `mj1` | 75.4 MB | Mahjong ⚠ | No | not assessed |
+| Sega Yonin Uchi Mahjong MJ Network Taisen Ver. (Update Disc Ver.2.002, Japan) (CDP-10002E) | `mj1e` | **GD-ROM** | clone of `mj1` | 75.4 MB | Mahjong ⚠ | No | parked G1 · [notes](assessments/mj1e.md) |
 | Senko no Ronde (Japan) (GDL-0030) | `senkoo` | **GD-ROM** | clone of `senko` | 215.3 MB | Shmup ★ | No | see [`senko`](assessments/senko.md) |
 | Senko no Ronde (Japan, Rev A) (GDL-0030A) | `senko` | **GD-ROM** | parent | 241.0 MB | Shmup ★ | No | **89.9** S · [assessment](assessments/senko.md) |
 | Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | **GD-ROM** | parent | 237.7 MB | Shmup ★ | No | **91.0** S · [assessment](assessments/senkosp.md) |
@@ -161,7 +161,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Melty Blood Actress Again Version A (Japan, Rev A) | `mbaa` | **cart** | parent | 233.9 MB | Fighting | No | **55.9** B · [assessment](assessments/mbaa.md) |
 | Mushiking The King Of Beetles - Mushiking II / III / III+ (Ver. 2.001) (World) | `mushik2e` | **cart** | parent | 72.8 MB | Card battle ⚠ | No | **70.5** A · [assessment](assessments/mushik2e.md) |
 | Ninja Assault (World, NJA2 Ver.A) | `ninjaslt` | **cart** | parent | 81.2 MB | Light-gun | No | parked G3 · [notes](assessments/ninjaslt.md) |
-| Nittere Shiki! Mirai Yosou Studio / NTV Future Forecast Studio (Japan, Rev A) | `ntvmys` | **cart** | parent | 61.4 MB | Party | No | not assessed |
+| Nittere Shiki! Mirai Yosou Studio / NTV Future Forecast Studio (Japan, Rev A) | `ntvmys` | **cart** | parent | 61.4 MB | Party | No | parked G1 · [notes](assessments/ntvmys.md) |
 | Oinori-daimyoujin Matsuri | `oinori` | **cart** | parent | 36.4 MB | Gambling/medal ⚠ | No | parked G3 · [notes](assessments/oinori.md) |
 | OutTrigger | `otrigger` | **cart** | parent | 82.1 MB | Action | Yes (2001) | not assessed |
 | Pokasuka Ghost! (Japan) | `pokasuka` | **cart** | clone of `manicpnc` | 142.3 MB | ? | No | parked G3 · [notes](assessments/pokasuka.md) |

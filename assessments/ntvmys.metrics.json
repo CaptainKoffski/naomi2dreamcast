@@ -1,0 +1,112 @@
+{
+  "set": "ntvmys",
+  "title": "Nittere Shiki! Mirai Yosou Studio / NTV Future Forecast Studio (Japan, Rev A)",
+  "maker": "Sega / NTV",
+  "year": "2000",
+  "format": "cart",
+  "assessed": "2026-08-12",
+  "versions": {
+    "flycast": "f014a410c",
+    "battery": "9",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/ntvmys.zip"
+  },
+  "boot": {
+    "ok": false,
+    "failure_class": "no-render-after-handoff",
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 20.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
+    },
+    "screenshots": [
+      "assessments/evidence/ntvmys/shot-060s.png",
+      "assessments/evidence/ntvmys/shot-121s.png",
+      "assessments/evidence/ntvmys/shot-182s.png",
+      "assessments/evidence/ntvmys/shot-243s.png",
+      "assessments/evidence/ntvmys/shot-304s.png",
+      "assessments/evidence/ntvmys/shot-365s.png",
+      "assessments/evidence/ntvmys/shot-426s.png",
+      "assessments/evidence/ntvmys/shot-487s.png",
+      "assessments/evidence/ntvmys/shot-548s.png",
+      "assessments/evidence/ntvmys/shot-609s.png"
+    ],
+    "coverage": null,
+    "watermarks_info": {
+      "main": 22020093,
+      "vram": 9692984,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "peak": 22020093,
+      "nz_total": 1479689,
+      "nz_above_cap": 11,
+      "dma_high_water": 0
+    },
+    "vram": {
+      "peak": 8388608,
+      "nz_total": 24962,
+      "nz_above_cap": 0,
+      "regs_last": "isp_base=400000 isp_limit=6fff00 ol_base=7e6c80 ol_limit=700000 fb_w_sof1=800000 fb_w_sof2=c00000 fb_r_sof1=c00000",
+      "content_total": 24962,
+      "fb_bytes": 614400
+    },
+    "aram": {
+      "peak": 32708,
+      "nz_above_cap": 0,
+      "content_total": 20
+    }
+  },
+  "streaming": {
+    "dma_events": 0,
+    "total_bytes": 0,
+    "unique_bytes": 0,
+    "reread_ratio": 0.0,
+    "steady_mb_per_min": 0.0,
+    "short_window": false,
+    "pio_bytes": 1115488
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "skipped (--skip-static or no boot)",
+    "flags": [
+      "eeprom_bios"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "pad_adaptable",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'naomi'",
+      "MAME src/mame/sega/naomi.cpp @59e7c0b cart-PCB notes line 295: 'Nittere Shiki! Mirai Yosou Studio / NTV Future Forecast Studio (Japan, Rev A) ... Require 837-13844 JVS IO with DIPSW 5 On, ELO AccuTouch-compatible touch screen controller and special printer.'",
+      "Flycast fork core/hw/maple/maple_jvs.cpp @f014a410c lines 1561-1567: gameId 'MIRAI YOSOU STUDIO' selects jvs_837_13844_touch (light_gun_count=1, absolute-pointer coordinate hack) + settings.input.lightgunGame=true -- same board class as tduno/tduno2",
+      "Flycast fork core/hw/naomi/naomi_cart.cpp @f014a410c lines 709-714: printer::init() fires for gameId 'MIRAI YOSOU STUDIO'",
+      "https://undumped.miraheze.org/wiki/Nittere_Shiki!_Mirai_Yosou_Studio (via search snippet -- direct fetch blocked HTTP 403): genre 'fortune teller', Sega, released September 2000, Naomi hardware"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": "G1 broken: no-render-after-handoff",
+  "scores": null
+}

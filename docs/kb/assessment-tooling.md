@@ -455,6 +455,31 @@ floor, the exact skew §4.q warned about); mushik2e 70.5 A is lower-bound-flavor
 Fix if more EPR-mode carts appear: teach cart2dat to decrypt only the FPR regions or
 to detect the EPR overlay and skip/handle it separately.
 
+**x. `no-render-after-handoff` has a third face: device-init wait (ntvmys, 2026-08-12).**
+Distinct from §4.k/m's headless-loop face and the multiboard-shm face (§4.vii.2): the game
+boots and runs, but blocks forever inside its own boot-time device-initialization screen
+waiting on a JVS/cabinet peripheral the fork never satisfies — a legible device prompt sits
+in every shot (ntvmys: all 10 shots byte-identical md5 `e34cf3bdcd6a47adb08d81cd1f86405e`,
+text "TOUCH PANEL INITIALIZE", `evidence/ntvmys/shot-060s.png`). Triage recipe: read the
+shots first (the prompt names the missing device), then grep the fork's per-gameId device
+init gates (`naomi_cart.cpp`'s `touchscreen::init()`/`printer::init()`/`card_reader::…`
+blocks, `maple_jvs.cpp`'s per-gameId `io_boards.push_back` branches) for the game's gameId
+string. **Caution surfaced on ntvmys: don't stop at the first matching gate.** A naive read
+of `naomi_cart.cpp:690–694` says only "POKASUKA GHOST"/"TOUCH DE ZUNO" get `touchscreen::init()`
+(the SH4-serial 837-14672 sensor board) — true, but irrelevant here: ntvmys's real cabinet
+(MAME `naomi.cpp` @59e7c0b line 295, cart-PCB notes: "requires 837-13844 JVS IO … ELO
+AccuTouch-compatible touch screen controller") uses the *other* touch technology, and
+`maple_jvs.cpp:1561–1567` already wires the matching `jvs_837_13844_touch` board (+
+`lightgunGame=true`) for `gameId == "MIRAI YOSOU STUDIO"` — the identical class the closest
+analog `tduno2` uses successfully (`assessments/tduno2.md`). So the device IS HLE'd, same as
+its working sibling, and the hang is not a missing-gate case at all — the real gap is
+downstream (the game's own JVS handshake/calibration sequence never resolves against the
+generic board response), which needs a live JVS-traffic diff against a working sibling to
+pin down, not a static grep. Lesson: when two device-init paths exist for a "touch" gameId,
+check both files, and confirm the closest working analog actually shares the *same*
+class/board before writing "add gameId to gate X" as the unblock — the fix may already be
+wired and the real gap lives one layer deeper.
+
 ### 4.vi Fighter/light-gun cohort lessons (2026-08-10, 15 families)
 
 1. **EEPROM-defaults prompt class (new false-G1 mechanism).** Titles with blank
