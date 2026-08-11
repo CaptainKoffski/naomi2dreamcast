@@ -19,7 +19,7 @@ Every ROM set in the `naomi/` library folder: format, set relationship, size, ge
 | Cartridge | 75 |
 | GD-ROM | 77 |
 | **Total sets** | **152** (16 clones) |
-| Official DC ports | **58 Yes** · 4 Partial · 90 No |
+| Official DC ports | **59 Yes** · 4 Partial · 89 No (shangril No→Yes 2026-08-11: DC T-40801M found during assessment) |
 | Local size | ~22 GB total (516 MB of it is images/videos/manuals) |
 | Missing discs | none — all present & hash-verified |
 
@@ -127,7 +127,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Dead or Alive 2 | `doa2` | **cart** | clone of `doa2m` | 113.7 MB | Fighting | Yes (2000) | not assessed |
 | Dead or Alive 2 Millennium | `doa2m` | **cart** | parent | 113.7 MB | Fighting | Yes (2000) | not assessed |
 | Death Crimson OX (USA) | `deathcox` | **cart** | parent | 62.5 MB | Light-gun | Yes (2001) | not assessed |
-| Dengen Tenshi Taisen Janshi Shangri-la | `shangril` | **cart** | parent | 98.6 MB | Mahjong ⚠ | No | not assessed |
+| Dengen Tenshi Taisen Janshi Shangri-la | `shangril` | **cart** | parent | 98.6 MB | Mahjong ⚠ | Yes (1999) | **75.9** A · [assessment](assessments/shangril.md) |
 | Derby Owners Club (Japan, Rev B) | `derbyoc` | **cart** | parent | 52.5 MB | Horse-race sim ⚠ | No | parked G3 · [notes](assessments/derbyoc.md) |
 | Derby Owners Club 2000 Ver.2 (Japan, Rev A) | `derbyo2k` | **cart** | parent | 60.7 MB | Horse-race sim ⚠ | No | parked G3 · [notes](assessments/derbyo2k.md) |
 | Derby Owners Club II Ver.2.1 (Japan, Rev B) | `derbyoc2` | **cart** | parent | 118.9 MB | Horse-race sim ⚠ | No | parked G3 · [notes](assessments/derbyoc2.md) |
