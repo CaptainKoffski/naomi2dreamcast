@@ -1,0 +1,123 @@
+{
+  "set": "mushik2e",
+  "title": "Mushiking The King Of Beetles - Mushiking II / III / III+ (Ver. 2.001) (World)",
+  "maker": "Sega",
+  "year": "2005",
+  "format": "cart",
+  "assessed": "2026-08-11",
+  "versions": {
+    "flycast": "f014a410c",
+    "battery": "9",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/mushik2e.zip"
+  },
+  "boot": {
+    "ok": true,
+    "failure_class": null,
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 20.0,
+      "aram_zeroed": true,
+      "vram_zeroed": true,
+      "main_baselined": true,
+      "trigger": "pio"
+    },
+    "screenshots": [
+      "assessments/evidence/mushik2e/shot-060s.png",
+      "assessments/evidence/mushik2e/shot-121s.png",
+      "assessments/evidence/mushik2e/shot-182s.png",
+      "assessments/evidence/mushik2e/shot-243s.png",
+      "assessments/evidence/mushik2e/shot-304s.png",
+      "assessments/evidence/mushik2e/shot-365s.png",
+      "assessments/evidence/mushik2e/shot-426s.png",
+      "assessments/evidence/mushik2e/shot-487s.png",
+      "assessments/evidence/mushik2e/shot-548s.png",
+      "assessments/evidence/mushik2e/shot-609s.png"
+    ],
+    "coverage": "demo",
+    "watermarks_info": {
+      "main": 33292352,
+      "vram": 9692984,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "peak": 33292352,
+      "nz_total": 4208384,
+      "nz_above_cap": 1900058,
+      "dma_high_water": 27542752
+    },
+    "vram": {
+      "peak": 6634783,
+      "nz_total": 1968353,
+      "nz_above_cap": 0,
+      "regs_last": "isp_base=400000 isp_limit=503920 ol_base=55a180 ol_limit=503a20 fb_w_sof1=56a000 fb_w_sof2=c00000 fb_r_sof1=16a000",
+      "content_total": 1968335,
+      "fb_bytes": 614400
+    },
+    "aram": {
+      "peak": 2097136,
+      "nz_above_cap": 0,
+      "content_total": 1293578
+    }
+  },
+  "streaming": {
+    "dma_events": 1530,
+    "total_bytes": 26208256,
+    "unique_bytes": 10967040,
+    "reread_ratio": 0.5815,
+    "steady_mb_per_min": 1.553,
+    "short_window": false,
+    "pio_bytes": 3148352
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "mushik2e: no NAOMI header at 0 or 0x800000 after decrypt (offset 0 = b'\\x02\\xde\\xddB_\\xee\\xf3U')\n",
+    "flags": [
+      "eeprom_bios"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "pad_adaptable",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b GAME line 11038 (mushik2e, machine naomim4, INPUT_PORTS 'naomi' = standard JVS digital buttons); clones mushi2eo line 11037, mushik2k line 11041",
+      "Flycast fork core/hw/naomi/naomi_cart.cpp @f014a410c lines 695-703 \u2014 'MKG TKOB' gameId -> card_reader::barcodeInit()",
+      "Flycast fork core/hw/naomi/card_reader.cpp @f014a410c lines 681-737 \u2014 BarcodeReader pipes card barcode digits + '*' over SCIF serial; insertCard()",
+      "Flycast fork core/hw/maple/maple_jvs.cpp @f014a410c lines 1249-1278 \u2014 jvs_837_13551_mushiking spoofs card-dispenser status (dispenser OK / not empty / not jammed)",
+      "Flycast fork core/hw/maple/maple_jvs.cpp @f014a410c lines 2740-2782 \u2014 MUSHIKING_CHIP_DATA RFID management chip auto-generated; mushik2e gameId 'MKG TKOB 2 JPN VER2.001-' special-cased line 2768",
+      "Flycast fork core/hw/maple/maple_cfg.cpp @f014a410c lines 248-258 \u2014 2x MDT_RFIDReaderWriter maple devices + insertRfidCard(0/1) auto-insert for 'MKG TKOB'",
+      "Flycast fork core/ui/settings_controls.cpp:279 (DC_BTN_INSERT_CARD 'Insert Card' mappable button) + core/ui/gui.cpp:647-655 (Barcode Card text field)",
+      "https://en.wikipedia.org/wiki/Mushiking:_The_King_of_Beetles \u2014 3-button rock-paper-scissors moves (Hitting/Pinching/Throwing), lengthwise-barcode cards, card dispensed per play; GBA (2005) and DS (2007) home versions only, no Dreamcast port"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": null,
+  "scores": {
+    "memory": 100.0,
+    "streaming": 78.0,
+    "guts": null,
+    "controls": 50.0,
+    "similarity": 20.0,
+    "final": 70.5,
+    "tier": "A"
+  }
+}
