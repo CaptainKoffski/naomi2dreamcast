@@ -132,7 +132,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Derby Owners Club 2000 Ver.2 (Japan, Rev A) | `derbyo2k` | **cart** | parent | 60.7 MB | Horse-race sim ⚠ | No | not assessed |
 | Derby Owners Club II Ver.2.1 (Japan, Rev B) | `derbyoc2` | **cart** | parent | 118.9 MB | Horse-race sim ⚠ | No | not assessed |
 | Derby Owners Club World Edition EX (Rev D) | `derbyocw` | **cart** | parent | 46.7 MB | Horse-race sim ⚠ | No | not assessed |
-| Dynamite Baseball '99 (Japan, Rev B) | `dybb99` | **cart** | parent | 106.4 MB | Sports | No | not assessed |
+| Dynamite Baseball '99 (Japan, Rev B) | `dybb99` | **cart** | parent | 106.4 MB | Sports | No | parked G3 · [notes](assessments/dybb99.md) |
 | Dynamite Baseball NAOMI (Japan) | `dybbnao` | **cart** | parent | 114.8 MB | Sports | No | not assessed |
 | Ferrari F355 Challenge (deluxe, no link) | `f355` | **cart** | clone of `f355dlx` | 98.4 MB | Driving | Yes (2000) | not assessed |
 | Ferrari F355 Challenge 2 - International Course Edition (twin/deluxe) | `f355twn2` | **cart** | parent | 104.7 MB | Driving | No | parked G1 · [notes](assessments/f355twn2.md) |
