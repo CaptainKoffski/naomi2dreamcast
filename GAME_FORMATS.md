@@ -111,7 +111,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | World Club Champion Football Serie A 2002-2003 Drive Checker (CDV-10007) | `wccf2chk` | **GD-ROM** | parent | 103 KB | Football-card ⚠ | No | not assessed |
 | World Club Champion Football Serie A 2002-2003 Ver.2.12 (Italy) (CDV-10002) | `wccf212e` | **GD-ROM** | parent | 490.9 MB | Football-card ⚠ | No | not assessed |
 | World Club Champion Football Serie A 2002-2003 Ver.2.34 (Japan) (CDV-10008) | `wccf234j` | **GD-ROM** | parent | 521.5 MB | Football-card ⚠ | No | not assessed |
-| World Series Baseball / Super Major League (GDS-0010) | `wsbbgd` | **GD-ROM** | parent | 157.8 MB | Sports | No | not assessed |
+| World Series Baseball / Super Major League (GDS-0010) | `wsbbgd` | **GD-ROM** | parent | 157.8 MB | Sports | No | parked G3 · [notes](assessments/wsbbgd.md) |
 | 18 Wheeler: American Pro Trucker (deluxe, Rev A) | `18wheelr` | **cart** | parent | 105.3 MB | Driving | Yes (2000) | not assessed |
 | Airline Pilots (World, Rev B) | `alpilot` | **cart** | parent | 41.3 MB | Driving | No | parked G3 · [notes](assessments/alpilot.md) |
 | Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | **cart** | parent | 75.4 MB | ? | No | **84.4** S · [assessment](assessments/ausfache.md) |

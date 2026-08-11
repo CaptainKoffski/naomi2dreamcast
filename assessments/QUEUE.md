@@ -75,7 +75,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `smlg99` — World Series 99 / Super Major League 99 | `smlg99` | Sports | 109.7 MB | parked |
 | `virnba` — Virtua NBA (USA) | `virnba` | Sports | 100.2 MB | parked |
 | `wldkicks` — World Kicks (World, WK2 Ver.A) | `wldkicks` | Sports | 74.3 MB | done |
-| `wsbbgd` — World Series Baseball / Super Major League (GDS-0010) | `wsbbgd` | Sports | 157.8 MB | pending |
+| `wsbbgd` — World Series Baseball / Super Major League (GDS-0010) | `wsbbgd` | Sports | 157.8 MB | parked |
 | `mushik2e` — Mushiking The King Of Beetles - Mushiking II / III / III+ (Ver. 2.001) (World) | `mushik2e` | Card battle ⚠ | 72.8 MB | pending |
 | `wccf116` — World Club Champion Football Serie A 2001-2002 Ver.2 (Japan) (CDP-10001C) | `wccf116` | Football-card ⚠ | 349.9 MB | excluded (user 2026-08-09: card-terminal family, not a port target) |
 | `wccf1dup` — World Club Champion Football Serie A 2001-2002 DIMM FIRM Ver.3.03 (CDP-10003) | `wccf1dup` | Football-card ⚠ | 1.0 MB | excluded (user 2026-08-09: card-terminal family, not a port target) |
