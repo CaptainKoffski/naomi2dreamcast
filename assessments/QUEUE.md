@@ -73,7 +73,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `dygolf` — Virtua Golf / Dynamic Golf (Rev A) (GDS-0009A) | `dygolf` | Sports | 70.6 MB | parked |
 | `jambo` — Jambo! Safari (Rev A) | `jambo` | Sports | 31.7 MB | parked |
 | `smlg99` — World Series 99 / Super Major League 99 | `smlg99` | Sports | 109.7 MB | parked |
-| `virnba` — Virtua NBA (USA) | `virnba` | Sports | 100.2 MB | pending |
+| `virnba` — Virtua NBA (USA) | `virnba` | Sports | 100.2 MB | parked |
 | `wldkicks` — World Kicks (World, WK2 Ver.A) | `wldkicks` | Sports | 74.3 MB | pending |
 | `wsbbgd` — World Series Baseball / Super Major League (GDS-0010) | `wsbbgd` | Sports | 157.8 MB | pending |
 | `mushik2e` — Mushiking The King Of Beetles - Mushiking II / III / III+ (Ver. 2.001) (World) | `mushik2e` | Card battle ⚠ | 72.8 MB | pending |
