@@ -161,7 +161,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Power Stone 2 | `pstone2` | **cart** | parent | 56.7 MB | ? | Yes (2000) | not assessed |
 | Project Justice / Moero! Justice Gakuen (Rev B) | `pjustic` | **cart** | parent | 126.1 MB | Fighting | Yes (2000) | not assessed |
 | Puyo Puyo Da! (Japan) | `puyoda` | **cart** | parent | 111.0 MB | Puzzle ★ | Yes (1999) | **81.8** S · [assessment](assessments/puyoda.md) |
-| Quiz Aa! Megami-sama ~Tatakau Tsubasa to Tomoni~ (Japan) | `qmegamis` | **cart** | parent | 60.0 MB | Quiz ⚠ | Yes (2000) | not assessed |
+| Quiz Aa! Megami-sama ~Tatakau Tsubasa to Tomoni~ (Japan) | `qmegamis` | **cart** | parent | 60.0 MB | Quiz ⚠ | Yes (2000) | parked G3 · [notes](assessments/qmegamis.md) |
 | Radirgy Noa (Japan) | `radirgyn` | **cart** | parent | 107.4 MB | Shmup ★ | No | **79.0** A · [assessment](assessments/radirgyn.md) |
 | Rhythm Tengoku (Japan) | `rhytngk` | **cart** | parent | 119.9 MB | Rhythm | No | **26.7** C · [assessment](assessments/rhytngk.md) |
 | Ring Out 4x4 (Rev A) | `ringout` | **cart** | parent | 39.0 MB | ? | No | parked G3 · [notes](assessments/ringout.md) |
