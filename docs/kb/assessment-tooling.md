@@ -443,6 +443,18 @@ pins this shape so the PIO trigger can't silently regress. gwing2's partial face
 (main-RAM axis blind despite a DMA handoff) is addressed the same way but gets its own
 measured main-RAM figure at its own v6 re-run, not here.
 
+**w. EPR-mode M4 hybrid carts defeat `cart2dat.py` even post-§4.q (mushik2e,
+2026-08-11).** mushik2e (840-0164) loads a 4 MiB `epr-24357.ic7` OVER offset 0 of the
+M4 flash pair ("EPR mode, overwrite FPR data" — MAME naomi.cpp @59e7c0b line 6607).
+The assembled image's head is then neither plaintext (`NAOMI` absent raw, so the
+M4-plain path is not taken) nor recoverable by the whole-ROM M4 stream decrypt:
+`cart2dat.py:160` exits `no NAOMI header at 0 or 0x800000 after decrypt`. Distinct
+from the solved §4.q bit-30 carve bug — plain M4 carts (ausfache et al.) scan fine.
+Result: `guts.dat_available = false` on a *scored* title (guts dropped + similarity
+floor, the exact skew §4.q warned about); mushik2e 70.5 A is lower-bound-flavored.
+Fix if more EPR-mode carts appear: teach cart2dat to decrypt only the FPR regions or
+to detect the EPR overlay and skip/handle it separately.
+
 ### 4.vi Fighter/light-gun cohort lessons (2026-08-10, 15 families)
 
 1. **EEPROM-defaults prompt class (new false-G1 mechanism).** Titles with blank
