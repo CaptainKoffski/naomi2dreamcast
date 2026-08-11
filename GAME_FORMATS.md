@@ -23,7 +23,7 @@ Every ROM set in the `naomi/` library folder: format, set relationship, size, ge
 | Local size | ~22 GB total (516 MB of it is images/videos/manuals) |
 | Missing discs | none — all present & hash-verified |
 
-**Triage at a glance:** ★ candidates ≈ 35 (14 puzzle + 21 shmup) · ⚠ exotic ≈ 29 (12 football-card, 4 horse-race, 3 mahjong, 3 typing, 3 quiz, 2 gambling, 1 fishing, 1 card) · fighting 30 · sports 13 · light-gun 9 · driving 7 · rhythm 5 · beat-em-up 4 · action 3 · ? 10. (Recounted from table rows 2026-08-11 after in-assessment genre fills: shootopl ?→Sports, tduno2 ?→Quiz ⚠, spkrbtl Sports→Beat-em-up.)
+**Triage at a glance:** ★ candidates ≈ 36 (15 puzzle + 21 shmup) · ⚠ exotic ≈ 28 (12 football-card, 4 horse-race, 3 mahjong, 3 typing, 2 quiz, 2 gambling, 1 fishing, 1 card) · fighting 30 · sports 13 · light-gun 9 · driving 7 · rhythm 5 · beat-em-up 4 · action 3 · ? 10. (Recounted from table rows 2026-08-11 after in-assessment genre fills: shootopl ?→Sports, spkrbtl Sports→Beat-em-up; tduno2 ?→Quiz ⚠→Puzzle — user ruling 2026-08-11: right-brain mini-game machine, not a text quiz, stays out of the ⚠ lane.)
 
 ## Completeness
 
@@ -176,7 +176,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | The House of the Dead 2 (USA) | `hotd2` | **cart** | parent | 100.2 MB | Light-gun | Yes (1999) | not assessed |
 | The Typing of the Dead (Rev A) | `totd` | **cart** | parent | 89.4 MB | Typing ⚠ | Yes (2000) | not assessed |
 | Tokyo Bus Guide (Japan, Rev A) | `tokyobus` | **cart** | parent | 81.8 MB | Driving | Yes (1999) | not assessed |
-| Touch de Uno! 2 (Japan) | `tduno2` | **cart** | parent | 49.9 MB | Quiz ⚠ | No | parked G3 · [notes](assessments/tduno2.md) |
+| Touch de Uno! 2 (Japan) | `tduno2` | **cart** | parent | 49.9 MB | Puzzle | No | parked G3 · [notes](assessments/tduno2.md) |
 | Touch De Zunou (Japan, Rev A) | `zunou` | **cart** | parent | 61.9 MB | Puzzle ★ | No | parked G1 · [notes](assessments/zunou.md) |
 | Toy Fighter | `toyfight` | **cart** | parent | 46.0 MB | Fighting | No | parked G3 · [notes](assessments/toyfight.md) |
 | Virtua NBA (USA) | `virnba` | **cart** | parent | 100.2 MB | Sports | No | parked G3 · [notes](assessments/virnba.md) |
