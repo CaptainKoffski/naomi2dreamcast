@@ -82,7 +82,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | **GD-ROM** | parent | 237.7 MB | Shmup ★ | No | **91.0** S · [assessment](assessments/senkosp.md) |
 | Shakatto Tambourine Cho Powerup Chu (2K1 AUT) (GDS-0016) | `shaktamb` | **GD-ROM** | parent | 180.2 MB | Rhythm | No | not assessed |
 | Shikigami no Shiro II / The Castle of Shikigami II (GDL-0021) | `shikgam2` | **GD-ROM** | parent | 111.1 MB | Shmup ★ | Yes (2004) | **87.7** S · [assessment](assessments/shikgam2.md) |
-| Slashout (GDS-0004) | `slashout` | **GD-ROM** | parent | 137.4 MB | Beat-em-up | No | not assessed |
+| Slashout (GDS-0004) | `slashout` | **GD-ROM** | parent | 137.4 MB | Beat-em-up | No | parked G3 · [notes](assessments/slashout.md) |
 | Spikers Battle (GDS-0005) | `spkrbtl` | **GD-ROM** | parent | 147.3 MB | Sports | No | not assessed |
 | Sports Jam (GDS-0003) | `sprtjam` | **GD-ROM** | parent | 124.4 MB | Sports | Yes (2001) | not assessed |
 | Street Fighter Zero 3 Upper (Japan) (GDL-0002) | `sfz3ugd` | **GD-ROM** | parent | 112.1 MB | Fighting | No | **89.2** S · [assessment](assessments/sfz3ugd.md) |
@@ -113,7 +113,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | World Club Champion Football Serie A 2002-2003 Ver.2.34 (Japan) (CDV-10008) | `wccf234j` | **GD-ROM** | parent | 521.5 MB | Football-card ⚠ | No | not assessed |
 | World Series Baseball / Super Major League (GDS-0010) | `wsbbgd` | **GD-ROM** | parent | 157.8 MB | Sports | No | not assessed |
 | 18 Wheeler: American Pro Trucker (deluxe, Rev A) | `18wheelr` | **cart** | parent | 105.3 MB | Driving | Yes (2000) | not assessed |
-| Airline Pilots (World, Rev B) | `alpilot` | **cart** | parent | 41.3 MB | Driving | No | not assessed |
+| Airline Pilots (World, Rev B) | `alpilot` | **cart** | parent | 41.3 MB | Driving | No | parked G1 · [notes](assessments/alpilot.md) |
 | Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | **cart** | parent | 75.4 MB | ? | No | **84.4** S · [assessment](assessments/ausfache.md) |
 | Alien Front (Rev T) | `alienfnt` | **cart** | parent | 45.9 MB | Action | Partial | parked G3 · [notes](assessments/alienfnt.md) |
 | Asian Dynamite / Dynamite Deka EX | `asndynmt` | **cart** | parent | 148.0 MB | Beat-em-up | No | parked G3 · [notes](assessments/asndynmt.md) |
