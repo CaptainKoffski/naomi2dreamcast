@@ -181,7 +181,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Toy Fighter | `toyfight` | **cart** | parent | 46.0 MB | Fighting | No | parked G3 · [notes](assessments/toyfight.md) |
 | Virtua NBA (USA) | `virnba` | **cart** | parent | 100.2 MB | Sports | No | not assessed |
 | Virtua Striker 2 Ver. 2000 (Rev C) | `vs2_2k` | **cart** | parent | 60.9 MB | ? | Yes (2000) | not assessed |
-| Wave Runner GP | `wrungp` | **cart** | parent | 48.1 MB | Driving | No | not assessed |
+| Wave Runner GP | `wrungp` | **cart** | parent | 48.1 MB | Driving | No | **37.9** C · [assessment](assessments/wrungp.md) |
 | World Kicks (World, WK2 Ver.A) | `wldkicks` | **cart** | parent | 74.3 MB | Sports | No | not assessed |
 | World Series 99 / Super Major League 99 | `smlg99` | **cart** | parent | 109.7 MB | Sports | No | not assessed |
 | WWF Royal Rumble | `wwfroyal` | **cart** | parent | 104.6 MB | ? | Yes (2000) | not assessed |
