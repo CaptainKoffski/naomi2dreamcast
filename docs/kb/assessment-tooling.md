@@ -550,6 +550,46 @@ to detect the EPR overlay and skip/handle it separately.
    row, was treated as a possible deliberate stop and deferred rather than
    relaunched a third time (queue status left `pending`).
 
+### 4.viii ⚠ sweep lessons (2026-08-11 evening, 15 families — queue emptied)
+
+1. **The battery-kill mystery of §4.vii.3 is solved: idle-session reaping.** Every
+   evening battery launched the fire-and-forget way was killed while the controller
+   session sat idle with no live subagent (rhytngk ~2.2 min in mid-capture, mushik2e
+   ~6.2 min in — 2/2, vs 4/27 in the morning sweep whose constant finalize activity
+   kept the session busy). Discriminating experiment: relaunching mushik2e and
+   holding the turn open with chained blocking `TaskOutput(block=true,
+   timeout=600000)` calls survived and completed; the pattern then ran 15/15
+   batteries clean. Rule: controller-side batteries need blocking-wait chains
+   during their window, exactly like the §4.j subagent protocol — "background +
+   idle wait" is not a safe combination anywhere. rhytngk was never being targeted;
+   its morning double-stop (§4.vii.3) retro-classifies as the same reaping.
+2. **Phantom kills: relaunching an identical command string can return a stale
+   killed task record.** The first rhytngk "relaunch" returned a task id whose
+   output file predated the launch by 9 h (the previous attempt's bytes) and
+   reported killed instantly — nothing had executed. Before counting a kill as
+   real, compare the task output file's mtime against launch time; uniquify battery
+   commands (`echo <timestamp>; python3 …`) and verify liveness ~45 s in
+   (`pgrep -x Flycast` + fresh `raw/`).
+3. **The guts step was unbounded — rhytngk's 4.2 MB boot.bin ran Ghidra >2 h CPU
+   without finishing** (107% CPU throughout: working, not hung — but 100×+ the
+   normal ~1 min). Every earlier rhytngk "post-processing hang" was this. Fix
+   (commit be4339b): `run_guts.sh` wraps analyzeHeadless in a python
+   process-group killer honoring `GUTS_TIMEOUT` (default 600 s) and clears stale
+   project locks up front; on timeout the battery takes the documented
+   guts-unavailable path (§4.w). rhytngk scored with `guts.dat_available = false`.
+4. **Satellite/payout cabinets produce degraded-but-usable captures.** oinori ran
+   its whole 600 s on the SATL-BD error screen (`SATE. 004 RAM IS BAD` — Flycast
+   HLEs only kick4csh's 837-14438 hopper board), coverage `calibration ⚠`, figures
+   lower bounds that still parked it (u 3.741). kick4csh only boots because of that
+   hopper HLE and parked `G2 controls: medal_hopper` — stake→payout IS the game
+   loop (video SWP), the first G2 of the campaign. All four Derby Owners Club sets
+   ran NO LINK standby loops (coverage `demo`, lower bounds; all parked G3-aram).
+5. **Leg-1 `emulator-exited` flakes spiked: 4/15 launches** (kick4csh, derbyo2k,
+   derbyoc2, quizqgd) vs sporadic in earlier waves; every one cleared on the
+   battery's automatic second leg. Watch the rate; if a retry ever fails too,
+   triage per §4.vii.1 (grep stdout.log for "cannot load BIOS") before blaming
+   the game.
+
 ## 5. Campaign start checklist
 
 The battery is calibrated (§3) and the queue is generated. From here the campaign is pure
@@ -627,6 +667,22 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
    asndynmt 2.782 / dygolf 2.921 / alpilot 2.958 / takoron 2.997. ARAM-sole-blocker
    unpark shortlist grew by tduno2, monkeyba, shaktamb, wsbbgd (joining ausfache,
    radirgyn, mamonoro, mok, ninjaslt).
+   **2026-08-11 ⚠ sweep: 7 more G3-aram parks** (18th–24th of the day): `oinori`
+   (3.741 — content 7,845,933 B, 3rd-hottest of the cohort; main 1.214 also over;
+   measured from a satellite error screen, so a lower bound), `qmegamis` (3.488 —
+   **sole blocker**, main 0.454/vram 0.575 fit, and **same-game official DC port
+   precedent #3**: WOW/Sega shipped the DC version 2000-11-30), `derbyo2k` (3.047),
+   `derbyoc` (3.047 — 714 B from its sequel: same engine, deterministic), `derbyoc2`
+   (2.824 — **sole blocker**, main 0.917/vram 0.696 fit), `derbyocw` (2.665 —
+   lowest of the four Derby generations, all parked), `quizqgd` (2.291 — **sole
+   blocker**, main 0.592/vram 0.826 fit; only 609,594 B over the line, the
+   second-nearest miss after toyfight). The former empty band now holds EIGHT
+   in-band parks (toyfight 2.035 · quizqgd 2.291 · tduno2 2.615 · derbyocw 2.665 ·
+   asndynmt 2.782 · derbyoc2 2.824 · dygolf 2.921 · alpilot 2.958) plus takoron
+   2.997 at its edge, and the scored side now reaches rhytngk 1.957 — the
+   distribution is continuous across the gate; nothing about 2.0 is special in the
+   data. Sole-blocker unpark shortlist adds qmegamis, quizqgd, derbyoc2. Same-game
+   official-DC-port precedents now number three: vonot, alienfnt, qmegamis.
 2. **Streaming re-read penalty may be pessimistic for small-working-set loops.** cleoftp
    measured re-read ratio 0.77 (97.8 MiB streamed / 22.8 MiB unique over 600 s of attract
    loops) → streaming axis 69 — yet the actual Cleopatra port streams fine from GD-ROM,
