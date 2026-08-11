@@ -95,7 +95,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `derbyocw` — Derby Owners Club World Edition EX (Rev D) | `derbyocw` | Horse-race sim ⚠ | 46.7 MB | parked |
 | `shangril` — Dengen Tenshi Taisen Janshi Shangri-la | `shangril` | Mahjong ⚠ | 98.6 MB | done |
 | `suchie3` — Idol Janshi Suchie-Pai 3 (Japan) | `suchie3` | Mahjong ⚠ | 102.3 MB | done |
-| `usagiym` — Usagi - Yamashiro Mahjong Hen (Japan) (GDL-0022) | `usagiym` | Mahjong ⚠ | 110.4 MB | pending |
+| `usagiym` — Usagi - Yamashiro Mahjong Hen (Japan) (GDL-0022) | `usagiym` | Mahjong ⚠ | 110.4 MB | done |
 | `qmegamis` — Quiz Aa! Megami-sama ~Tatakau Tsubasa to Tomoni~ (Japan) | `qmegamis` | Quiz ⚠ | 60.0 MB | pending |
 | `quizqgd` — Quiz Keitai Q mode (GDL-0017) | `quizqgd` | Quiz ⚠ | 126.4 MB | pending |
 | `keyboard` — La Keyboard (GDS-0017) | `keyboard` | Typing ⚠ | 33.6 MB | pending |

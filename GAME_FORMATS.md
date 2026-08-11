@@ -94,7 +94,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Trigger Heart Exelica Ver.A (Japan) (GDL-0036A) | `trgheart` | **GD-ROM** | parent | 91.6 MB | Shmup ★ | Yes (2007) | **86.5** S · [assessment](assessments/trgheart.md) |
 | Trizeal (Japan) (GDL-0026) | `trizeal` | **GD-ROM** | parent | 129.4 MB | Shmup ★ | Yes (2005) | **72.5** A · [assessment](assessments/trizeal.md) |
 | Under Defeat (Japan) (GDL-0035) | `undefeat` | **GD-ROM** | parent | 150.9 MB | Shmup ★ | Yes (2006) | not assessed |
-| Usagi - Yamashiro Mahjong Hen (Japan) (GDL-0022) | `usagiym` | **GD-ROM** | parent | 110.4 MB | Mahjong ⚠ | No | not assessed |
+| Usagi - Yamashiro Mahjong Hen (Japan) (GDL-0022) | `usagiym` | **GD-ROM** | parent | 110.4 MB | Mahjong ⚠ | No | **50.7** B · [assessment](assessments/usagiym.md) |
 | Virtua Athletics / Virtua Athlete (GDS-0019) | `vathlete` | **GD-ROM** | parent | 86.3 MB | Sports | Yes (2000) | not assessed |
 | Virtua Golf / Dynamic Golf (Rev A) (GDS-0009A) | `dygolf` | **GD-ROM** | parent | 70.6 MB | Sports | No | parked G3 · [notes](assessments/dygolf.md) |
 | Virtua Tennis / Power Smash (GDS-0011) | `vtennisg` | **GD-ROM** | parent | 52.5 MB | Sports | Yes (2000) | not assessed |
