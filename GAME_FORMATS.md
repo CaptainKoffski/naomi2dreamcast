@@ -113,7 +113,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | World Club Champion Football Serie A 2002-2003 Ver.2.34 (Japan) (CDV-10008) | `wccf234j` | **GD-ROM** | parent | 521.5 MB | Football-card ⚠ | No | not assessed |
 | World Series Baseball / Super Major League (GDS-0010) | `wsbbgd` | **GD-ROM** | parent | 157.8 MB | Sports | No | not assessed |
 | 18 Wheeler: American Pro Trucker (deluxe, Rev A) | `18wheelr` | **cart** | parent | 105.3 MB | Driving | Yes (2000) | not assessed |
-| Airline Pilots (World, Rev B) | `alpilot` | **cart** | parent | 41.3 MB | Driving | No | parked G1 · [notes](assessments/alpilot.md) |
+| Airline Pilots (World, Rev B) | `alpilot` | **cart** | parent | 41.3 MB | Driving | No | parked G3 · [notes](assessments/alpilot.md) |
 | Akatsuki Blitzkampf Ausf. Achse (Japan) | `ausfache` | **cart** | parent | 75.4 MB | ? | No | **84.4** S · [assessment](assessments/ausfache.md) |
 | Alien Front (Rev T) | `alienfnt` | **cart** | parent | 45.9 MB | Action | Partial | parked G3 · [notes](assessments/alienfnt.md) |
 | Asian Dynamite / Dynamite Deka EX | `asndynmt` | **cart** | parent | 148.0 MB | Beat-em-up | No | parked G3 · [notes](assessments/asndynmt.md) |
