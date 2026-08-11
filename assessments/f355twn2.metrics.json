@@ -1,0 +1,109 @@
+{
+  "set": "f355twn2",
+  "title": "Ferrari F355 Challenge 2 - International Course Edition (twin/deluxe)",
+  "maker": "Sega",
+  "year": "2001",
+  "format": "cart",
+  "assessed": "2026-08-11",
+  "versions": {
+    "flycast": "f014a410c",
+    "battery": "9",
+    "ghidra": "12.1.2_PUBLIC",
+    "mame_src": "59e7c0b"
+  },
+  "params": {
+    "capture_s": 600,
+    "steady_after_s": 120,
+    "shot_interval_s": 60,
+    "boot_timeout_s": 120,
+    "rom_used": "naomi/f355twn2.zip"
+  },
+  "boot": {
+    "ok": false,
+    "failure_class": "no-render-after-handoff",
+    "mame_not_working": false
+  },
+  "capture": {
+    "handoff": {
+      "seen": true,
+      "t": 60.1,
+      "aram_zeroed": false,
+      "vram_zeroed": false,
+      "main_baselined": false,
+      "trigger": null
+    },
+    "screenshots": [
+      "assessments/evidence/f355twn2/shot-060s.png",
+      "assessments/evidence/f355twn2/shot-121s.png",
+      "assessments/evidence/f355twn2/shot-182s.png",
+      "assessments/evidence/f355twn2/shot-243s.png",
+      "assessments/evidence/f355twn2/shot-304s.png",
+      "assessments/evidence/f355twn2/shot-365s.png",
+      "assessments/evidence/f355twn2/shot-426s.png",
+      "assessments/evidence/f355twn2/shot-488s.png",
+      "assessments/evidence/f355twn2/shot-549s.png",
+      "assessments/evidence/f355twn2/shot-600s.png"
+    ],
+    "coverage": null,
+    "watermarks_info": {
+      "main": 31885055,
+      "vram": 16282966,
+      "aram": 8388608
+    }
+  },
+  "memory": {
+    "main": {
+      "peak": 0,
+      "nz_total": 0,
+      "nz_above_cap": 0,
+      "dma_high_water": 29332992
+    },
+    "vram": {
+      "peak": 0,
+      "nz_total": 0,
+      "nz_above_cap": 0,
+      "regs_last": "isp_base=0 isp_limit=10f700 ol_base=153200 ol_limit=10f800 fb_w_sof1=800000 fb_w_sof2=c00000 fb_r_sof1=c00000"
+    },
+    "aram": {
+      "peak": 8323024,
+      "nz_above_cap": 5903939,
+      "content_total": 7923189
+    }
+  },
+  "streaming": {
+    "dma_events": 7510,
+    "total_bytes": 217416192,
+    "unique_bytes": 67717664,
+    "reread_ratio": 0.6885,
+    "steady_mb_per_min": 18.525,
+    "short_window": false,
+    "pio_bytes": 9895668
+  },
+  "guts": {
+    "dat_available": false,
+    "error": "skipped (--skip-static or no boot)",
+    "flags": [
+      "eeprom_bios"
+    ],
+    "extra_bios_classes": 0,
+    "sdk_strings": []
+  },
+  "serial_pokes": 0,
+  "controls": {
+    "device_class": "pad_adaptable",
+    "input_ports": "naomi",
+    "sources": [
+      "MAME src/mame/sega/naomi.cpp @59e7c0b INPUT_PORTS 'naomi'; GAME line 10935: f355twn2 requires dedicated 'f355bios' BIOS (wheel/pedals via JVS analog, not modeled as dedicated ports)",
+      "https://en.wikipedia.org/wiki/F355_Challenge \u2014 cab offers automatic transmission or paddle-shift; official DC port F355 Challenge: Passione Rossa (Sega, 2000-08-03 JP / Acclaim NA 2000-09-22)",
+      "https://silodrome.com/sega-ferrari-f355-challenge-arcade-game/ \u2014 deluxe cab: force-feedback wheel, clutch+brake+accelerator pedals, gated six-speed shifter",
+      "https://www.thedreamcastjunkyard.co.uk/2023/02/dreamcast-racing-wheels-overview.html \u2014 DC F355 Challenge playable with Race Controller-class wheels (Thrustmaster Ferrari wheel 'a perfect pair')"
+    ]
+  },
+  "similarity": {
+    "developer_match": false,
+    "sdk_overlap": "none",
+    "cart_loader_match": false
+  },
+  "gate": "G1 broken: no-render-after-handoff",
+  "scores": null
+}

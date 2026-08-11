@@ -135,7 +135,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Dynamite Baseball '99 (Japan, Rev B) | `dybb99` | **cart** | parent | 106.4 MB | Sports | No | not assessed |
 | Dynamite Baseball NAOMI (Japan) | `dybbnao` | **cart** | parent | 114.8 MB | Sports | No | not assessed |
 | Ferrari F355 Challenge (deluxe, no link) | `f355` | **cart** | clone of `f355dlx` | 98.4 MB | Driving | Yes (2000) | not assessed |
-| Ferrari F355 Challenge 2 - International Course Edition (twin/deluxe) | `f355twn2` | **cart** | parent | 104.7 MB | Driving | No | not assessed |
+| Ferrari F355 Challenge 2 - International Course Edition (twin/deluxe) | `f355twn2` | **cart** | parent | 104.7 MB | Driving | No | parked G1 · [notes](assessments/f355twn2.md) |
 | Giant Gram 2000 | `gram2000` | **cart** | parent | 114.8 MB | Fighting | Yes (2000) | not assessed |
 | Giant Gram: All Japan Pro Wrestling 2 (Japan) | `ggram2` | **cart** | parent | 57.0 MB | Fighting | Yes (1999) | not assessed |
 | Giga Wing 2 | `gwing2` | **cart** | parent | 57.6 MB | Shmup ★ | Yes (2001) | **79.0** A · [assessment](assessments/gwing2.md) |

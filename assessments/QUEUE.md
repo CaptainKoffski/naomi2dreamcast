@@ -45,7 +45,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `asndynmt` — Asian Dynamite / Dynamite Deka EX | `asndynmt` | Beat-em-up | 148.0 MB | parked |
 | `slashout` — Slashout (GDS-0004) | `slashout` | Beat-em-up | 137.4 MB | parked |
 | `alpilot` — Airline Pilots (World, Rev B) | `alpilot` | Driving | 41.3 MB | parked |
-| `f355twn2` — Ferrari F355 Challenge 2 - International Course Edition (twin/deluxe) | `f355twn2` | Driving | 104.7 MB | pending |
+| `f355twn2` — Ferrari F355 Challenge 2 - International Course Edition (twin/deluxe) | `f355twn2` | Driving | 104.7 MB | parked |
 | `wrungp` — Wave Runner GP | `wrungp` | Driving | 48.1 MB | pending |
 | `ggxx` — Guilty Gear XX (GDL-0011) | `ggxx` | Fighting | 250.2 MB | done |
 | `ggxxac` — Guilty Gear XX Accent Core (Japan) (GDL-0041) | `ggxxac` | Fighting | 255.1 MB | done |
