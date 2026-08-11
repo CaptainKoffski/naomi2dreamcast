@@ -120,7 +120,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Cannon Spike / Gun Spike | `cspike` | **cart** | parent | 63.6 MB | Shmup ★ | Yes (2000) | **42.8** B · [assessment](assessments/cspike.md) |
 | Capcom Vs. SNK: Millennium Fight 2000 (Rev C) | `capsnk` | **cart** | parent | 95.6 MB | Fighting | Yes (2000) | not assessed |
 | Cosmic Smash (Rev A) | `csmash` | **cart** | parent | 42.8 MB | ? | Yes (2001) | not assessed |
-| Crackin' DJ | `crackndj` | **cart** | parent | 108.0 MB | Rhythm | No | not assessed |
+| Crackin' DJ | `crackndj` | **cart** | parent | 108.0 MB | Rhythm | No | **67.6** A · [assessment](assessments/crackndj.md) |
 | Crackin' DJ Part 2 (Japan) | `crakndj2` | **cart** | parent | 105.5 MB | Rhythm | No | not assessed |
 | Crazy Taxi | `crzytaxi` | **cart** | parent | 62.3 MB | Driving | Yes (2000) | not assessed |
 | Cyber Troopers Virtual-On: Oratorio Tangram M.S.B.S. ver 5.66 2000 Edition | `vonot` | **cart** | parent | 91.6 MB | ? | Partial | parked G3 · [notes](assessments/vonot.md) |
