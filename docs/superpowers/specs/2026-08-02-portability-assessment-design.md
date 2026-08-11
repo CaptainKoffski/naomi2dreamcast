@@ -1,6 +1,6 @@
 # Naomi → Dreamcast portability assessment — design
 
-Date: 2026-08-02 · Source requirements: `REQUIREMENTS.md` · Status: approved by user (pipeline, scoring, template, tooling — all three design parts)
+Date: 2026-08-02 · Status: approved by user (pipeline, scoring, template, tooling — all three design parts)
 
 ## 1. Goal & scope
 

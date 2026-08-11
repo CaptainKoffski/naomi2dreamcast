@@ -12,16 +12,15 @@ AXIS_FLOOR = 10.0   # spec §4: axes live in [10,100]; a 0 would annihilate the 
 class MetricRegression(SystemExit):
     """A known instrumentation-artifact signature reappeared, or an anchor title
     parked. Scoring REFUSES to produce a verdict from poisoned measurements —
-    REQUIREMENTS.md ('rendered by Naomi BIOS and not the game itself... just
-    noise. We need to avoid it during data collection or data assessment phase')
-    and docs/kb/assessment-tooling.md §7."""
+    BIOS noise must never be scored as game usage; we avoid it during data
+    collection and assessment. See docs/kb/assessment-tooling.md §7."""
 
 
 # VRAM structures drawn by the Naomi BIOS, not the game — identified by an EXACT
 # (peak, nz_above_cap) pair. Proof: dragntr3 never boots past the GD-ROM splash
 # yet reports values byte-identical to booted GD titles (cleoftp/moeru/ikaruga/
-# tetkiwam, 2026-08-04). This is REQUIREMENTS.md's "9.4 mb during the Naomi logo
-# show time" caveat: 0x943000 == 9,711,616 == 9.4 MB.
+# tetkiwam, 2026-08-04). This is the "9.4 MB during the Naomi logo show time"
+# caveat (kb §8): 0x943000 == 9,711,616 == 9.4 MB.
 # v8 (spec 2026-08-07-vram-fb-masking-design.md ruling 4): the v5 handoff
 # gating removed the noise this table once clamped, so an exact match on a
 # booted title now means the gating regressed — refuse to score (canary,

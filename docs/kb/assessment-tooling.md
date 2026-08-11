@@ -1126,7 +1126,7 @@ game behavior. Root-caused and fixed across battery v3 (fork `27d12da78`) and v4
 
 ## 8. Score r2 (2026-08-04): BIOS VRAM logo scored as game usage — and the guards that now prohibit the whole class
 
-REQUIREMENTS.md warned about exactly this before the campaign started: *"we
+The original project brief warned about exactly this before the campaign started: *"we
 initially mistakenly assessed peak memory consumption as 9.4 mb ... during the
 Naomi logo show time, rendered by Naomi BIOS and not the game itself ... just
 noise."* The v4 battery walked into it anyway: the wider sampling window caught

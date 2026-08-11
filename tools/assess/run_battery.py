@@ -186,8 +186,8 @@ def similarity(row, fmt, guts):
 
 
 def selftest():
-    # Strict prohibition (REQUIREMENTS.md: BIOS noise must never be scored as game
-    # usage; kb §7): the battery refuses to run at all unless the metric
+    # Strict prohibition (BIOS noise must never be scored as game usage; kb §7):
+    # the battery refuses to run at all unless the metric
     # invariants hold. Never bypass this to "just get a run" — a red test means
     # the measurements would be untrustworthy.
     for t in ("test_score.py", "test_metric_guards.py"):

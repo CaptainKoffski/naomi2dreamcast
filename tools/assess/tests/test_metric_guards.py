@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guards against the REQUIREMENTS.md "BIOS noise scored as game usage" mistake.
+"""Guards against the "BIOS noise scored as game usage" mistake (kb §7–8).
 run_battery refuses to start unless this prints ALL OK — these invariants are the
 strict prohibition, not advice. Never weaken a test here to make a run pass:
 a failure means the instrumentation regressed (kb §7), not that the test is old."""

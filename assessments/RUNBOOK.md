@@ -8,8 +8,8 @@ Spec: `docs/superpowers/specs/2026-08-02-portability-assessment-design.md`.
 1. `python3 tools/assess/tests/test_score.py` and
    `python3 tools/assess/tests/test_metric_guards.py` → must print `ALL OK`.
    `run_battery.py` also runs both automatically and **refuses to start** if they
-   fail. The guards enforce REQUIREMENTS.md's "BIOS noise is not game usage"
-   caveat: known artifact signatures refuse to score, and the anchor titles
+   fail. The guards enforce the "BIOS noise is not game usage" rule (kb §7):
+   known artifact signatures refuse to score, and the anchor titles
    (`cleoftp`, `ikaruga` — verifiably run on real DC) must never park. NEVER
    weaken a guard test to make a run pass — a red guard means the
    instrumentation regressed (kb §7), not that the test is stale.
