@@ -96,7 +96,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Under Defeat (Japan) (GDL-0035) | `undefeat` | **GD-ROM** | parent | 150.9 MB | Shmup ★ | Yes (2006) | not assessed |
 | Usagi - Yamashiro Mahjong Hen (Japan) (GDL-0022) | `usagiym` | **GD-ROM** | parent | 110.4 MB | Mahjong ⚠ | No | not assessed |
 | Virtua Athletics / Virtua Athlete (GDS-0019) | `vathlete` | **GD-ROM** | parent | 86.3 MB | Sports | Yes (2000) | not assessed |
-| Virtua Golf / Dynamic Golf (Rev A) (GDS-0009A) | `dygolf` | **GD-ROM** | parent | 70.6 MB | Sports | No | not assessed |
+| Virtua Golf / Dynamic Golf (Rev A) (GDS-0009A) | `dygolf` | **GD-ROM** | parent | 70.6 MB | Sports | No | parked G3 · [notes](assessments/dygolf.md) |
 | Virtua Tennis / Power Smash (GDS-0011) | `vtennisg` | **GD-ROM** | parent | 52.5 MB | Sports | Yes (2000) | not assessed |
 | Virtua Tennis 2 / Power Smash 2 (Rev A) (GDS-0015A) | `vtennis2` | **GD-ROM** | parent | 121.6 MB | Sports | Yes (2001) | not assessed |
 | World Club Champion Football European Clubs 2004-2005 (Asia) (CDV-10013) | `wccf310j` | **GD-ROM** | parent | 662.8 MB | Football-card ⚠ | No | not assessed |
