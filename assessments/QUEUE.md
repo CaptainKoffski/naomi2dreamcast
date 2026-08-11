@@ -89,7 +89,7 @@ Representative default = MAME parent set; during hand-curation prefer the newest
 | `wccf420e` — World Club Champion Football European Clubs 2005-2006 (Export) (CDV-10027) | `wccf420e` | Football-card ⚠ | 657.6 MB | excluded (user 2026-08-09: card-terminal family, not a port target) |
 | `kick4csh` — Kick '4' Cash (Export) | `kick4csh` | Gambling/medal ⚠ | 42.6 MB | parked |
 | `oinori` — Oinori-daimyoujin Matsuri | `oinori` | Gambling/medal ⚠ | 36.4 MB | parked |
-| `derbyo2k` — Derby Owners Club 2000 Ver.2 (Japan, Rev A) | `derbyo2k` | Horse-race sim ⚠ | 60.7 MB | pending |
+| `derbyo2k` — Derby Owners Club 2000 Ver.2 (Japan, Rev A) | `derbyo2k` | Horse-race sim ⚠ | 60.7 MB | parked |
 | `derbyoc` — Derby Owners Club (Japan, Rev B) | `derbyoc` | Horse-race sim ⚠ | 52.5 MB | pending |
 | `derbyoc2` — Derby Owners Club II Ver.2.1 (Japan, Rev B) | `derbyoc2` | Horse-race sim ⚠ | 118.9 MB | pending |
 | `derbyocw` — Derby Owners Club World Edition EX (Rev D) | `derbyocw` | Horse-race sim ⚠ | 46.7 MB | pending |
