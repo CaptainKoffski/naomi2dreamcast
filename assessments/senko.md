@@ -15,7 +15,7 @@
 | Set / family | `senko` (Rev A, representative) covers `senkoo` (original GDL-0030). Same PIC `317-5107-jpn` for both; they differ in GD image (`gdl-0030a` vs `gdl-0030`) and default MIE EEPROM (MAME src/mame/sega/naomi.cpp @59e7c0b, ROM_START blocks lines 8737–8767; GAME lines 11272–11273, both ROT0). Rev A displays "Senko no Ronde New Ver." on screen — visually confirmed in the battery v2 attract capture; the original "Old ver." was "quickly updated" and is poorly documented, no public changelog ([SuperCombo wiki](https://wiki.supercombo.gg/w/Senko_No_Ronde_Rev._X), [archive.org](https://archive.org/details/arcade_senko)) |
 | Maker / year | G.Rev, 2005 (arcade debut 2005-04-26, [Wikipedia](https://en.wikipedia.org/wiki/WarTech:_Senko_no_Ronde)). Founded by ex-Taito staff; music by Yasuhisa Watanabe (ex-Taito), in-binary credits confirm ([arcadeitalia](http://adb.arcadeitalia.net/dettaglio_mame.php?game_name=senko), `guts.sdk_strings`) |
 | Genre / format | Shmup ★ per queue — actually a 1v1 arena "versus shooting"/fighting hybrid (Virtual On-adjacent, Psychic Force lineage per SuperCombo). **GD-ROM** GDL-0030A, 241 MB, machine `naomigd`, horizontal ROT0 |
-| Official DC port | No — the official port is Xbox 360: *Senko no Ronde Rev.X* (JP 2006-07-27, G.rev), released overseas as *WarTech: Senko no Ronde* (NA 2007-05-29 / EU 2007-06-08, Ubisoft) ([Wikipedia](https://en.wikipedia.org/wiki/WarTech:_Senko_no_Ronde)). Arcade debut was 2005, years after DC production ended; no DC release planned or cancelled |
+| Official DC port | No — the official port is Xbox 360: *Senko no Ronde Rev.X* (JP 2006-07-27, G.rev), released overseas as *WarTech: Senko no Ronde* (NA 2007-05-29 / EU 2007-06-08, Ubisoft) ([Wikipedia](https://en.wikipedia.org/wiki/WarTech:_Senko_no_Ronde)). **A DC port was announced and cancelled**: a G.rev directing manager assured fans circa 2005 that a Dreamcast release was coming "late 2005" ([Tom's Hardware forum](https://forums.tomshardware.com/threads/senko-no-ronde-for-dreamcast-still-coming.128910/)); it never shipped, the game went to X360 instead, and a fan petition failed to revive it ([shmups.system11.org petition thread](https://shmups.system11.org/viewtopic.php?f=1&t=5313), [Shenmue Dojo petition thread](https://www.shenmuedojo.net/forum/viewtopic.php?f=15&t=27108)) |
 | Community ports | None found (searched 2026-08-03) — only the generic Naomi-conversion threads on dreamcast-talk ([NAOMI Rom in GDI](https://www.dreamcast-talk.com/forum/viewtopic.php?t=15366), [Naomi and Naomi 2 conversion](https://dreamcast-talk.com/forum/viewtopic.php?t=14103)), which conclude a Naomi image can't run as-is (DIMM loads the whole image vs DC disc streaming) |
 | Representative choice | Rev A is the revision the entire later lineage (X360 Rev.X, arcade SP) descends from; `senkoo` is the short-lived first pressing |
 
@@ -94,6 +94,14 @@ first-party Naomi→DC porting pedigree (same checkpoint note as `senkosp`/`illv
 
 ## 9. Risks & notes
 
+- **Recommend parking in favor of `senkosp`**: same engine/SDK stack (build strings
+  match down to dates), and `senkosp` is a strict superset — 5-button cabinet
+  (adds Barrage/C, OverDrive) vs this set's 3 buttons, plus Novice mode, stage/music
+  select, new HUD, extra costumes (§7 here; `senkosp.md` §2/§7). `senkosp` also ranks
+  higher (91.0 vs 89.9, #1 vs #4 in `RANKING.md`). Porting `senko` after `senkosp`
+  would re-do the same engine work to ship a strict subset of what SP already covers;
+  keep this assessment for completeness/preservation, but the actual port slot should
+  go to `senkosp`.
 - **All three memory regions now clear the 0.80u full-score plateau** — the fresh v9
   capture replaces every v4 fallback with a measured content volume: main write-truth
   `nz_total` 7,567,610 B (u 0.4511) replaces the `dma_high_water` fallback (33,453,344 B,
