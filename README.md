@@ -4,12 +4,18 @@ Umbrella repo for porting games from the **Sega Naomi** arcade system to the
 **Sega Dreamcast**. The two machines share a CPU and GPU family; the hard part
 is memory — Naomi has far more RAM/VRAM/ARAM than a Dreamcast. So before
 porting anything, every game in the library gets a uniform **portability
-assessment**, and games are ported easiest-first. Proven reference case:
-the fan port of [*Cleopatra Fortune Plus*](https://github.com/CaptainKoffski/cfp2dreamcast).
+assessment**, and games are ported easiest-first.
 
 This repo stores the library inventory, the assessment method and tooling, the
 per-game assessment results, and the shared knowledge base. Individual ports
 live in their own repos.
+
+## Ports
+
+| Game | Status | Repo |
+|---|---|---|
+| Cleopatra Fortune Plus (Naomi cart) | Finished | [cfp2dreamcast](https://github.com/CaptainKoffski/cfp2dreamcast) |
+| Senko no Ronde Special (senkosp, Naomi GD-ROM GDL-0038, G.Rev 2006) | In progress | [senkosp2dreamcast](https://github.com/CaptainKoffski/senkosp2dreamcast) |
 
 ## Where things are
 
