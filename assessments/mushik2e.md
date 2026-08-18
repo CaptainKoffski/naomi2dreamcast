@@ -4,9 +4,9 @@
 
 | | |
 |---|---|
-| **Final score** | **70.5 (A)** |
-| Bottom line | Sega's kids' card-battle machine measures green on every technical axis — all three memory regions ≤0.62× cap under content keying, streaming a trivial 1.55 MB/min — and the ⚠ that queued it (barcode card reader + card dispenser) turns out to be fully software-replaceable: the fork already emulates the whole card path in pure software (barcode digits over SCIF serial, RFID management chip on maple, dispenser status spoofed in JVS), and actual play is three rock-paper-scissors buttons. Controls rule `pad_adaptable` (50), not off-ladder: a DC port needs a card-select UI, not hardware. Score is dragged below its cohort's S-range by that 50 plus a missing guts axis (EPR-mode M4 cart defeats the carve) and floor similarity. |
-| Assessed | capture 2026-08-11 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` |
+| **Final score** | **78.4 (A)** |
+| Bottom line | Sega's kids' card-battle machine measures green on every technical axis — all three memory regions ≤0.62× cap under content keying, streaming a trivial 1.55 MB/min — and the ⚠ that queued it (barcode card reader + card dispenser) turns out to be fully software-replaceable: the fork already emulates the whole card path in pure software (barcode digits over SCIF serial, RFID management chip on maple, dispenser status spoofed in JVS), and actual play is three rock-paper-scissors buttons. Controls rule `pad_adaptable` (50), not off-ladder: a DC port needs a card-select UI, not hardware. Score sits below its cohort's S-range on that 50 alone — every other axis is healthy (guts 85.0, similarity 40.0). |
+| Assessed | capture 2026-08-11 · battery v9 · flycast `f014a410c` · Ghidra 12.1.2_PUBLIC · MAME `59e7c0b` · static axes re-scanned 2026-08-19 (`rescore_static.py`) |
 
 ## 2. Identity
 
@@ -51,17 +51,27 @@ re-read ratio 0.5815 · steady-state 1.553 MB/min (`short_window: false`) ·
 PIO 3,148,352 B. Bandwidth is trivial (sub-score 100); the 0.58 re-read ratio
 (sub-score 45.1) caps the axis at 78.0.
 
-## 6. Guts (axis: n/a — no .dat, weights renormalized)
+## 6. Guts (axis: 85.0)
 
-`guts.dat_available = false`: `cart2dat.py` fails with `no NAOMI header at 0 or
-0x800000 after decrypt (offset 0 = b'\x02\xde\xddB_\xee\xf3U')` (sidecar `guts.error`,
-`cart2dat.py:160`). This is NOT the solved kb §4.q bit-30 carve bug (ausfache and
-other plain M4 carts scan fine post-fix) — it is a new sub-case: mushik2e is an
-**EPR-mode hybrid** (4 MiB `epr-24357.ic7` overlaid on offset 0 of the M4 flash
-image, naomi.cpp line 6607), and the assembled head is neither plaintext (`NAOMI`
-absent raw → M4-plain path not taken) nor recoverable by the whole-ROM M4 stream
-decrypt. Flycast's own M4 loader boots it regardless (§3). Guts axis dropped;
-`flags: [eeprom_bios]` recorded but unused. Logged as a kb lesson.
+Code 3,145,728 B (3.00 MiB) · functions 4,161 · MMIO refs: scif 25, rtc 3, g2ext 191 ·
+BIOS vector refs: none · flags: `eeprom_bios`, `serial`, `rtc` (penalty 15).
+M4 boot blob carved at base `0x8c020000`, entry `0x8c021000`, header at offset 0,
+carve title `MKG TKOB 2 JPN VER2.001-` — byte-identical to the gameId the fork keys
+its Mushiking RFID mask on (§7), confirming the scan is this set's own image.
+SDK strings: Kunoichi2 Library for NAOMI 2.07 + KAMUI2 16,5,3,2 (Sega/NEC, 2000–2001
+builds) over CRI middleware (Sofdec/MPV 1.53, ADX 5.94, ADXF, SAN, LSC) — the standard
+Naomi stack, hence `sdk_overlap: partial`. The 25 SCIF refs and the card-path strings
+(`RFID READ ERROR` / `RFID WRITE ERROR` / `RFID READER NOT READY`, `BCodeRD %d`,
+`BARCODE DISP!!`, `mushieep data`) corroborate §7's software card path from the guest side.
+
+**This axis was absent in the v9 pass and recovered 2026-08-19.** The originally
+recorded cause — an "EPR-mode M4 hybrid" defeating the whole-ROM decrypt — was wrong.
+`cart2dat.py`'s Games[] lookup matched `"mushik2e"` where it appears as the
+*parent_name* of the `mushikc` clone (Flycast `naomi_roms.cpp:706` @f014a410c),
+assembled that entry instead, and resolved its generic `ic8.bin` blob out of an
+unrelated set's zip; the decrypt then ran on foreign bytes. Fixed by anchoring the
+lookup on an entry's own name field. The EPR overlay needs no special handling — it
+decrypts fine under the whole-ROM M4 stream cipher. kb §4.w.
 
 ## 7. Controls (axis: 50.0 — `pad_adaptable`)
 
@@ -100,18 +110,19 @@ Sources: all of the above + MAME GAME line citation are in sidecar `controls.sou
 
 ## 8. Score computation
 
-final = memory^.50 · streaming^.25 · controls^.125 · similarity^.125 (guts dropped, spec §4.3)
-      = 100.0^.50 · 78.0^.25 · 50.0^.125 · 20.0^.125 = **70.5 (A)**
-Similarity inputs: developer no, SDK overlap none (no sdk_strings — carve failed, §6), loader match no.
+final = memory^.40 · streaming^.20 · guts^.20 · controls^.10 · similarity^.10
+      = 100.0^.40 · 78.0^.20 · 85.0^.20 · 50.0^.10 · 40.0^.10 = **78.4 (A)**
+Similarity inputs: developer no, SDK overlap partial, loader match no.
 
 ## 9. Risks & notes
 
 - **1.9 MB of main-RAM content sits above the 16 MB line** (`nz_above_cap`
   1,900,058; address peak 1.98× cap). Content volume (4.2 MB) fits four times
   over, but a port must relocate whatever lives up there — first thing to map.
-- **Scored M4 title with no guts axis** (kb §4.q's checkpoint warning applies):
-  missing guts + floor similarity make 70.5 a lower-bound-flavored score; EPR-mode
-  support in `cart2dat.py` would firm it up.
+- **Mixed provenance: v9 capture + 2026-08-19 static rescan.** Memory, streaming and
+  controls are the original v9 capture, untouched; guts and similarity were re-derived
+  after the `cart2dat.py` lookup fix (§6). Guts is static-only, so no re-capture was
+  needed (`rescore_static.py`, kb §4.q precedent).
 - **Card-flow UI is the real porting work.** The three-button game itself is
   trivially pad-mappable; budget the effort for a card-select/collection UI
   (and VMU persistence for the management-chip counters). The fork's
@@ -126,4 +137,5 @@ Similarity inputs: developer no, SDK overlap none (no sdk_strings — carve fail
 
 | Battery | Date | Final | What changed |
 |---|---|---|---|
+| v9 (rescan) | 2026-08-19 | 78.4 (A) | Guts recovered — the v9 scan failure was a `cart2dat.py` Games[] lookup bug (resolved `mushik2e` to the `mushikc` clone entry), not the EPR overlay; kb §4.w rewritten. guts n/a → 85.0, similarity none → partial (20.0 → 40.0), 70.5 → 78.4. Capture provenance untouched |
 | v9 | 2026-08-11 | 70.5 (A) | Initial assessment (⚠ Card battle family, by explicit user order). Battery-printed 76.9 A was the `stick` placeholder; controls research ruled `pad_adaptable` (card path fully software-emulable per fork source) → 70.5. Guts absent: EPR-mode M4 defeats cart2dat (new kb sub-case) |

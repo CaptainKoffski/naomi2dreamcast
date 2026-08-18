@@ -24,11 +24,12 @@ SZ   = "/opt/homebrew/bin/7zz"
 
 def entry_text(src, name):
     """Return the exact { ... } text of the Games[] entry named `name`."""
-    m = re.search(r'"%s"\s*,' % re.escape(name), src)
+    # anchor on the entry's own name field ('{' + name); a bare name match also hits
+    # clones' parent_name references and would assemble the WRONG set (mushik2e -> mushikc)
+    m = re.search(r'\{\s*"%s"\s*,' % re.escape(name), src)
     if not m:
         sys.exit("set %r not found in %s" % (name, ROMS))
-    # back up to the '{' that opens this entry, then brace-match forward
-    i = src.rfind("{", 0, m.start())
+    i = src.rfind("{", 0, m.end())
     depth, j = 0, i
     while j < len(src):
         if src[j] == "{": depth += 1

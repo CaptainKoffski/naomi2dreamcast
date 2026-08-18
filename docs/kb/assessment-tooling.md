@@ -443,17 +443,39 @@ pins this shape so the PIO trigger can't silently regress. gwing2's partial face
 (main-RAM axis blind despite a DMA handoff) is addressed the same way but gets its own
 measured main-RAM figure at its own v6 re-run, not here.
 
-**w. EPR-mode M4 hybrid carts defeat `cart2dat.py` even post-§4.q (mushik2e,
-2026-08-11).** mushik2e (840-0164) loads a 4 MiB `epr-24357.ic7` OVER offset 0 of the
-M4 flash pair ("EPR mode, overwrite FPR data" — MAME naomi.cpp @59e7c0b line 6607).
-The assembled image's head is then neither plaintext (`NAOMI` absent raw, so the
-M4-plain path is not taken) nor recoverable by the whole-ROM M4 stream decrypt:
-`cart2dat.py:160` exits `no NAOMI header at 0 or 0x800000 after decrypt`. Distinct
-from the solved §4.q bit-30 carve bug — plain M4 carts (ausfache et al.) scan fine.
-Result: `guts.dat_available = false` on a *scored* title (guts dropped + similarity
-floor, the exact skew §4.q warned about); mushik2e 70.5 A is lower-bound-flavored.
-Fix if more EPR-mode carts appear: teach cart2dat to decrypt only the FPR regions or
-to detect the EPR overlay and skip/handle it separately.
+**w. `cart2dat.py` resolved a set name to a *clone's* `parent_name` and assembled the
+wrong ROM (mushik2e, 2026-08-11; root-caused + fixed 2026-08-19).** `entry_text()`
+searched Flycast `naomi_roms.cpp` for a bare `"<set>",`. In the Games[] struct the name
+field and the `parent_name` field are both plain strings, so for `mushik2e` the first
+hit was line 706 — the *parent_name* of the `mushikc` clone — not mushik2e's own entry
+at line 4755. cart2dat brace-matched the `mushikc` entry, asked for its single generic
+blob `ic8.bin` (absent from `mushik2e.zip`), and `extract()`'s filename-first fallback
+handed back **ausfache's** `ic8.bin` from another zip. m4dec then decrypted a foreign
+ROM with mushik2e's 317-0437 PIC key → `cart2dat.py:160` exits `no NAOMI header at 0 or
+0x800000 after decrypt (offset 0 = b'\x02\xde\xddB_\xee\xf3U')`.
+
+**The original diagnosis in this slot was wrong.** It blamed the EPR-mode overlay
+(mushik2e loads a 4 MiB `epr-24357.ic7` over offset 0 of the M4 flash pair, "EPR mode,
+overwrite FPR data", MAME naomi.cpp @59e7c0b line 6607) for defeating the whole-ROM
+stream decrypt. It does not: post-fix the real entry assembles and decrypts clean —
+`OK mushik2e M4 assembled+decrypted 134217728 bytes hdr@0x0 title='MKG TKOB 2 JPN
+VER2.001-'`. **EPR-mode M4 hybrids need no special handling.** Lesson about the lesson:
+an error string that names a *stage* (decrypt) does not prove the stage's *input* was
+what you think — check what the tool actually assembled before theorising about format.
+
+Fix (`cart2dat.py:entry_text`): anchor the search on the entry's own name field,
+`re.search(r'\{\s*"%s"\s*,')`, and brace-match from `m.end()`. Regression test
+`tools/assess/tests/test_cart2dat_entry.py`. Swept all 90 assessed sets for the same
+mis-resolution: only `mushik2e` and `dygolf` resolve differently, and dygolf is GD-ROM
+(cart2dat aborts on GD; its `.dat` came from `chd2dat.sh`), so mushik2e was the only
+victim. Rescored with `rescore_static.py` (capture untouched, §4.q precedent):
+guts n/a → 85.0, `sdk_overlap` none → partial (similarity 20.0 → 40.0), **70.5 A → 78.4 A**.
+
+Still latent, not fixed: `extract()` tries filename across every zip in the library
+*before* checking CRC, so a generic blob name (`ic8.bin`, `rom0.ic22`, …) can silently
+pull another game's chip. That is what turned a wrong-entry lookup into garbage bytes
+instead of a clean "cannot find blob". Harmless while the lookup is correct; fix by
+CRC-verifying the filename hit if it ever bites again.
 
 **x. `no-render-after-handoff` has a third face: device-init wait (ntvmys, 2026-08-12).**
 Distinct from §4.k/m's headless-loop face and the multiboard-shm face (§4.vii.2): the game
