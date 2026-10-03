@@ -16,6 +16,7 @@ live in their own repos.
 |---|---|---|
 | Cleopatra Fortune Plus (Naomi cart) | Finished | [cfp2dreamcast](https://github.com/CaptainKoffski/cfp2dreamcast) |
 | Senko no Ronde Special (senkosp, Naomi GD-ROM GDL-0038, G.Rev 2006) | In progress | [senkosp2dreamcast](https://github.com/CaptainKoffski/senkosp2dreamcast) |
+| Tetris Kiwamemichi (Naomi GD-ROM) | Working | [tetkiwam2dreamcast](https://github.com/CaptainKoffski/tetkiwam2dreamcast) |
 
 ## Where things are
 
