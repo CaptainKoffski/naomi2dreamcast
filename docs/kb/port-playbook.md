@@ -11,24 +11,29 @@ are written `cfp/docs/kb/...` and `senkosp/docs/kb/...`.
 Deeper references, cited throughout: `cfp/docs/kb/atomiswave-method.md`
 (technique catalog), `cfp/docs/kb/naomi-vs-dreamcast.md` (hardware deltas),
 each port's `tooling.md` (install recipes) and `boot-binary.md` (RE
-findings). The hardware checklist every finished port is tested against:
-`GENERAL_CHECKLIST.md` at this repo's root.
+findings). The release checklist every finished port is tested against is
+the Definition of done below (it absorbed the former `GENERAL_CHECKLIST.md`,
+2026-10-03).
 
 ## Definition of done — what every port ships (standing, 2026-10-03)
 
 Four requirements that are part of the deliverable, not polish. Each has a
 shipped, hardware-verified implementation in senkosp2dreamcast to copy.
 
-### 1. Three boot paths, all PASS on the release candidate
+### 1. Every boot path PASS on the release candidate, verdicts recorded
 
 | Destination | Role | Fed by |
 |---|---|---|
 | **Flycast** (DC profile) | dev tool — never the verdict | `build/disc.gdi` |
 | **Real console from a GDEMU-class ODE** | primary target | release zip via GDMENUCardManager |
 | **Real console over the serial port via DreamShell** (isoldr serial-SD) | required path for testers without an ODE | GDI + the `DS/` per-game preset shipped in the release zip |
+| **Real console from the optical drive** (burned CD-R of the CDI) | the CDI's true target | `[CDI]` release zip (§2) |
 
-Both VGA and composite, per `GENERAL_CHECKLIST.md`. DreamShell is the path
-that reshapes the design, so decide it in phase 4, not after release:
+Each path on both VGA and composite. **Every path is executed on the release
+candidate and its verdict recorded in the port KB** — date, rig, build hash,
+operator wording — the way senkosp's phase files table them. A path nobody
+ran is a path that does not work. DreamShell is the one that reshapes the
+design, so decide it in phase 4, not after release:
 
 - **isoldr virtualizes the GD at the BIOS-syscall layer only.** A raw-ATA
   cart stream can never be served by it — senkosp's phase-6 control test
@@ -181,10 +186,17 @@ Don't start a phase until the previous gate is green.
    + baselines: `cfp/docs/superpowers/specs/2026-07-26-vmu-safety-design.md`,
    `cfp/scripts/test_maple_literals.py`, `cfp/scripts/test_vmu_untouched.sh` —
    reusable for the next port (start from an empty baseline, classify every
-   hit). Then `make release`: GDI zip + CDI zip + DreamShell preset
-   (Definition of done §2).
-   *Gate:* all three tripwires PASS on the release candidate; both images
-   boot on hardware.
+   hit). Two more static checks on the release build, by inspection of the
+   build knobs and the linked objects: **serial path compiled out** (no SCIF
+   writes — under DreamShell they corrupt SD reads, Definition of done §1;
+   senkosp's `SERIAL=1` family of knobs is debug-only) and **no debug sleeps
+   or timing windows** (cfp's loader carries an 8 s photograph window behind
+   `LOADER_TIMING`; halt loops and frame pacing are fine, anything that
+   stretches boot is not). Then `make release`: GDI zip + CDI zip +
+   DreamShell preset (Definition of done §2).
+   *Gate:* all three tripwires PASS and both static checks hold on the
+   release candidate; every boot path in Definition of done §1 executed and
+   recorded.
 
 ## Core mechanism
 
@@ -280,6 +292,5 @@ considered and deferred (see the reuse spec).
 - Toolchain install recipes: `cfp/docs/kb/tooling.md`, `senkosp/docs/kb/tooling.md`
   (incl. §CDI mastering, §Decoupling from ../cleopatra)
 - Each port's narrative index: `cfp/docs/kb/00-status.md`, `senkosp/docs/kb/00-status.md`
-- Hardware checklist for finished ports: `GENERAL_CHECKLIST.md` (this repo)
 - Deferred tooling handoff (kit repo, instrumented-Flycast fork) and the full
   reuse plan: `cfp/docs/superpowers/specs/2026-07-26-experience-reuse-design.md`

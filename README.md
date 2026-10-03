@@ -32,7 +32,6 @@ live in their own repos.
 | [`docs/producing-the-dat.md`](docs/producing-the-dat.md) | What a `.dat` (decrypted DIMM image) is and when you need one |
 | [`tools/assess/`](tools/assess/) | Assessment battery: capture runner, parsers, scorer, table generator (stdlib-only Python) |
 | [`tools/dat-extract/`](tools/dat-extract/) | Convert a romset into a Ghidra-loadable `.dat` (cart M1/M2/M4 + GD-ROM) |
-| [`GENERAL_CHECKLIST.md`](GENERAL_CHECKLIST.md) | Hardware validation checklist for finished ports |
 | `naomi/` | The romset library — **gitignored, never committed** |
 
 ## How a game gets assessed
@@ -62,5 +61,5 @@ version history and calibration proof in the
   (MAME/Flycast source, RE'd docs), not wikis.
 - **Reproducibility** — every tool install and version is pinned and recorded
   in the KB so any session can rerun the pipeline.
-- **Emulator ≠ proof** — final ports must pass the real-hardware checklist in
-  [`GENERAL_CHECKLIST.md`](GENERAL_CHECKLIST.md).
+- **Emulator ≠ proof** — final ports must pass every boot path in the
+  playbook's [Definition of done](docs/kb/port-playbook.md#definition-of-done--what-every-port-ships-standing-2026-10-03).
