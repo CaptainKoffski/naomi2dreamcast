@@ -206,3 +206,46 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 - **`starseek`** — DC release was retitled *Doki Doki Idol Star Seeker Remix* (2002), which added a story mode and voice acting on top of the arcade puzzle mode — a reworked version, not a straight port. Low-priority queue candidate given the small 37.2 MB footprint.
 
 Also flagged **No** despite near-misses: `cleoftp` (only the unrelated Taito *Cleopatra Fortune* hit DC, not this NAOMI "Plus"), `sfz3ugd` (DC got base *Street Fighter Zero 3*, never the "Upper" revision), the `ggxx*` family (all went PS2/Xbox, never DC), and cancelled-but-unreleased DC ports `dygolf` / `spkrbtl` / `toyfight` / `sl2007` / `wrungp` / `wldkicks` / `dybbnao` / `illvelo` / `jambo` (ODCM UK reported a 3-in-1 "Real Life Career Series" compilation with *Brave Firefighters* and *Emergency Call Ambulance*; never released — [Wikipedia](https://en.wikipedia.org/wiki/Jambo!_Safari)).
+
+## Katana-mastered DIMM images
+
+Scan of 2026-10-04: every GD-ROM set's decrypted DIMM image (`tools/dat-extract/chd2dat.sh`) searched for a Dreamcast-style IP.BIN (`SEGA SEGAKATANA SEGA ENTERPRISES`) and an ISO9660 volume descriptor (`\x01CD001\x01`). 29 sets carry a complete DC-mastered disc structure (IP.BIN + filesystem with absolute LBAs from 45000), i.e. they were built with Sega's Katana/Kunoichi disc tooling. Data files there are already DC formats (PVM, ADX, AFS…), which makes them cheaper ports.
+
+Only **`tetkiwam`** also ships the DC executable named in its IP.BIN (root `1ST_READ.BIN`, next to the Naomi `BIN/__GAME__.BIN` its header loads). In all other sets the IP.BIN's boot file is missing — the only executable is the Naomi program.
+
+Offset = where the IP.BIN sits in the decrypted image; the ISO volume descriptor follows at +0x8000. Product no. and boot file are the IP.BIN fields verbatim.
+
+| Title (MAME) | Shortname | Offset | IP.BIN product no. | IP.BIN boot file |
+|---|---|---|---|---|
+| Azumanga Daioh Puzzle Bobble (GDL-0018) | `azumanga` | 0x800000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Border Down (Rev A) (GDL-0023A) | `bdrdown` | 0x800000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Chaos Field (Japan) (GDL-0025) | `cfield` | 0xc00000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Musapey's Choco Marker (Rev A) (GDL-0014A) | `chocomk` | 0x800000 | T0000M | 00TYP.BIN — absent |
+| Cleopatra Fortune Plus (GDL-0012) | `cleoftp` | 0x800000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Ikaruga (GDL-0010) | `ikaruga` | 0x800000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Jingi Storm - The Arcade (Japan) (GDL-0037) | `jingystm` | 0xc00000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Karous (Japan) (GDL-0040) | `karous` | 0xc00000 | GM-9999999 | 1ST_READ.BIN — absent |
+| La Keyboard (GDS-0017) | `keyboard` | 0x800000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Kurukuru Chameleon (Japan) (GDL-0034) | `kurucham` | 0x800000 | GDL-0034 | (blank) — absent |
+| Lupin The Third - The Shooting (Rev A) (GDS-0018A) | `lupinsho` | 0x800000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Lupin The Third - The Typing (Rev A) (GDS-0021A) | `luptype` | 0x800000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Melty Blood Act Cadenza Version B2 (Japan) (GDL-0039A) | `meltyb` | 0x800000 | T0000M | 00MEL.BIN — absent |
+| Melty Blood Act Cadenza Ver. A (Japan) (GDL-0028C) | `meltybld` | 0x800000 | T0000M | 00MEL.BIN — absent |
+| Moeru Casinyo (Japan) (GDL-0013) | `moeru` | 0x800000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Psyvariar 2 - The Will To Fabricate (Japan) (GDL-0024) | `psyvar2` | 0x500 | T0000M | 1ST_READ.BIN — absent; same 0x500 layout as tetkiwam |
+| Puyo Pop Fever (World) (GDS-0034) | `puyofev` | 0x1000000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Radirgy (Japan, Rev A) (GDL-0032A) | `radirgy` | 0xc00000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Senko no Ronde (Japan, Rev A) (GDL-0030A) | `senko` | 0x800000 | T00000M | 1ST_READ.BIN — absent |
+| Senko no Ronde Special (Export, Japan) (GDL-0038) | `senkosp` | 0x800000 | T00000M | 1ST_READ.BIN — absent |
+| Street Fighter Zero 3 Upper (Japan) (GDL-0002) | `sfz3ugd` | 0x1000000 | T1230M | 1ST_READ.BIN — absent |
+| Shikigami no Shiro II / The Castle of Shikigami II (GDL-0021) | `shikgam2` | 0x1000000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Super Shanghai 2005 (Japan, Rev A) (GDL-0031A) | `ss2005` | 0x800000 | GDL-0031A | (blank) — absent |
+| Tetris Kiwamemichi (Japan) (GDL-0020) | `tetkiwam` | 0x500 | T0000M | 1ST_READ.BIN — **file present: hidden DC build** ([tetkiwam2dreamcast](https://github.com/CaptainKoffski/tetkiwam2dreamcast)) |
+| Trigger Heart Exelica Ver.A (Japan) (GDL-0036A) | `trgheart` | 0x800000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Trizeal (Japan) (GDL-0026) | `trizeal` | 0x1000000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Under Defeat (Japan) (GDL-0035) | `undefeat` | 0x800000 | T0000M | 1ST_READ.BIN — absent |
+| Usagi - Yamashiro Mahjong Hen (Japan) (GDL-0022) | `usagiym` | 0x800000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Virtua Athletics / Virtua Athlete (GDS-0019) | `vathlete` | 0x800000 | MK-0081 | 1ST_READ.BIN — absent |
+
+**No DC disc structure (21):** `confmiss`, `cvs2`, `cvsgd`, `dygolf`, `ggxx`, `ggxxac`, `ggxxrl`, `ggxxsla`, `gundmgd`, `gundmxgd`, `mok`, `monkeyba`, `quizqgd`, `shaktamb`, `slashout`, `spkrbtl`, `sprtjam`, `starseek`, `takoron`, `vtennis2`, `vtennisg`.
+**Not scanned:** `mj1a`–`mj1e` (chd2dat fails), `dragntr*` and `wccf*` (excluded families), clones without their own disc, and all cart sets.
