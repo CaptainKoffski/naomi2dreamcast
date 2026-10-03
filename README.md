@@ -27,6 +27,7 @@ live in their own repos.
 | [`assessments/RUNBOOK.md`](assessments/RUNBOOK.md) | Day-to-day steps to run an assessment |
 | [`assessments/<set>.md`](assessments/) | Per-game assessment report + `<set>.metrics.json` sidecar (machine-readable scores) |
 | [`docs/superpowers/specs/2026-08-02-portability-assessment-design.md`](docs/superpowers/specs/2026-08-02-portability-assessment-design.md) | The assessment method: criteria, formulas, scoring |
+| [`docs/kb/port-playbook.md`](docs/kb/port-playbook.md) | The port playbook — the reusable method, definition of done (GDEMU + DreamShell + Flycast, GDI + CDI, pad + arcade stick, in-menu arcade settings), gotchas |
 | [`docs/kb/assessment-tooling.md`](docs/kb/assessment-tooling.md) | Reproducibility record — exact tool versions, invocation, calibration, lessons learned |
 | [`docs/producing-the-dat.md`](docs/producing-the-dat.md) | What a `.dat` (decrypted DIMM image) is and when you need one |
 | [`tools/assess/`](tools/assess/) | Assessment battery: capture runner, parsers, scorer, table generator (stdlib-only Python) |
