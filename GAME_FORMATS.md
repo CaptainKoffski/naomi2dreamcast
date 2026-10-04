@@ -248,4 +248,28 @@ Offset = where the IP.BIN sits in the decrypted image; the ISO volume descriptor
 | Virtua Athletics / Virtua Athlete (GDS-0019) | `vathlete` | 0x800000 | MK-0081 | 1ST_READ.BIN — absent |
 
 **No DC disc structure (21):** `confmiss`, `cvs2`, `cvsgd`, `dygolf`, `ggxx`, `ggxxac`, `ggxxrl`, `ggxxsla`, `gundmgd`, `gundmxgd`, `mok`, `monkeyba`, `quizqgd`, `shaktamb`, `slashout`, `spkrbtl`, `sprtjam`, `starseek`, `takoron`, `vtennis2`, `vtennisg`.
-**Not scanned:** `mj1a`–`mj1e` (chd2dat fails), `dragntr*` and `wccf*` (excluded families), clones without their own disc, and all cart sets.
+**Not scanned:** `mj1a`–`mj1e` (chd2dat fails), `dragntr*` and `wccf*` (excluded families), and clones without their own disc.
+
+### Cart sets
+
+Scan of 2026-10-04: each cart's flat ROM image assembled with `tools/dat-extract/cart2dat.py` and searched the same way. 13 carts carry a DC-mastered disc structure in ROM; only **`sl2007`** also holds a DC executable — a leftover Trizeal build (official DC port exists, so not pursued).
+
+| Title (MAME) | Shortname | Offset | IP.BIN product no. | IP.BIN boot file |
+|---|---|---|---|---|
+| Cyber Troopers Virtual-On: Oratorio Tangram M.S.B.S. ver 5.66 2000 Edition | `vonot` | 0x800000 | HDR-0040 | 1ST_READ.BIN — absent |
+| Derby Owners Club II Ver.2.1 (Japan, Rev B) | `derbyoc2` | 0x800000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Gun Survivor 2 Biohazard Code: Veronica (World, BHF2 Ver.E) | `gunsur2` | 0x2000000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Kick '4' Cash (Export) | `kick4csh` | 0x400000 + 0x1000000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Oinori-daimyoujin Matsuri | `oinori` | 0x800000 | T0000M | 1ST_READ.BIN — absent |
+| Puyo Puyo Da! (Japan) | `puyoda` | 0x800000 | T0000M | 1ST_READ.BIN — absent |
+| Samba de Amigo ver. 2000 (Japan) | `samba2k` | 0x800000 | HDR-0000 | 1ST_READ.BIN — absent |
+| Shin Nihon Pro Wrestling Toukon Retsuden 4 Arcade Edition (Japan, TRF1 Ver.A) | `toukon4` | 0x800000 | GM-9999999 | 1ST_READ.BIN — absent |
+| Shooting Love 2007 (Japan) | `sl2007` | 0x1000000 | GM-9999999 | 1ST_READ.BIN — **present: Trizeal DC build** (+17 `T9908M` TRIZEAL IP.BIN copies at 0x9476800–0x9486000) — see [`trizeal`](assessments/trizeal.md) §9 |
+| Shootout Pool | `shootopl` | 0x400000 + 0x1000000 | HDR-0000 | 1ST_READ.BIN — absent |
+| Tokyo Bus Guide (Japan, Rev A) | `tokyobus` | 0x800000 | T35402M | 1ST_READ.BIN — absent |
+| Wave Runner GP | `wrungp` | 0x800000 | HDR-0040 | 1ST_READ.BIN — absent |
+| WWF Royal Rumble | `wwfroyal` | 0x800000 | GM-9999999 | 1ST_READ.BIN — absent |
+
+**Marker strings only, no IP.BIN/ISO structure (8):** `ausfache`, `asndynmt`, `illvelo`, `mamonoro`, `mbaa`, `mushik2e`, `pokasuka`, `radirgyn` — SDK library strings.
+**No markers:** the other 53 assembled carts. `mazan`, `ninjaslt`, `wldkicks` assembled without a NAOMI header at offset 0, so their negative is weak.
+**Not scanned:** `deathcox`, `pjustic` (missing ROM chip), `hotd2` (no NAOMI header after assembly). M1 carts keep assets LZSS-compressed, so content inside compressed data is not covered.

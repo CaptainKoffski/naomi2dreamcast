@@ -91,6 +91,21 @@ Similarity inputs: developer match no, SDK overlap **partial**, cart loader matc
   Love 2007 (`sl2007`, Naomi cart, still pending in the queue) — expect similar metric
   shapes when `sl2007` is assessed.
 - Main-RAM write-truth includes CPU writes (v6+); `dma_high_water` is informational-only.
+- **A Trizeal DC build is left inside the `sl2007` cart** (found 2026-10-04 during the
+  hidden-DC-build scan, `GAME_FORMATS.md` § Katana-mastered DIMM images). The cart's
+  ISO9660 filesystem at ROM offset 0x1000000 (`tools/dat-extract/cart2dat.py sl2007`)
+  holds a root `1ST_READ.BIN` (1,072,300 B: `TRIZEAL Version 1.000`, `Shinobi Library
+  for Dreamcast Version 2.25`, `KATANA_FLASH`, no JVS/NAOMI strings) plus `IP.BIN` /
+  `IP0000.BIN` files carrying a DC header `T9908M V0.800 20041213`, region `J`, title
+  `TRIZEAL`. The cart boots a different Naomi program (Exzeal, header load src 0x0).
+  The executable opens `GS2.PAR`; the cart ships `GS3.PAR` (125 MB, sl2007's newer
+  archive). Carved to a GDI (tetkiwam recipe: 1ST_READ on track 4 @ LBA 450000, Trizeal
+  IP.BIN in the system area, `GS3.PAR` renamed `GS2.PAR`), it boots in Flycast on both
+  the real BIOS and reios — ADX logo, then stage rendering with a `bg_map Null` debug
+  line (background assets missing from the newer archive). Without the rename it calls
+  `SYS_MISC 1` (back to BIOS) ~3 s after load. Not pursued: the official DC release
+  makes it redundant (user ruling 2026-10-04); possibly a reference for the
+  retail build's history.
 
 ## 10. History
 
