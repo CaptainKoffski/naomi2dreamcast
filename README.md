@@ -14,7 +14,7 @@ live in their own repos.
 
 | Game | Status | Repo |
 |---|---|---|
-| Cleopatra Fortune Plus (Naomi cart) | Finished | [cfp2dreamcast](https://github.com/CaptainKoffski/cfp2dreamcast) |
+| Cleopatra Fortune Plus (Naomi GD-ROM) | Finished | [cfp2dreamcast](https://github.com/CaptainKoffski/cfp2dreamcast) |
 | Senko no Ronde Special (Naomi GD-ROM) | In progress | [senkosp2dreamcast](https://github.com/CaptainKoffski/senkosp2dreamcast) |
 | Tetris Kiwamemichi (Naomi GD-ROM) | In progress | [tetkiwam2dreamcast](https://github.com/CaptainKoffski/tetkiwam2dreamcast) |
 | Akatsuki Blitzkampf Ausf. Achse (Naomi cart) | Not started | [ausfache2dreamcast](https://github.com/CaptainKoffski/ausfache2dreamcast) |
