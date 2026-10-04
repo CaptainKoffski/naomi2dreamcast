@@ -71,22 +71,26 @@ def extract(zips, filename, crc):
     """Pull one blob out of the set/parent zips: by filename, else by CRC (handles
     renamed/extension-swapped dumps, e.g. gunsur2's bhf1ma8.4e <-> .4d)."""
     for z in zips:
-        d = tempfile.mkdtemp()
-        subprocess.run([SZ, "e", "-y", "-o"+d, z, filename], capture_output=True, text=True)
-        p = os.path.join(d, os.path.basename(filename))
-        if os.path.exists(p):
-            return open(p, "rb").read()
+        data = _pull(z, filename)
+        if data is not None:
+            return data
     if crc:
         want = "%08x" % crc
         for z in zips:
             hit = _crcmap(z).get(want)
             if hit:
-                d = tempfile.mkdtemp()
-                subprocess.run([SZ, "e", "-y", "-o"+d, z, hit], capture_output=True, text=True)
-                p = os.path.join(d, os.path.basename(hit))
-                if os.path.exists(p):
-                    return open(p, "rb").read()
+                data = _pull(z, hit)
+                if data is not None:
+                    return data
     return None
+
+def _pull(z, member):
+    """One member out of one zip, or None. Temp dir is removed (leaked one per
+    blob before -- a full-library scan filled the disk, 2026-10-04)."""
+    with tempfile.TemporaryDirectory() as d:
+        subprocess.run([SZ, "e", "-y", "-o"+d, z, member], capture_output=True, text=True)
+        p = os.path.join(d, os.path.basename(member))
+        return open(p, "rb").read() if os.path.exists(p) else None
 
 def main():
     if len(sys.argv) < 2:
