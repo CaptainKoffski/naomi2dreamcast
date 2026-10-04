@@ -159,7 +159,7 @@ Fill the **Status** column during assessment (e.g. `candidate`, `too big`, `need
 | Marvel Vs. Capcom 2: New Age of Heroes (Export, Korea, Rev A) | `mvsc2` | **cart** | parent | 87.5 MB | Fighting | Yes (2000) | not assessed |
 | Mazan: Flash of the Blade (World, MAZ2 Ver.A) | `mazan` | **cart** | parent | 73.7 MB | Light-gun | No | parked G3 · [notes](assessments/mazan.md) |
 | Melty Blood Actress Again Version A (Japan, Rev A) | `mbaa` | **cart** | parent | 233.9 MB | Fighting | No | **55.9** B · [assessment](assessments/mbaa.md) |
-| Mushiking The King Of Beetles - Mushiking II / III / III+ (Ver. 2.001) (World) | `mushik2e` | **cart** | parent | 72.8 MB | Card battle ⚠ | No | **70.5** A · [assessment](assessments/mushik2e.md) |
+| Mushiking The King Of Beetles - Mushiking II / III / III+ (Ver. 2.001) (World) | `mushik2e` | **cart** | parent | 72.8 MB | Card battle ⚠ | No | **78.4** A · [assessment](assessments/mushik2e.md) |
 | Ninja Assault (World, NJA2 Ver.A) | `ninjaslt` | **cart** | parent | 81.2 MB | Light-gun | No | parked G3 · [notes](assessments/ninjaslt.md) |
 | Nittere Shiki! Mirai Yosou Studio / NTV Future Forecast Studio (Japan, Rev A) | `ntvmys` | **cart** | parent | 61.4 MB | Party | No | parked G1 · [notes](assessments/ntvmys.md) |
 | Oinori-daimyoujin Matsuri | `oinori` | **cart** | parent | 36.4 MB | Gambling/medal ⚠ | No | parked G3 · [notes](assessments/oinori.md) |
