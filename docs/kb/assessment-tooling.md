@@ -647,7 +647,8 @@ dead server), not a fixable emulation gap, per `assessments/mj1.md` §Gate.
    reported killed instantly — nothing had executed. Before counting a kill as
    real, compare the task output file's mtime against launch time; uniquify battery
    commands (`echo <timestamp>; python3 …`) and verify liveness ~45 s in
-   (`pgrep -x Flycast` + fresh `raw/`).
+   (a Flycast whose command line names this battery's set — `pgrep -x Flycast`
+   alone also counts other projects' instances, 2026-10-04 — + fresh `raw/`).
 3. **The guts step was unbounded — rhytngk's 4.2 MB boot.bin ran Ghidra >2 h CPU
    without finishing** (107% CPU throughout: working, not hung — but 100×+ the
    normal ~1 min). Every earlier rhytngk "post-processing hang" was this. Fix
@@ -733,7 +734,9 @@ the v1 main-RAM limitation) — **landed 2026-08-07 as battery v6, §11.**
    blocker, main 0.71/vram 0.91 fit), `vonot` (3.746 — **same-game official DC port
    precedent**: Oratorio Tangram ver 5.45 DC 1999/2000 shipped in 2 MiB ARAM, and the
    cart's sdk_strings contain the DC-port codebase in situ: SEGAKATANA libs,
-   VOORATAN.SYS, "M.S.B.S.VER.5.45", "Twin Stick"), `alienfnt` (3.702 — same-game DC
+   VOORATAN.SYS, "M.S.B.S.VER.5.45", "Twin Stick"; 2026-10-24: Sega's Dorimaga
+   "Ver.5.66 Customize Disc" GD-ROM also ran the three 5.66-only VRs on DC in a 5.45-
+   engine build. Not a ROM source; unmeasured, see `assessments/vonot.md`), `alienfnt` (3.702 — same-game DC
    precedent #2: Alien Front Online 2001), `monkeyba` (3.637 — sole blocker, main
    0.57/vram 0.91 fit; active 2026 Memorix101 community DC port), `asndynmt` (2.782 —
    built on DC Dynamite Deka 2 codebase per Katana sdk_strings), `slashout` (3.756 —

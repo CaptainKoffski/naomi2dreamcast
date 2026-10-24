@@ -100,8 +100,32 @@ with shipped DC-peripheral lineage, ARAM is the *only* blocker; under any softer
 (kb §6 item 1's candidate fixes) `vonot` unparks immediately, ahead of `ausfache` (no port
 exists anywhere) and `radirgyn` (franchise-only precedent) as the queue's #1 unpark candidate.
 
+**Narrowing the nuance: Sega shipped the 5.66-only Virtuaroids on DC hardware (2026-10-24, tester
+lead).** A non-retail GD-ROM, **"M.S.B.S. Ver.5.66 カスタマイズディスク"** (Customize Disc), came
+with the 7/28 special issue of Japan's Dreamcast Magazine (Dorimaga). Sega's 5.66 page names it,
+but the year isn't stated there; presumably 2000. The disc is a color/emblem editor for the arcade's
+VMU slot, and it covers all three 5.66 additions (Apharmd C, Temjin 10/80, Stein-Vok), which the
+retail 5.45 DC game cannot edit. It hides a locked **"VR Test"** battle mode that fan boot disc
+**Cust-Plus** (Scott Robinson, c. 2003) unlocks; a forum post says every stage is playable with
+the 5.66 robots. The engine is **not** the NAOMI 5.66 binary: per the forum it is "basically
+VER.5.45, hence the unofficial moniker 'VER.5.60'". It is therefore no ROM source and offers no
+way to derive the `vonot` cart image. What it adds: a first-party DC build ran the 5.66-exclusive
+Virtuaroid content in battle inside stock DC RAM/ARAM, so the remaining "precedent covers 5.45
+only" gap shrinks to engine/balance code. Caveats: the battle claims are fan-sourced, and the disc
+has never been measured here. **Unmeasured follow-up:** if a dump turns up, run its VR Test mode
+through the battery and record DC-side ARAM/main/VRAM for 5.66 content. That would make this a
+primary-source data point. No public dump confirmed: redump.org was unreachable on 2026-10-24.
+Sources: [Sega 5.66 download page](https://virtual-on.sega.jp/oratan/hotstart/msbs566/566dl.html)
+(names the Dorimaga GD-ROM) · [Virtual-On Forums Cust-Plus thread, 2009](https://www.oratan.com/forum/viewtopic.php?t=48)
+("VER.5.60" engine statement; the three 5.66 VRs playable) ·
+[Astro Museum Cust-Plus page](https://astromuseum.org/gamecenter/VOOTCustom/VOOTCustomDisc)
+("literally just a colour edit tool"; VR Test unlock) ·
+[gameflame.seesaa.net write-up](https://gameflame.seesaa.net/article/201704article_6.html)
+(per-part color + emblem editor).
+
 ## 10. History
 
 | Battery | Date | Final | What changed |
 |---|---|---|---|
 | v9 | 2026-08-11 | PARKED G3 memory: aram content > 2x DC capacity | initial assessment — ARAM u 3.746 new cohort max, main/VRAM both fit; same-title official DC port (ver 5.45, 1999) makes this the strongest kb §6 item-1 unpark candidate; controls dc_peripheral (DC Twin Stick HKT-7500 lineage) |
+| — | 2026-10-24 | (unchanged) | research note only, no re-run: Dorimaga "Ver.5.66 Customize Disc" GD-ROM, a 5.45-engine ("VER.5.60") DC build with the three 5.66-only VRs, battle-capable via the Cust-Plus VR Test unlock; extends the precedent to 5.66 content; no ROM path |
